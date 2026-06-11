@@ -187,6 +187,10 @@ input[type=color]::-webkit-color-swatch{border:none;border-radius:3px}
     <button class="eng-btn"        data-engine="lorenz"   style="--e:#44aaff">LORENZ</button>
     <button class="eng-btn"        data-engine="react"    style="--e:#ff2266">REACT</button>
     <button class="eng-btn"        data-engine="aco"      style="--e:#ff8800">ACO</button>
+    <button class="eng-btn"        data-engine="rdiff"    style="--e:#ff5500">R-D</button>
+    <button class="eng-btn"        data-engine="strange"  style="--e:#cc44ff">ATTR</button>
+    <button class="eng-btn"        data-engine="lsys"     style="--e:#44ff88">LSYS</button>
+    <button class="eng-btn"        data-engine="voronoi"  style="--e:#ffcc00">VOR</button>
   </div>
 
   <!-- ══ FX CHAIN PANEL ══ -->
@@ -1173,6 +1177,156 @@ input[type=color]::-webkit-color-swatch{border:none;border-radius:3px}
       </div>
     </div>
   </div>
+
+  <!-- ══ REACTION-DIFFUSION ══ -->
+  <div class="engine-panes" data-engine="rdiff">
+  <div class="tab-pane active" id="tab-rdiff-live">
+    <div class="sec"><div class="sec-title">Preset</div>
+      <div class="btn-grid" style="grid-template-columns:repeat(3,1fr)">
+        <button class="btn active" data-rdp="coral">Corail</button><button class="btn" data-rdp="zebre">Zèbre</button>
+        <button class="btn" data-rdp="labyrinth">Labyrinthe</button><button class="btn" data-rdp="spots">Spots</button>
+        <button class="btn" data-rdp="worms">Vers</button><button class="btn" data-rdp="mitosis">Mitose</button>
+      </div>
+    </div><div class="sep"></div>
+    <div class="sec">
+      <div class="quick-row"><button class="big-toggle" id="rdbtn-pulse" style="flex:1"><span class="dot"></span>PULSE</button><button class="quick-fire" id="rdbtn-pulse-fire">▶</button></div>
+      <div class="prog-bar"><div class="prog-fill" id="rdpulse-bar"></div></div>
+      <div style="margin-top:8px"></div>
+      <div class="quick-row"><button class="big-toggle" id="rdbtn-auto" style="flex:1"><span class="dot"></span>AUTO SEED</button><button class="quick-fire" id="rdbtn-auto-fire">▶</button></div>
+      <div class="prog-bar"><div class="prog-fill" id="rdauto-bar"></div></div>
+    </div><div class="sep"></div>
+    <div class="ctrl"><label>Pinceau <span class="val" id="rdval-brush">20</span></label><input type="range" id="rdbr-size" min="5" max="80" step="1" value="20"></div>
+    <div class="sec"><div class="btn-grid" style="grid-template-columns:repeat(2,1fr)">
+      <button class="btn active" data-rdbrush="inject">Injecter B</button><button class="btn" data-rdbrush="erase">Effacer B</button>
+    </div></div>
+  </div>
+  <div class="tab-pane" id="tab-rdiff-sim">
+    <div class="sec">
+      <div class="ctrl"><label>F feed <span class="val" id="rdval-f">0.055</span></label><input type="range" id="rdf" min="0.01" max="0.1" step="0.001" value="0.055"></div>
+      <div class="ctrl"><label>k kill <span class="val" id="rdval-k">0.062</span></label><input type="range" id="rdk" min="0.03" max="0.075" step="0.001" value="0.062"></div>
+      <div class="ctrl"><label>Du <span class="val" id="rdval-du">1.00</span></label><input type="range" id="rddu" min="0.1" max="2.0" step="0.05" value="1.0"></div>
+      <div class="ctrl"><label>Dv <span class="val" id="rdval-dv">0.50</span></label><input type="range" id="rddv" min="0.05" max="1.0" step="0.025" value="0.5"></div>
+      <div class="ctrl"><label>dt vitesse <span class="val" id="rdval-dt">1.0</span></label><input type="range" id="rddt" min="0.2" max="2.0" step="0.1" value="1.0"></div>
+      <div class="ctrl"><label>Steps/frame <span class="val" id="rdval-steps">8</span></label><input type="range" id="rdsteps" min="1" max="20" step="1" value="8"></div>
+    </div><div class="sep"></div>
+    <button class="btn-wide" id="rdbtn-reset">↺ Réinitialiser</button>
+    <button class="btn-wide" id="rdbtn-seed" style="margin-top:4px">✦ Seed aléatoire</button>
+  </div>
+  <div class="tab-pane" id="tab-rdiff-color">
+    <div class="ctrl"><label style="margin-bottom:5px">Couleur A (fond)</label><input type="color" id="rdcol-a" value="#000033"></div>
+    <div class="ctrl"><label style="margin-bottom:5px">Couleur mid</label><input type="color" id="rdcol-m" value="#440055"></div>
+    <div class="ctrl"><label style="margin-bottom:5px">Couleur B (fort)</label><input type="color" id="rdcol-b" value="#ff6600"></div>
+    <div class="ctrl"><label>Contraste <span class="val" id="rdval-contrast">2.0</span></label><input type="range" id="rdcontrast" min="0.5" max="6.0" step="0.1" value="2.0"></div>
+  </div>
+  <div class="tab-pane" id="tab-rdiff-tempo">
+    <div class="ctrl"><label>Intervalle pulse <span class="val" id="rdval-pulse-int">2.0</span>s</label><input type="range" id="rdtpulse-int" min="0.1" max="20" step="0.1" value="2.0"></div>
+    <div class="ctrl"><label>Intervalle auto <span class="val" id="rdval-auto-int">8.0</span>s</label><input type="range" id="rdtauto-int" min="0.5" max="30" step="0.5" value="8.0"></div>
+  </div>
+  <div class="tab-pane" id="tab-rdiff-io"><div class="sec"><div class="sec-title">MIDI CC R-D</div><div id="rdmidi-cc-list"></div></div></div>
+  <div class="tab-pane" id="tab-rdiff-save"><div class="sec"><div style="color:#444;font-size:9px">Config R-D dans les scènes globales.</div></div></div>
+  </div><!-- /rdiff -->
+
+  <!-- ══ STRANGE ATTRACTORS ══ -->
+  <div class="engine-panes" data-engine="strange">
+  <div class="tab-pane active" id="tab-strange-live">
+    <div class="sec"><div class="sec-title">Attracteur 2D</div>
+      <div class="btn-grid" style="grid-template-columns:repeat(3,1fr)">
+        <button class="btn active" data-sta="clifford">Clifford</button><button class="btn" data-sta="dejong">De Jong</button>
+        <button class="btn" data-sta="peter">Peter</button><button class="btn" data-sta="tinkerbell">Tinkerbell</button>
+        <button class="btn" data-sta="gingerbread">Gingerbread</button><button class="btn" data-sta="bedhead">Bedhead</button>
+      </div>
+    </div><div class="sep"></div>
+    <div class="sec">
+      <div class="quick-row"><button class="big-toggle" id="stbtn-pulse" style="flex:1"><span class="dot"></span>PULSE RESET</button><button class="quick-fire" id="stbtn-pulse-fire">▶</button></div>
+      <div class="prog-bar"><div class="prog-fill" id="stpulse-bar"></div></div>
+    </div>
+  </div>
+  <div class="tab-pane" id="tab-strange-sim">
+    <div class="ctrl"><label>Itérations/frame <span class="val" id="stval-iters">80000</span></label><input type="range" id="stiters" min="10000" max="200000" step="5000" value="80000"></div>
+    <button class="btn-wide" id="stbtn-reset" style="margin-top:8px">↺ Réinitialiser</button>
+  </div>
+  <div class="tab-pane" id="tab-strange-color">
+    <div class="ctrl"><label>Trail (persistance) <span class="val" id="stval-trail">0.03</span></label><input type="range" id="sttrail" min="0.001" max="0.2" step="0.001" value="0.03"></div>
+    <div class="ctrl"><label style="margin-bottom:5px">Fond</label><input type="color" id="stbg-color" value="#010206"></div>
+    <div class="ctrl"><label style="margin-bottom:5px">Couleur bas</label><input type="color" id="stcol-low" value="#000033"></div>
+    <div class="ctrl"><label style="margin-bottom:5px">Couleur mid</label><input type="color" id="stcol-mid" value="#880055"></div>
+    <div class="ctrl"><label style="margin-bottom:5px">Couleur haut</label><input type="color" id="stcol-high" value="#ffffff"></div>
+  </div>
+  <div class="tab-pane" id="tab-strange-tempo">
+    <div class="ctrl"><label>Intervalle pulse <span class="val" id="stval-pulse-int">3.0</span>s</label><input type="range" id="sttpr-int" min="0.1" max="20" step="0.1" value="3.0"></div>
+  </div>
+  <div class="tab-pane" id="tab-strange-io"><div class="sec"><div class="sec-title">MIDI CC Strange</div><div id="stmidi-cc-list"></div></div></div>
+  <div class="tab-pane" id="tab-strange-save"><div class="sec"><div style="color:#444;font-size:9px">Config Strange Attr. dans les scènes globales.</div></div></div>
+  </div><!-- /strange -->
+
+  <!-- ══ L-SYSTEMS ══ -->
+  <div class="engine-panes" data-engine="lsys">
+  <div class="tab-pane active" id="tab-lsys-live">
+    <div class="sec"><div class="sec-title">Système</div>
+      <div class="btn-grid" style="grid-template-columns:repeat(3,1fr)">
+        <button class="btn active" data-lsp="fern">Fougère</button><button class="btn" data-lsp="tree">Arbre</button>
+        <button class="btn" data-lsp="snowflake">Flocon</button><button class="btn" data-lsp="dragon">Dragon</button>
+        <button class="btn" data-lsp="sierpinski">Sierpinski</button><button class="btn" data-lsp="bush">Buisson</button>
+      </div>
+    </div><div class="sep"></div>
+    <div class="sec">
+      <div class="quick-row"><button class="big-toggle" id="lsbtn-pulse" style="flex:1"><span class="dot"></span>REDESSINER</button><button class="quick-fire" id="lsbtn-pulse-fire">▶</button></div>
+      <div class="prog-bar"><div class="prog-fill" id="lspulse-bar"></div></div>
+    </div><div class="sep"></div>
+    <div class="ctrl"><label>Itérations <span class="val" id="lsval-iter">5</span></label><input type="range" id="lsiter" min="1" max="8" step="1" value="5"></div>
+    <div class="ctrl"><label>Angle <span class="val" id="lsval-angle">25°</span></label><input type="range" id="lsangle" min="5" max="90" step="1" value="25"></div>
+  </div>
+  <div class="tab-pane" id="tab-lsys-sim">
+    <div class="ctrl"><label>Longueur seg. <span class="val" id="lsval-len">5</span></label><input type="range" id="lslen" min="1" max="20" step="0.5" value="5"></div>
+    <div class="ctrl"><label>Vitesse anim. <span class="val" id="lsval-speed">300</span></label><input type="range" id="lsanim-speed" min="10" max="3000" step="10" value="300"></div>
+  </div>
+  <div class="tab-pane" id="tab-lsys-color">
+    <div class="ctrl"><label style="margin-bottom:5px">Fond</label><input type="color" id="lsbg-color" value="#060810"></div>
+    <div class="ctrl"><label style="margin-bottom:5px">Couleur base</label><input type="color" id="lscol-base" value="#44ff88"></div>
+    <div class="ctrl"><label style="margin-bottom:5px">Couleur pointe</label><input type="color" id="lscol-tip" value="#ffffff"></div>
+    <div class="ctrl"><label>Épaisseur <span class="val" id="lsval-lw">1.5</span></label><input type="range" id="lslw" min="0.3" max="5" step="0.1" value="1.5"></div>
+  </div>
+  <div class="tab-pane" id="tab-lsys-tempo">
+    <div class="ctrl"><label>Intervalle pulse <span class="val" id="lsval-pulse-int">4.0</span>s</label><input type="range" id="lstpulse-int" min="0.5" max="20" step="0.5" value="4.0"></div>
+  </div>
+  <div class="tab-pane" id="tab-lsys-io"><div class="sec"><div class="sec-title">MIDI CC L-Sys</div><div id="lsmidi-cc-list"></div></div></div>
+  <div class="tab-pane" id="tab-lsys-save"><div class="sec"><div style="color:#444;font-size:9px">Config L-Sys dans les scènes globales.</div></div></div>
+  </div><!-- /lsys -->
+
+  <!-- ══ VORONOI ══ -->
+  <div class="engine-panes" data-engine="voronoi">
+  <div class="tab-pane active" id="tab-voronoi-live">
+    <div class="sec">
+      <div class="quick-row"><button class="big-toggle" id="vobtn-pulse" style="flex:1"><span class="dot"></span>DIVISER</button><button class="quick-fire" id="vobtn-pulse-fire">▶</button></div>
+      <div class="prog-bar"><div class="prog-fill" id="vopulse-bar"></div></div>
+      <div style="margin-top:8px"></div>
+      <div class="quick-row"><button class="big-toggle" id="vobtn-auto" style="flex:1"><span class="dot"></span>AUTO RESET</button><button class="quick-fire" id="vobtn-auto-fire">▶</button></div>
+      <div class="prog-bar"><div class="prog-fill" id="voauto-bar"></div></div>
+    </div><div class="sep"></div>
+    <div class="ctrl"><label>Graines <span class="val" id="voval-seeds">40</span></label><input type="range" id="voseeds" min="3" max="120" step="1" value="40"></div>
+    <div class="ctrl"><label>Vitesse <span class="val" id="voval-speed">0.5</span></label><input type="range" id="vospeed" min="0" max="4" step="0.05" value="0.5"></div>
+  </div>
+  <div class="tab-pane" id="tab-voronoi-sim">
+    <div class="ctrl"><label>Répulsion bords <span class="val" id="voval-border">60</span></label><input type="range" id="voborder-rep" min="0" max="200" step="5" value="60"></div>
+    <div class="ctrl"><label>Répulsion graines <span class="val" id="voval-repulse">40</span></label><input type="range" id="vorepulse" min="0" max="150" step="5" value="40"></div>
+    <button class="btn-wide" id="vobtn-reset" style="margin-top:8px">↺ Réinitialiser</button>
+  </div>
+  <div class="tab-pane" id="tab-voronoi-color">
+    <div class="ctrl"><label style="margin-bottom:5px">Mode couleur</label>
+      <div class="btn-grid" style="grid-template-columns:repeat(2,1fr);margin-top:5px">
+        <button class="btn active" data-voc="hue">Arc-en-ciel</button><button class="btn" data-voc="dark">Sombre</button>
+        <button class="btn" data-voc="velocity">Vitesse</button><button class="btn" data-voc="mono">Mono</button>
+      </div>
+    </div>
+    <div class="ctrl" style="margin-top:8px"><label>Épaisseur bordure <span class="val" id="voval-bw">1.5</span></label><input type="range" id="vobw" min="0" max="6" step="0.1" value="1.5"></div>
+  </div>
+  <div class="tab-pane" id="tab-voronoi-tempo">
+    <div class="ctrl"><label>Intervalle division <span class="val" id="voval-pulse-int">3.0</span>s</label><input type="range" id="votpulse-int" min="0.1" max="20" step="0.1" value="3.0"></div>
+    <div class="ctrl"><label>Intervalle auto <span class="val" id="voval-auto-int">8.0</span>s</label><input type="range" id="votauto-int" min="0.5" max="30" step="0.5" value="8.0"></div>
+  </div>
+  <div class="tab-pane" id="tab-voronoi-io"><div class="sec"><div class="sec-title">MIDI CC Voronoi</div><div id="vomidi-cc-list"></div></div></div>
+  <div class="tab-pane" id="tab-voronoi-save"><div class="sec"><div style="color:#444;font-size:9px">Config Voronoi dans les scènes globales.</div></div></div>
+  </div><!-- /voronoi -->
 
   <div class="tab-pane" id="tab-bug">
     <div class="sec">
@@ -2433,16 +2587,314 @@ var Engine_ACO=(function(){
 })();
 
 /* ═══════════════════════════════════════════
+   ENGINE: REACTION-DIFFUSION (Gray-Scott)
+═══════════════════════════════════════════ */
+window.Engine_RDiff=(function(){
+  var C,ctx,W,H,glc,gl,cur=0,SIM=512;
+  var tex=[null,null],fb=[null,null],qbuf,pSim,pRend;
+  var _active=false,_pulseT=0,_autoT=0,_md=false,_mx=0,_my=0,_mh=null;
+  var VS='attribute vec2 a;varying vec2 v;void main(){v=a*.5+.5;gl_Position=vec4(a,0,1);}';
+  var FS_S='precision highp float;uniform sampler2D u_s;uniform vec2 u_px;uniform float u_f,u_k,u_du,u_dv,u_dt;varying vec2 v;void main(){vec2 s=texture2D(u_s,v).rg;float A=s.r,B=s.g;vec2 L=texture2D(u_s,v+vec2(u_px.x,0.)).rg+texture2D(u_s,v-vec2(u_px.x,0.)).rg+texture2D(u_s,v+vec2(0.,u_px.y)).rg+texture2D(u_s,v-vec2(0.,u_px.y)).rg-4.*s;float q=A*B*B;gl_FragColor=vec4(clamp(A+u_dt*(u_du*L.r-q+u_f*(1.-A)),0.,1.),clamp(B+u_dt*(u_dv*L.g+q-(u_f+u_k)*B),0.,1.),0.,1.);}';
+  var FS_R='precision mediump float;uniform sampler2D u_s;uniform vec3 u_ca,u_cm,u_cb;uniform float u_con;varying vec2 v;void main(){float b=clamp(texture2D(u_s,v).g*u_con,0.,1.);vec3 c=b<.5?mix(u_ca,u_cm,b*2.):mix(u_cm,u_cb,(b-.5)*2.);gl_FragColor=vec4(c,1.);}';
+  var PRESETS={coral:{f:.055,k:.062,du:1.,dv:.5},zebre:{f:.026,k:.051,du:.16,dv:.08},labyrinth:{f:.039,k:.058,du:1.,dv:.5},spots:{f:.035,k:.065,du:1.,dv:.5},worms:{f:.078,k:.061,du:1.,dv:.5},mitosis:{f:.028,k:.053,du:.16,dv:.08}};
+  var cfg={f:.055,k:.062,du:1.,dv:.5,dt:1.,steps:8,brush:20,brush_mode:'inject',contrast:2.,pulse_enabled:false,auto_enabled:false,pulse_int:2.,auto_int:8.};
+  function h3(h){return[parseInt(h.slice(1,3),16)/255,parseInt(h.slice(3,5),16)/255,parseInt(h.slice(5,7),16)/255];}
+  function sh(t,s){var x=gl.createShader(t);gl.shaderSource(x,s);gl.compileShader(x);return x;}
+  function mkP(v,f){var p=gl.createProgram();gl.attachShader(p,sh(gl.VERTEX_SHADER,v));gl.attachShader(p,sh(gl.FRAGMENT_SHADER,f));gl.linkProgram(p);return p;}
+  function mkT(d){var t=gl.createTexture();gl.bindTexture(gl.TEXTURE_2D,t);gl.texImage2D(gl.TEXTURE_2D,0,gl.RGBA,SIM,SIM,0,gl.RGBA,gl.UNSIGNED_BYTE,d);gl.texParameteri(gl.TEXTURE_2D,gl.TEXTURE_MIN_FILTER,gl.NEAREST);gl.texParameteri(gl.TEXTURE_2D,gl.TEXTURE_MAG_FILTER,gl.LINEAR);gl.texParameteri(gl.TEXTURE_2D,gl.TEXTURE_WRAP_S,gl.CLAMP_TO_EDGE);gl.texParameteri(gl.TEXTURE_2D,gl.TEXTURE_WRAP_T,gl.CLAMP_TO_EDGE);return t;}
+  function mkF(t){var f=gl.createFramebuffer();gl.bindFramebuffer(gl.FRAMEBUFFER,f);gl.framebufferTexture2D(gl.FRAMEBUFFER,gl.COLOR_ATTACHMENT0,gl.TEXTURE_2D,t,0);return f;}
+  function quad(p){var a=gl.getAttribLocation(p,'a');gl.bindBuffer(gl.ARRAY_BUFFER,qbuf);gl.enableVertexAttribArray(a);gl.vertexAttribPointer(a,2,gl.FLOAT,false,0,0);gl.drawArrays(gl.TRIANGLE_STRIP,0,4);}
+  function ul(p,n){return gl.getUniformLocation(p,n);}
+  function initGL(){
+    glc=document.createElement('canvas');glc.width=SIM;glc.height=SIM;
+    gl=glc.getContext('webgl',{preserveDrawingBuffer:true})||glc.getContext('experimental-webgl',{preserveDrawingBuffer:true});
+    if(!gl)return false;
+    pSim=mkP(VS,FS_S);pRend=mkP(VS,FS_R);
+    qbuf=gl.createBuffer();gl.bindBuffer(gl.ARRAY_BUFFER,qbuf);
+    gl.bufferData(gl.ARRAY_BUFFER,new Float32Array([-1,-1,1,-1,-1,1,1,1]),gl.STATIC_DRAW);
+    resetSim(false);return true;
+  }
+  function resetSim(seedOnly){
+    var d=new Uint8Array(SIM*SIM*4);
+    for(var i=0;i<SIM*SIM;i++){d[i*4]=255;d[i*4+3]=255;}
+    var cnt=seedOnly?4:40,r=seedOnly?18:5;
+    for(var s=0;s<cnt;s++){var sx=r+Math.floor(Math.random()*(SIM-2*r)),sy=r+Math.floor(Math.random()*(SIM-2*r));for(var dy=-r;dy<=r;dy++)for(var dx=-r;dx<=r;dx++){if(dx*dx+dy*dy>r*r)continue;d[((sy+dy)*SIM+(sx+dx))*4+1]=255;}}
+    if(tex[0]){gl.deleteTexture(tex[0]);gl.deleteFramebuffer(fb[0]);gl.deleteTexture(tex[1]);gl.deleteFramebuffer(fb[1]);}
+    tex[0]=mkT(d);tex[1]=mkT(d);fb[0]=mkF(tex[0]);fb[1]=mkF(tex[1]);cur=0;
+    gl.bindFramebuffer(gl.FRAMEBUFFER,null);
+  }
+  function step(){
+    var p=pSim;gl.useProgram(p);
+    gl.uniform2f(ul(p,'u_px'),1/SIM,1/SIM);gl.uniform1f(ul(p,'u_f'),cfg.f);gl.uniform1f(ul(p,'u_k'),cfg.k);
+    gl.uniform1f(ul(p,'u_du'),cfg.du);gl.uniform1f(ul(p,'u_dv'),cfg.dv);gl.uniform1f(ul(p,'u_dt'),cfg.dt);
+    var n=1-cur;gl.bindFramebuffer(gl.FRAMEBUFFER,fb[n]);gl.viewport(0,0,SIM,SIM);
+    gl.activeTexture(gl.TEXTURE0);gl.bindTexture(gl.TEXTURE_2D,tex[cur]);gl.uniform1i(ul(p,'u_s'),0);quad(p);cur=n;
+  }
+  function renderGL(){
+    var p=pRend;gl.useProgram(p);
+    var ea=document.getElementById('rdcol-a'),em=document.getElementById('rdcol-m'),eb=document.getElementById('rdcol-b');
+    gl.uniform3fv(ul(p,'u_ca'),ea?h3(ea.value):[0,0,.2]);
+    gl.uniform3fv(ul(p,'u_cm'),em?h3(em.value):[.27,0,.33]);
+    gl.uniform3fv(ul(p,'u_cb'),eb?h3(eb.value):[1,.4,0]);
+    gl.uniform1f(ul(p,'u_con'),cfg.contrast);
+    gl.bindFramebuffer(gl.FRAMEBUFFER,null);gl.viewport(0,0,SIM,SIM);
+    gl.activeTexture(gl.TEXTURE0);gl.bindTexture(gl.TEXTURE_2D,tex[cur]);gl.uniform1i(ul(p,'u_s'),0);quad(p);
+    ctx.save();ctx.translate(0,H);ctx.scale(1,-1);ctx.drawImage(glc,0,0,SIM,SIM,0,0,W,H);ctx.restore();
+  }
+  function doBrush(){
+    if(!_md)return;
+    var sx=Math.round(_mx/W*SIM),sy=SIM-1-Math.round(_my/H*SIM);
+    var r=Math.max(3,Math.round(cfg.brush*SIM/W)),d2=r*2+1;
+    sx=Math.max(r,Math.min(SIM-1-r,sx));sy=Math.max(r,Math.min(SIM-1-r,sy));
+    var px=new Uint8Array(d2*d2*4);
+    gl.bindFramebuffer(gl.FRAMEBUFFER,fb[cur]);gl.readPixels(sx-r,sy-r,d2,d2,gl.RGBA,gl.UNSIGNED_BYTE,px);
+    for(var dy=0;dy<d2;dy++)for(var dx=0;dx<d2;dx++){var cx=dx-r,cy=dy-r;if(cx*cx+cy*cy>r*r)continue;var i=(dy*d2+dx)*4;if(cfg.brush_mode==='inject'){px[i]=80;px[i+1]=200;}else{px[i]=255;px[i+1]=0;}px[i+2]=0;px[i+3]=255;}
+    gl.bindTexture(gl.TEXTURE_2D,tex[cur]);gl.texSubImage2D(gl.TEXTURE_2D,0,sx-r,sy-r,d2,d2,gl.RGBA,gl.UNSIGNED_BYTE,px);
+  }
+  function pulse(){
+    for(var s=0;s<5;s++){var r=15,d2=r*2+1,sx=r+Math.floor(Math.random()*(SIM-2*r)),sy=r+Math.floor(Math.random()*(SIM-2*r));var d=new Uint8Array(d2*d2*4);for(var i=0;i<d2*d2;i++){var dx=i%d2-r,dy=Math.floor(i/d2)-r;if(dx*dx+dy*dy<=r*r){d[i*4]=80;d[i*4+1]=200;d[i*4+3]=255;}else{d[i*4]=255;d[i*4+3]=255;}}gl.bindTexture(gl.TEXTURE_2D,tex[cur]);gl.texSubImage2D(gl.TEXTURE_2D,0,sx-r,sy-r,d2,d2,gl.RGBA,gl.UNSIGNED_BYTE,d);}
+  }
+  // UI wiring
+  function wireRD(){
+    function slw(id,key,sp,dec){var el=document.getElementById(id);if(!el)return;el.addEventListener('input',function(){cfg[key]=parseFloat(this.value);var s=document.getElementById(sp);if(s)s.textContent=parseFloat(this.value).toFixed(dec);});}
+    slw('rdf','f','rdval-f',3);slw('rdk','k','rdval-k',3);slw('rddu','du','rdval-du',2);slw('rddv','dv','rdval-dv',2);slw('rddt','dt','rdval-dt',1);
+    slw('rdtpulse-int','pulse_int','rdval-pulse-int',1);slw('rdtauto-int','auto_int','rdval-auto-int',1);
+    slw('rdcontrast','contrast','rdval-contrast',1);
+    var brs=document.getElementById('rdbr-size');if(brs)brs.addEventListener('input',function(){cfg.brush=parseInt(this.value);var s=document.getElementById('rdval-brush');if(s)s.textContent=this.value;});
+    var stps=document.getElementById('rdsteps');if(stps)stps.addEventListener('input',function(){cfg.steps=parseInt(this.value);var s=document.getElementById('rdval-steps');if(s)s.textContent=this.value;});
+    document.querySelectorAll('[data-rdp]').forEach(function(b){b.addEventListener('click',function(){document.querySelectorAll('[data-rdp]').forEach(function(x){x.classList.remove('active');});b.classList.add('active');var p=PRESETS[b.dataset.rdp];Object.assign(cfg,p);['rdf','rdk','rddu','rddv'].forEach(function(id){var el=document.getElementById(id);if(el){el.value=cfg[{rdf:'f',rdk:'k',rddu:'du',rddv:'dv'}[id]];var sp=document.getElementById('rdval-'+id.slice(2));if(sp)sp.textContent=el.value;}});resetSim(false);});});
+    document.querySelectorAll('[data-rdbrush]').forEach(function(b){b.addEventListener('click',function(){document.querySelectorAll('[data-rdbrush]').forEach(function(x){x.classList.remove('active');});b.classList.add('active');cfg.brush_mode=b.dataset.rdbrush;});});
+    var btn=document.getElementById('rdbtn-reset');if(btn)btn.addEventListener('click',function(){resetSim(false);});
+    var btn2=document.getElementById('rdbtn-seed');if(btn2)btn2.addEventListener('click',function(){resetSim(true);});
+    function setupBT(btnId,fireId,key,pulseFn){var bt=document.getElementById(btnId);if(bt){bt.addEventListener('click',function(){cfg[key]=!cfg[key];bt.classList.toggle('on',cfg[key]);bt.querySelector('.dot').style.background=cfg[key]?'#ff5500':'#444';});bt._update=function(){bt.classList.toggle('on',cfg[key]);bt.querySelector('.dot').style.background=cfg[key]?'#ff5500':'#444';};bt._update();}var bf=document.getElementById(fireId);if(bf)bf.addEventListener('click',pulseFn);}
+    setupBT('rdbtn-pulse','rdbtn-pulse-fire','pulse_enabled',pulse);
+    setupBT('rdbtn-auto','rdbtn-auto-fire','auto_enabled',function(){resetSim(true);});
+  }
+  return{cfg:cfg,
+    activate:function(){
+      C=document.getElementById('c');if(!C)return;ctx=C.getContext('2d');W=C.width;H=C.height;
+      if(!gl&&!initGL())return;
+      _active=true;
+      if(!_mh){_mh=true;C.addEventListener('mousemove',function(e){var r=C.getBoundingClientRect();_mx=e.clientX-r.left;_my=e.clientY-r.top;});C.addEventListener('mousedown',function(){_md=true;});document.addEventListener('mouseup',function(){_md=false;});}
+      wireRD();
+    },
+    deactivate:function(){_active=false;_md=false;},
+    draw:function(){
+      if(!gl||!_active)return;W=C.width;H=C.height;doBrush();
+      for(var i=0;i<cfg.steps;i++)step();renderGL();
+      _pulseT+=1/60;_autoT+=1/60;
+      if(cfg.pulse_enabled&&_pulseT>=cfg.pulse_int){_pulseT=0;pulse();}
+      if(cfg.auto_enabled&&_autoT>=cfg.auto_int){_autoT=0;resetSim(true);}
+      var pb=document.getElementById('rdpulse-bar');if(pb)pb.style.width=Math.min(100,_pulseT/cfg.pulse_int*100)+'%';
+      var ab=document.getElementById('rdauto-bar');if(ab)ab.style.width=Math.min(100,_autoT/cfg.auto_int*100)+'%';
+    }
+  };
+})();
+
+/* ═══════════════════════════════════════════
+   ENGINE: STRANGE ATTRACTORS (2D Maps)
+═══════════════════════════════════════════ */
+window.Engine_Strange=(function(){
+  var C,ctx,W,H,_active=false;
+  var _oc,_octx,_dens,_id,_RW=960,_RH=540;
+  var _x=.1,_y=.1,_pulseT=0;
+  var TYPES={
+    clifford:{fn:function(x,y,p){return[Math.sin(p.a*y)+p.c*Math.cos(p.a*x),Math.sin(p.b*x)+p.d*Math.cos(p.b*y)];},p:{a:-1.4,b:1.6,c:1.,d:.7},sc:1.6},
+    dejong:{fn:function(x,y,p){return[Math.sin(p.a*y)-Math.cos(p.b*x),Math.sin(p.c*x)-Math.cos(p.d*y)];},p:{a:1.641,b:1.902,c:.316,d:1.525},sc:1.6},
+    peter:{fn:function(x,y,p){return[Math.sin(p.a*y)-p.b*Math.cos(p.a*x),Math.sin(p.c*x)-p.d*Math.cos(p.c*y)];},p:{a:1.4,b:1.6,c:1.4,d:1.6},sc:1.6},
+    tinkerbell:{fn:function(x,y,p){return[x*x-y*y+p.a*x+p.b*y,2*x*y+p.c*x+p.d*y];},p:{a:.9,b:-.6013,c:2.,d:.5},sc:3.},
+    gingerbread:{fn:function(x,y,p){return[1-Math.abs(x)+y,x];},p:{},sc:2.5},
+    bedhead:{fn:function(x,y,p){return[Math.sin(x*y/p.b)*y+Math.cos(p.a*x-y),x+Math.sin(y)/2];},p:{a:-.81,b:.92},sc:3.5}
+  };
+  var cfg={type:'clifford',iters:80000,trail:.03,bg:'#010206',col_low:'#000033',col_mid:'#880055',col_high:'#ffffff',pulse_enabled:false,pulse_int:3.};
+  function h3(h){return[parseInt(h.slice(1,3),16)/255,parseInt(h.slice(3,5),16)/255,parseInt(h.slice(5,7),16)/255];}
+  function gv(id,def){var el=document.getElementById(id);return el?el.value:def;}
+  function initBuf(){_oc=document.createElement('canvas');_oc.width=_RW;_oc.height=_RH;_octx=_oc.getContext('2d');_dens=new Float32Array(_RW*_RH);_id=_octx.createImageData(_RW,_RH);_x=.1+Math.random()*.2;_y=.1+Math.random()*.2;_octx.fillStyle=cfg.bg;_octx.fillRect(0,0,_RW,_RH);}
+  function reset(){if(_dens)_dens.fill(0);_x=.1+Math.random()*.2;_y=.1+Math.random()*.2;if(_octx){_octx.fillStyle=cfg.bg;_octx.fillRect(0,0,_RW,_RH);}}
+  function iterate(){
+    var tp=TYPES[cfg.type],cx=_RW/2,cy=_RH/2,sc=Math.min(_RW,_RH)/(2.2*tp.sc);
+    var fn=tp.fn,p=tp.p,d=_dens,x=_x,y=_y,N=cfg.iters;
+    for(var i=0;i<N;i++){var r=fn(x,y,p);x=r[0];y=r[1];var px=(cx+x*sc+.5)|0,py=(cy-y*sc+.5)|0;if(px>=0&&px<_RW&&py>=0&&py<_RH)d[py*_RW+px]+=1;}
+    _x=x;_y=y;
+  }
+  function render(){
+    var clo=h3(gv('stcol-low',cfg.col_low)),cmi=h3(gv('stcol-mid',cfg.col_mid)),chi=h3(gv('stcol-high',cfg.col_high)),bgc=h3(gv('stbg-color',cfg.bg));
+    var d=_dens,n=_RW*_RH,mx=0;
+    for(var i=0;i<n;i++)if(d[i]>mx)mx=d[i];
+    if(mx<1){ctx.fillStyle=cfg.bg;ctx.fillRect(0,0,W,H);return;}
+    var lm=Math.log(mx+1),img=_id.data;
+    for(var i=0;i<n;i++){var j=i<<2;if(d[i]<=0){img[j]=bgc[0]*255;img[j+1]=bgc[1]*255;img[j+2]=bgc[2]*255;img[j+3]=255;continue;}var t=Math.log(d[i]+1)/lm,r2,g2,b2;if(t<.5){var u=t*2;r2=clo[0]+(cmi[0]-clo[0])*u;g2=clo[1]+(cmi[1]-clo[1])*u;b2=clo[2]+(cmi[2]-clo[2])*u;}else{var u=(t-.5)*2;r2=cmi[0]+(chi[0]-cmi[0])*u;g2=cmi[1]+(chi[1]-cmi[1])*u;b2=cmi[2]+(chi[2]-cmi[2])*u;}img[j]=r2*255+.5|0;img[j+1]=g2*255+.5|0;img[j+2]=b2*255+.5|0;img[j+3]=255;}
+    _octx.putImageData(_id,0,0);ctx.drawImage(_oc,0,0,_RW,_RH,0,0,W,H);
+    var tr=1-cfg.trail;for(var i=0;i<n;i++)d[i]*=tr;
+  }
+  function wireS(){
+    document.querySelectorAll('[data-sta]').forEach(function(b){b.addEventListener('click',function(){document.querySelectorAll('[data-sta]').forEach(function(x){x.classList.remove('active');});b.classList.add('active');cfg.type=b.dataset.sta;reset();});});
+    var sit=document.getElementById('stiters');if(sit)sit.addEventListener('input',function(){cfg.iters=parseInt(this.value);var s=document.getElementById('stval-iters');if(s)s.textContent=this.value;});
+    var str=document.getElementById('sttrail');if(str)str.addEventListener('input',function(){cfg.trail=parseFloat(this.value);var s=document.getElementById('stval-trail');if(s)s.textContent=parseFloat(this.value).toFixed(3);});
+    var sp=document.getElementById('sttpr-int');if(sp)sp.addEventListener('input',function(){cfg.pulse_int=parseFloat(this.value);var s=document.getElementById('stval-pulse-int');if(s)s.textContent=parseFloat(this.value).toFixed(1);});
+    var bt=document.getElementById('stbtn-pulse');if(bt){bt.addEventListener('click',function(){cfg.pulse_enabled=!cfg.pulse_enabled;bt.classList.toggle('on',cfg.pulse_enabled);bt.querySelector('.dot').style.background=cfg.pulse_enabled?'#cc44ff':'#444';});bt._update=function(){bt.classList.toggle('on',cfg.pulse_enabled);bt.querySelector('.dot').style.background=cfg.pulse_enabled?'#cc44ff':'#444';};}
+    var bf=document.getElementById('stbtn-pulse-fire');if(bf)bf.addEventListener('click',reset);
+    var br=document.getElementById('stbtn-reset');if(br)br.addEventListener('click',reset);
+  }
+  return{cfg:cfg,
+    activate:function(){C=document.getElementById('c');if(!C)return;ctx=C.getContext('2d');W=C.width;H=C.height;if(!_oc)initBuf();_active=true;wireS();},
+    deactivate:function(){_active=false;},
+    draw:function(){
+      if(!_active)return;W=C.width;H=C.height;iterate();render();
+      _pulseT+=1/60;if(cfg.pulse_enabled&&_pulseT>=cfg.pulse_int){_pulseT=0;reset();}
+      var pb=document.getElementById('stpulse-bar');if(pb)pb.style.width=Math.min(100,_pulseT/cfg.pulse_int*100)+'%';
+    }
+  };
+})();
+
+/* ═══════════════════════════════════════════
+   ENGINE: L-SYSTEMS
+═══════════════════════════════════════════ */
+window.Engine_LSystem=(function(){
+  var C,ctx,W,H,_active=false;
+  var _str='',_animPos=0,_pulseT=0;
+  var _ax,_ay,_adir,_afi,_astk=[],_atotalF=0,_needBuild=true;
+  var PRESETS={
+    fern:{axiom:'X',rules:{X:'F+[[X]-X]-F[-FX]+X',F:'FF'},angle:25,iter:5,sx:.5,sy:.9},
+    tree:{axiom:'F',rules:{F:'FF+[+F-F-F]-[-F+F+F]'},angle:22.5,iter:4,sx:.5,sy:.92},
+    snowflake:{axiom:'F++F++F',rules:{F:'F-F++F-F'},angle:60,iter:4,sx:.15,sy:.6},
+    dragon:{axiom:'FX',rules:{X:'X+YF+',Y:'-FX-Y'},angle:90,iter:11,sx:.5,sy:.5},
+    sierpinski:{axiom:'F-G-G',rules:{F:'F-G+F+G-F',G:'GG'},angle:120,iter:5,sx:.1,sy:.9},
+    bush:{axiom:'Y',rules:{X:'X[-FFF][+FFF]FX',Y:'YFX[+Y][-Y]'},angle:25.7,iter:5,sx:.5,sy:.92}
+  };
+  var cfg={preset:'fern',iter:5,angle:25,len:5,lw:1.5,bg:'#060810',col_base:'#44ff88',col_tip:'#ffffff',speed:300,pulse_enabled:false,pulse_int:4.};
+  function rewrite(axiom,rules,n){var s=axiom;for(var i=0;i<n;i++){var ns='';for(var j=0;j<s.length;j++)ns+=rules[s[j]]||s[j];s=ns;}return s;}
+  function lerpHex(a,b,t){var f=function(h,o){return parseInt(h.slice(o,o+2),16);};var r=f(a,1)+(f(b,1)-f(a,1))*t,g=f(a,3)+(f(b,3)-f(a,3))*t,bl=f(a,5)+(f(b,5)-f(a,5))*t;return'#'+(Math.round(r).toString(16).padStart(2,'0'))+(Math.round(g).toString(16).padStart(2,'0'))+(Math.round(bl).toString(16).padStart(2,'0'));}
+  function build(){var pr=PRESETS[cfg.preset];_str=rewrite(pr.axiom,pr.rules,cfg.iter);_needBuild=false;startAnim();}
+  function startAnim(){
+    var pr=PRESETS[cfg.preset];ctx.fillStyle=cfg.bg;ctx.fillRect(0,0,W,H);
+    _ax=W*pr.sx;_ay=H*pr.sy;_adir=-Math.PI/2;_afi=0;_astk=[];_animPos=0;
+    _atotalF=0;for(var i=0;i<_str.length;i++){var c=_str[i];if(c==='F'||c==='G')_atotalF++;}
+  }
+  function animStep(){
+    if(_animPos>=_str.length)return;
+    var ang=cfg.angle*(Math.PI/180),n=Math.min(_animPos+cfg.speed,_str.length);
+    ctx.lineWidth=cfg.lw;
+    for(var i=_animPos;i<n;i++){
+      var c=_str[i];
+      if(c==='F'||c==='G'){var nx=_ax+Math.cos(_adir)*cfg.len,ny=_ay+Math.sin(_adir)*cfg.len;var t=_atotalF>0?_afi/_atotalF:0;ctx.strokeStyle=lerpHex(cfg.col_base,cfg.col_tip,t);ctx.beginPath();ctx.moveTo(_ax,_ay);ctx.lineTo(nx,ny);ctx.stroke();_ax=nx;_ay=ny;_afi++;}
+      else if(c==='+')_adir+=ang;else if(c==='-')_adir-=ang;
+      else if(c==='[')_astk.push({x:_ax,y:_ay,d:_adir});
+      else if(c===']'){var s=_astk.pop();if(s){_ax=s.x;_ay=s.y;_adir=s.d;}}
+    }
+    _animPos=n;
+  }
+  function wireLS(){
+    document.querySelectorAll('[data-lsp]').forEach(function(b){b.addEventListener('click',function(){document.querySelectorAll('[data-lsp]').forEach(function(x){x.classList.remove('active');});b.classList.add('active');cfg.preset=b.dataset.lsp;var pr=PRESETS[cfg.preset];cfg.angle=pr.angle;cfg.iter=pr.iter||5;var al=document.getElementById('lsangle');if(al){al.value=cfg.angle;var sv=document.getElementById('lsval-angle');if(sv)sv.textContent=cfg.angle+'°';}var il=document.getElementById('lsiter');if(il){il.value=cfg.iter;var sv=document.getElementById('lsval-iter');if(sv)sv.textContent=cfg.iter;}_needBuild=true;});});
+    function slw(id,key,sp,dec,suffix){var el=document.getElementById(id);if(!el)return;el.addEventListener('input',function(){cfg[key]=parseFloat(this.value);var s=document.getElementById(sp);if(s)s.textContent=parseFloat(this.value).toFixed(dec)+(suffix||'');if(key==='iter'||key==='angle')_needBuild=true;else startAnim();});}
+    slw('lsiter','iter','lsval-iter',0);slw('lsangle','angle','lsval-angle',0,'°');slw('lslen','len','lsval-len',1);slw('lsanim-speed','speed','lsval-speed',0);slw('lslw','lw','lsval-lw',1);slw('lstpulse-int','pulse_int','lsval-pulse-int',1);
+    var bt=document.getElementById('lsbtn-pulse');if(bt){bt.addEventListener('click',function(){cfg.pulse_enabled=!cfg.pulse_enabled;bt.classList.toggle('on',cfg.pulse_enabled);bt.querySelector('.dot').style.background=cfg.pulse_enabled?'#44ff88':'#444';});bt._update=function(){bt.classList.toggle('on',cfg.pulse_enabled);bt.querySelector('.dot').style.background=cfg.pulse_enabled?'#44ff88':'#444';};}
+    var bf=document.getElementById('lsbtn-pulse-fire');if(bf)bf.addEventListener('click',function(){_needBuild=true;});
+  }
+  return{cfg:cfg,
+    activate:function(){C=document.getElementById('c');if(!C)return;ctx=C.getContext('2d');W=C.width;H=C.height;if(!_str)_needBuild=true;_active=true;wireLS();},
+    deactivate:function(){_active=false;},
+    draw:function(){
+      if(!_active)return;W=C.width;H=C.height;
+      if(_needBuild)build();
+      animStep();
+      _pulseT+=1/60;if(cfg.pulse_enabled&&_pulseT>=cfg.pulse_int){_pulseT=0;_needBuild=true;}
+      var pb=document.getElementById('lspulse-bar');if(pb)pb.style.width=Math.min(100,_pulseT/cfg.pulse_int*100)+'%';
+    }
+  };
+})();
+
+/* ═══════════════════════════════════════════
+   ENGINE: VORONOI VIVANT (WebGL)
+═══════════════════════════════════════════ */
+window.Engine_Voronoi=(function(){
+  var C,ctx,W,H,glc,gl,_active=false,_pulseT=0,_autoT=0;
+  var qbuf,prog,_N=40;
+  var _seeds=[],_mh=null;
+  var VS='attribute vec2 a;varying vec2 v;void main(){v=a*.5+.5;gl_Position=vec4(a,0,1);}';
+  var FS='precision mediump float;varying vec2 v;uniform int u_n;uniform vec2 u_seeds[120];uniform vec3 u_cols[120];uniform float u_bw;void main(){float md=1e9,sd=1e9;int near=0;for(int i=0;i<120;i++){if(i<u_n){float dx=v.x-u_seeds[i].x,dy=v.y-u_seeds[i].y;float d=dx*dx+dy*dy;if(d<md){sd=md;md=d;near=i;}else if(d<sd)sd=d;}}float b=u_bw>0.?smoothstep(0.,u_bw*.005,sqrt(sd)-sqrt(md)):1.;gl_FragColor=vec4(u_cols[near]*b,1.);}';
+  var cfg={seeds:40,speed:.5,border_rep:60,repulse:40,color_mode:'hue',bw:1.5,pulse_enabled:false,auto_enabled:false,pulse_int:3.,auto_int:8.};
+  function hsl(h,s,l){s/=100;l/=100;var a=s*Math.min(l,1-l),f=function(n){var k=(n+h/30)%12,c=l-a*Math.max(-1,Math.min(k-3,9-k,1));return c;};return[f(0),f(8),f(4)];}
+  function seedCol(i,spd){var cm=cfg.color_mode;if(cm==='hue')return hsl(i*360/_N,65,50);if(cm==='velocity')return hsl(180+Math.min(spd*60,160),80,50);if(cm==='dark')return hsl(i*360/_N,35,18);return[.5,.5,.5];}
+  function initSeeds(){
+    var vw=glc.width,vh=glc.height;_N=cfg.seeds;_seeds=[];
+    for(var i=0;i<_N;i++){var vx=(Math.random()-.5)*cfg.speed,vy=(Math.random()-.5)*cfg.speed;_seeds.push({x:Math.random()*vw,y:Math.random()*vh,vx:vx,vy:vy});}
+  }
+  function updateSeeds(){
+    var vw=glc.width,vh=glc.height,br=cfg.border_rep,rp=cfg.repulse;
+    for(var i=0;i<_seeds.length;i++){
+      var s=_seeds[i];
+      if(s.x<br)s.vx+=.3*(br-s.x)/Math.max(1,br);if(s.x>vw-br)s.vx-=.3*(s.x-(vw-br))/Math.max(1,br);
+      if(s.y<br)s.vy+=.3*(br-s.y)/Math.max(1,br);if(s.y>vh-br)s.vy-=.3*(s.y-(vh-br))/Math.max(1,br);
+      if(rp>0){for(var j=i+1;j<_seeds.length;j++){var dx=s.x-_seeds[j].x,dy=s.y-_seeds[j].y,d2=dx*dx+dy*dy;if(d2<rp*rp&&d2>.01){var d=Math.sqrt(d2),f=.15*(rp-d)/rp;s.vx+=dx/d*f;s.vy+=dy/d*f;_seeds[j].vx-=dx/d*f;_seeds[j].vy-=dy/d*f;}}}
+      s.vx*=.96;s.vy*=.96;var sp=Math.sqrt(s.vx*s.vx+s.vy*s.vy),mx=cfg.speed*2;if(sp>mx){s.vx=s.vx/sp*mx;s.vy=s.vy/sp*mx;}
+      s.x+=s.vx;s.y+=s.vy;
+    }
+  }
+  function sh(t,s){var x=gl.createShader(t);gl.shaderSource(x,s);gl.compileShader(x);return x;}
+  function initGL(){
+    glc=document.createElement('canvas');
+    gl=glc.getContext('webgl',{preserveDrawingBuffer:true})||glc.getContext('experimental-webgl',{preserveDrawingBuffer:true});
+    if(!gl)return false;
+    prog=gl.createProgram();gl.attachShader(prog,sh(gl.VERTEX_SHADER,VS));gl.attachShader(prog,sh(gl.FRAGMENT_SHADER,FS));gl.linkProgram(prog);
+    qbuf=gl.createBuffer();gl.bindBuffer(gl.ARRAY_BUFFER,qbuf);gl.bufferData(gl.ARRAY_BUFFER,new Float32Array([-1,-1,1,-1,-1,1,1,1]),gl.STATIC_DRAW);
+    return true;
+  }
+  function renderV(){
+    glc.width=W;glc.height=H;gl.viewport(0,0,W,H);gl.useProgram(prog);
+    var a=gl.getAttribLocation(prog,'a');gl.bindBuffer(gl.ARRAY_BUFFER,qbuf);gl.enableVertexAttribArray(a);gl.vertexAttribPointer(a,2,gl.FLOAT,false,0,0);
+    var n=Math.min(_seeds.length,120);
+    gl.uniform1i(gl.getUniformLocation(prog,'u_n'),n);
+    gl.uniform1f(gl.getUniformLocation(prog,'u_bw'),cfg.bw);
+    var sp=new Float32Array(n*2),co=new Float32Array(n*3);
+    for(var i=0;i<n;i++){sp[i*2]=_seeds[i].x/W;sp[i*2+1]=_seeds[i].y/H;var spd=Math.sqrt(_seeds[i].vx*_seeds[i].vx+_seeds[i].vy*_seeds[i].vy);var c=seedCol(i,spd);co[i*3]=c[0];co[i*3+1]=c[1];co[i*3+2]=c[2];}
+    gl.uniform2fv(gl.getUniformLocation(prog,'u_seeds'),sp);
+    gl.uniform3fv(gl.getUniformLocation(prog,'u_cols'),co);
+    gl.drawArrays(gl.TRIANGLE_STRIP,0,4);
+    ctx.drawImage(glc,0,0,W,H);
+  }
+  function divide(){for(var i=0;i<3&&_seeds.length<120;i++){var p=_seeds[Math.floor(Math.random()*_seeds.length)];_seeds.push({x:p.x+(Math.random()-.5)*20,y:p.y+(Math.random()-.5)*20,vx:(Math.random()-.5),vy:(Math.random()-.5)});}_N=_seeds.length;}
+  function wireV(){
+    function slw(id,key,sp,dec){var el=document.getElementById(id);if(!el)return;el.addEventListener('input',function(){cfg[key]=parseFloat(this.value);var s=document.getElementById(sp);if(s)s.textContent=parseFloat(this.value).toFixed(dec);});}
+    slw('voseeds','seeds','voval-seeds',0);slw('vospeed','speed','voval-speed',2);slw('voborder-rep','border_rep','voval-border',0);slw('vorepulse','repulse','voval-repulse',0);slw('vobw','bw','voval-bw',1);slw('votpulse-int','pulse_int','voval-pulse-int',1);slw('votauto-int','auto_int','voval-auto-int',1);
+    document.querySelectorAll('[data-voc]').forEach(function(b){b.addEventListener('click',function(){document.querySelectorAll('[data-voc]').forEach(function(x){x.classList.remove('active');});b.classList.add('active');cfg.color_mode=b.dataset.voc;});});
+    function setupBT(btnId,fireId,key,fn){var bt=document.getElementById(btnId);if(bt){bt.addEventListener('click',function(){cfg[key]=!cfg[key];bt.classList.toggle('on',cfg[key]);bt.querySelector('.dot').style.background=cfg[key]?'#ffcc00':'#444';});bt._update=function(){bt.classList.toggle('on',cfg[key]);bt.querySelector('.dot').style.background=cfg[key]?'#ffcc00':'#444';};}var bf=document.getElementById(fireId);if(bf)bf.addEventListener('click',fn);}
+    setupBT('vobtn-pulse','vobtn-pulse-fire','pulse_enabled',divide);
+    setupBT('vobtn-auto','vobtn-auto-fire','auto_enabled',function(){initSeeds();});
+    var br=document.getElementById('vobtn-reset');if(br)br.addEventListener('click',function(){initSeeds();});
+  }
+  return{cfg:cfg,
+    activate:function(){
+      C=document.getElementById('c');if(!C)return;ctx=C.getContext('2d');W=C.width;H=C.height;
+      if(!gl&&!initGL())return;
+      glc.width=W;glc.height=H;if(!_seeds.length)initSeeds();
+      _active=true;wireV();
+    },
+    deactivate:function(){_active=false;},
+    draw:function(){
+      if(!gl||!_active)return;W=C.width;H=C.height;
+      updateSeeds();renderV();
+      _pulseT+=1/60;_autoT+=1/60;
+      if(cfg.pulse_enabled&&_pulseT>=cfg.pulse_int){_pulseT=0;divide();}
+      if(cfg.auto_enabled&&_autoT>=cfg.auto_int){_autoT=0;initSeeds();}
+      var pb=document.getElementById('vopulse-bar');if(pb)pb.style.width=Math.min(100,_pulseT/cfg.pulse_int*100)+'%';
+      var ab=document.getElementById('voauto-bar');if(ab)ab.style.width=Math.min(100,_autoT/cfg.auto_int*100)+'%';
+    }
+  };
+})();
+
+/* ═══════════════════════════════════════════
    ENGINE MANAGER
 ═══════════════════════════════════════════ */
 var EngineManager=(function(){
   var ENGINES={
     fluid:window.FluidSim,vortex:window.VortexEngine,nbody:window.NBodyEngine,
     sph:window.Engine_SPH,boids:window.Engine_Boids,physarum:window.Engine_Physarum,
-    lorenz:window.Engine_Lorenz,react:window.Engine_React,aco:window.Engine_ACO
+    lorenz:window.Engine_Lorenz,react:window.Engine_React,aco:window.Engine_ACO,
+    rdiff:window.Engine_RDiff,strange:window.Engine_Strange,lsys:window.Engine_LSystem,voronoi:window.Engine_Voronoi
   };
-  var ACCENT={fluid:'#00ffff',vortex:'#ff6600',nbody:'#aa44ff',sph:'#00ff88',boids:'#ffdd00',physarum:'#ff44aa',lorenz:'#44aaff',react:'#ff2266',aco:'#ff8800'};
-  var NAMES={fluid:'FLUID SIM',vortex:'VORTEX',nbody:'N-BODY',sph:'SPH FLUID',boids:'BOIDS',physarum:'PHYSARUM',lorenz:'LORENZ',react:'REACT',aco:'ACO FOURMIS'};
+  var ACCENT={fluid:'#00ffff',vortex:'#ff6600',nbody:'#aa44ff',sph:'#00ff88',boids:'#ffdd00',physarum:'#ff44aa',lorenz:'#44aaff',react:'#ff2266',aco:'#ff8800',rdiff:'#ff5500',strange:'#cc44ff',lsys:'#44ff88',voronoi:'#ffcc00'};
+  var NAMES={fluid:'FLUID SIM',vortex:'VORTEX',nbody:'N-BODY',sph:'SPH FLUID',boids:'BOIDS',physarum:'PHYSARUM',lorenz:'LORENZ',react:'REACT',aco:'ACO FOURMIS',rdiff:'REACTION-DIFFUSION',strange:'STRANGE ATTRACTORS',lsys:'L-SYSTEMS',voronoi:'VORONOI VIVANT'};
   window.activeEngine='fluid';
   window.overlayEngine=null;window.overlayAlpha=0.3;
 
@@ -2603,7 +3055,7 @@ document.querySelectorAll('.tab-btn').forEach(function(btn){
     document.querySelectorAll('.tab-pane').forEach(function(p){p.classList.remove('active');});
     this.classList.add('active');
     var el=document.getElementById('tab-'+_activeTab);if(el)el.classList.add('active');
-    ['vortex','nbody','sph','boids','physarum','lorenz','react','aco'].forEach(function(eng){
+    ['vortex','nbody','sph','boids','physarum','lorenz','react','aco','rdiff','strange','lsys','voronoi'].forEach(function(eng){
       var vel=document.getElementById('tab-'+eng+'-'+_activeTab);if(vel)vel.classList.add('active');
     });
   });
