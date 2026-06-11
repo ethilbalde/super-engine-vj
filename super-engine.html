@@ -2618,9 +2618,9 @@ window.Engine_RDiff=(function(){
   }
   function resetSim(seedOnly){
     var d=new Uint8Array(SIM*SIM*4);
-    for(var i=0;i<SIM*SIM;i++){d[i*4]=255;d[i*4+3]=255;}
-    var cnt=seedOnly?8:100,r=seedOnly?22:3;
-    for(var s=0;s<cnt;s++){var sx=r+Math.floor(Math.random()*(SIM-2*r)),sy=r+Math.floor(Math.random()*(SIM-2*r));for(var dy=-r;dy<=r;dy++)for(var dx=-r;dx<=r;dx++){if(dx*dx+dy*dy>r*r)continue;d[((sy+dy)*SIM+(sx+dx))*4+1]=255;}}
+    for(var i=0;i<SIM*SIM;i++){d[i*4]=255;d[i*4+3]=255;} // A=1, B=0
+    var cnt=seedOnly?12:120,r=seedOnly?25:4;
+    for(var s=0;s<cnt;s++){var sx=r+Math.floor(Math.random()*(SIM-2*r)),sy=r+Math.floor(Math.random()*(SIM-2*r));for(var dy=-r;dy<=r;dy++)for(var dx=-r;dx<=r;dx++){if(dx*dx+dy*dy>r*r)continue;var idx=((sy+dy)*SIM+(sx+dx))*4;d[idx]=128;d[idx+1]=64;d[idx+3]=255;}} // A=0.5,B=0.25
     if(tex[0]){gl.deleteTexture(tex[0]);gl.deleteFramebuffer(fb[0]);gl.deleteTexture(tex[1]);gl.deleteFramebuffer(fb[1]);}
     tex[0]=mkT(d);tex[1]=mkT(d);fb[0]=mkF(tex[0]);fb[1]=mkF(tex[1]);cur=0;
     gl.bindFramebuffer(gl.FRAMEBUFFER,null);
@@ -2645,16 +2645,16 @@ window.Engine_RDiff=(function(){
   }
   function doBrush(){
     if(!_md)return;
-    var sx=Math.round(_mx/W*SIM),sy=Math.round(_my/H*SIM);
+    var sx=Math.round(_mx/W*SIM),sy=SIM-1-Math.round(_my/H*SIM);
     var r=Math.max(3,Math.round(cfg.brush*SIM/W)),d2=r*2+1;
     sx=Math.max(r,Math.min(SIM-1-r,sx));sy=Math.max(r,Math.min(SIM-1-r,sy));
     var px=new Uint8Array(d2*d2*4);
     gl.bindFramebuffer(gl.FRAMEBUFFER,fb[cur]);gl.readPixels(sx-r,sy-r,d2,d2,gl.RGBA,gl.UNSIGNED_BYTE,px);
-    for(var dy=0;dy<d2;dy++)for(var dx=0;dx<d2;dx++){var cx=dx-r,cy=dy-r;if(cx*cx+cy*cy>r*r)continue;var i=(dy*d2+dx)*4;if(cfg.brush_mode==='inject'){px[i]=80;px[i+1]=200;}else{px[i]=255;px[i+1]=0;}px[i+2]=0;px[i+3]=255;}
+    for(var dy=0;dy<d2;dy++)for(var dx=0;dx<d2;dx++){var cx=dx-r,cy=dy-r;if(cx*cx+cy*cy>r*r)continue;var i=(dy*d2+dx)*4;if(cfg.brush_mode==='inject'){px[i]=128;px[i+1]=64;}else{px[i]=255;px[i+1]=0;}px[i+2]=0;px[i+3]=255;}
     gl.bindTexture(gl.TEXTURE_2D,tex[cur]);gl.texSubImage2D(gl.TEXTURE_2D,0,sx-r,sy-r,d2,d2,gl.RGBA,gl.UNSIGNED_BYTE,px);
   }
   function pulse(){
-    for(var s=0;s<5;s++){var r=15,d2=r*2+1,sx=r+Math.floor(Math.random()*(SIM-2*r)),sy=r+Math.floor(Math.random()*(SIM-2*r));var d=new Uint8Array(d2*d2*4);for(var i=0;i<d2*d2;i++){var dx=i%d2-r,dy=Math.floor(i/d2)-r;if(dx*dx+dy*dy<=r*r){d[i*4]=80;d[i*4+1]=200;d[i*4+3]=255;}else{d[i*4]=255;d[i*4+3]=255;}}gl.bindTexture(gl.TEXTURE_2D,tex[cur]);gl.texSubImage2D(gl.TEXTURE_2D,0,sx-r,sy-r,d2,d2,gl.RGBA,gl.UNSIGNED_BYTE,d);}
+    for(var s=0;s<5;s++){var r=15,d2=r*2+1,sx=r+Math.floor(Math.random()*(SIM-2*r)),sy=r+Math.floor(Math.random()*(SIM-2*r));var d=new Uint8Array(d2*d2*4);for(var i=0;i<d2*d2;i++){var dx=i%d2-r,dy=Math.floor(i/d2)-r;if(dx*dx+dy*dy<=r*r){d[i*4]=128;d[i*4+1]=64;d[i*4+3]=255;}else{d[i*4]=255;d[i*4+3]=255;}}gl.bindTexture(gl.TEXTURE_2D,tex[cur]);gl.texSubImage2D(gl.TEXTURE_2D,0,sx-r,sy-r,d2,d2,gl.RGBA,gl.UNSIGNED_BYTE,d);}
   }
   // UI wiring
   function wireRD(){
