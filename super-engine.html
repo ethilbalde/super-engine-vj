@@ -1169,6 +1169,38 @@ input[type=color]::-webkit-color-swatch{border:none;border-radius:3px}
       </div>
     </div>
     <div class="sep"></div>
+    <div class="sec">
+      <div class="sec-title">Sortie vidéo — OBS</div>
+      <div style="font-size:9px;color:#667;line-height:1.7;margin-bottom:8px">
+        Super Engine VJ tourne dans le navigateur. Pour envoyer l'image vers un logiciel vidéo ou un réseau, utilisez OBS Studio comme pont.
+      </div>
+
+      <div style="color:var(--accent);font-size:9px;font-weight:700;letter-spacing:1px;margin-bottom:5px">① CAMÉRA VIRTUELLE OBS</div>
+      <div style="font-size:9px;color:#888;line-height:1.8;margin-bottom:10px">
+        <span style="color:#aaa">Principe :</span> OBS capture la fenêtre du navigateur et expose une caméra virtuelle utilisable dans n'importe quel logiciel (MadMapper, Resolume, Zoom, vMix…).<br><br>
+        <span style="color:var(--accent)">1.</span> Installer <span style="color:#ccc">OBS Studio</span> — obsproject.com<br>
+        <span style="color:var(--accent)">2.</span> Passer Super Engine en <span style="color:#ccc">plein écran (F)</span> et masquer le panneau (H)<br>
+        <span style="color:var(--accent)">3.</span> Dans OBS → Sources → <span style="color:#ccc">Capture de fenêtre</span> → sélectionner le navigateur<br>
+        <span style="color:var(--accent)">4.</span> Régler la résolution de la scène OBS pour qu'elle corresponde au canvas<br>
+        <span style="color:var(--accent)">5.</span> <span style="color:#ccc">Démarrer la caméra virtuelle</span> (menu Outils → Démarrer la caméra virtuelle)<br>
+        <span style="color:#556">La caméra virtuelle est incluse dans OBS depuis v26 — aucun plugin requis.</span>
+      </div>
+
+      <div style="color:#ffaa00;font-size:9px;font-weight:700;letter-spacing:1px;margin-bottom:5px">② NDI — RÉSEAU LOCAL (obs-ndi)</div>
+      <div style="font-size:9px;color:#888;line-height:1.8;margin-bottom:4px">
+        <span style="color:#aaa">Principe :</span> NDI envoie le flux vidéo sur le réseau local sans câble. Tout logiciel compatible NDI (Resolume, Arena, vMix, TouchDesigner…) peut recevoir le flux.<br><br>
+        <span style="color:#ffaa00">1.</span> Installer <span style="color:#ccc">NDI Tools</span> — ndi.video/tools (inclut le runtime NDI)<br>
+        <span style="color:#ffaa00">2.</span> Installer le plugin <span style="color:#ccc">obs-ndi</span> — github.com/obs-ndi/obs-ndi<br>
+        <span style="color:#ffaa00">3.</span> Redémarrer OBS — un menu <span style="color:#ccc">Outils → NDI Output Settings</span> apparaît<br>
+        <span style="color:#ffaa00">4.</span> Activer <span style="color:#ccc">Main Output</span> et nommer la source (ex : <em>SuperEngineVJ</em>)<br>
+        <span style="color:#ffaa00">5.</span> Dans le logiciel destinataire → ajouter une source NDI → sélectionner <em>SuperEngineVJ</em><br><br>
+        <span style="color:#556">Tous les appareils doivent être sur le même réseau local. Le flux est en temps réel, faible latence.</span>
+      </div>
+      <div style="font-size:8px;color:#334;margin-top:6px;border-top:1px solid #111;padding-top:6px">
+        OBS → obsproject.com &nbsp;·&nbsp; obs-ndi → github.com/obs-ndi/obs-ndi &nbsp;·&nbsp; NDI Tools → ndi.video
+      </div>
+    </div>
+    <div class="sep"></div>
     <div class="sec" style="text-align:center">
       <div style="color:var(--accent);font-size:11px;font-weight:700;letter-spacing:2px;margin-bottom:6px">SUPER ENGINE VJ</div>
       <div style="color:#555;font-size:9px;line-height:2">
