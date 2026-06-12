@@ -527,6 +527,24 @@ input[type=color]::-webkit-color-swatch{border:none;border-radius:3px}
         <button class="preset-btn" id="btn-add-note">+</button>
       </div>
     </div>
+    <div class="sep"></div>
+    <div class="sec">
+      <div class="sec-title">Contrôleur non détecté ?</div>
+      <div style="font-size:9px;color:#667;line-height:1.8;margin-bottom:8px">
+        Chrome utilise le MIDI système Windows (WinMM). Certains contrôleurs (Novation, Akai…) installent un driver propriétaire invisible à Chrome. Solution : passer par <strong style="color:#aaa">loopMIDI + MIDI-OX</strong>.
+      </div>
+      <div style="color:var(--accent);font-size:9px;font-weight:700;letter-spacing:1px;margin-bottom:6px">MARCHE À SUIVRE</div>
+      <div style="font-size:9px;color:#888;line-height:2">
+        <span style="color:var(--accent)">1.</span> Installer <a href="http://www.midiox.com/" target="_blank" style="color:#ccc;text-decoration:none">MIDI-OX</a> — midiox.com<br>
+        <span style="color:var(--accent)">2.</span> Ouvrir MIDI-OX → menu <span style="color:#ccc">Options → MIDI Devices</span><br>
+        <span style="color:var(--accent)">3.</span> Colonne gauche <span style="color:#ccc">MIDI Inputs</span> → sélectionner ton contrôleur<br>
+        <span style="color:var(--accent)">4.</span> Colonne droite <span style="color:#ccc">MIDI Outputs</span> → sélectionner <span style="color:#ccc">loopMIDI</span><br>
+        <span style="color:var(--accent)">5.</span> Menu <span style="color:#ccc">Actions → Port Routings → New Simple Port Route</span><br>
+        &nbsp;&nbsp;&nbsp;&nbsp;Input : contrôleur · Output : loopMIDI → <span style="color:#ccc">Route</span><br>
+        <span style="color:var(--accent)">6.</span> Ici : sélectionner <span style="color:#ccc">loopMIDI</span> dans le sélecteur APPAREIL<br>
+        <span style="color:#445;font-size:8px;margin-top:2px;display:block">MIDI-OX doit rester ouvert en arrière-plan pendant la session.</span>
+      </div>
+    </div>
   </div><!-- /tab-io -->
 
   <div class="tab-pane" id="tab-save">
