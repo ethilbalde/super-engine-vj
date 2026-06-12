@@ -1,6 +1,10 @@
 # Changelog — Super Engine VJ
 
-Format : `vMAJOR.DAILY.MICRO` — micro changes during session, daily release compiled at end of day.
+Format de versioning :
+- `v4.0.0.001` micro — changement atomique pendant la session (code + CHANGELOG, pas de release GitHub)
+- `v4.0.01` daily — fin de session, release GitHub compilée (Added/Fixed/Changed)
+- `v4.1`, `v4.2` — jalon fonctionnel (nouveau moteur, refonte UI…)
+- `v5.0` — version majeure (réécriture, changement d'architecture)
 
 ---
 

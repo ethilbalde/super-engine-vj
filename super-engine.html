@@ -4143,7 +4143,7 @@ wire('loop-len','loop_length','val-loop-len',0);
    INIT
 ═══════════════════════════════════════════ */
 window.requestAnimationFrame=window.requestAnimationFrame||window.webkitRequestAnimationFrame||window.mozRequestAnimationFrame;
-var VERSION='v4.0.01';
+var VERSION='v4.0.0.001';
 /* EngineManager.init() appelle FluidSim.init() qui initialise canvas+ctx AVANT autoResize */
 EngineManager.init();
 /* ── VERSION DISPLAY ── */
@@ -4166,7 +4166,12 @@ EngineManager.init();
     var m=html.match(/var VERSION='(v[\d.]+)'/);
     return m?m[1]:null;
   }
-  function verNum(v){return parseFloat((v||'0').replace('v',''));}
+  function verNum(v){
+    var parts=(v||'0').replace('v','').split('.');
+    var mult=1000000;var n=0;
+    for(var i=0;i<parts.length;i++){n+=parseInt(parts[i]||0)*mult;mult=Math.max(1,Math.floor(mult/1000));}
+    return n;
+  }
 
   if(checkBtn)checkBtn.addEventListener('click',function(){
     checkBtn.textContent='⟳ Vérification…';checkBtn.disabled=true;
@@ -4213,7 +4218,12 @@ EngineManager.init();
 /* ── AUTO-CHECK ON STARTUP ── */
 (function(){
   var RAW_URL='https://raw.githubusercontent.com/ethilbalde/super-engine-vj/main/super-engine.html';
-  function verNum(v){return parseFloat((v||'0').replace('v',''));}
+  function verNum(v){
+    var parts=(v||'0').replace('v','').split('.');
+    var mult=1000000;var n=0;
+    for(var i=0;i<parts.length;i++){n+=parseInt(parts[i]||0)*mult;mult=Math.max(1,Math.floor(mult/1000));}
+    return n;
+  }
   setTimeout(function(){
     fetch(RAW_URL+'?t='+Date.now())
       .then(function(r){return r.ok?r.text():null;})
