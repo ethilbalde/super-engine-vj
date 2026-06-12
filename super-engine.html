@@ -218,7 +218,7 @@ input[type=color]::-webkit-color-swatch{border:none;border-radius:3px}
     <button class="tab-btn" data-tab="output">OUT</button>
     <button class="tab-btn" data-tab="info">INFO</button>
     <button class="tab-btn" data-tab="bug" style="color:#ff4466">BUG</button>
-    <button class="tab-btn" data-tab="maj">MAJ</button>
+    <button class="tab-btn" data-tab="maj" id="tab-maj-btn">MAJ<span id="maj-badge" style="display:none;margin-left:3px;background:#ff4466;color:#fff;border-radius:50%;width:8px;height:8px;font-size:0;vertical-align:middle;display:inline-block;"></span></button>
   </div>
 
   <div id="panel-body">
@@ -4143,7 +4143,7 @@ wire('loop-len','loop_length','val-loop-len',0);
    INIT
 ═══════════════════════════════════════════ */
 window.requestAnimationFrame=window.requestAnimationFrame||window.webkitRequestAnimationFrame||window.mozRequestAnimationFrame;
-var VERSION='v3.01';
+var VERSION='v4.0.01';
 /* EngineManager.init() appelle FluidSim.init() qui initialise canvas+ctx AVANT autoResize */
 EngineManager.init();
 /* ── VERSION DISPLAY ── */
@@ -4208,6 +4208,27 @@ EngineManager.init();
     a.click();
     URL.revokeObjectURL(a.href);
   });
+})();
+
+/* ── AUTO-CHECK ON STARTUP ── */
+(function(){
+  var RAW_URL='https://raw.githubusercontent.com/ethilbalde/super-engine-vj/main/super-engine.html';
+  function verNum(v){return parseFloat((v||'0').replace('v',''));}
+  setTimeout(function(){
+    fetch(RAW_URL+'?t='+Date.now())
+      .then(function(r){return r.ok?r.text():null;})
+      .then(function(html){
+        if(!html)return;
+        var m=html.match(/var VERSION='(v[\d.]+)'/);
+        if(!m)return;
+        if(verNum(m[1])>verNum(VERSION)){
+          var badge=document.getElementById('maj-badge');
+          if(badge){badge.style.display='inline-block';}
+          var btn=document.getElementById('tab-maj-btn');
+          if(btn)btn.style.color='#ff4466';
+        }
+      }).catch(function(){});
+  },3000);
 })();
 
 /* ── EDITABLE VAL SPANS ── */
