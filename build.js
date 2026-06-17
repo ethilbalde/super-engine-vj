@@ -26,7 +26,6 @@ const ENGINE_FILES = [
   'engines/react.js',
   'engines/aco.js',
   'engines/rdiff.js',
-  'engines/lsys.js',
   'engines/voronoi.js',
   'engines/follow.js',
   'engines/ribbon.js',
