@@ -1970,6 +1970,17 @@
   <div class="engine-panes" data-engine="sphere">
   <div class="tab-pane active" id="tab-sphere-live">
     <div class="sec">
+      <div class="sec-title">Formes géométriques</div>
+      <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:3px;margin-bottom:10px">
+        <button class="btn" id="sphereshape-0">SPHERE</button>
+        <button class="btn" id="sphereshape-1">CUBE</button>
+        <button class="btn" id="sphereshape-2">TORUS</button>
+        <button class="btn" id="sphereshape-3">WAVE</button>
+        <button class="btn" id="sphereshape-4">SPIRAL</button>
+      </div>
+    </div>
+    <div class="sep"></div>
+    <div class="sec">
       <div class="quick-row">
         <button class="big-toggle" id="spherebtn-pulse" style="flex:1"><span class="dot"></span>DISPERSER</button>
         <button class="quick-fire" id="spherebtn-pulse-fire">▶</button>
@@ -1981,6 +1992,8 @@
       <div class="sec-title">Interaction souris</div>
       <div class="ctrl"><label>Rayon répulsion <span class="val" id="sphereval-repel">100</span></label><input type="range" id="sphererepel-radius" min="30" max="250" step="5" value="100"></div>
       <div class="ctrl"><label>Force répulsion <span class="val" id="sphereval-repel-str">28</span></label><input type="range" id="sphererepel-strength" min="5" max="80" step="1" value="28"></div>
+      <div class="ctrl"><label>Rayon pinceau <span class="val" id="sphereval-pen">80</span></label><input type="range" id="spherepen-size" min="10" max="300" value="80"></div>
+      <div class="ctrl"><label>Force pinceau <span class="val" id="sphereval-force">1.0</span></label><input type="range" id="spherepush-force" min="0.1" max="5" step="0.1" value="1.0"></div>
     </div>
   </div>
   <div class="tab-pane" id="tab-sphere-sim">
