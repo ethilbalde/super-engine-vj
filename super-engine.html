@@ -5370,22 +5370,22 @@ var Engine_Sphere=(function(){
         var side=Math.floor(idx/(cfg.particle_count/6));
         var local=idx%(cfg.particle_count/6);
         var x=Math.sin(local*Math.PI*2)*(0.5+0.5*Math.cos(angle*0.5));
-        var y=Math.cos(local*Math.PI*2)*(0.5+0.5*sin(angle*0.5));
+        var y=Math.cos(local*Math.PI*2)*(0.5+0.5*Math.cos(angle*0.5));
         p.targetx=x*cfg.radius;
         p.targety=y*cfg.radius;
       } else if(shape==='TORUS'){
         var theta=t+angle;
         var phi=u*Math.PI*2;
-        p.targetx=(cfg.radius*0.6+cfg.radius*0.3*cos(phi))*sin(theta);
-        p.targety=(cfg.radius*0.6+cfg.radius*0.3*cos(phi))*cos(theta);
+        p.targetx=(cfg.radius*0.6+cfg.radius*0.3*Math.cos(phi))*Math.sin(theta);
+        p.targety=(cfg.radius*0.6+cfg.radius*0.3*Math.cos(phi))*Math.cos(theta);
       } else if(shape==='WAVE'){
-        p.targetx=sin(t+angle)*sin(u*Math.PI*4)*cfg.radius;
-        p.targety=cos(u*Math.PI*2+angle*0.3)*cfg.radius;
+        p.targetx=Math.sin(t+angle)*Math.sin(u*Math.PI*4)*cfg.radius;
+        p.targety=Math.cos(u*Math.PI*2+angle*0.3)*cfg.radius;
       } else if(shape==='SPIRAL'){
         var r=cfg.radius*(0.3+0.7*u);
         var theta=u*Math.PI*12+angle;
-        p.targetx=sin(theta)*r;
-        p.targety=cos(theta)*r;
+        p.targetx=Math.sin(theta)*r;
+        p.targety=Math.cos(theta)*r;
       } else {
         // SPHERE par défaut
         var sinIdxSq=Math.sin(idx*idx);
