@@ -2017,50 +2017,6 @@ input[type=color]::-webkit-color-swatch{border:none;border-radius:3px}
   <div class="tab-pane" id="tab-growth-save"><div class="sec"><div style="color:var(--text-faint);font-size:9px">Config Growth dans les scènes globales.</div></div></div>
   </div><!-- /growth -->
 
-  <!-- ══ GRIDWAVE ENGINE PANES ══ -->
-  <div class="engine-panes" data-engine="gridwave">
-  <div class="tab-pane active" id="tab-gridwave-live">
-    <div class="sec">
-      <div class="quick-row">
-        <button class="big-toggle" id="gdwbtn-pulse" style="flex:1"><span class="dot"></span>NOUVELLE PHASE</button>
-        <button class="quick-fire" id="gdwbtn-pulse-fire">▶</button>
-      </div>
-      <div class="prog-bar"><div class="prog-fill" id="gdwpulse-bar"></div></div>
-    </div>
-    <div class="sep"></div>
-    <div class="sec">
-      <div class="sec-title">Contrôle curseur</div>
-      <div class="ctrl"><label>Rayon <span class="val" id="gdwval-pen">120</span></label><input type="range" id="gdwpen-size" min="10" max="400" value="120"></div>
-      <div class="ctrl"><label>Force <span class="val" id="gdwval-force">1.0</span></label><input type="range" id="gdwpush-force" min="0.1" max="5" step="0.1" value="1.0"></div>
-      <div class="ctrl"><label>Curseur X <span class="val" id="gdwval-cx">0.50</span></label><input type="range" id="gdwcursor-x" min="0" max="1" step="0.005" value="0.50"></div>
-      <div class="ctrl"><label>Curseur Y <span class="val" id="gdwval-cy">0.50</span></label><input type="range" id="gdwcursor-y" min="0" max="1" step="0.005" value="0.50"></div>
-      <div class="quick-row" style="margin-top:4px"><button class="big-toggle" id="gdwbtn-click" style="flex:1"><span class="dot"></span>CLICK</button><button class="quick-fire" id="gdwbtn-click-fire">▶</button></div>
-    </div>
-  </div>
-  <div class="tab-pane" id="tab-gridwave-sim">
-    <div class="ctrl"><label>Espacement grille <span class="val" id="gdwval-spacing">14</span>px</label><input type="range" id="gdwspacing" min="4" max="40" step="1" value="14"></div>
-    <div class="ctrl"><label>Échelle du bruit <span class="val" id="gdwval-nscale">0.02</span></label><input type="range" id="gdwnscale" min="0.005" max="0.08" step="0.001" value="0.02"></div>
-    <div class="ctrl"><label>Vitesse animation <span class="val" id="gdwval-nspeed">1.0</span></label><input type="range" id="gdwnspeed" min="0.1" max="5" step="0.1" value="1.0"></div>
-    <div class="ctrl"><label>Amplitude déplacement <span class="val" id="gdwval-amp">10</span></label><input type="range" id="gdwamp" min="0" max="40" step="1" value="10"></div>
-    <div class="ctrl"><label>Taille point <span class="val" id="gdwval-psize">2.0</span></label><input type="range" id="gdwpsize" min="0.5" max="8" step="0.5" value="2.0"></div>
-    <div class="sep"></div>
-    <button class="btn-wide" id="gdwbtn-reset">↺ Réinitialiser</button>
-  </div>
-  <div class="tab-pane" id="tab-gridwave-color">
-    <div class="ctrl"><label style="margin-bottom:5px">Fond</label><input type="color" id="gdwbg-color" value="#040608"></div>
-    <div class="ctrl"><label style="margin-bottom:5px">Couleur basse</label><input type="color" id="gdwcolor-low" value="#0a3d62"></div>
-    <div class="ctrl"><label style="margin-bottom:5px">Couleur haute</label><input type="color" id="gdwcolor-high" value="#7ee8fa"></div>
-    <div class="sep"></div>
-    <div class="ctrl"><label>Fade (traînées) <span class="val" id="gdwval-fade">0.10</span></label><input type="range" id="gdwfade" min="0.02" max="0.8" step="0.01" value="0.10"></div>
-  </div>
-  <div class="tab-pane" id="tab-gridwave-tempo">
-    <div class="ctrl"><label>Intervalle nouvelle phase <span class="val" id="gdwval-pulse-int">6.0</span>s</label><input type="range" id="gdwtpulse-int" min="0.5" max="30" step="0.5" value="6.0"></div>
-    <div class="ctrl"><label>BPM sync — div <span class="val" id="gdwval-beat-div">1</span></label><input type="range" id="gdwbeat-div" min="1" max="8" step="1" value="1"></div>
-  </div>
-  <div class="tab-pane" id="tab-gridwave-io"><div class="sec"><div class="sec-title">MIDI CC Gridwave</div><div id="gdwmidi-cc-list"></div></div></div>
-  <div class="tab-pane" id="tab-gridwave-save"><div class="sec"><div style="color:var(--text-faint);font-size:9px">Config Gridwave dans les scènes globales.</div></div></div>
-  </div><!-- /gridwave -->
-
   <!-- ══ BLOOM ENGINE PANES ══ -->
   <div class="engine-panes" data-engine="bloom">
   <div class="tab-pane active" id="tab-bloom-live">
