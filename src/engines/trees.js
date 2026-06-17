@@ -22,7 +22,7 @@ var Engine_Trees=(function(){
   Vec2.prototype.copy=function(){return new Vec2(this.x,this.y);};
   Vec2.prototype.add=function(v){this.x+=v.x;this.y+=v.y;return this;};
 
-  function Branch(start,stw,angle,gen,treeIndex){
+  function Branch(start,stw,angle,gen,treeIndex,proba){
     this.position=start.copy();
     this.stw=stw;
     this.gen=gen;
@@ -32,10 +32,10 @@ var Engine_Trees=(function(){
     this.speed=new Vec2(0,-3);
     this.treeIndex=treeIndex;
     this.maxlife=cfg.max_life*(0.3+Math.random()*0.5);
-    this.proba1=trees[treeIndex].proba1;
-    this.proba2=trees[treeIndex].proba2;
-    this.proba3=trees[treeIndex].proba3;
-    this.proba4=trees[treeIndex].proba4;
+    this.proba1=proba.p1;
+    this.proba2=proba.p2;
+    this.proba3=proba.p3;
+    this.proba4=proba.p4;
     this.deviation=0.2+Math.random()*0.5;
   }
 
@@ -44,18 +44,19 @@ var Engine_Trees=(function(){
       this.alive=false;
       if(this.stw>0.2){
         var brs=trees[this.treeIndex].branches;
+        var proba={p1:this.proba1,p2:this.proba2,p3:this.proba3,p4:this.proba4};
         if(Math.random()<this.proba1/this.gen)
           brs.push(new Branch(this.position.copy(),this.stw*(0.2+Math.random()*0.8),
-            this.angle+(0.7+Math.random()*0.4)*this.deviation,this.gen+0.1,this.treeIndex));
+            this.angle+(0.7+Math.random()*0.4)*this.deviation,this.gen+0.1,this.treeIndex,proba));
         if(Math.random()<this.proba2/this.gen)
           brs.push(new Branch(this.position.copy(),this.stw*(0.2+Math.random()*0.8),
-            this.angle-(0.7+Math.random()*0.4)*this.deviation,this.gen+0.1,this.treeIndex));
+            this.angle-(0.7+Math.random()*0.4)*this.deviation,this.gen+0.1,this.treeIndex,proba));
         if(Math.random()<this.proba3/this.gen)
           brs.push(new Branch(this.position.copy(),this.stw*(0.5+Math.random()*0.3),
-            this.angle+(0.2+Math.random()*0.8)*this.deviation,this.gen+0.1,this.treeIndex));
+            this.angle+(0.2+Math.random()*0.8)*this.deviation,this.gen+0.1,this.treeIndex,proba));
         if(Math.random()<this.proba4/this.gen)
           brs.push(new Branch(this.position.copy(),this.stw*(0.5+Math.random()*0.3),
-            this.angle-(0.2+Math.random()*0.8)*this.deviation,this.gen+0.1,this.treeIndex));
+            this.angle-(0.2+Math.random()*0.8)*this.deviation,this.gen+0.1,this.treeIndex,proba));
       }
     } else {
       this.speed.x+=(-0.5+Math.random());
@@ -132,9 +133,11 @@ var Engine_Trees=(function(){
     var x=0.1*W+i*Math.floor(0.9*W/nh);
     var y=Math.floor(0.2*H+j*Math.floor(0.8*H/nv));
     var start=new Vec2(x,y);
-    var tree=new Tree(start,start.y/(H-130),i+j*nh);
-    tree.branches[0]=new Branch(start,15*Math.sqrt(start.y/H),0,1,i+j*nh);
-    trees[i+j*nh]=tree;
+    var idx=i+j*nh;
+    var tree=new Tree(start,start.y/(H-130),idx);
+    trees[idx]=tree;
+    var proba={p1:tree.proba1,p2:tree.proba2,p3:tree.proba3,p4:tree.proba4};
+    tree.branches[0]=new Branch(start,15*Math.sqrt(start.y/H),0,1,idx,proba);
   };
 
   function map(val,a,b,c,d){
