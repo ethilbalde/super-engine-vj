@@ -51,6 +51,7 @@
     <button class="eng-btn"        data-engine="slope"    style="--e:#ff3d6e">SLOPE</button>
     <button class="eng-btn"        data-engine="dune"     style="--e:#e8772e">DUNE</button>
     <button class="eng-btn"        data-engine="cloth"    style="--e:#00aa88">CLOTH</button>
+    <button class="eng-btn"        data-engine="fpaint"   style="--e:#ff6644">PAINT</button>
   </div>
 
   <!-- ══ FX CHAIN PANEL ══ -->
@@ -1824,6 +1825,90 @@
   <div class="tab-pane" id="tab-cloth-io"><div class="sec"><div class="sec-title">MIDI CC Cloth</div><div id="clothmidi-cc-list"></div></div></div>
   <div class="tab-pane" id="tab-cloth-save"><div class="sec"><div style="color:var(--text-faint);font-size:9px">Config Cloth dans les scènes globales.</div></div></div>
   </div><!-- /cloth -->
+
+  <!-- ══ FPAINT ENGINE PANES ══ -->
+  <div class="engine-panes" data-engine="fpaint">
+
+  <div class="tab-pane active" id="tab-fpaint-live">
+    <div class="sec">
+      <div class="sec-title">Mode interaction</div>
+      <div class="btn-grid" style="grid-template-columns:repeat(3,1fr)">
+        <button class="btn active" data-fpmode="attract">Attirer</button>
+        <button class="btn"        data-fpmode="repel">Repousser</button>
+        <button class="btn"        data-fpmode="freeze">Geler</button>
+      </div>
+      <div class="ctrl"><label>Rayon <span class="val" id="fpval-pen">0.25</span></label><input type="range" id="fppen-size" min="0.05" max="1.0" step="0.01" value="0.25"></div>
+      <div class="ctrl"><label>Force <span class="val" id="fpval-force">1.0</span></label><input type="range" id="fppush-force" min="0.1" max="5" step="0.1" value="1.0"></div>
+    </div>
+    <div class="sep"></div>
+    <div class="sec">
+      <div class="sec-title">Curseur</div>
+      <div class="ctrl"><label>Curseur X <span class="val" id="fpval-cx">0.50</span></label><input type="range" id="fpcursor-x" min="0" max="1" step="0.005" value="0.50"></div>
+      <div class="ctrl"><label>Curseur Y <span class="val" id="fpval-cy">0.50</span></label><input type="range" id="fpcursor-y" min="0" max="1" step="0.005" value="0.50"></div>
+      <div class="quick-row" style="margin-top:4px"><button class="big-toggle" id="fpbtn-click" style="flex:1"><span class="dot"></span>CLICK</button><button class="quick-fire" id="fpbtn-click-fire">▶</button></div>
+    </div>
+    <div class="sep"></div>
+    <div class="sec">
+      <div class="quick-row">
+        <button class="big-toggle" id="fpbtn-pause" style="flex:1"><span class="dot"></span>PAUSE</button>
+        <button class="quick-fire" id="fpbtn-reset-time">↺</button>
+      </div>
+    </div>
+    <div class="sep"></div>
+    <div class="sec">
+      <div class="quick-row">
+        <button class="big-toggle" id="fpbtn-pulse" style="flex:1"><span class="dot"></span>PULSE</button>
+        <button class="quick-fire" id="fpbtn-pulse-fire">▶</button>
+      </div>
+      <div class="prog-bar"><div class="prog-fill" id="fppulse-bar"></div></div>
+    </div>
+  </div>
+
+  <div class="tab-pane" id="tab-fpaint-sim">
+    <div class="sec">
+      <div class="sec-title">Animation</div>
+      <div class="ctrl"><label>Vitesse <span class="val" id="fpval-speed">1.0</span></label><input type="range" id="fpspeed" min="0.05" max="4" step="0.05" value="1.0"></div>
+      <div class="ctrl"><label>Rotation <span class="val" id="fpval-rot">0.05</span></label><input type="range" id="fprot-speed" min="0.005" max="0.3" step="0.005" value="0.05"></div>
+      <div class="ctrl"><label>Zoom <span class="val" id="fpval-zoom">2.0</span></label><input type="range" id="fpzoom" min="0.5" max="6" step="0.1" value="2.0"></div>
+      <div class="ctrl"><label>Grain <span class="val" id="fpval-grain">1.0</span></label><input type="range" id="fpgrain" min="0" max="3" step="0.05" value="1.0"></div>
+    </div>
+    <div class="sep"></div>
+    <button class="btn-wide" id="fpbtn-reset">↺ Réinitialiser</button>
+  </div>
+
+  <div class="tab-pane" id="tab-fpaint-color">
+    <div class="sec">
+      <div class="sec-title">Luminosité & contraste</div>
+      <div class="ctrl"><label>Luminosité <span class="val" id="fpval-brightness">1.25</span></label><input type="range" id="fpbrightness" min="0.3" max="3" step="0.05" value="1.25"></div>
+      <div class="ctrl"><label>Vignette <span class="val" id="fpval-vignette">0.125</span></label><input type="range" id="fpvignette" min="0" max="0.5" step="0.005" value="0.125"></div>
+    </div>
+    <div class="sep"></div>
+    <div class="sec">
+      <div class="sec-title">Teinte RGB</div>
+      <div class="ctrl"><label>Rouge <span class="val" id="fpval-br">1.0</span></label><input type="range" id="fpboost-r" min="0" max="2" step="0.05" value="1.0"></div>
+      <div class="ctrl"><label>Vert <span class="val" id="fpval-bg">1.0</span></label><input type="range" id="fpboost-g" min="0" max="2" step="0.05" value="1.0"></div>
+      <div class="ctrl"><label>Bleu <span class="val" id="fpval-bb">1.0</span></label><input type="range" id="fpboost-b" min="0" max="2" step="0.05" value="1.0"></div>
+    </div>
+    <div class="sep"></div>
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:3px">
+      <button class="btn" id="fppreset-warm">Chaud</button>
+      <button class="btn" id="fppreset-cool">Froid</button>
+      <button class="btn" id="fppreset-mono">Mono</button>
+    </div>
+  </div>
+
+  <div class="tab-pane" id="tab-fpaint-tempo">
+    <div class="sec">
+      <div class="sec-title">Pulse automatique</div>
+      <div class="ctrl"><label>Intervalle <span class="val" id="fpval-pulse-int">4.0</span>s</label><input type="range" id="fptpulse-int" min="0.5" max="20" step="0.5" value="4.0"></div>
+      <div class="ctrl"><label>BPM div <span class="val" id="fpval-beat-div">1</span></label><input type="range" id="fpbeat-div" min="1" max="8" step="1" value="1"></div>
+    </div>
+  </div>
+
+  <div class="tab-pane" id="tab-fpaint-io"><div class="sec"><div class="sec-title">MIDI CC Paint</div><div id="fpmidi-cc-list"></div></div></div>
+  <div class="tab-pane" id="tab-fpaint-save"><div class="sec"><div style="color:var(--text-faint);font-size:9px">Config Paint dans les scènes globales.</div></div></div>
+
+  </div><!-- /fpaint -->
 
   <!-- ══ GROWTH ENGINE PANES ══ -->
   <div class="engine-panes" data-engine="growth">

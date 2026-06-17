@@ -277,6 +277,7 @@ input[type=color]::-webkit-color-swatch{border:none;border-radius:3px}
     <button class="eng-btn"        data-engine="slope"    style="--e:#ff3d6e">SLOPE</button>
     <button class="eng-btn"        data-engine="dune"     style="--e:#e8772e">DUNE</button>
     <button class="eng-btn"        data-engine="cloth"    style="--e:#00aa88">CLOTH</button>
+    <button class="eng-btn"        data-engine="fpaint"   style="--e:#ff6644">PAINT</button>
   </div>
 
   <!-- ══ FX CHAIN PANEL ══ -->
@@ -2050,6 +2051,90 @@ input[type=color]::-webkit-color-swatch{border:none;border-radius:3px}
   <div class="tab-pane" id="tab-cloth-io"><div class="sec"><div class="sec-title">MIDI CC Cloth</div><div id="clothmidi-cc-list"></div></div></div>
   <div class="tab-pane" id="tab-cloth-save"><div class="sec"><div style="color:var(--text-faint);font-size:9px">Config Cloth dans les scènes globales.</div></div></div>
   </div><!-- /cloth -->
+
+  <!-- ══ FPAINT ENGINE PANES ══ -->
+  <div class="engine-panes" data-engine="fpaint">
+
+  <div class="tab-pane active" id="tab-fpaint-live">
+    <div class="sec">
+      <div class="sec-title">Mode interaction</div>
+      <div class="btn-grid" style="grid-template-columns:repeat(3,1fr)">
+        <button class="btn active" data-fpmode="attract">Attirer</button>
+        <button class="btn"        data-fpmode="repel">Repousser</button>
+        <button class="btn"        data-fpmode="freeze">Geler</button>
+      </div>
+      <div class="ctrl"><label>Rayon <span class="val" id="fpval-pen">0.25</span></label><input type="range" id="fppen-size" min="0.05" max="1.0" step="0.01" value="0.25"></div>
+      <div class="ctrl"><label>Force <span class="val" id="fpval-force">1.0</span></label><input type="range" id="fppush-force" min="0.1" max="5" step="0.1" value="1.0"></div>
+    </div>
+    <div class="sep"></div>
+    <div class="sec">
+      <div class="sec-title">Curseur</div>
+      <div class="ctrl"><label>Curseur X <span class="val" id="fpval-cx">0.50</span></label><input type="range" id="fpcursor-x" min="0" max="1" step="0.005" value="0.50"></div>
+      <div class="ctrl"><label>Curseur Y <span class="val" id="fpval-cy">0.50</span></label><input type="range" id="fpcursor-y" min="0" max="1" step="0.005" value="0.50"></div>
+      <div class="quick-row" style="margin-top:4px"><button class="big-toggle" id="fpbtn-click" style="flex:1"><span class="dot"></span>CLICK</button><button class="quick-fire" id="fpbtn-click-fire">▶</button></div>
+    </div>
+    <div class="sep"></div>
+    <div class="sec">
+      <div class="quick-row">
+        <button class="big-toggle" id="fpbtn-pause" style="flex:1"><span class="dot"></span>PAUSE</button>
+        <button class="quick-fire" id="fpbtn-reset-time">↺</button>
+      </div>
+    </div>
+    <div class="sep"></div>
+    <div class="sec">
+      <div class="quick-row">
+        <button class="big-toggle" id="fpbtn-pulse" style="flex:1"><span class="dot"></span>PULSE</button>
+        <button class="quick-fire" id="fpbtn-pulse-fire">▶</button>
+      </div>
+      <div class="prog-bar"><div class="prog-fill" id="fppulse-bar"></div></div>
+    </div>
+  </div>
+
+  <div class="tab-pane" id="tab-fpaint-sim">
+    <div class="sec">
+      <div class="sec-title">Animation</div>
+      <div class="ctrl"><label>Vitesse <span class="val" id="fpval-speed">1.0</span></label><input type="range" id="fpspeed" min="0.05" max="4" step="0.05" value="1.0"></div>
+      <div class="ctrl"><label>Rotation <span class="val" id="fpval-rot">0.05</span></label><input type="range" id="fprot-speed" min="0.005" max="0.3" step="0.005" value="0.05"></div>
+      <div class="ctrl"><label>Zoom <span class="val" id="fpval-zoom">2.0</span></label><input type="range" id="fpzoom" min="0.5" max="6" step="0.1" value="2.0"></div>
+      <div class="ctrl"><label>Grain <span class="val" id="fpval-grain">1.0</span></label><input type="range" id="fpgrain" min="0" max="3" step="0.05" value="1.0"></div>
+    </div>
+    <div class="sep"></div>
+    <button class="btn-wide" id="fpbtn-reset">↺ Réinitialiser</button>
+  </div>
+
+  <div class="tab-pane" id="tab-fpaint-color">
+    <div class="sec">
+      <div class="sec-title">Luminosité & contraste</div>
+      <div class="ctrl"><label>Luminosité <span class="val" id="fpval-brightness">1.25</span></label><input type="range" id="fpbrightness" min="0.3" max="3" step="0.05" value="1.25"></div>
+      <div class="ctrl"><label>Vignette <span class="val" id="fpval-vignette">0.125</span></label><input type="range" id="fpvignette" min="0" max="0.5" step="0.005" value="0.125"></div>
+    </div>
+    <div class="sep"></div>
+    <div class="sec">
+      <div class="sec-title">Teinte RGB</div>
+      <div class="ctrl"><label>Rouge <span class="val" id="fpval-br">1.0</span></label><input type="range" id="fpboost-r" min="0" max="2" step="0.05" value="1.0"></div>
+      <div class="ctrl"><label>Vert <span class="val" id="fpval-bg">1.0</span></label><input type="range" id="fpboost-g" min="0" max="2" step="0.05" value="1.0"></div>
+      <div class="ctrl"><label>Bleu <span class="val" id="fpval-bb">1.0</span></label><input type="range" id="fpboost-b" min="0" max="2" step="0.05" value="1.0"></div>
+    </div>
+    <div class="sep"></div>
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:3px">
+      <button class="btn" id="fppreset-warm">Chaud</button>
+      <button class="btn" id="fppreset-cool">Froid</button>
+      <button class="btn" id="fppreset-mono">Mono</button>
+    </div>
+  </div>
+
+  <div class="tab-pane" id="tab-fpaint-tempo">
+    <div class="sec">
+      <div class="sec-title">Pulse automatique</div>
+      <div class="ctrl"><label>Intervalle <span class="val" id="fpval-pulse-int">4.0</span>s</label><input type="range" id="fptpulse-int" min="0.5" max="20" step="0.5" value="4.0"></div>
+      <div class="ctrl"><label>BPM div <span class="val" id="fpval-beat-div">1</span></label><input type="range" id="fpbeat-div" min="1" max="8" step="1" value="1"></div>
+    </div>
+  </div>
+
+  <div class="tab-pane" id="tab-fpaint-io"><div class="sec"><div class="sec-title">MIDI CC Paint</div><div id="fpmidi-cc-list"></div></div></div>
+  <div class="tab-pane" id="tab-fpaint-save"><div class="sec"><div style="color:var(--text-faint);font-size:9px">Config Paint dans les scènes globales.</div></div></div>
+
+  </div><!-- /fpaint -->
 
   <!-- ══ GROWTH ENGINE PANES ══ -->
   <div class="engine-panes" data-engine="growth">
@@ -5320,6 +5405,265 @@ var Engine_Cloth=(function(){
 })();
 
 /* ═══════════════════════════════════════════
+   FLUID PAINTING ENGINE — Peinture fluide GPU
+   Domain-warping noise multi-couches via WebGL2,
+   composité sur le canvas 2D principal.
+   Shader original : Matthias Hurrle (@atzedent)
+═══════════════════════════════════════════ */
+var Engine_FPaint=(function(){
+  var canvas,ctx,glCanvas,gl,prog;
+  var uLocs={};
+  var mouse=window._mouse;
+  var _active=false,_t=0,_paused=false,_timeBase=0;
+  var frameCount=0,lastPulseTime=0,_needsReset=false;
+
+  var cfg={
+    canvas_width:800,canvas_height:600,
+    speed:1.0,
+    rot_speed:0.05,
+    zoom:2.0,
+    grain:1.0,
+    brightness:1.25,
+    vignette:0.125,
+    boost_r:1.0,boost_g:1.0,boost_b:1.0,
+    pen_size:0.25,push_force:1.0,
+    pointer_mode:'attract',
+    pulse_enabled:false,pulse_interval:4.0,pulse_beat_div:1,
+    time_mode:'bpm',bpm:120
+  };
+
+  /* ── Vertex shader — quad plein écran en clip space ── */
+  var VERT=[
+    '#version 300 es',
+    'in vec2 aPos;',
+    'void main(){gl_Position=vec4(aPos,0.,1.);}'
+  ].join('\n');
+
+  /* ── Fragment shader — domain-warping noise coloré ── */
+  var FRAG=[
+    '#version 300 es',
+    'precision highp float;',
+    'out vec4 O;',
+    'uniform float time;',
+    'uniform vec2  resolution;',
+    'uniform float uSpeed;',
+    'uniform float uRotSpeed;',
+    'uniform float uZoom;',
+    'uniform float uGrain;',
+    'uniform float uBrightness;',
+    'uniform float uVignette;',
+    'uniform float uBoostR,uBoostG,uBoostB;',
+    'uniform vec2  uMouse;',
+    'uniform float uMouseActive;',
+    'uniform float uPenSize;',
+    'uniform float uPushForce;',
+    'uniform float uPointerMode;',
+    '#define FC gl_FragCoord.xy',
+    '#define R  resolution',
+    '#define T  (time*uSpeed)',
+    '#define S  smoothstep',
+    '#define MN min(R.x,R.y)',
+    '#define rot(a) mat2(cos((a)-vec4(0,11,33,0)))',
+    /* bruit blanc */
+    'float rnd(vec2 p){p=fract(p*vec2(12.9898,78.233));p+=dot(p,p+34.56);return fract(p.x*p.y);}',
+    /* bruit de valeur */
+    'float noise(vec2 p){vec2 i=floor(p),u=S(i,i+1.,p),k=vec2(1,0);float a=rnd(i),b=rnd(i+k),c=rnd(i+k.yx),d=rnd(i+k.xx);return mix(mix(a,b,u.x),mix(c,d,u.x),u.y);}',
+    /* animation de l'espace UV */
+    'void anim(inout vec2 uv){',
+    '  float t=T*uRotSpeed;',
+    '  uv*=1.+S(.0,1.,clamp(1.2*dot(uv,uv),.0,1.));',
+    '  uv*=rot(t);',
+    '  uv.x-=12.*cos(t);',
+    '  uv.y+=10.*sin(t);',
+    '  uv*=uZoom;',
+    '}',
+    /* 4 couches de domain warping → couleurs */
+    'vec3 pattern(vec2 uv){',
+    '  const float k=4.;',
+    '  float grain=mix(0.,noise(uv*100.),min(T*.3,1.)*uGrain);',
+    '  vec3 col=vec3(0);',
+    '  vec2',
+    '    a=vec2(noise(uv-T+noise(uv*2.+grain)),noise(T*.1-uv+vec2(3,5))),',
+    '    b=vec2(noise(T+uv+vec2(7,3)+a*k),noise(T*.3-uv+a*k)),',
+    '    c=vec2(noise(T*.2-uv+vec2(1,4)+b*k),noise(T*.5-uv-vec2(4,1)+b*k)),',
+    '    d=vec2(noise(T*.4-uv+vec2(2,3)+c*k),noise(T*.2-uv-vec2(7,2)+c*k));',
+    '  col+=max(.3,noise(uv-d));',
+    '  col=clamp(col,0.,.35);',
+    '  float f=clamp(dot(a,b),-1.,1.);',
+    '  col+=vec3(a.x/3.+a.y/2.+f*1.4,a.x+a.x/(2.4+f*f),b.x*b.y/1.5+f*.6+d.y*.4)/3.;',
+    '  col+=pow(d.x*d.y,4.)*vec3(.2,.8,1.);',
+    '  col+=.4*pow(a.x,5.);',
+    '  return col;',
+    '}',
+    /* assemblage + color grading */
+    'vec3 render(vec2 uv){',
+    /* influence souris AVANT anim — espace UV initial */
+    '  if(uMouseActive>.5){',
+    '    vec2 diff=uMouse-uv;',
+    '    float dist=length(diff)+.001;',
+    '    float inf=uPushForce*exp(-dist/uPenSize);',
+    '    uv+=diff*inf*uPointerMode;',
+    '  }',
+    '  anim(uv);',
+    '  vec3 col=pattern(uv);',
+    '  col=S(.1,1.,col);',
+    '  col+=abs(col)*.25;',
+    '  col=tanh(col*col*col);',
+    '  col*=uBrightness*vec3(uBoostR,uBoostG,uBoostB);',
+    '  return col;',
+    '}',
+    'void main(){',
+    '  vec3 col=render((FC-.5*R)/MN);',
+    '  vec2 c=FC/R;c*=1.-c.yx;',
+    '  float v=c.x*c.y*25.;',
+    '  col*=pow(v,uVignette);',
+    '  O=vec4(col,1.);',
+    '}'
+  ].join('\n');
+
+  /* ── WebGL helpers ── */
+  function compileShader(type,src){
+    var sh=gl.createShader(type);
+    gl.shaderSource(sh,src);gl.compileShader(sh);
+    if(!gl.getShaderParameter(sh,gl.COMPILE_STATUS)){
+      console.error('[FPaint shader]',gl.getShaderInfoLog(sh));
+      gl.deleteShader(sh);return null;
+    }
+    return sh;
+  }
+
+  function initGL(){
+    if(gl)return true;
+    glCanvas=document.createElement('canvas');
+    glCanvas.width=cfg.canvas_width;glCanvas.height=cfg.canvas_height;
+    gl=glCanvas.getContext('webgl2');
+    if(!gl){console.error('[FPaint] WebGL2 non disponible');return false;}
+    var vs=compileShader(gl.VERTEX_SHADER,VERT);
+    var fs=compileShader(gl.FRAGMENT_SHADER,FRAG);
+    if(!vs||!fs)return false;
+    prog=gl.createProgram();
+    gl.attachShader(prog,vs);gl.attachShader(prog,fs);
+    gl.linkProgram(prog);
+    if(!gl.getProgramParameter(prog,gl.LINK_STATUS)){
+      console.error('[FPaint link]',gl.getProgramInfoLog(prog));return false;
+    }
+    /* quad plein écran en clip space : 2 triangles via TRIANGLE_STRIP */
+    var buf=gl.createBuffer();
+    gl.bindBuffer(gl.ARRAY_BUFFER,buf);
+    gl.bufferData(gl.ARRAY_BUFFER,new Float32Array([-1,-1, 1,-1, -1,1, 1,1]),gl.STATIC_DRAW);
+    var loc=gl.getAttribLocation(prog,'aPos');
+    gl.enableVertexAttribArray(loc);
+    gl.vertexAttribPointer(loc,2,gl.FLOAT,false,0,0);
+    gl.useProgram(prog);
+    /* cache uniform locations */
+    ['time','resolution','uSpeed','uRotSpeed','uZoom','uGrain','uBrightness','uVignette',
+     'uBoostR','uBoostG','uBoostB','uMouse','uMouseActive','uPenSize','uPushForce','uPointerMode'
+    ].forEach(function(n){uLocs[n]=gl.getUniformLocation(prog,n);});
+    return true;
+  }
+
+  function triggerPulse(){
+    /* reset le temps → le champ de bruit repart d'un état frais */
+    _timeBase=performance.now()/1000;
+    _t=0;
+    if(window.oscSend)window.oscSend('/fpaint/pulse_fired',[cfg.speed]);
+  }
+
+  function draw(){
+    if(!_active||!gl)return;
+    frameCount++;
+    var now=performance.now()/1000;
+    var W=cfg.canvas_width,H=cfg.canvas_height;
+
+    var pulseEff=cfg.time_mode==='bpm'?(60/cfg.bpm)*cfg.pulse_beat_div:cfg.pulse_interval;
+    if(cfg.pulse_enabled&&now-lastPulseTime>=pulseEff){triggerPulse();lastPulseTime=now;}
+
+    if(!_paused)_t=now-_timeBase;
+
+    /* Conversion coordonnées souris → espace UV du shader */
+    var MN=Math.min(W,H);
+    var mx=(mouse.x-W*0.5)/MN;
+    var my=-(mouse.y-H*0.5)/MN; /* inversion Y : canvas top=0, GLSL bottom=0 */
+
+    var pMode=cfg.pointer_mode==='repel'?-1.0:1.0;
+    var mActive=(mouse.down&&cfg.pointer_mode!=='freeze')?1.0:0.0;
+
+    /* Resize glCanvas si besoin */
+    if(glCanvas.width!==W||glCanvas.height!==H){
+      glCanvas.width=W;glCanvas.height=H;
+      gl.viewport(0,0,W,H);
+    }
+
+    /* Envoi des uniforms */
+    gl.useProgram(prog);
+    gl.uniform1f(uLocs.time,_t);
+    gl.uniform2f(uLocs.resolution,W,H);
+    gl.uniform1f(uLocs.uSpeed,cfg.speed);
+    gl.uniform1f(uLocs.uRotSpeed,cfg.rot_speed);
+    gl.uniform1f(uLocs.uZoom,cfg.zoom);
+    gl.uniform1f(uLocs.uGrain,cfg.grain);
+    gl.uniform1f(uLocs.uBrightness,cfg.brightness);
+    gl.uniform1f(uLocs.uVignette,cfg.vignette);
+    gl.uniform1f(uLocs.uBoostR,cfg.boost_r);
+    gl.uniform1f(uLocs.uBoostG,cfg.boost_g);
+    gl.uniform1f(uLocs.uBoostB,cfg.boost_b);
+    gl.uniform2f(uLocs.uMouse,mx,my);
+    gl.uniform1f(uLocs.uMouseActive,mActive);
+    gl.uniform1f(uLocs.uPenSize,cfg.pen_size);
+    gl.uniform1f(uLocs.uPushForce,cfg.push_force);
+    gl.uniform1f(uLocs.uPointerMode,pMode);
+    gl.drawArrays(gl.TRIANGLE_STRIP,0,4);
+
+    /* Composite WebGL → Canvas2D principal */
+    ctx.drawImage(glCanvas,0,0,W,H);
+
+    mouse.px=mouse.x;mouse.py=mouse.y;
+  }
+
+  function _reset(){
+    _t=0;_paused=false;
+    _timeBase=performance.now()/1000;
+    frameCount=0;lastPulseTime=0;
+  }
+
+  function init(){
+    canvas=document.getElementById('c');
+    ctx=canvas.getContext('2d');
+    cfg.canvas_width=canvas.width||cfg.canvas_width;
+    cfg.canvas_height=canvas.height||cfg.canvas_height;
+    initGL();
+    if(gl)gl.viewport(0,0,cfg.canvas_width,cfg.canvas_height);
+    _reset();
+  }
+
+  function activate(){
+    _active=true;
+    var cv=document.getElementById('c');
+    canvas=cv;ctx=cv.getContext('2d');
+    cfg.canvas_width=cv.width||cfg.canvas_width;
+    cfg.canvas_height=cv.height||cfg.canvas_height;
+    if(!gl){initGL();}
+    if(glCanvas&&gl){
+      glCanvas.width=cfg.canvas_width;glCanvas.height=cfg.canvas_height;
+      gl.viewport(0,0,cfg.canvas_width,cfg.canvas_height);
+    }
+    if(_needsReset){_needsReset=false;_reset();}
+  }
+
+  function deactivate(){_active=false;}
+
+  return{
+    cfg:cfg,init:init,draw:draw,activate:activate,deactivate:deactivate,
+    reset:_reset,triggerPulse:triggerPulse,
+    togglePause:function(){
+      _paused=!_paused;
+      if(!_paused)_timeBase=performance.now()/1000-_t;
+    },
+    markReset:function(){_needsReset=true;}
+  };
+})();
+
+/* ═══════════════════════════════════════════
    ENGINE MANAGER
 ═══════════════════════════════════════════ */
 var EngineManager=(function(){
@@ -5330,10 +5674,10 @@ var EngineManager=(function(){
     rdiff:window.Engine_RDiff,
     voronoi:window.Engine_Voronoi,follow:window.Engine_Follow,
     ribbon:window.Engine_Ribbon,physiks:window.Engine_Physiks,neural:window.Engine_Neural,
-    ink:window.Engine_Ink,slope:window.Engine_Slope,dune:window.Engine_Dune,cloth:window.Engine_Cloth
+    ink:window.Engine_Ink,slope:window.Engine_Slope,dune:window.Engine_Dune,cloth:window.Engine_Cloth,fpaint:window.Engine_FPaint
   };
-  var ACCENT={fluid:'#00ffff',vortex:'#ff6600',nbody:'#aa44ff',sph:'#00ff88',boids:'#ffdd00',physarum:'#ff44aa',lorenz:'#44aaff',react:'#ff2266',aco:'#ff8800',rdiff:'#ff5500',voronoi:'#ffcc00',follow:'#6688ff',ribbon:'#ff66aa',physiks:'#c8a040',neural:'#44eeff',ink:'#a044ff',slope:'#ff3d6e',dune:'#e8772e',cloth:'#00aa88'};
-  var NAMES={fluid:'FLUID SIM',vortex:'VORTEX',nbody:'N-BODY',sph:'SPH FLUID',boids:'BOIDS',physarum:'PHYSARUM',lorenz:'LORENZ',react:'REACT',aco:'ACO FOURMIS',rdiff:'REACTION-DIFFUSION',voronoi:'VORONOI VIVANT',follow:'FOLLOW — FLOW FIELD',ribbon:'RIBBON — RUBANS',physiks:'PHYSIKS — PHYSIQUE DES MATÉRIAUX',neural:'NEURAL — RÉSEAU',ink:'INK — ENCRE & PEINTURE',slope:'SLOPE — CHAMPS DE VECTEURS',dune:'DUNE — SABLE & BRUIT',cloth:'CLOTH — TISSU PHYSIQUE'};
+  var ACCENT={fluid:'#00ffff',vortex:'#ff6600',nbody:'#aa44ff',sph:'#00ff88',boids:'#ffdd00',physarum:'#ff44aa',lorenz:'#44aaff',react:'#ff2266',aco:'#ff8800',rdiff:'#ff5500',voronoi:'#ffcc00',follow:'#6688ff',ribbon:'#ff66aa',physiks:'#c8a040',neural:'#44eeff',ink:'#a044ff',slope:'#ff3d6e',dune:'#e8772e',cloth:'#00aa88',fpaint:'#ff6644'};
+  var NAMES={fluid:'FLUID SIM',vortex:'VORTEX',nbody:'N-BODY',sph:'SPH FLUID',boids:'BOIDS',physarum:'PHYSARUM',lorenz:'LORENZ',react:'REACT',aco:'ACO FOURMIS',rdiff:'REACTION-DIFFUSION',voronoi:'VORONOI VIVANT',follow:'FOLLOW — FLOW FIELD',ribbon:'RIBBON — RUBANS',physiks:'PHYSIKS — PHYSIQUE DES MATÉRIAUX',neural:'NEURAL — RÉSEAU',ink:'INK — ENCRE & PEINTURE',slope:'SLOPE — CHAMPS DE VECTEURS',dune:'DUNE — SABLE & BRUIT',cloth:'CLOTH — TISSU PHYSIQUE',fpaint:'FLUID PAINTING — PEINTURE GPU'};
   window.activeEngine='fluid';
   window.overlayEngine=null;window.overlayAlpha=0.3;
 
@@ -5418,7 +5762,7 @@ function autoResize(){
   FluidSim.cfg.canvas_height=Math.max(res*10,Math.floor(availH/res)*res);
   FluidSim.resize();updateResDisplay();
   /* sync canvas size to all engines and mark them for reset on next activate */
-  var engineNames=['VortexEngine','NBodyEngine','Engine_SPH','Engine_Boids','Engine_Physarum','Engine_Lorenz','Engine_React','Engine_ACO','Engine_RDiff','Engine_LSystem','Engine_Voronoi','Engine_Follow','Engine_Ribbon','Engine_Physiks','Engine_Neural','Engine_Ink','Engine_Slope','Engine_Dune','Engine_Cloth'];
+  var engineNames=['VortexEngine','NBodyEngine','Engine_SPH','Engine_Boids','Engine_Physarum','Engine_Lorenz','Engine_React','Engine_ACO','Engine_RDiff','Engine_LSystem','Engine_Voronoi','Engine_Follow','Engine_Ribbon','Engine_Physiks','Engine_Neural','Engine_Ink','Engine_Slope','Engine_Dune','Engine_Cloth','Engine_FPaint'];
   engineNames.forEach(function(n){var e=window[n];if(e&&e.cfg){e.cfg.canvas_width=FluidSim.cfg.canvas_width;e.cfg.canvas_height=FluidSim.cfg.canvas_height;if(e.markReset)e.markReset();}});
 }
 function updateResDisplay(){
@@ -5496,7 +5840,7 @@ document.querySelectorAll('.tab-btn').forEach(function(btn){
     document.querySelectorAll('.tab-pane').forEach(function(p){p.classList.remove('active');});
     this.classList.add('active');
     var el=document.getElementById('tab-'+_activeTab);if(el)el.classList.add('active');
-    ['vortex','nbody','sph','boids','physarum','lorenz','react','aco','rdiff','lsys','voronoi','follow','ribbon','physiks','neural','ink','slope','dune','cloth'].forEach(function(eng){
+    ['vortex','nbody','sph','boids','physarum','lorenz','react','aco','rdiff','lsys','voronoi','follow','ribbon','physiks','neural','ink','slope','dune','cloth','fpaint'].forEach(function(eng){
       var vel=document.getElementById('tab-'+eng+'-'+_activeTab);if(vel)vel.classList.add('active');
     });
   });
@@ -7078,13 +7422,82 @@ updateResDisplay();
 })();
 
 
+/* ── FPAINT WIRING ── */
+(function(){
+  var E=Engine_FPaint;
+  function fp(id,key,valId,dec){var sl=document.getElementById(id);if(!sl)return;sl.addEventListener('input',function(){var v=parseFloat(this.value);E.cfg[key]=v;var sp=document.getElementById(valId);if(sp)sp.textContent=v.toFixed(dec!==undefined?dec:2);});}
+  fp('fpspeed','speed','fpval-speed',2);
+  fp('fprot-speed','rot_speed','fpval-rot',3);
+  fp('fpzoom','zoom','fpval-zoom',1);
+  fp('fpgrain','grain','fpval-grain',2);
+  fp('fpbrightness','brightness','fpval-brightness',2);
+  fp('fpvignette','vignette','fpval-vignette',3);
+  fp('fpboost-r','boost_r','fpval-br',2);
+  fp('fpboost-g','boost_g','fpval-bg',2);
+  fp('fpboost-b','boost_b','fpval-bb',2);
+  fp('fppen-size','pen_size','fpval-pen',2);
+  fp('fppush-force','push_force','fpval-force',1);
+  fp('fptpulse-int','pulse_interval','fpval-pulse-int',1);
+  fp('fpbeat-div','pulse_beat_div','fpval-beat-div',0);
+  /* mode pointeur */
+  document.querySelectorAll('[data-fpmode]').forEach(function(b){
+    b.addEventListener('click',function(){
+      document.querySelectorAll('[data-fpmode]').forEach(function(x){x.classList.remove('active');});
+      this.classList.add('active');
+      E.cfg.pointer_mode=this.dataset.fpmode;
+    });
+  });
+  /* pause / play */
+  var pauseBtn=document.getElementById('fpbtn-pause');
+  if(pauseBtn)pauseBtn.addEventListener('click',function(){
+    E.togglePause();
+    this.classList.toggle('on');
+    var d=this.querySelector('.dot');if(d)d.style.background=this.classList.contains('on')?'var(--accent)':'var(--text-faint)';
+  });
+  /* reset time */
+  var rtBtn=document.getElementById('fpbtn-reset-time');
+  if(rtBtn)rtBtn.addEventListener('click',function(){E.reset();});
+  /* pulse */
+  var pbtn=document.getElementById('fpbtn-pulse');
+  if(pbtn)pbtn.addEventListener('click',function(){E.cfg.pulse_enabled=!E.cfg.pulse_enabled;this.classList.toggle('on',E.cfg.pulse_enabled);var d=this.querySelector('.dot');if(d)d.style.background=E.cfg.pulse_enabled?'var(--accent)':'var(--text-faint)';});
+  var pbf=document.getElementById('fpbtn-pulse-fire');if(pbf)pbf.addEventListener('click',function(){E.triggerPulse();});
+  /* reset sim */
+  var rstBtn=document.getElementById('fpbtn-reset');if(rstBtn)rstBtn.addEventListener('click',function(){E.reset();});
+  /* presets couleur */
+  var warmBtn=document.getElementById('fppreset-warm');
+  if(warmBtn)warmBtn.addEventListener('click',function(){
+    E.cfg.boost_r=1.4;E.cfg.boost_g=0.9;E.cfg.boost_b=0.5;
+    var r=document.getElementById('fpboost-r'),g=document.getElementById('fpboost-g'),b=document.getElementById('fpboost-b');
+    if(r)r.value=1.4;if(g)g.value=0.9;if(b)b.value=0.5;
+    var vr=document.getElementById('fpval-br'),vg=document.getElementById('fpval-bg'),vb=document.getElementById('fpval-bb');
+    if(vr)vr.textContent='1.40';if(vg)vg.textContent='0.90';if(vb)vb.textContent='0.50';
+  });
+  var coolBtn=document.getElementById('fppreset-cool');
+  if(coolBtn)coolBtn.addEventListener('click',function(){
+    E.cfg.boost_r=0.5;E.cfg.boost_g=0.9;E.cfg.boost_b=1.6;
+    var r=document.getElementById('fpboost-r'),g=document.getElementById('fpboost-g'),b=document.getElementById('fpboost-b');
+    if(r)r.value=0.5;if(g)g.value=0.9;if(b)b.value=1.6;
+    var vr=document.getElementById('fpval-br'),vg=document.getElementById('fpval-bg'),vb=document.getElementById('fpval-bb');
+    if(vr)vr.textContent='0.50';if(vg)vg.textContent='0.90';if(vb)vb.textContent='1.60';
+  });
+  var monoBtn=document.getElementById('fppreset-mono');
+  if(monoBtn)monoBtn.addEventListener('click',function(){
+    E.cfg.boost_r=0.8;E.cfg.boost_g=0.8;E.cfg.boost_b=0.8;
+    var r=document.getElementById('fpboost-r'),g=document.getElementById('fpboost-g'),b=document.getElementById('fpboost-b');
+    if(r)r.value=0.8;if(g)g.value=0.8;if(b)b.value=0.8;
+    var vr=document.getElementById('fpval-br'),vg=document.getElementById('fpval-bg'),vb=document.getElementById('fpval-bb');
+    if(vr)vr.textContent='0.80';if(vg)vg.textContent='0.80';if(vb)vb.textContent='0.80';
+  });
+})();
+
+
 /* ═══════════════════════════════════════════
    CURSOR X/Y + CLICK — câblage global MIDI
 ═══════════════════════════════════════════ */
 (function(){
   /* préfixe HTML → clé activeEngine */
-  var ENG_PFX={fluid:'',vortex:'v',nbody:'nb',sph:'sph',boids:'b',physarum:'ph',lorenz:'l',react:'r',aco:'aco',rdiff:'rd',lsys:'ls',voronoi:'vo',follow:'fw',ribbon:'rb',physiks:'phx',neural:'nr',ink:'ink',slope:'slp',dune:'dun',cloth:'clth'};
-  var ALL_PFX=['','v','nb','sph','b','ph','l','r','aco','rd','ls','vo','fw','rb','phx','nr','ink','slp','dun','clth'];
+  var ENG_PFX={fluid:'',vortex:'v',nbody:'nb',sph:'sph',boids:'b',physarum:'ph',lorenz:'l',react:'r',aco:'aco',rdiff:'rd',lsys:'ls',voronoi:'vo',follow:'fw',ribbon:'rb',physiks:'phx',neural:'nr',ink:'ink',slope:'slp',dune:'dun',cloth:'clth',fpaint:'fp'};
+  var ALL_PFX=['','v','nb','sph','b','ph','l','r','aco','rd','ls','vo','fw','rb','phx','nr','ink','slp','dun','clth','fp'];
 
   function getCanvas(){return document.getElementById('c');}
 

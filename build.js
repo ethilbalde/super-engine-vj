@@ -35,6 +35,7 @@ const ENGINE_FILES = [
   'engines/slope.js',
   'engines/dune.js',
   'engines/cloth.js',
+  'engines/fpaint.js',
   // ── Add new engines here ──
 ];
 

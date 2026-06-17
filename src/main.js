@@ -9,10 +9,10 @@ var EngineManager=(function(){
     rdiff:window.Engine_RDiff,
     voronoi:window.Engine_Voronoi,follow:window.Engine_Follow,
     ribbon:window.Engine_Ribbon,physiks:window.Engine_Physiks,neural:window.Engine_Neural,
-    ink:window.Engine_Ink,slope:window.Engine_Slope,dune:window.Engine_Dune,cloth:window.Engine_Cloth
+    ink:window.Engine_Ink,slope:window.Engine_Slope,dune:window.Engine_Dune,cloth:window.Engine_Cloth,fpaint:window.Engine_FPaint
   };
-  var ACCENT={fluid:'#00ffff',vortex:'#ff6600',nbody:'#aa44ff',sph:'#00ff88',boids:'#ffdd00',physarum:'#ff44aa',lorenz:'#44aaff',react:'#ff2266',aco:'#ff8800',rdiff:'#ff5500',voronoi:'#ffcc00',follow:'#6688ff',ribbon:'#ff66aa',physiks:'#c8a040',neural:'#44eeff',ink:'#a044ff',slope:'#ff3d6e',dune:'#e8772e',cloth:'#00aa88'};
-  var NAMES={fluid:'FLUID SIM',vortex:'VORTEX',nbody:'N-BODY',sph:'SPH FLUID',boids:'BOIDS',physarum:'PHYSARUM',lorenz:'LORENZ',react:'REACT',aco:'ACO FOURMIS',rdiff:'REACTION-DIFFUSION',voronoi:'VORONOI VIVANT',follow:'FOLLOW — FLOW FIELD',ribbon:'RIBBON — RUBANS',physiks:'PHYSIKS — PHYSIQUE DES MATÉRIAUX',neural:'NEURAL — RÉSEAU',ink:'INK — ENCRE & PEINTURE',slope:'SLOPE — CHAMPS DE VECTEURS',dune:'DUNE — SABLE & BRUIT',cloth:'CLOTH — TISSU PHYSIQUE'};
+  var ACCENT={fluid:'#00ffff',vortex:'#ff6600',nbody:'#aa44ff',sph:'#00ff88',boids:'#ffdd00',physarum:'#ff44aa',lorenz:'#44aaff',react:'#ff2266',aco:'#ff8800',rdiff:'#ff5500',voronoi:'#ffcc00',follow:'#6688ff',ribbon:'#ff66aa',physiks:'#c8a040',neural:'#44eeff',ink:'#a044ff',slope:'#ff3d6e',dune:'#e8772e',cloth:'#00aa88',fpaint:'#ff6644'};
+  var NAMES={fluid:'FLUID SIM',vortex:'VORTEX',nbody:'N-BODY',sph:'SPH FLUID',boids:'BOIDS',physarum:'PHYSARUM',lorenz:'LORENZ',react:'REACT',aco:'ACO FOURMIS',rdiff:'REACTION-DIFFUSION',voronoi:'VORONOI VIVANT',follow:'FOLLOW — FLOW FIELD',ribbon:'RIBBON — RUBANS',physiks:'PHYSIKS — PHYSIQUE DES MATÉRIAUX',neural:'NEURAL — RÉSEAU',ink:'INK — ENCRE & PEINTURE',slope:'SLOPE — CHAMPS DE VECTEURS',dune:'DUNE — SABLE & BRUIT',cloth:'CLOTH — TISSU PHYSIQUE',fpaint:'FLUID PAINTING — PEINTURE GPU'};
   window.activeEngine='fluid';
   window.overlayEngine=null;window.overlayAlpha=0.3;
 
@@ -97,7 +97,7 @@ function autoResize(){
   FluidSim.cfg.canvas_height=Math.max(res*10,Math.floor(availH/res)*res);
   FluidSim.resize();updateResDisplay();
   /* sync canvas size to all engines and mark them for reset on next activate */
-  var engineNames=['VortexEngine','NBodyEngine','Engine_SPH','Engine_Boids','Engine_Physarum','Engine_Lorenz','Engine_React','Engine_ACO','Engine_RDiff','Engine_LSystem','Engine_Voronoi','Engine_Follow','Engine_Ribbon','Engine_Physiks','Engine_Neural','Engine_Ink','Engine_Slope','Engine_Dune','Engine_Cloth'];
+  var engineNames=['VortexEngine','NBodyEngine','Engine_SPH','Engine_Boids','Engine_Physarum','Engine_Lorenz','Engine_React','Engine_ACO','Engine_RDiff','Engine_LSystem','Engine_Voronoi','Engine_Follow','Engine_Ribbon','Engine_Physiks','Engine_Neural','Engine_Ink','Engine_Slope','Engine_Dune','Engine_Cloth','Engine_FPaint'];
   engineNames.forEach(function(n){var e=window[n];if(e&&e.cfg){e.cfg.canvas_width=FluidSim.cfg.canvas_width;e.cfg.canvas_height=FluidSim.cfg.canvas_height;if(e.markReset)e.markReset();}});
 }
 function updateResDisplay(){
@@ -175,7 +175,7 @@ document.querySelectorAll('.tab-btn').forEach(function(btn){
     document.querySelectorAll('.tab-pane').forEach(function(p){p.classList.remove('active');});
     this.classList.add('active');
     var el=document.getElementById('tab-'+_activeTab);if(el)el.classList.add('active');
-    ['vortex','nbody','sph','boids','physarum','lorenz','react','aco','rdiff','lsys','voronoi','follow','ribbon','physiks','neural','ink','slope','dune','cloth'].forEach(function(eng){
+    ['vortex','nbody','sph','boids','physarum','lorenz','react','aco','rdiff','lsys','voronoi','follow','ribbon','physiks','neural','ink','slope','dune','cloth','fpaint'].forEach(function(eng){
       var vel=document.getElementById('tab-'+eng+'-'+_activeTab);if(vel)vel.classList.add('active');
     });
   });
@@ -1757,13 +1757,82 @@ updateResDisplay();
 })();
 
 
+/* ── FPAINT WIRING ── */
+(function(){
+  var E=Engine_FPaint;
+  function fp(id,key,valId,dec){var sl=document.getElementById(id);if(!sl)return;sl.addEventListener('input',function(){var v=parseFloat(this.value);E.cfg[key]=v;var sp=document.getElementById(valId);if(sp)sp.textContent=v.toFixed(dec!==undefined?dec:2);});}
+  fp('fpspeed','speed','fpval-speed',2);
+  fp('fprot-speed','rot_speed','fpval-rot',3);
+  fp('fpzoom','zoom','fpval-zoom',1);
+  fp('fpgrain','grain','fpval-grain',2);
+  fp('fpbrightness','brightness','fpval-brightness',2);
+  fp('fpvignette','vignette','fpval-vignette',3);
+  fp('fpboost-r','boost_r','fpval-br',2);
+  fp('fpboost-g','boost_g','fpval-bg',2);
+  fp('fpboost-b','boost_b','fpval-bb',2);
+  fp('fppen-size','pen_size','fpval-pen',2);
+  fp('fppush-force','push_force','fpval-force',1);
+  fp('fptpulse-int','pulse_interval','fpval-pulse-int',1);
+  fp('fpbeat-div','pulse_beat_div','fpval-beat-div',0);
+  /* mode pointeur */
+  document.querySelectorAll('[data-fpmode]').forEach(function(b){
+    b.addEventListener('click',function(){
+      document.querySelectorAll('[data-fpmode]').forEach(function(x){x.classList.remove('active');});
+      this.classList.add('active');
+      E.cfg.pointer_mode=this.dataset.fpmode;
+    });
+  });
+  /* pause / play */
+  var pauseBtn=document.getElementById('fpbtn-pause');
+  if(pauseBtn)pauseBtn.addEventListener('click',function(){
+    E.togglePause();
+    this.classList.toggle('on');
+    var d=this.querySelector('.dot');if(d)d.style.background=this.classList.contains('on')?'var(--accent)':'var(--text-faint)';
+  });
+  /* reset time */
+  var rtBtn=document.getElementById('fpbtn-reset-time');
+  if(rtBtn)rtBtn.addEventListener('click',function(){E.reset();});
+  /* pulse */
+  var pbtn=document.getElementById('fpbtn-pulse');
+  if(pbtn)pbtn.addEventListener('click',function(){E.cfg.pulse_enabled=!E.cfg.pulse_enabled;this.classList.toggle('on',E.cfg.pulse_enabled);var d=this.querySelector('.dot');if(d)d.style.background=E.cfg.pulse_enabled?'var(--accent)':'var(--text-faint)';});
+  var pbf=document.getElementById('fpbtn-pulse-fire');if(pbf)pbf.addEventListener('click',function(){E.triggerPulse();});
+  /* reset sim */
+  var rstBtn=document.getElementById('fpbtn-reset');if(rstBtn)rstBtn.addEventListener('click',function(){E.reset();});
+  /* presets couleur */
+  var warmBtn=document.getElementById('fppreset-warm');
+  if(warmBtn)warmBtn.addEventListener('click',function(){
+    E.cfg.boost_r=1.4;E.cfg.boost_g=0.9;E.cfg.boost_b=0.5;
+    var r=document.getElementById('fpboost-r'),g=document.getElementById('fpboost-g'),b=document.getElementById('fpboost-b');
+    if(r)r.value=1.4;if(g)g.value=0.9;if(b)b.value=0.5;
+    var vr=document.getElementById('fpval-br'),vg=document.getElementById('fpval-bg'),vb=document.getElementById('fpval-bb');
+    if(vr)vr.textContent='1.40';if(vg)vg.textContent='0.90';if(vb)vb.textContent='0.50';
+  });
+  var coolBtn=document.getElementById('fppreset-cool');
+  if(coolBtn)coolBtn.addEventListener('click',function(){
+    E.cfg.boost_r=0.5;E.cfg.boost_g=0.9;E.cfg.boost_b=1.6;
+    var r=document.getElementById('fpboost-r'),g=document.getElementById('fpboost-g'),b=document.getElementById('fpboost-b');
+    if(r)r.value=0.5;if(g)g.value=0.9;if(b)b.value=1.6;
+    var vr=document.getElementById('fpval-br'),vg=document.getElementById('fpval-bg'),vb=document.getElementById('fpval-bb');
+    if(vr)vr.textContent='0.50';if(vg)vg.textContent='0.90';if(vb)vb.textContent='1.60';
+  });
+  var monoBtn=document.getElementById('fppreset-mono');
+  if(monoBtn)monoBtn.addEventListener('click',function(){
+    E.cfg.boost_r=0.8;E.cfg.boost_g=0.8;E.cfg.boost_b=0.8;
+    var r=document.getElementById('fpboost-r'),g=document.getElementById('fpboost-g'),b=document.getElementById('fpboost-b');
+    if(r)r.value=0.8;if(g)g.value=0.8;if(b)b.value=0.8;
+    var vr=document.getElementById('fpval-br'),vg=document.getElementById('fpval-bg'),vb=document.getElementById('fpval-bb');
+    if(vr)vr.textContent='0.80';if(vg)vg.textContent='0.80';if(vb)vb.textContent='0.80';
+  });
+})();
+
+
 /* ═══════════════════════════════════════════
    CURSOR X/Y + CLICK — câblage global MIDI
 ═══════════════════════════════════════════ */
 (function(){
   /* préfixe HTML → clé activeEngine */
-  var ENG_PFX={fluid:'',vortex:'v',nbody:'nb',sph:'sph',boids:'b',physarum:'ph',lorenz:'l',react:'r',aco:'aco',rdiff:'rd',lsys:'ls',voronoi:'vo',follow:'fw',ribbon:'rb',physiks:'phx',neural:'nr',ink:'ink',slope:'slp',dune:'dun',cloth:'clth'};
-  var ALL_PFX=['','v','nb','sph','b','ph','l','r','aco','rd','ls','vo','fw','rb','phx','nr','ink','slp','dun','clth'];
+  var ENG_PFX={fluid:'',vortex:'v',nbody:'nb',sph:'sph',boids:'b',physarum:'ph',lorenz:'l',react:'r',aco:'aco',rdiff:'rd',lsys:'ls',voronoi:'vo',follow:'fw',ribbon:'rb',physiks:'phx',neural:'nr',ink:'ink',slope:'slp',dune:'dun',cloth:'clth',fpaint:'fp'};
+  var ALL_PFX=['','v','nb','sph','b','ph','l','r','aco','rd','ls','vo','fw','rb','phx','nr','ink','slp','dun','clth','fp'];
 
   function getCanvas(){return document.getElementById('c');}
 
