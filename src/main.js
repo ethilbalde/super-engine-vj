@@ -9,10 +9,10 @@ var EngineManager=(function(){
     rdiff:window.Engine_RDiff,
     voronoi:window.Engine_Voronoi,follow:window.Engine_Follow,
     ribbon:window.Engine_Ribbon,physiks:window.Engine_Physiks,neural:window.Engine_Neural,
-    ink:window.Engine_Ink,slope:window.Engine_Slope,dune:window.Engine_Dune,sphere:window.Engine_Sphere
+    ink:window.Engine_Ink,slope:window.Engine_Slope,dune:window.Engine_Dune
   };
-  var ACCENT={fluid:'#00ffff',vortex:'#ff6600',nbody:'#aa44ff',sph:'#00ff88',boids:'#ffdd00',physarum:'#ff44aa',lorenz:'#44aaff',react:'#ff2266',aco:'#ff8800',rdiff:'#ff5500',voronoi:'#ffcc00',follow:'#6688ff',ribbon:'#ff66aa',physiks:'#c8a040',neural:'#44eeff',ink:'#a044ff',slope:'#ff3d6e',dune:'#e8772e',sphere:'#ffffff'};
-  var NAMES={fluid:'FLUID SIM',vortex:'VORTEX',nbody:'N-BODY',sph:'SPH FLUID',boids:'BOIDS',physarum:'PHYSARUM',lorenz:'LORENZ',react:'REACT',aco:'ACO FOURMIS',rdiff:'REACTION-DIFFUSION',voronoi:'VORONOI VIVANT',follow:'FOLLOW — FLOW FIELD',ribbon:'RIBBON — RUBANS',physiks:'PHYSIKS — PHYSIQUE DES MATÉRIAUX',neural:'NEURAL — RÉSEAU',ink:'INK — ENCRE & PEINTURE',slope:'SLOPE — CHAMPS DE VECTEURS',dune:'DUNE — SABLE & BRUIT',sphere:'SPHERE — NUAGE ROTATIF'};
+  var ACCENT={fluid:'#00ffff',vortex:'#ff6600',nbody:'#aa44ff',sph:'#00ff88',boids:'#ffdd00',physarum:'#ff44aa',lorenz:'#44aaff',react:'#ff2266',aco:'#ff8800',rdiff:'#ff5500',voronoi:'#ffcc00',follow:'#6688ff',ribbon:'#ff66aa',physiks:'#c8a040',neural:'#44eeff',ink:'#a044ff',slope:'#ff3d6e',dune:'#e8772e'};
+  var NAMES={fluid:'FLUID SIM',vortex:'VORTEX',nbody:'N-BODY',sph:'SPH FLUID',boids:'BOIDS',physarum:'PHYSARUM',lorenz:'LORENZ',react:'REACT',aco:'ACO FOURMIS',rdiff:'REACTION-DIFFUSION',voronoi:'VORONOI VIVANT',follow:'FOLLOW — FLOW FIELD',ribbon:'RIBBON — RUBANS',physiks:'PHYSIKS — PHYSIQUE DES MATÉRIAUX',neural:'NEURAL — RÉSEAU',ink:'INK — ENCRE & PEINTURE',slope:'SLOPE — CHAMPS DE VECTEURS',dune:'DUNE — SABLE & BRUIT'};
   window.activeEngine='fluid';
   window.overlayEngine=null;window.overlayAlpha=0.3;
 
@@ -175,7 +175,7 @@ document.querySelectorAll('.tab-btn').forEach(function(btn){
     document.querySelectorAll('.tab-pane').forEach(function(p){p.classList.remove('active');});
     this.classList.add('active');
     var el=document.getElementById('tab-'+_activeTab);if(el)el.classList.add('active');
-    ['vortex','nbody','sph','boids','physarum','lorenz','react','aco','rdiff','lsys','voronoi','follow','ribbon','physiks','neural','ink','slope','dune','sphere'].forEach(function(eng){
+    ['vortex','nbody','sph','boids','physarum','lorenz','react','aco','rdiff','lsys','voronoi','follow','ribbon','physiks','neural','ink','slope','dune'].forEach(function(eng){
       var vel=document.getElementById('tab-'+eng+'-'+_activeTab);if(vel)vel.classList.add('active');
     });
   });
@@ -1720,36 +1720,14 @@ updateResDisplay();
   var rst2=document.getElementById('dunbtn-reset');if(rst2)rst2.addEventListener('click',function(){E.reset();});
 })();
 
-/* ── SPHERE WIRING ── */
-document.addEventListener('DOMContentLoaded',function(){
-  setTimeout(function(){
-    var E=window.Engine_Sphere;if(!E)return;
-    function sp(id,key,valId,dec){var sl=document.getElementById(id);if(!sl)return;sl.addEventListener('input',function(){var v=parseFloat(this.value);E.cfg[key]=v;var vl=document.getElementById(valId);if(vl)vl.textContent=v.toFixed(dec!==undefined?dec:1);});}
-    sp('sphere-particle-count','particle_count','sphval-count',0);
-    sp('sphere-size','point_size','sphereval-size',1);
-    sp('sphere-radius','radius','sphereval-radius',0);
-    sp('sphere-attr','attraction','sphereval-attr',3);
-    sp('sphere-damp','damping','sphereval-damp',2);
-    sp('sphere-pel-radius','repel_radius','sphere-val-repel',0);
-    sp('sphere-pel-strength','repel_strength','sphere-val-force',0);
-    sp('sphere-tpulse-int','pulse_interval','sphval-pulse-int',1);
-    sp('sphere-beat-div','pulse_beat_div','sphereval-beat-div',0);
-    var bgc=document.getElementById('sphere-bg-color');if(bgc)bgc.addEventListener('input',function(){E.cfg.bg_color=this.value;});
-    var col=document.getElementById('sphere-pt-color');if(col)col.addEventListener('input',function(){E.cfg.color=this.value;});
-    document.querySelectorAll('[data-sphshape]').forEach(function(b){b.addEventListener('click',function(){document.querySelectorAll('[data-sphshape]').forEach(function(x){x.classList.remove('active');});this.classList.add('active');E.cfg.shape=parseInt(this.dataset.sphshape);});});
-    var pbtn=document.getElementById('sphere-btn-pulse');if(pbtn)pbtn.addEventListener('click',function(){E.cfg.pulse_enabled=!E.cfg.pulse_enabled;this.classList.toggle('on',E.cfg.pulse_enabled);var d=this.querySelector('.dot');if(d)d.style.background=E.cfg.pulse_enabled?'var(--accent)':'#444';});
-    var pbf=document.getElementById('sphere-btn-pulse-fire');if(pbf)pbf.addEventListener('click',function(){E.triggerPulse();});
-    var cx=document.getElementById('sphere-cursor-x');var cy=document.getElementById('sphere-cursor-y');if(cx)cx.addEventListener('input',function(){var c=document.getElementById('c'),W=c?c.width:1280;window._mouse.x=parseFloat(this.value)*W;});if(cy)cy.addEventListener('input',function(){var c=document.getElementById('c'),H=c?c.height:720;window._mouse.y=parseFloat(this.value)*H;});
-  },100);
-});
 
 /* ═══════════════════════════════════════════
    CURSOR X/Y + CLICK — câblage global MIDI
 ═══════════════════════════════════════════ */
 (function(){
   /* préfixe HTML → clé activeEngine */
-  var ENG_PFX={fluid:'',vortex:'v',nbody:'nb',sph:'sph',boids:'b',physarum:'ph',lorenz:'l',react:'r',aco:'aco',rdiff:'rd',lsys:'ls',voronoi:'vo',follow:'fw',ribbon:'rb',physiks:'phx',neural:'nr',ink:'ink',slope:'slp',dune:'dun',sphere:'sphere'};
-  var ALL_PFX=['','v','nb','sph','b','ph','l','r','aco','rd','ls','vo','fw','rb','phx','nr','ink','slp','dun','sphere'];
+  var ENG_PFX={fluid:'',vortex:'v',nbody:'nb',sph:'sph',boids:'b',physarum:'ph',lorenz:'l',react:'r',aco:'aco',rdiff:'rd',lsys:'ls',voronoi:'vo',follow:'fw',ribbon:'rb',physiks:'phx',neural:'nr',ink:'ink',slope:'slp',dune:'dun'};
+  var ALL_PFX=['','v','nb','sph','b','ph','l','r','aco','rd','ls','vo','fw','rb','phx','nr','ink','slp','dun'];
 
   function getCanvas(){return document.getElementById('c');}
 

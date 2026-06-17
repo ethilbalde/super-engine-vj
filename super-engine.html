@@ -276,7 +276,6 @@ input[type=color]::-webkit-color-swatch{border:none;border-radius:3px}
     <button class="eng-btn"        data-engine="ink"      style="--e:#a044ff">INK</button>
     <button class="eng-btn"        data-engine="slope"    style="--e:#ff3d6e">SLOPE</button>
     <button class="eng-btn"        data-engine="dune"     style="--e:#e8772e">DUNE</button>
-    <button class="eng-btn"        data-engine="sphere"   style="--e:#ffffff">SPHERE</button>
   </div>
 
   <!-- ══ FX CHAIN PANEL ══ -->
@@ -2158,75 +2157,6 @@ input[type=color]::-webkit-color-swatch{border:none;border-radius:3px}
   <div class="tab-pane" id="tab-displace-io"><div class="sec"><div class="sec-title">MIDI CC Displace</div><div id="dspmidi-cc-list"></div></div></div>
   <div class="tab-pane" id="tab-displace-save"><div class="sec"><div style="color:var(--text-faint);font-size:9px">Config Displace dans les scènes globales.</div></div></div>
   </div><!-- /displace -->
-
-  <!-- ══ SPHERE ENGINE PANES ══ -->
-  <div class="engine-panes" data-engine="sphere">
-
-  <div class="tab-pane active" id="tab-sphere-live">
-    <div class="sec">
-      <div class="sec-title">Formes</div>
-      <div class="btn-grid">
-        <button class="btn active" data-sphshape="0">Sphere</button>
-        <button class="btn" data-sphshape="1">Cube</button>
-        <button class="btn" data-sphshape="2">Torus</button>
-        <button class="btn" data-sphshape="3">Wave</button>
-        <button class="btn" data-sphshape="4">Spiral</button>
-      </div>
-    </div>
-    <div class="sep"></div>
-    <div class="sec">
-      <div class="sec-title">Contrôle souris</div>
-      <div class="ctrl"><label>Rayon répulsion <span class="val" id="sphere-val-repel">100</span></label><input type="range" id="sphere-pel-radius" min="30" max="250" step="5" value="100"></div>
-      <div class="ctrl"><label>Force répulsion <span class="val" id="sphere-val-force">28</span></label><input type="range" id="sphere-pel-strength" min="5" max="80" step="1" value="28"></div>
-      <div class="ctrl"><label>Curseur X <span class="val" id="sphval-cx">0.50</span></label><input type="range" id="sphere-cursor-x" min="0" max="1" step="0.005" value="0.50"></div>
-      <div class="ctrl"><label>Curseur Y <span class="val" id="sphval-cy">0.50</span></label><input type="range" id="sphere-cursor-y" min="0" max="1" step="0.005" value="0.50"></div>
-    </div>
-    <div class="sep"></div>
-    <div class="sec">
-      <div class="quick-row">
-        <button class="big-toggle" id="sphere-btn-pulse" style="flex:1"><span class="dot"></span>PULSE</button>
-        <button class="quick-fire" id="sphere-btn-pulse-fire">▶</button>
-      </div>
-      <div class="prog-bar"><div class="prog-fill" id="sphere-pulse-bar"></div></div>
-    </div>
-  </div><!-- /tab-sphere-live -->
-
-  <div class="tab-pane" id="tab-sphere-sim">
-    <div class="sec">
-      <div class="sec-title">Particules</div>
-      <div class="ctrl"><label>Nombre <span class="val" id="sphere-val-count">5000</span></label><input type="range" id="sphere-particle-count" min="500" max="12000" step="500" value="5000"></div>
-      <div class="ctrl"><label>Taille point <span class="val" id="sphere-val-size">1.5</span></label><input type="range" id="sphere-point-size" min="0.5" max="5" step="0.1" value="1.5"></div>
-    </div>
-    <div class="sep"></div>
-    <div class="sec">
-      <div class="sec-title">Dynamique</div>
-      <div class="ctrl"><label>Rayon sphère <span class="val" id="sphere-val-radius">180</span></label><input type="range" id="sphere-radius" min="50" max="350" step="10" value="180"></div>
-      <div class="ctrl"><label>Attraction <span class="val" id="sphere-val-attr">0.010</span></label><input type="range" id="sphere-attraction" min="0.001" max="0.1" step="0.001" value="0.01"></div>
-      <div class="ctrl"><label>Damping <span class="val" id="sphere-val-damp">0.90</span></label><input type="range" id="sphere-damping" min="0.7" max="0.99" step="0.01" value="0.9"></div>
-    </div>
-  </div><!-- /tab-sphere-sim -->
-
-  <div class="tab-pane" id="tab-sphere-color">
-    <div class="sec">
-      <div class="sec-title">Couleurs</div>
-      <div class="ctrl"><label style="margin-bottom:5px">Fond</label><input type="color" id="sphere-bg-color" value="#000000"></div>
-      <div class="ctrl"><label style="margin-bottom:5px">Particules</label><input type="color" id="sphere-color" value="#ffffff"></div>
-    </div>
-  </div><!-- /tab-sphere-color -->
-
-  <div class="tab-pane" id="tab-sphere-tempo">
-    <div class="sec">
-      <div class="sec-title">Timing</div>
-      <div class="ctrl"><label>Intervalle pulse <span class="val" id="sphere-val-pulse-int">6.0</span>s</label><input type="range" id="sphere-tpulse-int" min="0.5" max="30" step="0.5" value="6.0"></div>
-      <div class="ctrl"><label>BPM div <span class="val" id="sphere-val-beat-div">1</span></label><input type="range" id="sphere-beat-div" min="1" max="8" step="1" value="1"></div>
-    </div>
-  </div><!-- /tab-sphere-tempo -->
-
-  <div class="tab-pane" id="tab-sphere-io"><div class="sec"><div class="sec-title">MIDI CC Sphere</div><div id="sphere-midi-cc-list"></div></div></div>
-
-  <div class="tab-pane" id="tab-sphere-save"><div class="sec"><div style="color:var(--text-faint);font-size:9px">Config Sphere dans les scènes globales.</div></div></div>
-
-  </div><!-- /sphere -->
 
   <div class="tab-pane" id="tab-bug">
     <div class="sec">
@@ -5085,217 +5015,6 @@ var Engine_Dune=(function(){
 
 
 /* ═══════════════════════════════════════════
-   SPHERE ENGINE — Rotating Particle Cloud
-═══════════════════════════════════════════ */
-var Engine_Sphere=(function(){
-  var canvas,ctx,mouse=window._mouse,_active=false;
-  var points=[],_t=0,frameCount=0,_needsReset=false;
-  var angle=0;
-
-  var cfg={
-    canvas_width:800,canvas_height:600,
-    particle_count:5000,
-    radius:180,repel_radius:100,
-    attraction:0.01,damping:0.9,repel_strength:28,
-    color:'#ffffff',bg_color:'#000000',
-    point_size:1.5,
-    shape:0,shape_list:['SPHERE','CUBE','TORUS','WAVE','SPIRAL'],
-    pen_size:80,push_force:1.0,
-    pulse_enabled:false,pulse_interval:2.0,pulse_type:'burst',pulse_strength:1.0,
-    bpm:120,time_mode:'bpm',pulse_beat_div:1
-  };
-
-  function Point(index){
-    this.index=index;
-    this.pos={x:0,y:0};
-    this.vel={x:0,y:0};
-    this.targetx=0;
-    this.targety=0;
-  }
-
-  function initPoints(){
-    points=[];
-    for(var i=0;i<cfg.particle_count;i++){
-      points.push(new Point(i));
-    }
-    updateTargets();
-    for(var i=0;i<points.length;i++){
-      points[i].vel.x=0;
-      points[i].vel.y=0;
-    }
-  }
-
-  function updateTargets(){
-    var shape=cfg.shape_list[cfg.shape]||cfg.shape_list[0];
-    for(var i=0;i<points.length;i++){
-      var p=points[i];
-      var idx=p.index;
-      var t=idx/cfg.particle_count*Math.PI*2;
-      var u=idx/cfg.particle_count;
-
-      if(shape==='CUBE'){
-        var side=Math.floor(idx/(cfg.particle_count/6));
-        var local=idx%(cfg.particle_count/6);
-        var x=Math.sin(local*Math.PI*2)*(0.5+0.5*Math.cos(angle*0.5));
-        var y=Math.cos(local*Math.PI*2)*(0.5+0.5*Math.cos(angle*0.5));
-        p.targetx=x*cfg.radius;
-        p.targety=y*cfg.radius;
-      } else if(shape==='TORUS'){
-        var theta=t+angle;
-        var phi=u*Math.PI*2;
-        p.targetx=(cfg.radius*0.6+cfg.radius*0.3*Math.cos(phi))*Math.sin(theta);
-        p.targety=(cfg.radius*0.6+cfg.radius*0.3*Math.cos(phi))*Math.cos(theta);
-      } else if(shape==='WAVE'){
-        p.targetx=Math.sin(t+angle)*Math.sin(u*Math.PI*4)*cfg.radius;
-        p.targety=Math.cos(u*Math.PI*2+angle*0.3)*cfg.radius;
-      } else if(shape==='SPIRAL'){
-        var r=cfg.radius*(0.3+0.7*u);
-        var theta=u*Math.PI*12+angle;
-        p.targetx=Math.sin(theta)*r;
-        p.targety=Math.cos(theta)*r;
-      } else {
-        // SPHERE par défaut
-        var sinIdxSq=Math.sin(idx*idx);
-        var cosIdxSq=Math.cos(idx*idx);
-        p.targetx=Math.sin(idx+angle)*sinIdxSq*cfg.radius;
-        p.targety=cosIdxSq*cfg.radius;
-      }
-    }
-  }
-
-  function sin(x){return Math.sin(x);}
-  function cos(x){return Math.cos(x);}
-  function sqrt(x){return Math.sqrt(x);}
-
-  var lastPulseTime=0;
-  var ENG={
-    cfg:cfg,
-    init:function(){
-      canvas=document.getElementById('c');
-      if(!canvas||!canvas.getContext)return;
-      ctx=canvas.getContext('2d');
-      initPoints();
-    },
-    draw:function(){
-      if(!ctx)return;
-      ctx.fillStyle=cfg.bg_color;
-      ctx.fillRect(0,0,cfg.canvas_width,cfg.canvas_height);
-
-      var cx=cfg.canvas_width/2;
-      var cy=cfg.canvas_height/2;
-      var mx=mouse.x-cx;
-      var my=mouse.y-cy;
-      var now=_t;
-      var pulseEff=cfg.time_mode==='bpm'?(60/cfg.bpm)*cfg.pulse_beat_div:cfg.pulse_interval;
-      if(cfg.pulse_enabled&&now-lastPulseTime>=pulseEff){ENG.triggerPulse();lastPulseTime=now;}
-
-      // mouse spawn interaction
-      if(mouse.down){
-        for(var k=0;k<Math.max(1,Math.round(cfg.push_force*10));k++){
-          var dx=(Math.random()-0.5)*cfg.pen_size;
-          var dy=(Math.random()-0.5)*cfg.pen_size;
-          if(points.length<cfg.particle_count){
-            var np=new Point(points.length);
-            np.pos.x=mx+dx;
-            np.pos.y=my+dy;
-            points.push(np);
-          }
-        }
-      }
-
-      ctx.fillStyle=cfg.color;
-      ctx.strokeStyle=cfg.color;
-      ctx.lineWidth=0.5;
-
-      for(var i=0;i<points.length;i++){
-        var p=points[i];
-        var idx=p.index;
-
-        // compute rotating home position
-        var sinIdxSq=sin(idx*idx);
-        var cosIdxSq=cos(idx*idx);
-        var homeX=sin(idx+angle)*sinIdxSq*cfg.radius;
-        var homeY=cosIdxSq*cfg.radius;
-
-        // spring force toward home
-        var toHomeX=homeX-p.pos.x;
-        var toHomeY=homeY-p.pos.y;
-        p.vel.x+=toHomeX*cfg.attraction;
-        p.vel.y+=toHomeY*cfg.attraction;
-
-        // mouse repulsion
-        var awayX=p.pos.x-mx;
-        var awayY=p.pos.y-my;
-        var distSq=awayX*awayX+awayY*awayY;
-        if(distSq>0.1&&distSq<cfg.repel_radius*cfg.repel_radius){
-          var dist=sqrt(distSq);
-          var len=Math.max(0.001,dist);
-          var normX=awayX/len;
-          var normY=awayY/len;
-          var repel=cfg.repel_strength*(1-dist/cfg.repel_radius);
-          p.vel.x+=normX*repel;
-          p.vel.y+=normY*repel;
-        }
-
-        // damping and move
-        p.vel.x*=cfg.damping;
-        p.vel.y*=cfg.damping;
-        p.pos.x+=p.vel.x;
-        p.pos.y+=p.vel.y;
-
-        // draw point
-        ctx.beginPath();
-        ctx.arc(cx+p.pos.x,cy+p.pos.y,cfg.point_size,0,Math.PI*2);
-        ctx.fill();
-      }
-
-      angle+=0.01;
-      _t+=0.016;
-    },
-    triggerPulse:function(){
-      if(cfg.pulse_type==='burst'){
-        for(var i=0;i<points.length;i++){
-          var p=points[i];
-          var dx=p.pos.x;
-          var dy=p.pos.y;
-          var d=Math.sqrt(dx*dx+dy*dy)||1;
-          if(d>0){p.vel.x+=dx/d*cfg.pulse_strength*8;p.vel.y+=dy/d*cfg.pulse_strength*8;}
-        }
-      } else if(cfg.pulse_type==='reset'){
-        initPoints();
-      }
-    },
-    activate:function(){
-      _active=true;
-      if(_needsReset){initPoints();_needsReset=false;}
-    },
-    deactivate:function(){
-      _active=false;
-    },
-    reset:function(){
-      initPoints();
-    },
-    triggerPulse:function(){
-      if(cfg.pulse_type==='burst'){
-        // scatter particles
-        for(var i=0;i<points.length;i++){
-          points[i].vel.x+=(Math.random()-0.5)*cfg.pulse_strength*2;
-          points[i].vel.y+=(Math.random()-0.5)*cfg.pulse_strength*2;
-        }
-      } else if(cfg.pulse_type==='reset'){
-        initPoints();
-      }
-    },
-    markReset:function(){
-      _needsReset=true;
-    }
-  };
-
-  return ENG;
-})();
-window.Engine_Sphere=Engine_Sphere;
-
-/* ═══════════════════════════════════════════
    ENGINE MANAGER
 ═══════════════════════════════════════════ */
 var EngineManager=(function(){
@@ -5306,10 +5025,10 @@ var EngineManager=(function(){
     rdiff:window.Engine_RDiff,
     voronoi:window.Engine_Voronoi,follow:window.Engine_Follow,
     ribbon:window.Engine_Ribbon,physiks:window.Engine_Physiks,neural:window.Engine_Neural,
-    ink:window.Engine_Ink,slope:window.Engine_Slope,dune:window.Engine_Dune,sphere:window.Engine_Sphere
+    ink:window.Engine_Ink,slope:window.Engine_Slope,dune:window.Engine_Dune
   };
-  var ACCENT={fluid:'#00ffff',vortex:'#ff6600',nbody:'#aa44ff',sph:'#00ff88',boids:'#ffdd00',physarum:'#ff44aa',lorenz:'#44aaff',react:'#ff2266',aco:'#ff8800',rdiff:'#ff5500',voronoi:'#ffcc00',follow:'#6688ff',ribbon:'#ff66aa',physiks:'#c8a040',neural:'#44eeff',ink:'#a044ff',slope:'#ff3d6e',dune:'#e8772e',sphere:'#ffffff'};
-  var NAMES={fluid:'FLUID SIM',vortex:'VORTEX',nbody:'N-BODY',sph:'SPH FLUID',boids:'BOIDS',physarum:'PHYSARUM',lorenz:'LORENZ',react:'REACT',aco:'ACO FOURMIS',rdiff:'REACTION-DIFFUSION',voronoi:'VORONOI VIVANT',follow:'FOLLOW — FLOW FIELD',ribbon:'RIBBON — RUBANS',physiks:'PHYSIKS — PHYSIQUE DES MATÉRIAUX',neural:'NEURAL — RÉSEAU',ink:'INK — ENCRE & PEINTURE',slope:'SLOPE — CHAMPS DE VECTEURS',dune:'DUNE — SABLE & BRUIT',sphere:'SPHERE — NUAGE ROTATIF'};
+  var ACCENT={fluid:'#00ffff',vortex:'#ff6600',nbody:'#aa44ff',sph:'#00ff88',boids:'#ffdd00',physarum:'#ff44aa',lorenz:'#44aaff',react:'#ff2266',aco:'#ff8800',rdiff:'#ff5500',voronoi:'#ffcc00',follow:'#6688ff',ribbon:'#ff66aa',physiks:'#c8a040',neural:'#44eeff',ink:'#a044ff',slope:'#ff3d6e',dune:'#e8772e'};
+  var NAMES={fluid:'FLUID SIM',vortex:'VORTEX',nbody:'N-BODY',sph:'SPH FLUID',boids:'BOIDS',physarum:'PHYSARUM',lorenz:'LORENZ',react:'REACT',aco:'ACO FOURMIS',rdiff:'REACTION-DIFFUSION',voronoi:'VORONOI VIVANT',follow:'FOLLOW — FLOW FIELD',ribbon:'RIBBON — RUBANS',physiks:'PHYSIKS — PHYSIQUE DES MATÉRIAUX',neural:'NEURAL — RÉSEAU',ink:'INK — ENCRE & PEINTURE',slope:'SLOPE — CHAMPS DE VECTEURS',dune:'DUNE — SABLE & BRUIT'};
   window.activeEngine='fluid';
   window.overlayEngine=null;window.overlayAlpha=0.3;
 
@@ -5472,7 +5191,7 @@ document.querySelectorAll('.tab-btn').forEach(function(btn){
     document.querySelectorAll('.tab-pane').forEach(function(p){p.classList.remove('active');});
     this.classList.add('active');
     var el=document.getElementById('tab-'+_activeTab);if(el)el.classList.add('active');
-    ['vortex','nbody','sph','boids','physarum','lorenz','react','aco','rdiff','lsys','voronoi','follow','ribbon','physiks','neural','ink','slope','dune','sphere'].forEach(function(eng){
+    ['vortex','nbody','sph','boids','physarum','lorenz','react','aco','rdiff','lsys','voronoi','follow','ribbon','physiks','neural','ink','slope','dune'].forEach(function(eng){
       var vel=document.getElementById('tab-'+eng+'-'+_activeTab);if(vel)vel.classList.add('active');
     });
   });
@@ -7017,36 +6736,14 @@ updateResDisplay();
   var rst2=document.getElementById('dunbtn-reset');if(rst2)rst2.addEventListener('click',function(){E.reset();});
 })();
 
-/* ── SPHERE WIRING ── */
-document.addEventListener('DOMContentLoaded',function(){
-  setTimeout(function(){
-    var E=window.Engine_Sphere;if(!E)return;
-    function sp(id,key,valId,dec){var sl=document.getElementById(id);if(!sl)return;sl.addEventListener('input',function(){var v=parseFloat(this.value);E.cfg[key]=v;var vl=document.getElementById(valId);if(vl)vl.textContent=v.toFixed(dec!==undefined?dec:1);});}
-    sp('sphere-particle-count','particle_count','sphval-count',0);
-    sp('sphere-size','point_size','sphereval-size',1);
-    sp('sphere-radius','radius','sphereval-radius',0);
-    sp('sphere-attr','attraction','sphereval-attr',3);
-    sp('sphere-damp','damping','sphereval-damp',2);
-    sp('sphere-pel-radius','repel_radius','sphere-val-repel',0);
-    sp('sphere-pel-strength','repel_strength','sphere-val-force',0);
-    sp('sphere-tpulse-int','pulse_interval','sphval-pulse-int',1);
-    sp('sphere-beat-div','pulse_beat_div','sphereval-beat-div',0);
-    var bgc=document.getElementById('sphere-bg-color');if(bgc)bgc.addEventListener('input',function(){E.cfg.bg_color=this.value;});
-    var col=document.getElementById('sphere-pt-color');if(col)col.addEventListener('input',function(){E.cfg.color=this.value;});
-    document.querySelectorAll('[data-sphshape]').forEach(function(b){b.addEventListener('click',function(){document.querySelectorAll('[data-sphshape]').forEach(function(x){x.classList.remove('active');});this.classList.add('active');E.cfg.shape=parseInt(this.dataset.sphshape);});});
-    var pbtn=document.getElementById('sphere-btn-pulse');if(pbtn)pbtn.addEventListener('click',function(){E.cfg.pulse_enabled=!E.cfg.pulse_enabled;this.classList.toggle('on',E.cfg.pulse_enabled);var d=this.querySelector('.dot');if(d)d.style.background=E.cfg.pulse_enabled?'var(--accent)':'#444';});
-    var pbf=document.getElementById('sphere-btn-pulse-fire');if(pbf)pbf.addEventListener('click',function(){E.triggerPulse();});
-    var cx=document.getElementById('sphere-cursor-x');var cy=document.getElementById('sphere-cursor-y');if(cx)cx.addEventListener('input',function(){var c=document.getElementById('c'),W=c?c.width:1280;window._mouse.x=parseFloat(this.value)*W;});if(cy)cy.addEventListener('input',function(){var c=document.getElementById('c'),H=c?c.height:720;window._mouse.y=parseFloat(this.value)*H;});
-  },100);
-});
 
 /* ═══════════════════════════════════════════
    CURSOR X/Y + CLICK — câblage global MIDI
 ═══════════════════════════════════════════ */
 (function(){
   /* préfixe HTML → clé activeEngine */
-  var ENG_PFX={fluid:'',vortex:'v',nbody:'nb',sph:'sph',boids:'b',physarum:'ph',lorenz:'l',react:'r',aco:'aco',rdiff:'rd',lsys:'ls',voronoi:'vo',follow:'fw',ribbon:'rb',physiks:'phx',neural:'nr',ink:'ink',slope:'slp',dune:'dun',sphere:'sphere'};
-  var ALL_PFX=['','v','nb','sph','b','ph','l','r','aco','rd','ls','vo','fw','rb','phx','nr','ink','slp','dun','sphere'];
+  var ENG_PFX={fluid:'',vortex:'v',nbody:'nb',sph:'sph',boids:'b',physarum:'ph',lorenz:'l',react:'r',aco:'aco',rdiff:'rd',lsys:'ls',voronoi:'vo',follow:'fw',ribbon:'rb',physiks:'phx',neural:'nr',ink:'ink',slope:'slp',dune:'dun'};
+  var ALL_PFX=['','v','nb','sph','b','ph','l','r','aco','rd','ls','vo','fw','rb','phx','nr','ink','slp','dun'];
 
   function getCanvas(){return document.getElementById('c');}
 

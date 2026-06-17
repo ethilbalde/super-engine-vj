@@ -50,7 +50,6 @@
     <button class="eng-btn"        data-engine="ink"      style="--e:#a044ff">INK</button>
     <button class="eng-btn"        data-engine="slope"    style="--e:#ff3d6e">SLOPE</button>
     <button class="eng-btn"        data-engine="dune"     style="--e:#e8772e">DUNE</button>
-    <button class="eng-btn"        data-engine="sphere"   style="--e:#ffffff">SPHERE</button>
   </div>
 
   <!-- ══ FX CHAIN PANEL ══ -->
@@ -1932,75 +1931,6 @@
   <div class="tab-pane" id="tab-displace-io"><div class="sec"><div class="sec-title">MIDI CC Displace</div><div id="dspmidi-cc-list"></div></div></div>
   <div class="tab-pane" id="tab-displace-save"><div class="sec"><div style="color:var(--text-faint);font-size:9px">Config Displace dans les scènes globales.</div></div></div>
   </div><!-- /displace -->
-
-  <!-- ══ SPHERE ENGINE PANES ══ -->
-  <div class="engine-panes" data-engine="sphere">
-
-  <div class="tab-pane active" id="tab-sphere-live">
-    <div class="sec">
-      <div class="sec-title">Formes</div>
-      <div class="btn-grid">
-        <button class="btn active" data-sphshape="0">Sphere</button>
-        <button class="btn" data-sphshape="1">Cube</button>
-        <button class="btn" data-sphshape="2">Torus</button>
-        <button class="btn" data-sphshape="3">Wave</button>
-        <button class="btn" data-sphshape="4">Spiral</button>
-      </div>
-    </div>
-    <div class="sep"></div>
-    <div class="sec">
-      <div class="sec-title">Contrôle souris</div>
-      <div class="ctrl"><label>Rayon répulsion <span class="val" id="sphere-val-repel">100</span></label><input type="range" id="sphere-pel-radius" min="30" max="250" step="5" value="100"></div>
-      <div class="ctrl"><label>Force répulsion <span class="val" id="sphere-val-force">28</span></label><input type="range" id="sphere-pel-strength" min="5" max="80" step="1" value="28"></div>
-      <div class="ctrl"><label>Curseur X <span class="val" id="sphval-cx">0.50</span></label><input type="range" id="sphere-cursor-x" min="0" max="1" step="0.005" value="0.50"></div>
-      <div class="ctrl"><label>Curseur Y <span class="val" id="sphval-cy">0.50</span></label><input type="range" id="sphere-cursor-y" min="0" max="1" step="0.005" value="0.50"></div>
-    </div>
-    <div class="sep"></div>
-    <div class="sec">
-      <div class="quick-row">
-        <button class="big-toggle" id="sphere-btn-pulse" style="flex:1"><span class="dot"></span>PULSE</button>
-        <button class="quick-fire" id="sphere-btn-pulse-fire">▶</button>
-      </div>
-      <div class="prog-bar"><div class="prog-fill" id="sphere-pulse-bar"></div></div>
-    </div>
-  </div><!-- /tab-sphere-live -->
-
-  <div class="tab-pane" id="tab-sphere-sim">
-    <div class="sec">
-      <div class="sec-title">Particules</div>
-      <div class="ctrl"><label>Nombre <span class="val" id="sphere-val-count">5000</span></label><input type="range" id="sphere-particle-count" min="500" max="12000" step="500" value="5000"></div>
-      <div class="ctrl"><label>Taille point <span class="val" id="sphere-val-size">1.5</span></label><input type="range" id="sphere-point-size" min="0.5" max="5" step="0.1" value="1.5"></div>
-    </div>
-    <div class="sep"></div>
-    <div class="sec">
-      <div class="sec-title">Dynamique</div>
-      <div class="ctrl"><label>Rayon sphère <span class="val" id="sphere-val-radius">180</span></label><input type="range" id="sphere-radius" min="50" max="350" step="10" value="180"></div>
-      <div class="ctrl"><label>Attraction <span class="val" id="sphere-val-attr">0.010</span></label><input type="range" id="sphere-attraction" min="0.001" max="0.1" step="0.001" value="0.01"></div>
-      <div class="ctrl"><label>Damping <span class="val" id="sphere-val-damp">0.90</span></label><input type="range" id="sphere-damping" min="0.7" max="0.99" step="0.01" value="0.9"></div>
-    </div>
-  </div><!-- /tab-sphere-sim -->
-
-  <div class="tab-pane" id="tab-sphere-color">
-    <div class="sec">
-      <div class="sec-title">Couleurs</div>
-      <div class="ctrl"><label style="margin-bottom:5px">Fond</label><input type="color" id="sphere-bg-color" value="#000000"></div>
-      <div class="ctrl"><label style="margin-bottom:5px">Particules</label><input type="color" id="sphere-color" value="#ffffff"></div>
-    </div>
-  </div><!-- /tab-sphere-color -->
-
-  <div class="tab-pane" id="tab-sphere-tempo">
-    <div class="sec">
-      <div class="sec-title">Timing</div>
-      <div class="ctrl"><label>Intervalle pulse <span class="val" id="sphere-val-pulse-int">6.0</span>s</label><input type="range" id="sphere-tpulse-int" min="0.5" max="30" step="0.5" value="6.0"></div>
-      <div class="ctrl"><label>BPM div <span class="val" id="sphere-val-beat-div">1</span></label><input type="range" id="sphere-beat-div" min="1" max="8" step="1" value="1"></div>
-    </div>
-  </div><!-- /tab-sphere-tempo -->
-
-  <div class="tab-pane" id="tab-sphere-io"><div class="sec"><div class="sec-title">MIDI CC Sphere</div><div id="sphere-midi-cc-list"></div></div></div>
-
-  <div class="tab-pane" id="tab-sphere-save"><div class="sec"><div style="color:var(--text-faint);font-size:9px">Config Sphere dans les scènes globales.</div></div></div>
-
-  </div><!-- /sphere -->
 
   <div class="tab-pane" id="tab-bug">
     <div class="sec">
