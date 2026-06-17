@@ -51,6 +51,7 @@
     <button class="eng-btn"        data-engine="slope"    style="--e:#ff3d6e">SLOPE</button>
     <button class="eng-btn"        data-engine="dune"     style="--e:#e8772e">DUNE</button>
     <button class="eng-btn"        data-engine="trees"    style="--e:#2d7a3e">TREES</button>
+    <button class="eng-btn"        data-engine="sphere"   style="--e:#ffffff">SPHERE</button>
   </div>
 
   <!-- ══ FX CHAIN PANEL ══ -->
@@ -1964,6 +1965,44 @@
   <div class="tab-pane" id="tab-trees-io"><div class="sec"><div class="sec-title">MIDI CC Trees</div><div id="treemidi-cc-list"></div></div></div>
   <div class="tab-pane" id="tab-trees-save"><div class="sec"><div style="color:var(--text-faint);font-size:9px">Config Trees dans les scènes globales.</div></div></div>
   </div><!-- /trees -->
+
+  <!-- ══ SPHERE ENGINE PANES ══ -->
+  <div class="engine-panes" data-engine="sphere">
+  <div class="tab-pane active" id="tab-sphere-live">
+    <div class="sec">
+      <div class="quick-row">
+        <button class="big-toggle" id="spherebtn-pulse" style="flex:1"><span class="dot"></span>DISPERSER</button>
+        <button class="quick-fire" id="spherebtn-pulse-fire">▶</button>
+      </div>
+      <div class="prog-bar"><div class="prog-fill" id="spherepulse-bar"></div></div>
+    </div>
+    <div class="sep"></div>
+    <div class="sec">
+      <div class="sec-title">Interaction souris</div>
+      <div class="ctrl"><label>Rayon répulsion <span class="val" id="sphereval-repel">100</span></label><input type="range" id="spherererepel-radius" min="30" max="250" step="5" value="100"></div>
+      <div class="ctrl"><label>Force répulsion <span class="val" id="sphereval-repel-str">28</span></label><input type="range" id="spherererepel-strength" min="5" max="80" step="1" value="28"></div>
+    </div>
+  </div>
+  <div class="tab-pane" id="tab-sphere-sim">
+    <div class="ctrl"><label>Nombre particules <span class="val" id="sphereval-count">5000</span></label><input type="range" id="sphereparticle-count" min="500" max="12000" step="500" value="5000"></div>
+    <div class="ctrl"><label>Rayon sphère <span class="val" id="sphereval-radius">180</span></label><input type="range" id="sphereradius" min="50" max="350" step="10" value="180"></div>
+    <div class="ctrl"><label>Attraction home <span class="val" id="sphereval-attr">0.01</span></label><input type="range" id="sphereattraction" min="0.001" max="0.1" step="0.001" value="0.01"></div>
+    <div class="ctrl"><label>Damping (friction) <span class="val" id="sphereval-damp">0.90</span></label><input type="range" id="spheredamping" min="0.7" max="0.99" step="0.01" value="0.9"></div>
+    <div class="ctrl"><label>Taille point <span class="val" id="sphereval-ptsize">1.5</span></label><input type="range" id="spherepoint-size" min="0.5" max="5" step="0.1" value="1.5"></div>
+    <div class="sep"></div>
+    <button class="btn-wide" id="spherebtn-reset">↺ Réinitialiser</button>
+  </div>
+  <div class="tab-pane" id="tab-sphere-color">
+    <div class="ctrl"><label style="margin-bottom:5px">Fond</label><input type="color" id="spherebg-color" value="#000000"></div>
+    <div class="ctrl"><label style="margin-bottom:5px">Couleur particules</label><input type="color" id="spherecolor" value="#ffffff"></div>
+  </div>
+  <div class="tab-pane" id="tab-sphere-tempo">
+    <div class="ctrl"><label>Intervalle dispersion <span class="val" id="sphereval-pulse-int">6.0</span>s</label><input type="range" id="spheretpulse-int" min="0.5" max="30" step="0.5" value="6.0"></div>
+    <div class="ctrl"><label>BPM sync — div <span class="val" id="sphereval-beat-div">1</span></label><input type="range" id="spherebeat-div" min="1" max="8" step="1" value="1"></div>
+  </div>
+  <div class="tab-pane" id="tab-sphere-io"><div class="sec"><div class="sec-title">MIDI CC Sphere</div><div id="spheremidi-cc-list"></div></div></div>
+  <div class="tab-pane" id="tab-sphere-save"><div class="sec"><div style="color:var(--text-faint);font-size:9px">Config Sphere dans les scènes globales.</div></div></div>
+  </div><!-- /sphere -->
 
   <div class="tab-pane" id="tab-bug">
     <div class="sec">
