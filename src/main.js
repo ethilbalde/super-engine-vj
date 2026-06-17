@@ -9,10 +9,10 @@ var EngineManager=(function(){
     rdiff:window.Engine_RDiff,
     voronoi:window.Engine_Voronoi,follow:window.Engine_Follow,
     ribbon:window.Engine_Ribbon,physiks:window.Engine_Physiks,neural:window.Engine_Neural,
-    ink:window.Engine_Ink,slope:window.Engine_Slope,dune:window.Engine_Dune
+    ink:window.Engine_Ink,slope:window.Engine_Slope,dune:window.Engine_Dune,cloth:window.Engine_Cloth
   };
-  var ACCENT={fluid:'#00ffff',vortex:'#ff6600',nbody:'#aa44ff',sph:'#00ff88',boids:'#ffdd00',physarum:'#ff44aa',lorenz:'#44aaff',react:'#ff2266',aco:'#ff8800',rdiff:'#ff5500',voronoi:'#ffcc00',follow:'#6688ff',ribbon:'#ff66aa',physiks:'#c8a040',neural:'#44eeff',ink:'#a044ff',slope:'#ff3d6e',dune:'#e8772e'};
-  var NAMES={fluid:'FLUID SIM',vortex:'VORTEX',nbody:'N-BODY',sph:'SPH FLUID',boids:'BOIDS',physarum:'PHYSARUM',lorenz:'LORENZ',react:'REACT',aco:'ACO FOURMIS',rdiff:'REACTION-DIFFUSION',voronoi:'VORONOI VIVANT',follow:'FOLLOW — FLOW FIELD',ribbon:'RIBBON — RUBANS',physiks:'PHYSIKS — PHYSIQUE DES MATÉRIAUX',neural:'NEURAL — RÉSEAU',ink:'INK — ENCRE & PEINTURE',slope:'SLOPE — CHAMPS DE VECTEURS',dune:'DUNE — SABLE & BRUIT'};
+  var ACCENT={fluid:'#00ffff',vortex:'#ff6600',nbody:'#aa44ff',sph:'#00ff88',boids:'#ffdd00',physarum:'#ff44aa',lorenz:'#44aaff',react:'#ff2266',aco:'#ff8800',rdiff:'#ff5500',voronoi:'#ffcc00',follow:'#6688ff',ribbon:'#ff66aa',physiks:'#c8a040',neural:'#44eeff',ink:'#a044ff',slope:'#ff3d6e',dune:'#e8772e',cloth:'#00aa88'};
+  var NAMES={fluid:'FLUID SIM',vortex:'VORTEX',nbody:'N-BODY',sph:'SPH FLUID',boids:'BOIDS',physarum:'PHYSARUM',lorenz:'LORENZ',react:'REACT',aco:'ACO FOURMIS',rdiff:'REACTION-DIFFUSION',voronoi:'VORONOI VIVANT',follow:'FOLLOW — FLOW FIELD',ribbon:'RIBBON — RUBANS',physiks:'PHYSIKS — PHYSIQUE DES MATÉRIAUX',neural:'NEURAL — RÉSEAU',ink:'INK — ENCRE & PEINTURE',slope:'SLOPE — CHAMPS DE VECTEURS',dune:'DUNE — SABLE & BRUIT',cloth:'CLOTH — TISSU PHYSIQUE'};
   window.activeEngine='fluid';
   window.overlayEngine=null;window.overlayAlpha=0.3;
 
@@ -97,7 +97,7 @@ function autoResize(){
   FluidSim.cfg.canvas_height=Math.max(res*10,Math.floor(availH/res)*res);
   FluidSim.resize();updateResDisplay();
   /* sync canvas size to all engines and mark them for reset on next activate */
-  var engineNames=['VortexEngine','NBodyEngine','Engine_SPH','Engine_Boids','Engine_Physarum','Engine_Lorenz','Engine_React','Engine_ACO','Engine_RDiff','Engine_LSystem','Engine_Voronoi','Engine_Follow','Engine_Ribbon','Engine_Physiks','Engine_Neural','Engine_Ink','Engine_Slope','Engine_Dune'];
+  var engineNames=['VortexEngine','NBodyEngine','Engine_SPH','Engine_Boids','Engine_Physarum','Engine_Lorenz','Engine_React','Engine_ACO','Engine_RDiff','Engine_LSystem','Engine_Voronoi','Engine_Follow','Engine_Ribbon','Engine_Physiks','Engine_Neural','Engine_Ink','Engine_Slope','Engine_Dune','Engine_Cloth'];
   engineNames.forEach(function(n){var e=window[n];if(e&&e.cfg){e.cfg.canvas_width=FluidSim.cfg.canvas_width;e.cfg.canvas_height=FluidSim.cfg.canvas_height;if(e.markReset)e.markReset();}});
 }
 function updateResDisplay(){
@@ -1720,14 +1720,50 @@ updateResDisplay();
   var rst2=document.getElementById('dunbtn-reset');if(rst2)rst2.addEventListener('click',function(){E.reset();});
 })();
 
+/* ── CLOTH WIRING ── */
+(function(){
+  var E=Engine_Cloth;
+  function clth(id,key,valId,dec){var sl=document.getElementById(id);if(!sl)return;sl.addEventListener('input',function(){var v=parseFloat(this.value);E.cfg[key]=v;var sp=document.getElementById(valId);if(sp)sp.textContent=v.toFixed(dec!==undefined?dec:2);});}
+  clth('clthgrid-count','grid_count','clthval-grid',0);
+  var gslider=document.getElementById('clthgrid-count');if(gslider)gslider.addEventListener('change',function(){E.reset();});
+  clth('clthfriction','friction','clthval-friction',3);
+  clth('clthforce-mult','force_multiplier','clthval-force',2);
+  clth('clthspeed-limit','speed_limit','clthval-speed',1);
+  clth('clthgrav-x','gravity_x','clthval-gx',2);
+  clth('clthgrav-y','gravity_y','clthval-gy',2);
+  clth('clthknife-range','knife_range','clthval-knife',0);
+  clth('clthopacity','opacity','clthval-opacity',2);
+  clth('clthline-width','line_width','clthval-width',1);
+  clth('clthnode-size','node_size','clthval-nsize',1);
+  clth('clthtrail','trail','clthval-trail',3);
+  clth('clothpulse-int','pulse_interval','clthval-pulse-int',1);
+  clth('clthbeat-div','pulse_beat_div','clthval-beat-div',0);
+  clth('clothhue-speed','hue_speed','clthval-hue-speed',0);
+  /* colors */
+  var bgc=document.getElementById('clthbg-color');if(bgc)bgc.addEventListener('input',function(){E.cfg.bg_color=this.value;});
+  var linec=document.getElementById('clthline-color');if(linec)linec.addEventListener('input',function(){E.cfg.line_color=this.value;});
+  var nodec=document.getElementById('clthnode-color');if(nodec)nodec.addEventListener('input',function(){E.cfg.node_color=this.value;});
+  var knifec=document.getElementById('clthknife-color');if(knifec)knifec.addEventListener('input',function(){E.cfg.knife_color=this.value;});
+  /* toggles */
+  var knifeBtn=document.getElementById('clthknife-enabled');if(knifeBtn)knifeBtn.addEventListener('change',function(){E.cfg.knife_enabled=this.checked;});
+  var hueBtn=document.getElementById('clothhue-shift-enabled');if(hueBtn)hueBtn.addEventListener('change',function(){E.cfg.hue_shift_enabled=this.checked;});
+  /* pulse */
+  var pbtn=document.getElementById('clthbtn-pulse');if(pbtn)pbtn.addEventListener('click',function(){E.cfg.pulse_enabled=!E.cfg.pulse_enabled;this.classList.toggle('on',E.cfg.pulse_enabled);var d=this.querySelector('.dot');if(d)d.style.background=E.cfg.pulse_enabled?'var(--accent)':'var(--text-faint)';});
+  var pbf=document.getElementById('clthbtn-pulse-fire');if(pbf)pbf.addEventListener('click',function(){E.triggerPulse();});
+  /* undo */
+  var undoBtn=document.getElementById('clthbtn-undo');if(undoBtn)undoBtn.addEventListener('click',function(){E.undo();});
+  /* reset */
+  var rstBtn=document.getElementById('clthbtn-reset');if(rstBtn)rstBtn.addEventListener('click',function(){E.reset();});
+})();
+
 
 /* ═══════════════════════════════════════════
    CURSOR X/Y + CLICK — câblage global MIDI
 ═══════════════════════════════════════════ */
 (function(){
   /* préfixe HTML → clé activeEngine */
-  var ENG_PFX={fluid:'',vortex:'v',nbody:'nb',sph:'sph',boids:'b',physarum:'ph',lorenz:'l',react:'r',aco:'aco',rdiff:'rd',lsys:'ls',voronoi:'vo',follow:'fw',ribbon:'rb',physiks:'phx',neural:'nr',ink:'ink',slope:'slp',dune:'dun'};
-  var ALL_PFX=['','v','nb','sph','b','ph','l','r','aco','rd','ls','vo','fw','rb','phx','nr','ink','slp','dun'];
+  var ENG_PFX={fluid:'',vortex:'v',nbody:'nb',sph:'sph',boids:'b',physarum:'ph',lorenz:'l',react:'r',aco:'aco',rdiff:'rd',lsys:'ls',voronoi:'vo',follow:'fw',ribbon:'rb',physiks:'phx',neural:'nr',ink:'ink',slope:'slp',dune:'dun',cloth:'clth'};
+  var ALL_PFX=['','v','nb','sph','b','ph','l','r','aco','rd','ls','vo','fw','rb','phx','nr','ink','slp','dun','clth'];
 
   function getCanvas(){return document.getElementById('c');}
 

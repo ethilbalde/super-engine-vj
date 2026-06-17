@@ -50,6 +50,7 @@
     <button class="eng-btn"        data-engine="ink"      style="--e:#a044ff">INK</button>
     <button class="eng-btn"        data-engine="slope"    style="--e:#ff3d6e">SLOPE</button>
     <button class="eng-btn"        data-engine="dune"     style="--e:#e8772e">DUNE</button>
+    <button class="eng-btn"        data-engine="cloth"    style="--e:#00aa88">CLOTH</button>
   </div>
 
   <!-- ══ FX CHAIN PANEL ══ -->
@@ -1746,6 +1747,83 @@
   <div class="tab-pane" id="tab-dune-io"><div class="sec"><div class="sec-title">MIDI CC Dune</div><div id="dunmidi-cc-list"></div></div></div>
   <div class="tab-pane" id="tab-dune-save"><div class="sec"><div style="color:var(--text-faint);font-size:9px">Config Dune dans les scènes globales.</div></div></div>
   </div><!-- /dune -->
+
+  <!-- ══ CLOTH ENGINE PANES ══ -->
+  <div class="engine-panes" data-engine="cloth">
+  <div class="tab-pane active" id="tab-cloth-live">
+    <div class="sec">
+      <div class="sec-title">Couteau (Knife)</div>
+      <div class="toggle-row"><label>Couteau activé</label><input type="checkbox" id="clthknife-enabled" checked></div>
+      <div class="ctrl"><label>Rayon couteau <span class="val" id="clthval-knife">15</span></label><input type="range" id="clthknife-range" min="5" max="50" step="1" value="15"></div>
+      <div class="ctrl"><label>Couleur couteau</label><input type="color" id="clthknife-color" value="#ffff00"></div>
+    </div>
+    <div class="sep"></div>
+    <div class="sec">
+      <div class="quick-row">
+        <button class="big-toggle" id="clthbtn-pulse" style="flex:1"><span class="dot"></span>PULSE</button>
+        <button class="quick-fire" id="clthbtn-pulse-fire">▶</button>
+      </div>
+      <div class="prog-bar"><div class="prog-fill" id="clthpulse-bar"></div></div>
+    </div>
+    <div class="sep"></div>
+    <div class="sec">
+      <div class="sec-title">Action</div>
+      <button class="btn-wide" id="clthbtn-undo">↶ Undo Cut</button>
+      <button class="btn-wide" id="clthbtn-reset">↺ Réinitialiser</button>
+    </div>
+  </div>
+
+  <div class="tab-pane" id="tab-cloth-sim">
+    <div class="sec">
+      <div class="sec-title">Grille</div>
+      <div class="ctrl"><label>Densité grille <span class="val" id="clthval-grid">50</span></label><input type="range" id="clthgrid-count" min="10" max="100" step="5" value="50"></div>
+    </div>
+    <div class="sep"></div>
+    <div class="sec">
+      <div class="sec-title">Physique</div>
+      <div class="ctrl"><label>Friction <span class="val" id="clthval-friction">0.99</span></label><input type="range" id="clthfriction" min="0.8" max="0.999" step="0.005" value="0.99"></div>
+      <div class="ctrl"><label>Force multiplier <span class="val" id="clthval-force">0.25</span></label><input type="range" id="clthforce-mult" min="0.05" max="1.0" step="0.05" value="0.25"></div>
+      <div class="ctrl"><label>Limite vitesse <span class="val" id="clthval-speed">8</span></label><input type="range" id="clthspeed-limit" min="1" max="20" step="0.5" value="8"></div>
+    </div>
+    <div class="sep"></div>
+    <div class="sec">
+      <div class="sec-title">Gravité</div>
+      <div class="ctrl"><label>Gravité X <span class="val" id="clthval-gx">0.00</span></label><input type="range" id="clthgrav-x" min="-1" max="1" step="0.1" value="0"></div>
+      <div class="ctrl"><label>Gravité Y <span class="val" id="clthval-gy">0.10</span></label><input type="range" id="clthgrav-y" min="-1" max="1" step="0.1" value="0.1"></div>
+    </div>
+  </div>
+
+  <div class="tab-pane" id="tab-cloth-color">
+    <div class="sec">
+      <div class="sec-title">Couleurs</div>
+      <div class="ctrl"><label style="margin-bottom:5px">Fond</label><input type="color" id="clthbg-color" value="#050505"></div>
+      <div class="ctrl"><label style="margin-bottom:5px">Liens</label><input type="color" id="clthline-color" value="#00aa88"></div>
+      <div class="ctrl"><label style="margin-bottom:5px">Nœuds</label><input type="color" id="clthnode-color" value="#ff4400"></div>
+    </div>
+    <div class="sep"></div>
+    <div class="sec">
+      <div class="sec-title">Rendu</div>
+      <div class="ctrl"><label>Opacité <span class="val" id="clthval-opacity">0.90</span></label><input type="range" id="clthopacity" min="0.3" max="1" step="0.05" value="0.9"></div>
+      <div class="ctrl"><label>Épaisseur liens <span class="val" id="clthval-width">1.0</span></label><input type="range" id="clthline-width" min="0.5" max="3" step="0.1" value="1.0"></div>
+      <div class="ctrl"><label>Taille nœuds <span class="val" id="clthval-nsize">2.0</span></label><input type="range" id="clthnode-size" min="0.5" max="5" step="0.5" value="2.0"></div>
+      <div class="ctrl"><label>Traînée <span class="val" id="clthval-trail">0.02</span></label><input type="range" id="clthtrail" min="0.01" max="0.3" step="0.01" value="0.02"></div>
+    </div>
+  </div>
+
+  <div class="tab-pane" id="tab-cloth-tempo">
+    <div class="sec">
+      <div class="sec-title">Timing</div>
+      <div class="ctrl"><label>Intervalle pulse <span class="val" id="clthval-pulse-int">2.0</span>s</label><input type="range" id="clothpulse-int" min="0.5" max="10" step="0.5" value="2.0"></div>
+      <div class="ctrl"><label>BPM div <span class="val" id="clthval-beat-div">1</span></label><input type="range" id="clthbeat-div" min="1" max="8" step="1" value="1"></div>
+    </div>
+    <div class="sep"></div>
+    <div class="toggle-row"><label>Hue shift</label><input type="checkbox" id="clothhue-shift-enabled"></div>
+    <div class="ctrl"><label>Vitesse hue <span class="val" id="clthval-hue-speed">20</span></label><input type="range" id="clothhue-speed" min="0" max="60" step="1" value="20"></div>
+  </div>
+
+  <div class="tab-pane" id="tab-cloth-io"><div class="sec"><div class="sec-title">MIDI CC Cloth</div><div id="clothmidi-cc-list"></div></div></div>
+  <div class="tab-pane" id="tab-cloth-save"><div class="sec"><div style="color:var(--text-faint);font-size:9px">Config Cloth dans les scènes globales.</div></div></div>
+  </div><!-- /cloth -->
 
   <!-- ══ GROWTH ENGINE PANES ══ -->
   <div class="engine-panes" data-engine="growth">
