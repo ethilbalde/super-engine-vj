@@ -50,6 +50,7 @@
     <button class="eng-btn"        data-engine="ink"      style="--e:#a044ff">INK</button>
     <button class="eng-btn"        data-engine="slope"    style="--e:#ff3d6e">SLOPE</button>
     <button class="eng-btn"        data-engine="dune"     style="--e:#e8772e">DUNE</button>
+    <button class="eng-btn"        data-engine="mandala"  style="--e:#ff44aa">MANDALA</button>
   </div>
 
   <!-- ══ FX CHAIN PANEL ══ -->
@@ -1746,6 +1747,72 @@
   <div class="tab-pane" id="tab-dune-io"><div class="sec"><div class="sec-title">MIDI CC Dune</div><div id="dunmidi-cc-list"></div></div></div>
   <div class="tab-pane" id="tab-dune-save"><div class="sec"><div style="color:var(--text-faint);font-size:9px">Config Dune dans les scènes globales.</div></div></div>
   </div><!-- /dune -->
+
+  <!-- ══ MANDALA ENGINE PANES ══ -->
+  <div class="engine-panes" data-engine="mandala">
+  <div class="tab-pane active" id="tab-mandala-live">
+    <div class="sec">
+      <div class="sec-title">Formes</div>
+      <div class="toggle-row"><label>Mode spiral</label><input type="checkbox" id="manspiral-enabled"></div>
+      <div class="ctrl"><label>Rotation <span class="val" id="manval-rot">5.0</span>°/s</label><input type="range" id="manrot-speed" min="0" max="30" step="0.5" value="5.0"></div>
+      <div class="toggle-row"><label>Twist/torsion</label><input type="checkbox" id="mantwist-enabled"></div>
+    </div>
+    <div class="sep"></div>
+    <div class="sec">
+      <div class="sec-title">Interaction souris</div>
+      <div class="ctrl"><label>Rayon <span class="val" id="manval-pen">60</span></label><input type="range" id="manpen-size" min="10" max="200" value="60"></div>
+      <div class="ctrl"><label>Force <span class="val" id="manval-force">1.5</span></label><input type="range" id="manpush-force" min="0.1" max="5" step="0.1" value="1.5"></div>
+    </div>
+    <div class="sep"></div>
+    <div class="sec">
+      <div class="quick-row">
+        <button class="big-toggle" id="manbtn-pulse" style="flex:1"><span class="dot"></span>PULSE</button>
+        <button class="quick-fire" id="manbtn-pulse-fire">▶</button>
+      </div>
+      <div class="prog-bar"><div class="prog-fill" id="manpulse-bar"></div></div>
+    </div>
+  </div>
+  <div class="tab-pane" id="tab-mandala-sim">
+    <div class="sec">
+      <div class="sec-title">Croissance</div>
+      <div class="ctrl"><label>Nombre branches <span class="val" id="manval-count">8</span></label><input type="range" id="manbranch-count" min="1" max="24" step="1" value="8"></div>
+      <div class="ctrl"><label>Ordre symétrie <span class="val" id="manval-sym">6</span></label><input type="range" id="mansym-order" min="2" max="12" step="1" value="6"></div>
+      <div class="ctrl"><label>Vitesse croissance <span class="val" id="manval-speed">0.8</span></label><input type="range" id="mangrow-speed" min="0.1" max="3" step="0.1" value="0.8"></div>
+      <div class="ctrl"><label>Longueur branche <span class="val" id="manval-len">120</span></label><input type="range" id="manbranch-len" min="30" max="300" step="10" value="120"></div>
+      <div class="ctrl"><label>Étalement angle <span class="val" id="manval-spread">25</span>°</label><input type="range" id="manangle-spread" min="0" max="90" step="1" value="25"></div>
+    </div>
+    <div class="sep"></div>
+    <div class="sec">
+      <div class="sec-title">Physique</div>
+      <div class="ctrl"><label>Attraction au centre <span class="val" id="manval-attr">0.15</span></label><input type="range" id="manattr-strength" min="0" max="1" step="0.01" value="0.15"></div>
+      <div class="ctrl"><label>Amortissement <span class="val" id="manval-damp">0.92</span></label><input type="range" id="mandamp" min="0.7" max="0.99" step="0.01" value="0.92"></div>
+    </div>
+  </div>
+  <div class="tab-pane" id="tab-mandala-color">
+    <div class="sec">
+      <div class="sec-title">Couleurs</div>
+      <div class="ctrl"><label style="margin-bottom:5px">Fond</label><input type="color" id="manbg-color" value="#0a0a0a"></div>
+      <div class="ctrl"><label style="margin-bottom:5px">Teinte principale</label><input type="color" id="mancolor" value="#ff44aa"></div>
+      <div class="ctrl"><label style="margin-bottom:5px">Teinte secondaire</label><input type="color" id="mancolor2" value="#44ffaa"></div>
+      <div class="ctrl"><label>Mode couleur <select id="mancolor-mode" style="margin-top:4px;width:100%;padding:4px;background:#1a1a1a;border:1px solid #333;color:#fff;font-family:inherit"><option value="hue">Teinte (Hue shift)</option><option value="ramp">Gradient (Ramp)</option><option value="solid">Solide</option></select></label></div>
+    </div>
+    <div class="sep"></div>
+    <div class="ctrl"><label>Opacité <span class="val" id="manval-opacity">0.95</span></label><input type="range" id="manopacity" min="0.3" max="1" step="0.05" value="0.95"></div>
+    <div class="ctrl"><label>Épaisseur trait <span class="val" id="manval-width">1.2</span></label><input type="range" id="manline-width" min="0.5" max="3" step="0.1" value="1.2"></div>
+  </div>
+  <div class="tab-pane" id="tab-mandala-tempo">
+    <div class="sec">
+      <div class="sec-title">Timing</div>
+      <div class="ctrl"><label>Intervalle pulse <span class="val" id="manval-pulse-int">3.0</span>s</label><input type="range" id="mantpulse-int" min="0.5" max="20" step="0.5" value="3.0"></div>
+      <div class="ctrl"><label>BPM div <span class="val" id="manval-beat-div">1</span></label><input type="range" id="manbeat-div" min="1" max="8" step="1" value="1"></div>
+    </div>
+    <div class="sep"></div>
+    <div class="toggle-row"><label>Hue shift en syncro</label><input type="checkbox" id="manhue-shift-enabled"></div>
+    <div class="ctrl"><label>Vitesse hue shift <span class="val" id="manval-hue-speed">20</span></label><input type="range" id="manhue-speed" min="0" max="60" step="1" value="20"></div>
+  </div>
+  <div class="tab-pane" id="tab-mandala-io"><div class="sec"><div class="sec-title">MIDI CC Mandala</div><div id="manmidi-cc-list"></div></div></div>
+  <div class="tab-pane" id="tab-mandala-save"><div class="sec"><div style="color:var(--text-faint);font-size:9px">Config Mandala dans les scènes globales.</div></div></div>
+  </div><!-- /mandala -->
 
   <!-- ══ GROWTH ENGINE PANES ══ -->
   <div class="engine-panes" data-engine="growth">
