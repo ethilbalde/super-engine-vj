@@ -5346,10 +5346,10 @@ var Engine_Sphere=(function(){
     for(var i=0;i<points.length;i++){
       var p=points[i];
       var idx=p.index;
-      var sinIdx=Math.sin(idx*0.001);
-      var cosIdx=Math.cos(idx*idx*0.0001);
-      p.targetx=Math.sin(idx*0.001+angle)*sinIdx*cfg.radius;
-      p.targety=cosIdx*cfg.radius;
+      var sinIdxSq=Math.sin(idx*idx);
+      var cosIdxSq=Math.cos(idx*idx);
+      p.targetx=Math.sin(idx+angle)*sinIdxSq*cfg.radius;
+      p.targety=cosIdxSq*cfg.radius;
     }
   }
 
@@ -5384,10 +5384,10 @@ var Engine_Sphere=(function(){
         var idx=p.index;
 
         // compute rotating home position
-        var sinIdx=sin(idx*0.001);
-        var cosIdx=cos(idx*idx*0.0001);
-        var homeX=sin(idx*0.001+angle)*sinIdx*cfg.radius;
-        var homeY=cosIdx*cfg.radius;
+        var sinIdxSq=sin(idx*idx);
+        var cosIdxSq=cos(idx*idx);
+        var homeX=sin(idx+angle)*sinIdxSq*cfg.radius;
+        var homeY=cosIdxSq*cfg.radius;
 
         // spring force toward home
         var toHomeX=homeX-p.pos.x;
