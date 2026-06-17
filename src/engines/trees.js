@@ -40,7 +40,7 @@ var Engine_Trees=(function(){
   }
 
   Branch.prototype.grow=function(){
-    if(this.age>=this.maxlife/this.gen||Math.random()<0.05*this.gen){
+    if(Math.floor(this.age)===Math.floor(this.maxlife/this.gen)||Math.random()<0.05*this.gen){
       this.alive=false;
       if(this.stw>0.2){
         var brs=trees[this.treeIndex].branches;
