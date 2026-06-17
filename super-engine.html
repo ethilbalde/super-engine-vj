@@ -872,17 +872,17 @@ input[type=color]::-webkit-color-swatch{border:none;border-radius:3px}
     <div class="sec">
       <div class="ctrl"><label>Rayon <span class="val" id="sphval-pen">50</span></label><input type="range" id="sphpen-size" min="10" max="200" value="50"></div>
       <div class="ctrl"><label>Force <span class="val" id="sphval-force">1.0</span></label><input type="range" id="sphpush-force" min="0.1" max="5" step="0.1" value="1.0"></div>
-      <div class="ctrl"><label>Curseur X <span class="val" id="sphval-cx">0.50</span></label><input type="range" id="spherecursor-x" min="0" max="1" step="0.005" value="0.50"></div>
-      <div class="ctrl"><label>Curseur Y <span class="val" id="sphval-cy">0.50</span></label><input type="range" id="spherecursor-y" min="0" max="1" step="0.005" value="0.50"></div>
+      <div class="ctrl"><label>Curseur X <span class="val" id="sphval-cx">0.50</span></label><input type="range" id="sphere-cursor-x" min="0" max="1" step="0.005" value="0.50"></div>
+      <div class="ctrl"><label>Curseur Y <span class="val" id="sphval-cy">0.50</span></label><input type="range" id="sphere-cursor-y" min="0" max="1" step="0.005" value="0.50"></div>
       <div class="quick-row" style="margin-top:4px"><button class="big-toggle" id="sphbtn-click" style="flex:1"><span class="dot"></span>CLICK</button><button class="quick-fire" id="sphbtn-click-fire">▶</button></div>
     </div>
     <div class="sep"></div>
     <div class="sec">
       <div class="quick-row">
-        <button class="big-toggle" id="spherebtn-pulse" style="flex:1"><span class="dot"></span>PULSE</button>
-        <button class="quick-fire" id="spherebtn-pulse-fire">▶</button>
+        <button class="big-toggle" id="sphere-btn-pulse" style="flex:1"><span class="dot"></span>PULSE</button>
+        <button class="quick-fire" id="sphere-btn-pulse-fire">▶</button>
       </div>
-      <div class="prog-bar"><div class="prog-fill" id="spherepulse-bar"></div></div>
+      <div class="prog-bar"><div class="prog-fill" id="sphere-pulse-bar"></div></div>
       <div class="ctrl" style="margin-top:6px"><label style="margin-bottom:4px">Type pulse</label>
         <div class="btn-grid">
           <button class="btn active" data-sphptype="splash">Splash</button>
@@ -894,7 +894,7 @@ input[type=color]::-webkit-color-swatch{border:none;border-radius:3px}
   </div>
   <div class="tab-pane" id="tab-sph-sim">
     <div class="sec">
-      <div class="ctrl"><label>Particules <span class="val" id="sphval-count">2000</span></label><input type="range" id="sphereparticle-count" min="100" max="10000" step="100" value="2000"></div>
+      <div class="ctrl"><label>Particules <span class="val" id="sphval-count">2000</span></label><input type="range" id="sphere-particle-count" min="100" max="10000" step="100" value="2000"></div>
       <div class="ctrl"><label>Smoothing h <span class="val" id="sphval-h">30</span></label><input type="range" id="sphsmoothing-h" min="10" max="80" step="2" value="30"></div>
       <div class="ctrl"><label>Stiffness <span class="val" id="sphval-stiff">200</span></label><input type="range" id="sphstiffness" min="10" max="1000" step="10" value="200"></div>
       <div class="ctrl"><label>Viscosité <span class="val" id="sphval-visc">0.10</span></label><input type="range" id="sphviscosity" min="0" max="2" step="0.05" value="0.1"></div>
@@ -905,15 +905,15 @@ input[type=color]::-webkit-color-swatch{border:none;border-radius:3px}
     <button class="btn-wide" id="sphbtn-reset">↺ Réinitialiser SPH</button>
   </div>
   <div class="tab-pane" id="tab-sph-color">
-    <div class="ctrl"><label style="margin-bottom:5px">Background</label><input type="color" id="spherebg-color" value="#050505"></div>
+    <div class="ctrl"><label style="margin-bottom:5px">Background</label><input type="color" id="sphere-bg-color" value="#050505"></div>
     <div class="ctrl"><label style="margin-bottom:5px">Couleur particule</label><input type="color" id="sphparticle-color" value="#00ff88"></div>
     <div class="ctrl"><label>Rayon <span class="val" id="sphval-radius">4</span>px</label><input type="range" id="sphparticle-radius" min="1" max="15" step="1" value="4"></div>
     <div class="ctrl"><label>Opacité <span class="val" id="sphval-opacity">1.0</span></label><input type="range" id="sphopacity" min="0.05" max="1" step="0.05" value="1.0"></div>
   </div>
   <div class="tab-pane" id="tab-sph-tempo">
-    <div class="ctrl"><label>Intervalle pulse <span class="val" id="sphval-pulse-int">2.0</span>s</label><input type="range" id="spheretpulse-int" min="0.1" max="20" step="0.1" value="2.0"></div>
+    <div class="ctrl"><label>Intervalle pulse <span class="val" id="sphval-pulse-int">2.0</span>s</label><input type="range" id="sphere-tpulse-int" min="0.1" max="20" step="0.1" value="2.0"></div>
   </div>
-  <div class="tab-pane" id="tab-sph-io"><div class="sec"><div class="sec-title">MIDI CC SPH</div><div id="spheremidi-cc-list" style="max-height:100px;overflow-y:auto;font-size:10px;color:#888"></div></div></div>
+  <div class="tab-pane" id="tab-sph-io"><div class="sec"><div class="sec-title">MIDI CC SPH</div><div id="sphere-midi-cc-list" style="max-height:100px;overflow-y:auto;font-size:10px;color:#888"></div></div></div>
   <div class="tab-pane" id="tab-sph-save"><div class="sec"><div style="color:#444;font-size:9px">Config SPH sauvegardée dans les scènes globales.</div></div></div>
   </div><!-- /engine-panes sph -->
 
@@ -2176,53 +2176,53 @@ input[type=color]::-webkit-color-swatch{border:none;border-radius:3px}
     <div class="sep"></div>
     <div class="sec">
       <div class="sec-title">Contrôle souris</div>
-      <div class="ctrl"><label>Rayon répulsion <span class="val" id="sphereval-repel">100</span></label><input type="range" id="spherepel-radius" min="30" max="250" step="5" value="100"></div>
-      <div class="ctrl"><label>Force répulsion <span class="val" id="sphereval-force">28</span></label><input type="range" id="spherepel-strength" min="5" max="80" step="1" value="28"></div>
-      <div class="ctrl"><label>Curseur X <span class="val" id="sphval-cx">0.50</span></label><input type="range" id="spherecursor-x" min="0" max="1" step="0.005" value="0.50"></div>
-      <div class="ctrl"><label>Curseur Y <span class="val" id="sphval-cy">0.50</span></label><input type="range" id="spherecursor-y" min="0" max="1" step="0.005" value="0.50"></div>
+      <div class="ctrl"><label>Rayon répulsion <span class="val" id="sphere-val-repel">100</span></label><input type="range" id="sphere-pel-radius" min="30" max="250" step="5" value="100"></div>
+      <div class="ctrl"><label>Force répulsion <span class="val" id="sphere-val-force">28</span></label><input type="range" id="sphere-pel-strength" min="5" max="80" step="1" value="28"></div>
+      <div class="ctrl"><label>Curseur X <span class="val" id="sphval-cx">0.50</span></label><input type="range" id="sphere-cursor-x" min="0" max="1" step="0.005" value="0.50"></div>
+      <div class="ctrl"><label>Curseur Y <span class="val" id="sphval-cy">0.50</span></label><input type="range" id="sphere-cursor-y" min="0" max="1" step="0.005" value="0.50"></div>
     </div>
     <div class="sep"></div>
     <div class="sec">
       <div class="quick-row">
-        <button class="big-toggle" id="spherebtn-pulse" style="flex:1"><span class="dot"></span>PULSE</button>
-        <button class="quick-fire" id="spherebtn-pulse-fire">▶</button>
+        <button class="big-toggle" id="sphere-btn-pulse" style="flex:1"><span class="dot"></span>PULSE</button>
+        <button class="quick-fire" id="sphere-btn-pulse-fire">▶</button>
       </div>
-      <div class="prog-bar"><div class="prog-fill" id="spherepulse-bar"></div></div>
+      <div class="prog-bar"><div class="prog-fill" id="sphere-pulse-bar"></div></div>
     </div>
   </div><!-- /tab-sphere-live -->
 
   <div class="tab-pane" id="tab-sphere-sim">
     <div class="sec">
       <div class="sec-title">Particules</div>
-      <div class="ctrl"><label>Nombre <span class="val" id="sphereval-count">5000</span></label><input type="range" id="sphereparticle-count" min="500" max="12000" step="500" value="5000"></div>
-      <div class="ctrl"><label>Taille point <span class="val" id="sphereval-size">1.5</span></label><input type="range" id="spherepoint-size" min="0.5" max="5" step="0.1" value="1.5"></div>
+      <div class="ctrl"><label>Nombre <span class="val" id="sphere-val-count">5000</span></label><input type="range" id="sphere-particle-count" min="500" max="12000" step="500" value="5000"></div>
+      <div class="ctrl"><label>Taille point <span class="val" id="sphere-val-size">1.5</span></label><input type="range" id="sphere-point-size" min="0.5" max="5" step="0.1" value="1.5"></div>
     </div>
     <div class="sep"></div>
     <div class="sec">
       <div class="sec-title">Dynamique</div>
-      <div class="ctrl"><label>Rayon sphère <span class="val" id="sphereval-radius">180</span></label><input type="range" id="sphereradius" min="50" max="350" step="10" value="180"></div>
-      <div class="ctrl"><label>Attraction <span class="val" id="sphereval-attr">0.010</span></label><input type="range" id="sphereattraction" min="0.001" max="0.1" step="0.001" value="0.01"></div>
-      <div class="ctrl"><label>Damping <span class="val" id="sphereval-damp">0.90</span></label><input type="range" id="spheredamping" min="0.7" max="0.99" step="0.01" value="0.9"></div>
+      <div class="ctrl"><label>Rayon sphère <span class="val" id="sphere-val-radius">180</span></label><input type="range" id="sphere-radius" min="50" max="350" step="10" value="180"></div>
+      <div class="ctrl"><label>Attraction <span class="val" id="sphere-val-attr">0.010</span></label><input type="range" id="sphere-attraction" min="0.001" max="0.1" step="0.001" value="0.01"></div>
+      <div class="ctrl"><label>Damping <span class="val" id="sphere-val-damp">0.90</span></label><input type="range" id="sphere-damping" min="0.7" max="0.99" step="0.01" value="0.9"></div>
     </div>
   </div><!-- /tab-sphere-sim -->
 
   <div class="tab-pane" id="tab-sphere-color">
     <div class="sec">
       <div class="sec-title">Couleurs</div>
-      <div class="ctrl"><label style="margin-bottom:5px">Fond</label><input type="color" id="spherebg-color" value="#000000"></div>
-      <div class="ctrl"><label style="margin-bottom:5px">Particules</label><input type="color" id="spherecolor" value="#ffffff"></div>
+      <div class="ctrl"><label style="margin-bottom:5px">Fond</label><input type="color" id="sphere-bg-color" value="#000000"></div>
+      <div class="ctrl"><label style="margin-bottom:5px">Particules</label><input type="color" id="sphere-color" value="#ffffff"></div>
     </div>
   </div><!-- /tab-sphere-color -->
 
   <div class="tab-pane" id="tab-sphere-tempo">
     <div class="sec">
       <div class="sec-title">Timing</div>
-      <div class="ctrl"><label>Intervalle pulse <span class="val" id="sphereval-pulse-int">6.0</span>s</label><input type="range" id="spheretpulse-int" min="0.5" max="30" step="0.5" value="6.0"></div>
-      <div class="ctrl"><label>BPM div <span class="val" id="sphereval-beat-div">1</span></label><input type="range" id="spherebeat-div" min="1" max="8" step="1" value="1"></div>
+      <div class="ctrl"><label>Intervalle pulse <span class="val" id="sphere-val-pulse-int">6.0</span>s</label><input type="range" id="sphere-tpulse-int" min="0.5" max="30" step="0.5" value="6.0"></div>
+      <div class="ctrl"><label>BPM div <span class="val" id="sphere-val-beat-div">1</span></label><input type="range" id="sphere-beat-div" min="1" max="8" step="1" value="1"></div>
     </div>
   </div><!-- /tab-sphere-tempo -->
 
-  <div class="tab-pane" id="tab-sphere-io"><div class="sec"><div class="sec-title">MIDI CC Sphere</div><div id="spheremidi-cc-list"></div></div></div>
+  <div class="tab-pane" id="tab-sphere-io"><div class="sec"><div class="sec-title">MIDI CC Sphere</div><div id="sphere-midi-cc-list"></div></div></div>
 
   <div class="tab-pane" id="tab-sphere-save"><div class="sec"><div style="color:var(--text-faint);font-size:9px">Config Sphere dans les scènes globales.</div></div></div>
 
@@ -7021,18 +7021,18 @@ updateResDisplay();
 (function(){
   var E=window.Engine_Sphere;if(!E)return;
   function sp(id,key,valId,dec){var sl=document.getElementById(id);if(!sl)return;sl.addEventListener('input',function(){var v=parseFloat(this.value);E.cfg[key]=v;var vl=document.getElementById(valId);if(vl)vl.textContent=v.toFixed(dec!==undefined?dec:1);});}
-  sp('sphereparticle-count','particle_count','sphereval-count',0);
-  sp('spherepoint-size','point_size','sphereval-size',1);
-  sp('sphereradius','radius','sphereval-radius',0);
-  sp('sphereattraction','attraction','sphereval-attr',3);
-  sp('spheredamping','damping','sphereval-damp',2);
-  sp('spherepel-radius','repel_radius','sphereval-repel',0);
-  sp('spherepel-strength','repel_strength','sphereval-force',0);
-  sp('spheretpulse-int','pulse_interval','sphereval-pulse-int',1);
-  sp('spherebeat-div','pulse_beat_div','sphereval-beat-div',0);
+  sp('sphere-particle-count','particle_count','sphval-count',0);
+  sp('sphere-size','point_size','sphereval-size',1);
+  sp('sphere-radius','radius','sphereval-radius',0);
+  sp('sphere-attr','attraction','sphereval-attr',3);
+  sp('sphere-damp','damping','sphereval-damp',2);
+  sp('sphere-pel-radius','repel_radius','sphere-val-repel',0);
+  sp('sphere-pel-strength','repel_strength','sphere-val-force',0);
+  sp('sphere-tpulse-int','pulse_interval','sphval-pulse-int',1);
+  sp('sphere-beat-div','pulse_beat_div','sphereval-beat-div',0);
   /* couleurs */
-  var bgc=document.getElementById('spherebg-color');if(bgc)bgc.addEventListener('input',function(){E.cfg.bg_color=this.value;});
-  var col=document.getElementById('spherecolor');if(col)col.addEventListener('input',function(){E.cfg.color=this.value;});
+  var bgc=document.getElementById('sphere-bg-color');if(bgc)bgc.addEventListener('input',function(){E.cfg.bg_color=this.value;});
+  var col=document.getElementById('sphere-pt-color');if(col)col.addEventListener('input',function(){E.cfg.color=this.value;});
   /* formes */
   document.querySelectorAll('[data-sphshape]').forEach(function(b){
     b.addEventListener('click',function(){
@@ -7041,9 +7041,14 @@ updateResDisplay();
     });
   });
   /* pulse toggle */
-  var pbtn=document.getElementById('spherebtn-pulse');
+  var pbtn=document.getElementById('sphere-btn-pulse');
   if(pbtn)pbtn.addEventListener('click',function(){E.cfg.pulse_enabled=!E.cfg.pulse_enabled;this.classList.toggle('on',E.cfg.pulse_enabled);var d=this.querySelector('.dot');if(d)d.style.background=E.cfg.pulse_enabled?'var(--accent)':'#444';});
-  var pbf=document.getElementById('spherebtn-pulse-fire');if(pbf)pbf.addEventListener('click',function(){E.triggerPulse();});
+  var pbf=document.getElementById('sphere-btn-pulse-fire');if(pbf)pbf.addEventListener('click',function(){E.triggerPulse();});
+  /* cursor tracking */
+  var cx=document.getElementById('sphere-cursor-x');
+  var cy=document.getElementById('sphere-cursor-y');
+  if(cx){cx.addEventListener('input',function(){var c=document.getElementById('c'),W=c?c.width:1280;window._mouse.x=parseFloat(this.value)*W;});}
+  if(cy){cy.addEventListener('input',function(){var c=document.getElementById('c'),H=c?c.height:720;window._mouse.y=parseFloat(this.value)*H;});}
 })();
 
 /* ═══════════════════════════════════════════
