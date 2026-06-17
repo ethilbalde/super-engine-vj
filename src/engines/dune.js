@@ -63,6 +63,7 @@ var Engine_Dune=(function(){
     var W=cfg.canvas_width,H=cfg.canvas_height;
     for(var i=0;i<cfg.count;i++)spawnGrain(Math.random()*W,Math.random()*H);
     evolveT=0;frameStep=0;
+    if(ctx){ctx.fillStyle=cfg.bg_color;ctx.fillRect(0,0,cfg.canvas_width,cfg.canvas_height);}
   }
   function init(){_reset();}
 
@@ -95,7 +96,7 @@ var Engine_Dune=(function(){
     }
     _wasDown=mouse.down;
 
-    ctx.fillStyle='rgba('+0+','+0+','+0+',0)';
+    ctx.fillStyle='rgba(3,3,3,0.05)';ctx.fillRect(0,0,cfg.canvas_width,cfg.canvas_height);
     for(var i=grains.length-1;i>=0;i--){
       var g=grains[i];g.step();
       var rgb=g.bucketEven?c0:c1;
