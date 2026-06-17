@@ -1,0 +1,1997 @@
+<body>
+
+<div id="panel">
+  <div id="panel-resize-handle"></div>
+  <div id="panel-header">
+    <span id="engine-label">FLUID SIM</span>
+    <span style="display:flex;align-items:center;gap:4px">
+      <span id="fps-display">— FPS</span>
+      <button id="btn-info" title="À propos des moteurs">?</button>
+      <button id="btn-theme" title="Thème de l'interface"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><circle cx="8" cy="10" r="1.5" fill="currentColor" stroke="none"/><circle cx="12" cy="7" r="1.5" fill="currentColor" stroke="none"/><circle cx="16" cy="10" r="1.5" fill="currentColor" stroke="none"/><path d="M7 16c1.5-2 8.5-2 10 0"/></svg></button>
+    </span>
+  </div>
+  <!-- THEME POPUP -->
+  <div id="theme-popup">
+    <div class="theme-lbl">THÈME</div>
+    <div class="theme-btns">
+      <button class="theme-sel-btn active" data-theme="dark">Sombre</button>
+      <button class="theme-sel-btn" data-theme="light">Clair</button>
+      <button class="theme-sel-btn" data-theme="custom">Perso</button>
+    </div>
+    <div class="theme-previews">
+      <div class="theme-preview-chip active" data-theme="dark" style="background:linear-gradient(135deg,#111 50%,#0a0a0a 50%)" title="Sombre"></div>
+      <div class="theme-preview-chip" data-theme="light" style="background:linear-gradient(135deg,#f2f3f5 50%,#dfe1e5 50%)" title="Clair"></div>
+      <div class="theme-preview-chip" data-theme="custom" id="theme-custom-chip" style="background:linear-gradient(135deg,#111 50%,#0a0a0a 50%)" title="Personnalisé"></div>
+    </div>
+    <div id="theme-custom-panel">
+      <div class="theme-custom-row"><label>Accent</label><input type="color" id="tc-accent" value="#00ffff"></div>
+      <div class="theme-custom-row"><label>Panneau</label><input type="color" id="tc-panel" value="#111111"></div>
+      <div class="theme-custom-row"><label>Fond</label><input type="color" id="tc-body" value="#050505"></div>
+      <div class="theme-custom-row"><label>Texte</label><input type="color" id="tc-text" value="#cccccc"></div>
+    </div>
+  </div>
+
+  <div id="engine-bar">
+    <button class="eng-btn active" data-engine="fluid"    style="--e:#00ffff">FLUID</button>
+    <button class="eng-btn"        data-engine="vortex"   style="--e:#ff6600">VORTEX</button>
+    <button class="eng-btn"        data-engine="nbody"    style="--e:#aa44ff">N-BODY</button>
+    <button class="eng-btn"        data-engine="sph"      style="--e:#00ff88">SPH</button>
+    <button class="eng-btn"        data-engine="boids"    style="--e:#ffdd00">BOIDS</button>
+    <button class="eng-btn"        data-engine="physarum" style="--e:#ff44aa">PHYSARUM</button>
+    <button class="eng-btn"        data-engine="lorenz"   style="--e:#44aaff">LORENZ</button>
+    <button class="eng-btn"        data-engine="react"    style="--e:#ff2266">REACT</button>
+    <button class="eng-btn"        data-engine="aco"      style="--e:#ff8800">ACO</button>
+    <button class="eng-btn"        data-engine="rdiff"    style="--e:#ff5500">R-D</button>
+    <button class="eng-btn"        data-engine="lsys"     style="--e:#44ff88">LSYS</button>
+    <button class="eng-btn"        data-engine="voronoi"  style="--e:#ffcc00">VOR</button>
+    <button class="eng-btn"        data-engine="follow"   style="--e:#6688ff">FOLLOW</button>
+    <button class="eng-btn"        data-engine="ribbon"   style="--e:#ff66aa">RIBBON</button>
+    <button class="eng-btn"        data-engine="physiks"  style="--e:#c8a040">PHYSIKS</button>
+    <button class="eng-btn"        data-engine="neural"   style="--e:#44eeff">NEURAL</button>
+    <button class="eng-btn"        data-engine="ink"      style="--e:#a044ff">INK</button>
+    <button class="eng-btn"        data-engine="slope"    style="--e:#ff3d6e">SLOPE</button>
+    <button class="eng-btn"        data-engine="dune"     style="--e:#e8772e">DUNE</button>
+    <button class="eng-btn"        data-engine="growth"   style="--e:#5ad16a">GROWTH</button>
+    <button class="eng-btn"        data-engine="gridwave" style="--e:#2ec4ff">GRIDWAVE</button>
+    <button class="eng-btn"        data-engine="bloom"    style="--e:#5cd65c">BLOOM</button>
+    <button class="eng-btn"        data-engine="displace" style="--e:#5dd9ff">DISPLACE</button>
+  </div>
+
+  <!-- ══ FX CHAIN PANEL ══ -->
+  <div id="fx-chain-panel" style="border-bottom:1px solid #1a1a1a;background:#0a0a0a;flex-shrink:0;max-height:260px;overflow-y:auto">
+    <div style="display:flex;align-items:center;padding:5px 8px;gap:5px;position:sticky;top:0;background:#0a0a0a;z-index:1;border-bottom:1px solid #131313">
+      <span style="color:#444;font-size:8px;letter-spacing:2px;flex-shrink:0">FX</span>
+      <div id="fx-chain-slots" style="display:flex;flex-wrap:wrap;gap:3px;flex:1"></div>
+      <button id="fx-add-btn" style="padding:3px 7px;background:#111;border:1px solid #222;border-radius:3px;color:#555;font-size:8px;cursor:pointer;font-family:inherit;flex-shrink:0" title="Ajouter un effet">＋</button>
+    </div>
+    <div id="fx-catalog" style="display:none;padding:5px 8px;border-bottom:1px solid #131313">
+      <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:3px" id="fx-cat-grid"></div>
+    </div>
+    <div id="fx-chain-list" style="padding:4px 6px"></div>
+  </div>
+
+  <div id="tab-bar">
+    <button class="tab-btn active" data-tab="live">LIVE</button>
+    <button class="tab-btn" data-tab="sim">SIM</button>
+    <button class="tab-btn" data-tab="color">COLOR</button>
+    <button class="tab-btn" data-tab="tempo">TEMPO</button>
+    <button class="tab-btn" data-tab="io">MIDI</button>
+    <button class="tab-btn" data-tab="save">SAVE</button>
+    <button class="tab-btn" data-tab="scenes">SCN</button>
+    <button class="tab-btn" data-tab="output">OUT</button>
+    <button class="tab-btn" data-tab="info">INFO</button>
+    <button class="tab-btn" data-tab="bug" style="color:#ff4466">BUG</button>
+    <button class="tab-btn" data-tab="maj" id="tab-maj-btn">MAJ<span id="maj-badge" style="display:none;margin-left:3px;background:#ff4466;color:#fff;border-radius:50%;width:8px;height:8px;font-size:0;vertical-align:middle;display:inline-block;"></span></button>
+  </div>
+
+  <div id="panel-body">
+
+  <!-- ══ FLUID ENGINE PANES ══ -->
+  <div class="engine-panes active" data-engine="fluid">
+
+  <div class="tab-pane active" id="tab-live">
+    <div class="sec">
+      <div class="sec-title">Mode pointeur</div>
+      <div class="btn-grid">
+        <button class="btn active" data-mode="push">Push</button>
+        <button class="btn" data-mode="attract">Attract</button>
+        <button class="btn" data-mode="vortex">Vortex</button>
+        <button class="btn" data-mode="repulse">Repulse</button>
+        <button class="btn" data-mode="scatter">Scatter</button>
+        <button class="btn" data-mode="freeze">Freeze</button>
+        <button class="btn" data-mode="gravity_well">GravWell</button>
+        <button class="btn" data-mode="injection">Inject</button>
+        <button class="btn" data-mode="sink">Sink</button>
+        <button class="btn" data-mode="spawn">Spawn</button>
+        <button class="btn" data-mode="erase">Erase</button>
+        <button class="btn" data-mode="turb_local">Turb.</button>
+        <button class="btn" data-mode="color_brush">Color</button>
+        <button class="btn" data-mode="speed_boost">Speed+</button>
+      </div>
+    </div>
+    <div class="sec">
+      <div class="ctrl"><label>Rayon <span class="val" id="val-pen-size">40</span></label><input type="range" id="pen-size" min="5" max="150" value="40"></div>
+      <div class="ctrl"><label>Force <span class="val" id="val-push-force">1.0</span></label><input type="range" id="push-force" min="0.1" max="8" step="0.1" value="1.0"></div>
+      <div class="ctrl"><label>Curseur X <span class="val" id="val-cx">0.50</span></label><input type="range" id="cursor-x" min="0" max="1" step="0.005" value="0.50"></div>
+      <div class="ctrl"><label>Curseur Y <span class="val" id="val-cy">0.50</span></label><input type="range" id="cursor-y" min="0" max="1" step="0.005" value="0.50"></div>
+      <div class="quick-row" style="margin-top:4px"><button class="big-toggle" id="btn-click" style="flex:1"><span class="dot"></span>CLICK</button><button class="quick-fire" id="btn-click-fire">▶</button></div>
+      <div id="sec-injection" style="display:none">
+        <div class="ctrl"><label>Angle inj. <span class="val" id="val-inj-angle">0</span>°</label><input type="range" id="inj-angle" min="0" max="360" step="1" value="0"></div>
+      </div>
+      <div id="sec-brush" style="display:none">
+        <div class="ctrl"><label style="margin-bottom:5px">Couleur brush</label><input type="color" id="brush-color" value="#ff00ff"></div>
+        <button class="btn-wide" id="btn-reset-colors">Effacer couleurs brush</button>
+      </div>
+    </div>
+    <div class="sep"></div>
+    <div class="sec">
+      <div class="sec-title">Déclencheurs</div>
+      <div class="quick-row">
+        <button class="big-toggle" id="btn-pulse-toggle" style="flex:1"><span class="dot"></span>PULSE</button>
+        <button class="quick-fire" id="btn-pulse-fire">▶</button>
+      </div>
+      <div class="prog-bar"><div class="prog-fill" id="pulse-bar"></div></div>
+      <div style="margin-top:8px"></div>
+      <div class="quick-row">
+        <button class="big-toggle" id="btn-auto-toggle" style="flex:1"><span class="dot"></span>AUTO</button>
+        <button class="quick-fire" id="btn-auto-fire">▶</button>
+      </div>
+      <div class="prog-bar"><div class="prog-fill" id="auto-bar"></div></div>
+    </div>
+    <div class="sep"></div>
+    <div class="sec">
+      <div class="sec-title">Post-process 2D</div>
+      <div class="toggle-row"><label>Kaléidoscope</label><input type="checkbox" id="kaleid-enabled"></div>
+      <div class="ctrl"><label>Segments <span class="val" id="val-kaleid-seg">6</span></label><input type="range" id="kaleid-seg" min="2" max="16" step="1" value="6"></div>
+      <div class="ctrl"><label>Angle <span class="val" id="val-kaleid-angle">0</span>°</label><input type="range" id="kaleid-angle" min="0" max="360" step="1" value="0"></div>
+      <div class="sep"></div>
+      <div class="ctrl"><label style="margin-bottom:5px">Miroir</label>
+        <div class="btn-grid" style="grid-template-columns:repeat(4,1fr)">
+          <button class="btn active" data-mirror="off">OFF</button>
+          <button class="btn" data-mirror="H">H</button>
+          <button class="btn" data-mirror="V">V</button>
+          <button class="btn" data-mirror="quad">4×</button>
+        </div>
+      </div>
+    </div>
+    <div class="sep"></div>
+    <div class="sec">
+      <div class="sec-title">Looper</div>
+      <div class="looper-row">
+        <button class="looper-btn" id="btn-loop-rec">⏺ REC</button>
+        <button class="looper-btn" id="btn-loop-play">▶ PLAY</button>
+        <button class="looper-btn" id="btn-loop-stop">■ STOP</button>
+      </div>
+      <div class="ctrl"><label>Longueur <span class="val" id="val-loop-len">2</span> bars</label><input type="range" id="loop-len" min="1" max="16" step="1" value="2"></div>
+      <div id="looper-status" style="color:#333;font-size:9px;text-align:center;margin-top:3px">ARRÊTÉ · 0 event(s)</div>
+    </div>
+  </div><!-- /tab-live -->
+
+  <div class="tab-pane" id="tab-sim">
+    <div class="sec">
+      <div class="sec-title">Particules</div>
+      <div class="ctrl"><label>Nombre <span class="val" id="val-speck">5000</span></label><input type="range" id="speck" min="100" max="30000" step="100" value="5000"></div>
+      <div class="ctrl"><label>Épaisseur <span class="val" id="val-lw">1.0</span></label><input type="range" id="lw" min="0.2" max="5" step="0.1" value="1.0"></div>
+      <div class="ctrl"><label>Flow force <span class="val" id="val-ff">0.050</span></label><input type="range" id="ff" min="0.005" max="0.3" step="0.005" value="0.05"></div>
+      <div class="ctrl"><label>Drag <span class="val" id="val-drag">0.50</span></label><input type="range" id="drag" min="0.1" max="0.99" step="0.01" value="0.50"></div>
+    </div>
+    <div class="sep"></div>
+    <div class="sec">
+      <div class="sec-title">Fluide</div>
+      <div class="ctrl"><label>Viscosité <span class="val" id="val-visc">0.990</span></label><input type="range" id="visc" min="0.80" max="0.999" step="0.001" value="0.99"></div>
+      <div class="ctrl"><label>Turbulence <span class="val" id="val-turb">0.00</span></label><input type="range" id="turb" min="0" max="2" step="0.05" value="0"></div>
+      <div class="ctrl"><label>Résolution grille <span class="val" id="val-res">10</span>px</label><input type="range" id="res" min="4" max="30" step="2" value="10"></div>
+    </div>
+    <div class="sep"></div>
+    <div class="sec">
+      <div class="sec-title">Curl Noise</div>
+      <div class="toggle-row"><label>Activer Curl Noise</label><input type="checkbox" id="curl-enabled"></div>
+      <div class="ctrl"><label>Échelle <span class="val" id="val-curl-scale">1.50</span></label><input type="range" id="curl-scale" min="0.1" max="5" step="0.1" value="1.5"></div>
+      <div class="ctrl"><label>Vitesse <span class="val" id="val-curl-speed">0.50</span></label><input type="range" id="curl-speed" min="0.01" max="2" step="0.01" value="0.5"></div>
+      <div class="ctrl"><label>Force <span class="val" id="val-curl-strength">1.00</span></label><input type="range" id="curl-strength" min="0" max="5" step="0.1" value="1.0"></div>
+    </div>
+    <div class="sep"></div>
+    <div class="sec">
+      <div class="sec-title">Gravité</div>
+      <div class="ctrl"><label>X <span class="val" id="val-gx">0.00</span></label><input type="range" id="gx" min="-0.5" max="0.5" step="0.01" value="0"></div>
+      <div class="ctrl"><label>Y <span class="val" id="val-gy">0.00</span></label><input type="range" id="gy" min="-0.5" max="0.5" step="0.01" value="0"></div>
+    </div>
+    <div class="sep"></div>
+    <button class="btn-wide" id="btn-reinit">↺ Réinitialiser simulation</button>
+  </div><!-- /tab-sim -->
+
+  <div class="tab-pane" id="tab-color">
+    <div class="sec">
+      <div class="sec-title">Fond</div>
+      <div class="ctrl"><label style="margin-bottom:5px">Background</label><input type="color" id="bg-color" value="#000000"></div>
+    </div>
+    <div class="sep"></div>
+    <div class="sec">
+      <div class="sec-title">Mode couleur</div>
+      <div class="row2" style="margin-bottom:10px">
+        <button class="btn-2 active" data-cmode="solid">Solide</button>
+        <button class="btn-2" data-cmode="velocity">Vélocité</button>
+      </div>
+      <div id="sec-solid">
+        <div class="ctrl"><label style="margin-bottom:5px">Couleur</label><input type="color" id="particle-color" value="#00ffff"></div>
+      </div>
+      <div id="sec-velocity" style="display:none">
+        <div class="ctrl"><label>Vitesse max <span class="val" id="val-vmax">4.0</span></label><input type="range" id="vmax" min="0.5" max="20" step="0.5" value="4.0"></div>
+        <div id="ramp-hint">Clic sur ramp = ajouter</div>
+        <canvas id="ramp-canvas" width="230" height="22"></canvas>
+        <div id="ramp-bar"></div>
+        <div id="stop-det">
+          <input type="color" id="stop-color" value="#ffffff">
+          <input type="number" id="stop-pos-inp" min="0" max="100" value="50"> %
+          <button id="btn-del-stop">✕</button>
+        </div>
+        <div class="sep"></div>
+        <div class="toggle-row"><label>Opacité ∝ vitesse</label><input type="checkbox" id="vel-opacity"></div>
+        <div class="toggle-row"><label>Épaisseur ∝ vitesse</label><input type="checkbox" id="vel-width"></div>
+      </div>
+    </div>
+    <div class="sep"></div>
+    <div class="sec">
+      <div class="sec-title">Rendu</div>
+      <div class="ctrl"><label>Trail <span class="val" id="val-trail">0.00</span></label><input type="range" id="trail" min="0" max="1" step="0.01" value="0"></div>
+      <div class="ctrl"><label>Opacité <span class="val" id="val-opa">1.00</span></label><input type="range" id="opa" min="0.05" max="1" step="0.01" value="1"></div>
+    </div>
+    <div class="sep"></div>
+    <div class="sec">
+      <div class="sec-title">Hue Shift animé</div>
+      <div class="toggle-row"><label>Activer</label><input type="checkbox" id="hue-shift-enabled"></div>
+      <div class="ctrl"><label>Décalage <span class="val" id="val-hue-shift">0</span>°</label><input type="range" id="hue-shift" min="0" max="359" step="1" value="0"></div>
+      <div class="ctrl"><label>Vitesse <span class="val" id="val-hue-speed">30</span>°/beat</label><input type="range" id="hue-speed" min="0" max="360" step="1" value="30"></div>
+      <div class="btn-grid">
+        <button class="btn" data-hdiv="4">4</button><button class="btn" data-hdiv="2">2</button>
+        <button class="btn active" data-hdiv="1">1</button><button class="btn" data-hdiv="0.5">1/2</button>
+        <button class="btn" data-hdiv="0.25">1/4</button><button class="btn" data-hdiv="0.125">1/8</button>
+      </div>
+      <div class="toggle-row" style="margin-top:6px"><label style="font-size:10px">Affecter particules</label><input type="checkbox" id="hue-tgt-particles" checked></div>
+      <div class="toggle-row"><label style="font-size:10px">Affecter background</label><input type="checkbox" id="hue-tgt-bg"></div>
+    </div>
+    <div class="sep"></div>
+    <div class="sec">
+      <div class="sec-title">Pixel Sort</div>
+      <div class="toggle-row"><label>Activer</label><input type="checkbox" id="pixsort-enabled"></div>
+      <div class="ctrl"><label>Seuil <span class="val" id="val-pixsort-thr">0.50</span></label><input type="range" id="pixsort-thr" min="0" max="1" step="0.01" value="0.5"></div>
+      <div class="ctrl"><label>Couverture <span class="val" id="val-pixsort-cov">30</span>%</label><input type="range" id="pixsort-cov" min="1" max="100" step="1" value="30"></div>
+    </div>
+    <div class="sep"></div>
+    <div class="sec">
+      <div class="sec-title">WebGL FX <span id="webgl-status" style="color:#333;font-size:9px;float:right">—</span></div>
+      <div class="toggle-row"><label>Bloom / Glow</label><input type="checkbox" id="bloom-enabled"></div>
+      <div class="ctrl"><label>Seuil <span class="val" id="val-bloom-thr">0.40</span></label><input type="range" id="bloom-thr" min="0" max="1" step="0.01" value="0.4"></div>
+      <div class="ctrl"><label>Intensité <span class="val" id="val-bloom-str">1.5</span></label><input type="range" id="bloom-str" min="0" max="8" step="0.1" value="1.5"></div>
+      <div class="sep"></div>
+      <div class="toggle-row"><label>Aberration chrom.</label><input type="checkbox" id="chroma-enabled"></div>
+      <div class="ctrl"><label>Intensité <span class="val" id="val-chroma">1.0</span></label><input type="range" id="chroma" min="0" max="10" step="0.1" value="1.0"></div>
+      <div class="sep"></div>
+      <div class="toggle-row"><label>Feedback vidéo</label><input type="checkbox" id="feedback-enabled"></div>
+      <div class="ctrl"><label>Zoom <span class="val" id="val-fb-zoom">1.005</span></label><input type="range" id="fb-zoom" min="0.98" max="1.02" step="0.001" value="1.005"></div>
+      <div class="ctrl"><label>Alpha <span class="val" id="val-fb-alpha">0.30</span></label><input type="range" id="fb-alpha" min="0" max="0.98" step="0.01" value="0.3"></div>
+      <div class="sep"></div>
+      <div class="ctrl"><label>Warp force <span class="val" id="val-warp-str">0.5</span></label><input type="range" id="warp-str" min="0" max="3" step="0.05" value="0.5"></div>
+      <div class="ctrl"><label>Warp decay <span class="val" id="val-warp-dec">300</span>ms</label><input type="range" id="warp-dec" min="50" max="2000" step="50" value="300"></div>
+    </div>
+  </div><!-- /tab-color -->
+
+  <div class="tab-pane" id="tab-tempo">
+    <div class="sec">
+      <div class="sec-title">Mode temps</div>
+      <div class="row2" style="margin-bottom:10px">
+        <button class="btn-2" data-tmode="sec">Secondes</button>
+        <button class="btn-2 active" data-tmode="bpm">BPM</button>
+      </div>
+      <div id="sec-bpm-ctrl" style="display:block">
+        <div class="ctrl"><label>BPM <span class="val" id="val-bpm">120</span></label><input type="range" id="bpm" min="40" max="300" step="1" value="120"></div>
+        <div style="display:flex;gap:6px;align-items:center;margin-bottom:4px">
+          <button class="btn-wide" id="btn-tap" style="flex:1;font-size:13px;padding:9px">TAP TEMPO</button>
+          <span id="tap-bpm-display" style="color:#00ffff;font-size:20px;font-weight:700;min-width:46px;text-align:right">120</span>
+        </div>
+        <div id="beat-flash-bar"><div id="beat-dot"></div></div>
+      </div>
+    </div>
+    <div class="sep"></div>
+    <div class="sec">
+      <div class="sec-title">Pulsation</div>
+      <div class="ctrl"><label>Force <span class="val" id="val-pulse-str">1.0</span></label><input type="range" id="pulse-str" min="0.1" max="5" step="0.1" value="1.0"></div>
+      <div class="ctrl"><label>Bruit <span class="val" id="val-pulse-noise">0.30</span></label><input type="range" id="pulse-noise" min="0" max="3" step="0.05" value="0.3"></div>
+      <div class="ctrl"><label style="margin-bottom:5px">Type</label>
+        <div class="row2">
+          <button class="btn-2 active" data-pulse="explode">Explode</button>
+          <button class="btn-2" data-pulse="implode">Implode</button>
+          <button class="btn-2" data-pulse="noise">Noise</button>
+        </div>
+      </div>
+      <div id="pulse-int-sec"><div class="ctrl"><label>Intervalle <span class="val" id="val-pulse-int">2.0</span>s</label><input type="range" id="pulse-int" min="0.05" max="20" step="0.05" value="2.0"></div></div>
+      <div id="pulse-int-bpm" style="display:none">
+        <div class="btn-grid">
+          <button class="btn" data-pdiv="4">4</button><button class="btn" data-pdiv="2">2</button>
+          <button class="btn active" data-pdiv="1">1</button><button class="btn" data-pdiv="0.5">1/2</button>
+          <button class="btn" data-pdiv="0.25">1/4</button><button class="btn" data-pdiv="0.125">1/8</button>
+        </div>
+      </div>
+    </div>
+    <div class="sep"></div>
+    <div class="sec">
+      <div class="sec-title">Auto strokes</div>
+      <div class="ctrl"><label>Rayon <span class="val" id="val-auto-pen-size">60</span></label><input type="range" id="auto-pen-size" min="5" max="300" step="5" value="60"></div>
+      <div class="ctrl"><label>Nombre <span class="val" id="val-auto-count">3</span></label><input type="range" id="auto-count" min="1" max="20" step="1" value="3"></div>
+      <div class="ctrl"><label>Longueur <span class="val" id="val-auto-length">60</span></label><input type="range" id="auto-length" min="5" max="300" step="5" value="60"></div>
+      <div class="ctrl"><label>Vitesse <span class="val" id="val-auto-speed">4</span></label><input type="range" id="auto-speed" min="1" max="30" step="1" value="4"></div>
+      <div class="ctrl"><label>Force <span class="val" id="val-auto-force">1.5</span></label><input type="range" id="auto-force" min="0.1" max="8" step="0.1" value="1.5"></div>
+      <div class="ctrl"><label style="margin-bottom:5px">Effet</label>
+        <div class="btn-grid">
+          <button class="btn active" data-amode="push">Push</button>
+          <button class="btn" data-amode="attract">Attract</button>
+          <button class="btn" data-amode="vortex">Vortex</button>
+          <button class="btn" data-amode="repulse">Repulse</button>
+          <button class="btn" data-amode="scatter">Scatter</button>
+          <button class="btn" data-amode="turb_local">Turb.</button>
+        </div>
+      </div>
+      <div id="auto-int-sec"><div class="ctrl"><label>Intervalle <span class="val" id="val-auto-int">2.0</span>s</label><input type="range" id="auto-int" min="0.05" max="20" step="0.05" value="2.0"></div></div>
+    </div>
+  </div><!-- /tab-tempo -->
+
+  <div class="tab-pane" id="tab-io">
+    <div class="sec">
+      <div class="io-header"><span class="io-label">MIDI</span>
+        <div style="display:flex;align-items:center;gap:8px">
+          <span id="midi-status" class="status-dot off">●</span>
+          <button class="btn-2" id="btn-midi-enable" style="padding:4px 8px">Activer</button>
+        </div>
+      </div>
+      <div style="display:flex;align-items:center;gap:6px;margin-bottom:8px">
+        <span style="color:#666;font-size:9px;letter-spacing:1px;white-space:nowrap">APPAREIL</span>
+        <select id="midi-device-sel" class="io-select">
+          <option value="all">Tous</option>
+        </select>
+        <button class="preset-btn" id="btn-midi-refresh" title="Rafraîchir la liste" style="padding:3px 6px;flex-shrink:0">↺</button>
+      </div>
+      <div class="toggle-row"><label>Note On → Pulse</label><input type="checkbox" id="midi-note-pulse" checked></div>
+      <div class="ctrl"><label>Canal <span style="color:#00ffff;font-size:11px" id="val-midi-ch">Tous</span></label><input type="range" id="midi-ch" min="0" max="16" step="1" value="0"></div>
+      <div style="font-size:9px;color:#444;letter-spacing:1px;text-transform:uppercase;margin:6px 0 4px">CC → Paramètre</div>
+      <div id="midi-cc-list"></div>
+      <div style="display:flex;gap:3px;margin-bottom:4px">
+        <input type="number" id="add-cc-num" min="0" max="127" value="1" style="width:44px;background:#1a1a1a;border:1px solid #2a2a2a;border-radius:3px;color:#aaa;font-size:10px;padding:3px 5px;outline:none;font-family:inherit">
+        <select id="add-cc-param" class="io-select"></select>
+        <button class="preset-btn" id="btn-add-cc">+</button>
+      </div>
+      <button class="btn-wide" id="btn-midi-learn">🎛 MIDI Learn</button>
+    </div>
+    <div class="sep"></div>
+    <div class="sec">
+      <div class="io-header"><span class="io-label">OSC WebSocket</span><span id="osc-status" class="status-dot off">●</span></div>
+      <input type="text" id="osc-url-inp" value="ws://localhost:8080">
+      <div class="row2">
+        <button class="btn-wide" id="btn-osc-connect" style="flex:1">Connecter</button>
+        <button class="btn-wide" id="btn-osc-disconnect" style="flex:1;display:none">Déconnecter</button>
+      </div>
+    </div>
+    <div class="sep"></div>
+    <div class="sec">
+      <div class="sec-title">MIDI Clock IN</div>
+      <div class="toggle-row"><label>Sync BPM sur MIDI Clock</label><input type="checkbox" id="midi-clock-active"></div>
+      <div class="ctrl"><label>Lissage EMA <span class="val" id="val-clock-smooth">0.90</span></label><input type="range" id="clock-smooth" min="0" max="0.99" step="0.01" value="0.9"></div>
+    </div>
+    <div class="sep"></div>
+    <div class="sec">
+      <div class="sec-title">Note Map</div>
+      <div id="note-map-list" style="max-height:90px;overflow-y:auto;margin-bottom:4px;scrollbar-width:thin;scrollbar-color:#333 #111"></div>
+      <div style="display:flex;gap:3px;margin-bottom:4px">
+        <input type="number" id="add-note-num" min="0" max="127" value="60" style="width:44px;background:#1a1a1a;border:1px solid #2a2a2a;border-radius:3px;color:#aaa;font-size:10px;padding:3px 5px;outline:none;font-family:inherit">
+        <select id="add-note-action" class="io-select">
+          <option value="pulse">Pulse</option>
+          <option value="next_preset">Preset suivant</option>
+          <option value="scene_load_0">Scène 1</option>
+          <option value="scene_load_1">Scène 2</option>
+          <option value="scene_load_2">Scène 3</option>
+          <option value="scene_load_3">Scène 4</option>
+        </select>
+        <button class="preset-btn" id="btn-add-note">+</button>
+      </div>
+    </div>
+    <div class="sep"></div>
+    <div class="sec">
+      <div class="sec-title">Contrôleur non détecté ?</div>
+      <div style="font-size:9px;color:#667;line-height:1.8;margin-bottom:8px">
+        Chrome utilise le MIDI système Windows (WinMM). Certains contrôleurs (Novation, Akai…) installent un driver propriétaire invisible à Chrome. Solution : passer par <strong style="color:#aaa">loopMIDI + MIDI-OX</strong>.
+      </div>
+      <div style="color:var(--accent);font-size:9px;font-weight:700;letter-spacing:1px;margin-bottom:6px">MARCHE À SUIVRE</div>
+      <div style="font-size:9px;color:#888;line-height:2">
+        <span style="color:var(--accent)">1.</span> Installer <a href="https://tobias-erichsen.de/software/loopmidi.html" target="_blank" style="color:#ccc;text-decoration:none">loopMIDI</a> — tobias-erichsen.de<br>
+        <span style="color:var(--accent)">2.</span> Installer <a href="http://www.midiox.com/" target="_blank" style="color:#ccc;text-decoration:none">MIDI-OX</a> — midiox.com<br>
+        <span style="color:var(--accent)">2.</span> Ouvrir MIDI-OX → menu <span style="color:#ccc">Options → MIDI Devices</span><br>
+        <span style="color:var(--accent)">3.</span> Colonne gauche <span style="color:#ccc">MIDI Inputs</span> → sélectionner ton contrôleur<br>
+        <span style="color:var(--accent)">4.</span> Colonne droite <span style="color:#ccc">MIDI Outputs</span> → sélectionner <span style="color:#ccc">loopMIDI</span><br>
+        <span style="color:var(--accent)">5.</span> Menu <span style="color:#ccc">Actions → Port Routings → New Simple Port Route</span><br>
+        &nbsp;&nbsp;&nbsp;&nbsp;Input : contrôleur · Output : loopMIDI → <span style="color:#ccc">Route</span><br>
+        <span style="color:var(--accent)">6.</span> Ici : sélectionner <span style="color:#ccc">loopMIDI</span> dans le sélecteur APPAREIL<br>
+        <span style="color:#445;font-size:8px;margin-top:2px;display:block">MIDI-OX doit rester ouvert en arrière-plan pendant la session.</span>
+      </div>
+    </div>
+  </div><!-- /tab-io -->
+
+  <div class="tab-pane" id="tab-save">
+    <div class="sec">
+      <div class="sec-title">Presets</div>
+      <input type="text" id="preset-name-inp" placeholder="Nom du preset…" maxlength="32">
+      <div class="row2" style="margin-bottom:6px">
+        <button class="btn-wide" id="btn-save-preset" style="flex:1">💾 Sauvegarder</button>
+        <button class="btn-wide" id="btn-overwrite-preset" style="flex:1;display:none">↺ Écraser</button>
+      </div>
+      <div id="preset-list"></div>
+      <div class="preset-io">
+        <button class="preset-btn" id="btn-export">Export JSON</button>
+        <button class="preset-btn" id="btn-import">Import JSON</button>
+        <input type="file" id="import-file" accept=".json" style="display:none">
+      </div>
+    </div>
+  </div><!-- /tab-save -->
+
+  </div><!-- /engine-panes fluid -->
+
+  <!-- ══ VORTEX ENGINE PANES ══ -->
+  <div class="engine-panes" data-engine="vortex">
+  <div class="tab-pane active" id="tab-vortex-live">
+    <div class="sec">
+      <div class="sec-title">Mode pointeur</div>
+      <div class="btn-grid">
+        <button class="btn active" data-vmode="spawn_pair">Spawn ±</button>
+        <button class="btn" data-vmode="spawn_pos">Spawn +</button>
+        <button class="btn" data-vmode="spawn_neg">Spawn −</button>
+        <button class="btn" data-vmode="attract">Attract</button>
+        <button class="btn" data-vmode="kill_nearest">Kill</button>
+        <button class="btn" data-vmode="scatter">Scatter</button>
+      </div>
+    </div>
+    <div class="sec">
+      <div class="ctrl"><label>Rayon <span class="val" id="vval-pen">40</span></label><input type="range" id="vpen-size" min="10" max="200" value="40"></div>
+      <div class="ctrl"><label>Force <span class="val" id="vval-force">1.0</span></label><input type="range" id="vpush-force" min="0.1" max="5" step="0.1" value="1.0"></div>
+      <div class="ctrl"><label>Curseur X <span class="val" id="vval-cx">0.50</span></label><input type="range" id="vcursor-x" min="0" max="1" step="0.005" value="0.50"></div>
+      <div class="ctrl"><label>Curseur Y <span class="val" id="vval-cy">0.50</span></label><input type="range" id="vcursor-y" min="0" max="1" step="0.005" value="0.50"></div>
+      <div class="quick-row" style="margin-top:4px"><button class="big-toggle" id="vbtn-click" style="flex:1"><span class="dot"></span>CLICK</button><button class="quick-fire" id="vbtn-click-fire">▶</button></div>
+      <div class="ctrl"><label>Force Γ <span class="val" id="vval-gamma">2.0</span></label><input type="range" id="vspawn-gamma" min="0.5" max="8" step="0.1" value="2.0"></div>
+    </div>
+    <div class="sep"></div>
+    <div class="sec">
+      <div class="sec-title">Vortex actifs</div>
+      <div class="ctrl"><label>Nombre initial <span class="val" id="vval-count">12</span></label><input type="range" id="vvortex-count" min="2" max="50" step="1" value="12"></div>
+      <div class="ctrl"><label>Epsilon <span class="val" id="vval-eps">15</span></label><input type="range" id="vvortex-eps" min="1" max="50" step="1" value="15"></div>
+      <div class="toggle-row"><label>Marqueurs</label><input type="checkbox" id="vshow-markers" checked></div>
+      <div class="toggle-row"><label>Traces</label><input type="checkbox" id="vshow-trails"></div>
+    </div>
+    <div class="sep"></div>
+    <div class="sec">
+      <div class="sec-title">Déclencheurs</div>
+      <div class="quick-row">
+        <button class="big-toggle" id="vbtn-pulse" style="flex:1"><span class="dot"></span>PULSE</button>
+        <button class="quick-fire" id="vbtn-pulse-fire">▶</button>
+      </div>
+      <div class="prog-bar"><div class="prog-fill" id="vpulse-bar"></div></div>
+      <div class="ctrl" style="margin-top:6px"><label style="margin-bottom:4px">Type pulse</label>
+        <div class="btn-grid">
+          <button class="btn active" data-vptype="ring">Ring</button>
+          <button class="btn" data-vptype="burst">Burst</button>
+          <button class="btn" data-vptype="chaos">Chaos</button>
+        </div>
+      </div>
+      <div style="margin-top:8px"></div>
+      <div class="quick-row">
+        <button class="big-toggle" id="vbtn-auto" style="flex:1"><span class="dot"></span>AUTO</button>
+        <button class="quick-fire" id="vbtn-auto-fire">▶</button>
+      </div>
+      <div class="prog-bar"><div class="prog-fill" id="vauto-bar"></div></div>
+    </div>
+  </div>
+  <div class="tab-pane" id="tab-vortex-sim">
+    <div class="sec">
+      <div class="ctrl"><label>Particules <span class="val" id="vval-speck">8000</span></label><input type="range" id="vspeck" min="100" max="30000" step="100" value="8000"></div>
+      <div class="ctrl"><label>Épaisseur <span class="val" id="vval-lw">1.0</span></label><input type="range" id="vlw" min="0.2" max="5" step="0.1" value="1.0"></div>
+      <div class="ctrl"><label>Flow force <span class="val" id="vval-ff">0.08</span></label><input type="range" id="vff" min="0.005" max="0.5" step="0.005" value="0.08"></div>
+      <div class="ctrl"><label>Drag <span class="val" id="vval-drag">0.95</span></label><input type="range" id="vdrag" min="0.5" max="0.999" step="0.001" value="0.95"></div>
+      <div class="ctrl"><label>Trail <span class="val" id="vval-trail">0.05</span></label><input type="range" id="vtrail" min="0" max="0.99" step="0.01" value="0.05"></div>
+    </div>
+    <div class="sep"></div>
+    <div class="row2">
+      <button class="btn-2" id="vbtn-reset-all">↺ Reset tout</button>
+      <button class="btn-2" id="vbtn-reset-particles">↺ Particules</button>
+    </div>
+  </div>
+  <div class="tab-pane" id="tab-vortex-color">
+    <div class="sec">
+      <div class="ctrl"><label style="margin-bottom:5px">Background</label><input type="color" id="vbg-color" value="#050505"></div>
+    </div>
+    <div class="sep"></div>
+    <div class="sec">
+      <div class="sec-title">Mode couleur</div>
+      <div class="btn-grid" style="grid-template-columns:repeat(2,1fr)">
+        <button class="btn active" data-vcmode="gamma">Gamma ±</button>
+        <button class="btn" data-vcmode="velocity">Velocity</button>
+        <button class="btn" data-vcmode="solid">Solid</button>
+        <button class="btn" data-vcmode="ramp">Ramp</button>
+      </div>
+      <div id="vsec-gamma" style="margin-top:8px">
+        <div class="ctrl"><label style="margin-bottom:5px">Couleur Γ+</label><input type="color" id="vcolor-pos" value="#ff6600"></div>
+        <div class="ctrl"><label style="margin-bottom:5px">Couleur Γ−</label><input type="color" id="vcolor-neg" value="#0066ff"></div>
+      </div>
+    </div>
+    <div class="sep"></div>
+    <div class="ctrl"><label>Opacité <span class="val" id="vval-opacity">1.0</span></label><input type="range" id="vopacity" min="0.05" max="1" step="0.05" value="1.0"></div>
+    <div class="ctrl"><label>Vel max <span class="val" id="vval-velmax">8.0</span></label><input type="range" id="vvel-max" min="1" max="30" step="0.5" value="8.0"></div>
+    <div class="toggle-row"><label>Hue shift</label><input type="checkbox" id="vhue-enabled"></div>
+    <div class="ctrl"><label>Vitesse °/beat <span class="val" id="vval-hspeed">30</span></label><input type="range" id="vhue-speed" min="-180" max="180" step="1" value="30"></div>
+  </div>
+  <div class="tab-pane" id="tab-vortex-tempo">
+    <div class="sec">
+      <div class="ctrl"><label>Intervalle pulse <span class="val" id="vval-pulse-int">2.0</span>s</label><input type="range" id="vtpulse-int" min="0.1" max="20" step="0.1" value="2.0"></div>
+      <div class="ctrl"><label>Intervalle auto <span class="val" id="vval-auto-int">3.0</span>s</label><input type="range" id="vtauto-int" min="0.1" max="30" step="0.1" value="3.0"></div>
+    </div>
+  </div>
+  <div class="tab-pane" id="tab-vortex-io"><div class="sec"><div class="sec-title">MIDI CC Vortex</div><div id="vmidi-cc-list" style="max-height:100px;overflow-y:auto;font-size:10px;color:#888"></div></div></div>
+  <div class="tab-pane" id="tab-vortex-save"><div class="sec"><button class="btn-wide" id="vbtn-export">Export JSON Vortex</button></div></div>
+  </div><!-- /engine-panes vortex -->
+
+  <!-- ══ NBODY ENGINE PANES ══ -->
+  <div class="engine-panes" data-engine="nbody">
+  <div class="tab-pane active" id="tab-nbody-live">
+    <div class="sec">
+      <div class="sec-title">Mode pointeur</div>
+      <div class="btn-grid">
+        <button class="btn active" data-nbmode="spawn_body">Spawn</button>
+        <button class="btn" data-nbmode="attract_bodies">Attract</button>
+        <button class="btn" data-nbmode="repulse_bodies">Repulse</button>
+        <button class="btn" data-nbmode="pin_body">Pin</button>
+        <button class="btn" data-nbmode="kill_nearest">Kill</button>
+      </div>
+    </div>
+    <div class="sec">
+      <div class="ctrl"><label>Rayon <span class="val" id="nbval-pen">60</span></label><input type="range" id="nbpen-size" min="10" max="200" value="60"></div>
+      <div class="ctrl"><label>Force <span class="val" id="nbval-force">1.0</span></label><input type="range" id="nbpush-force" min="0.1" max="5" step="0.1" value="1.0"></div>
+      <div class="ctrl"><label>Curseur X <span class="val" id="nbval-cx">0.50</span></label><input type="range" id="nbcursor-x" min="0" max="1" step="0.005" value="0.50"></div>
+      <div class="ctrl"><label>Curseur Y <span class="val" id="nbval-cy">0.50</span></label><input type="range" id="nbcursor-y" min="0" max="1" step="0.005" value="0.50"></div>
+      <div class="quick-row" style="margin-top:4px"><button class="big-toggle" id="nbbtn-click" style="flex:1"><span class="dot"></span>CLICK</button><button class="quick-fire" id="nbbtn-click-fire">▶</button></div>
+      <div class="ctrl"><label>Masse spawn <span class="val" id="nbval-mass">200</span></label><input type="range" id="nbspawn-mass" min="10" max="600" step="10" value="200"></div>
+    </div>
+    <div class="sep"></div>
+    <div class="sec">
+      <div class="ctrl"><label>Nombre corps <span class="val" id="nbval-count">6</span></label><input type="range" id="nbbody-count" min="2" max="20" step="1" value="6"></div>
+      <div class="ctrl"><label>G <span class="val" id="nbval-G">0.40</span></label><input type="range" id="nbG" min="0.01" max="2" step="0.01" value="0.4"></div>
+      <div class="ctrl"><label>Softening <span class="val" id="nbval-soft">20</span></label><input type="range" id="nbsoftening" min="1" max="80" step="1" value="20"></div>
+      <div class="toggle-row"><label>Trajectoires</label><input type="checkbox" id="nbshow-trails" checked></div>
+      <div class="ctrl"><label>Longueur traj. <span class="val" id="nbval-tlen">150</span></label><input type="range" id="nbtrail-len" min="20" max="500" step="10" value="150"></div>
+      <div class="ctrl"><label style="margin-bottom:4px">Frontières</label>
+        <div class="btn-grid">
+          <button class="btn active" data-nbbnd="reflect">Reflect</button>
+          <button class="btn" data-nbbnd="wrap">Wrap</button>
+          <button class="btn" data-nbbnd="absorb">Absorb</button>
+        </div>
+      </div>
+    </div>
+    <div class="sep"></div>
+    <div class="sec">
+      <div class="quick-row">
+        <button class="big-toggle" id="nbbtn-pulse" style="flex:1"><span class="dot"></span>PULSE</button>
+        <button class="quick-fire" id="nbbtn-pulse-fire">▶</button>
+      </div>
+      <div class="prog-bar"><div class="prog-fill" id="nbpulse-bar"></div></div>
+      <div class="ctrl" style="margin-top:6px"><label style="margin-bottom:4px">Type pulse</label>
+        <div class="btn-grid">
+          <button class="btn active" data-nbptype="scatter">Scatter</button>
+          <button class="btn" data-nbptype="implode">Implode</button>
+          <button class="btn" data-nbptype="orbit_reset">Orbit</button>
+        </div>
+      </div>
+      <div style="margin-top:8px"></div>
+      <div class="quick-row">
+        <button class="big-toggle" id="nbbtn-auto" style="flex:1"><span class="dot"></span>AUTO</button>
+        <button class="quick-fire" id="nbbtn-auto-fire">▶</button>
+      </div>
+      <div class="prog-bar"><div class="prog-fill" id="nbauto-bar"></div></div>
+    </div>
+  </div>
+  <div class="tab-pane" id="tab-nbody-sim">
+    <div class="sec">
+      <div class="ctrl"><label>Particules <span class="val" id="nbval-speck">10000</span></label><input type="range" id="nbspeck" min="100" max="40000" step="100" value="10000"></div>
+      <div class="ctrl"><label>Flow force <span class="val" id="nbval-ff">0.10</span></label><input type="range" id="nbff" min="0.005" max="0.5" step="0.005" value="0.1"></div>
+      <div class="ctrl"><label>Drag <span class="val" id="nbval-drag">0.97</span></label><input type="range" id="nbdrag" min="0.5" max="0.999" step="0.001" value="0.97"></div>
+      <div class="ctrl"><label>Trail <span class="val" id="nbval-trail">0.08</span></label><input type="range" id="nbtrail" min="0" max="0.99" step="0.01" value="0.08"></div>
+    </div>
+    <div class="sep"></div>
+    <div class="row2">
+      <button class="btn-2" id="nbbtn-reset-all">↺ Reset tout</button>
+      <button class="btn-2" id="nbbtn-reset-particles">↺ Particules</button>
+    </div>
+  </div>
+  <div class="tab-pane" id="tab-nbody-color">
+    <div class="sec">
+      <div class="ctrl"><label style="margin-bottom:5px">Background</label><input type="color" id="nbbg-color" value="#020208"></div>
+    </div>
+    <div class="sep"></div>
+    <div class="sec-title" style="margin-bottom:6px">Palette des corps</div>
+    <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:4px;margin-bottom:8px">
+      <input type="color" class="nb-body-color" data-idx="0" value="#aa44ff" title="Corps 1" style="width:100%;height:28px;border:none;padding:0;cursor:pointer;border-radius:3px">
+      <input type="color" class="nb-body-color" data-idx="1" value="#ff4422" title="Corps 2" style="width:100%;height:28px;border:none;padding:0;cursor:pointer;border-radius:3px">
+      <input type="color" class="nb-body-color" data-idx="2" value="#22ffaa" title="Corps 3" style="width:100%;height:28px;border:none;padding:0;cursor:pointer;border-radius:3px">
+      <input type="color" class="nb-body-color" data-idx="3" value="#ffaa00" title="Corps 4" style="width:100%;height:28px;border:none;padding:0;cursor:pointer;border-radius:3px">
+      <input type="color" class="nb-body-color" data-idx="4" value="#44aaff" title="Corps 5" style="width:100%;height:28px;border:none;padding:0;cursor:pointer;border-radius:3px">
+      <input type="color" class="nb-body-color" data-idx="5" value="#ff44aa" title="Corps 6" style="width:100%;height:28px;border:none;padding:0;cursor:pointer;border-radius:3px">
+      <input type="color" class="nb-body-color" data-idx="6" value="#aaff44" title="Corps 7" style="width:100%;height:28px;border:none;padding:0;cursor:pointer;border-radius:3px">
+      <input type="color" class="nb-body-color" data-idx="7" value="#ff8800" title="Corps 8" style="width:100%;height:28px;border:none;padding:0;cursor:pointer;border-radius:3px">
+    </div>
+    <div class="sep"></div>
+    <div class="ctrl"><label>Opacité <span class="val" id="nbval-opacity">1.0</span></label><input type="range" id="nbopacity" min="0.05" max="1" step="0.05" value="1.0"></div>
+    <div class="ctrl"><label>Vel max <span class="val" id="nbval-velmax">6.0</span></label><input type="range" id="nbvel-max" min="1" max="30" step="0.5" value="6.0"></div>
+    <div class="toggle-row"><label>Hue shift</label><input type="checkbox" id="nbhue-enabled"></div>
+    <div class="ctrl"><label>Vitesse °/beat <span class="val" id="nbval-hspeed">30</span></label><input type="range" id="nbhue-speed" min="-180" max="180" step="1" value="30"></div>
+  </div>
+  <div class="tab-pane" id="tab-nbody-tempo">
+    <div class="ctrl"><label>Intervalle pulse <span class="val" id="nbval-pulse-int">2.0</span>s</label><input type="range" id="nbtpulse-int" min="0.1" max="20" step="0.1" value="2.0"></div>
+    <div class="ctrl"><label>Intervalle auto <span class="val" id="nbval-auto-int">4.0</span>s</label><input type="range" id="nbtauto-int" min="0.1" max="30" step="0.1" value="4.0"></div>
+  </div>
+  <div class="tab-pane" id="tab-nbody-io"><div class="sec"><div class="sec-title">MIDI CC N-Body</div><div id="nbmidi-cc-list" style="max-height:100px;overflow-y:auto;font-size:10px;color:#888"></div></div></div>
+  <div class="tab-pane" id="tab-nbody-save"><div class="sec"><button class="btn-wide" id="nbbtn-export">Export JSON N-Body</button></div></div>
+  </div><!-- /engine-panes nbody -->
+
+  <!-- ══ SPH ENGINE PANES ══ -->
+  <div class="engine-panes" data-engine="sph">
+  <div class="tab-pane active" id="tab-sph-live">
+    <div class="sec">
+      <div class="sec-title">Mode pointeur</div>
+      <div class="btn-grid">
+        <button class="btn active" data-sphmode="push">Push</button>
+        <button class="btn" data-sphmode="inject">Inject</button>
+        <button class="btn" data-sphmode="drain">Drain</button>
+        <button class="btn" data-sphmode="heat">Heat</button>
+      </div>
+    </div>
+    <div class="sec">
+      <div class="ctrl"><label>Rayon <span class="val" id="sphval-pen">50</span></label><input type="range" id="sphpen-size" min="10" max="200" value="50"></div>
+      <div class="ctrl"><label>Force <span class="val" id="sphval-force">1.0</span></label><input type="range" id="sphpush-force" min="0.1" max="5" step="0.1" value="1.0"></div>
+      <div class="ctrl"><label>Curseur X <span class="val" id="sphval-cx">0.50</span></label><input type="range" id="sphcursor-x" min="0" max="1" step="0.005" value="0.50"></div>
+      <div class="ctrl"><label>Curseur Y <span class="val" id="sphval-cy">0.50</span></label><input type="range" id="sphcursor-y" min="0" max="1" step="0.005" value="0.50"></div>
+      <div class="quick-row" style="margin-top:4px"><button class="big-toggle" id="sphbtn-click" style="flex:1"><span class="dot"></span>CLICK</button><button class="quick-fire" id="sphbtn-click-fire">▶</button></div>
+    </div>
+    <div class="sep"></div>
+    <div class="sec">
+      <div class="quick-row">
+        <button class="big-toggle" id="sphbtn-pulse" style="flex:1"><span class="dot"></span>PULSE</button>
+        <button class="quick-fire" id="sphbtn-pulse-fire">▶</button>
+      </div>
+      <div class="prog-bar"><div class="prog-fill" id="sphpulse-bar"></div></div>
+      <div class="ctrl" style="margin-top:6px"><label style="margin-bottom:4px">Type pulse</label>
+        <div class="btn-grid">
+          <button class="btn active" data-sphptype="splash">Splash</button>
+          <button class="btn" data-sphptype="rain">Rain</button>
+          <button class="btn" data-sphptype="wave">Wave</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="tab-pane" id="tab-sph-sim">
+    <div class="sec">
+      <div class="ctrl"><label>Particules <span class="val" id="sphval-count">2000</span></label><input type="range" id="sphparticle-count" min="100" max="10000" step="100" value="2000"></div>
+      <div class="ctrl"><label>Smoothing h <span class="val" id="sphval-h">30</span></label><input type="range" id="sphsmoothing-h" min="10" max="80" step="2" value="30"></div>
+      <div class="ctrl"><label>Stiffness <span class="val" id="sphval-stiff">200</span></label><input type="range" id="sphstiffness" min="10" max="1000" step="10" value="200"></div>
+      <div class="ctrl"><label>Viscosité <span class="val" id="sphval-visc">0.10</span></label><input type="range" id="sphviscosity" min="0" max="2" step="0.05" value="0.1"></div>
+      <div class="ctrl"><label>Gravité Y <span class="val" id="sphval-gy">0.10</span></label><input type="range" id="sphgravity-y" min="-1" max="1" step="0.05" value="0.1"></div>
+      <div class="ctrl"><label>Gravité X <span class="val" id="sphval-gx">0.00</span></label><input type="range" id="sphgravity-x" min="-1" max="1" step="0.05" value="0"></div>
+    </div>
+    <div class="sep"></div>
+    <button class="btn-wide" id="sphbtn-reset">↺ Réinitialiser SPH</button>
+  </div>
+  <div class="tab-pane" id="tab-sph-color">
+    <div class="ctrl"><label style="margin-bottom:5px">Background</label><input type="color" id="sphbg-color" value="#050505"></div>
+    <div class="ctrl"><label style="margin-bottom:5px">Couleur particule</label><input type="color" id="sphparticle-color" value="#00ff88"></div>
+    <div class="ctrl"><label>Rayon <span class="val" id="sphval-radius">4</span>px</label><input type="range" id="sphparticle-radius" min="1" max="15" step="1" value="4"></div>
+    <div class="ctrl"><label>Opacité <span class="val" id="sphval-opacity">1.0</span></label><input type="range" id="sphopacity" min="0.05" max="1" step="0.05" value="1.0"></div>
+  </div>
+  <div class="tab-pane" id="tab-sph-tempo">
+    <div class="ctrl"><label>Intervalle pulse <span class="val" id="sphval-pulse-int">2.0</span>s</label><input type="range" id="sphtpulse-int" min="0.1" max="20" step="0.1" value="2.0"></div>
+  </div>
+  <div class="tab-pane" id="tab-sph-io"><div class="sec"><div class="sec-title">MIDI CC SPH</div><div id="sphmidi-cc-list" style="max-height:100px;overflow-y:auto;font-size:10px;color:#888"></div></div></div>
+  <div class="tab-pane" id="tab-sph-save"><div class="sec"><div style="color:#444;font-size:9px">Config SPH sauvegardée dans les scènes globales.</div></div></div>
+  </div><!-- /engine-panes sph -->
+
+  <!-- ══ BOIDS ENGINE PANES ══ -->
+  <div class="engine-panes" data-engine="boids">
+  <div class="tab-pane active" id="tab-boids-live">
+    <div class="sec">
+      <div class="sec-title">Mode pointeur</div>
+      <div class="btn-grid">
+        <button class="btn active" data-bmode="scatter">Scatter</button>
+        <button class="btn" data-bmode="attract">Attract</button>
+        <button class="btn" data-bmode="wind">Wind</button>
+        <button class="btn" data-bmode="obstacle">Obstacle</button>
+      </div>
+    </div>
+    <div class="sec">
+      <div class="ctrl"><label>Rayon <span class="val" id="bval-pen">80</span></label><input type="range" id="bpen-size" min="10" max="300" value="80"></div>
+      <div class="ctrl"><label>Force <span class="val" id="bval-force">1.0</span></label><input type="range" id="bpush-force" min="0.1" max="5" step="0.1" value="1.0"></div>
+      <div class="ctrl"><label>Curseur X <span class="val" id="bval-cx">0.50</span></label><input type="range" id="bcursor-x" min="0" max="1" step="0.005" value="0.50"></div>
+      <div class="ctrl"><label>Curseur Y <span class="val" id="bval-cy">0.50</span></label><input type="range" id="bcursor-y" min="0" max="1" step="0.005" value="0.50"></div>
+      <div class="quick-row" style="margin-top:4px"><button class="big-toggle" id="bbtn-click" style="flex:1"><span class="dot"></span>CLICK</button><button class="quick-fire" id="bbtn-click-fire">▶</button></div>
+    </div>
+    <div class="sep"></div>
+    <div class="sec">
+      <div class="quick-row">
+        <button class="big-toggle" id="bbtn-pulse" style="flex:1"><span class="dot"></span>PULSE</button>
+        <button class="quick-fire" id="bbtn-pulse-fire">▶</button>
+      </div>
+      <div class="prog-bar"><div class="prog-fill" id="bpulse-bar"></div></div>
+      <div class="ctrl" style="margin-top:6px"><label style="margin-bottom:4px">Type pulse</label>
+        <div class="btn-grid">
+          <button class="btn active" data-bptype="explode">Explode</button>
+          <button class="btn" data-bptype="implode">Implode</button>
+          <button class="btn" data-bptype="frenzy">Frenzy</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="tab-pane" id="tab-boids-sim">
+    <div class="sec">
+      <div class="ctrl"><label>Nombre boids <span class="val" id="bval-count">300</span></label><input type="range" id="bboid-count" min="50" max="2000" step="50" value="300"></div>
+      <div class="ctrl"><label>Rayon vision <span class="val" id="bval-perc">80</span></label><input type="range" id="bperception" min="20" max="200" step="5" value="80"></div>
+      <div class="ctrl"><label>Séparation <span class="val" id="bval-sep">1.5</span></label><input type="range" id="bseparation" min="0" max="5" step="0.1" value="1.5"></div>
+      <div class="ctrl"><label>Alignement <span class="val" id="bval-ali">1.0</span></label><input type="range" id="balignment" min="0" max="5" step="0.1" value="1.0"></div>
+      <div class="ctrl"><label>Cohésion <span class="val" id="bval-coh">1.0</span></label><input type="range" id="bcohesion" min="0" max="5" step="0.1" value="1.0"></div>
+      <div class="ctrl"><label>Vitesse max <span class="val" id="bval-speed">3.0</span></label><input type="range" id="bmax-speed" min="0.5" max="10" step="0.1" value="3.0"></div>
+    </div>
+    <div class="sep"></div>
+    <button class="btn-wide" id="bbtn-reset">↺ Réinitialiser Boids</button>
+  </div>
+  <div class="tab-pane" id="tab-boids-color">
+    <div class="ctrl"><label style="margin-bottom:5px">Background</label><input type="color" id="bbg-color" value="#050505"></div>
+    <div class="ctrl"><label style="margin-bottom:5px">Couleur</label><input type="color" id="bparticle-color" value="#ffdd00"></div>
+    <div class="ctrl"><label>Taille <span class="val" id="bval-size">4</span></label><input type="range" id="bboid-size" min="1" max="12" step="1" value="4"></div>
+    <div class="ctrl"><label>Trail <span class="val" id="bval-trail">0.15</span></label><input type="range" id="btrail" min="0" max="0.99" step="0.01" value="0.15"></div>
+    <div class="ctrl"><label>Opacité <span class="val" id="bval-opacity">1.0</span></label><input type="range" id="bopacity" min="0.05" max="1" step="0.05" value="1.0"></div>
+  </div>
+  <div class="tab-pane" id="tab-boids-tempo">
+    <div class="ctrl"><label>Intervalle pulse <span class="val" id="bval-pulse-int">2.0</span>s</label><input type="range" id="btpulse-int" min="0.1" max="20" step="0.1" value="2.0"></div>
+  </div>
+  <div class="tab-pane" id="tab-boids-io"><div class="sec"><div class="sec-title">MIDI CC Boids</div><div id="bmidi-cc-list" style="max-height:100px;overflow-y:auto;font-size:10px;color:#888"></div></div></div>
+  <div class="tab-pane" id="tab-boids-save"><div class="sec"><div style="color:#444;font-size:9px">Config Boids dans les scènes globales.</div></div></div>
+  </div><!-- /engine-panes boids -->
+
+  <!-- ══ PHYSARUM ENGINE PANES ══ -->
+  <div class="engine-panes" data-engine="physarum">
+  <div class="tab-pane active" id="tab-physarum-live">
+    <div class="sec">
+      <div class="sec-title">Mode pointeur</div>
+      <div class="btn-grid">
+        <button class="btn active" data-phmode="attract">Attract</button>
+        <button class="btn" data-phmode="repulse">Repulse</button>
+        <button class="btn" data-phmode="deposit">Deposit</button>
+        <button class="btn" data-phmode="erase">Erase</button>
+      </div>
+    </div>
+    <div class="ctrl"><label>Rayon <span class="val" id="phval-pen">60</span></label><input type="range" id="phpen-size" min="10" max="200" value="60"></div>
+    <div class="ctrl"><label>Force <span class="val" id="phval-force">1.0</span></label><input type="range" id="phpush-force" min="0.1" max="5" step="0.1" value="1.0"></div>
+    <div class="ctrl"><label>Curseur X <span class="val" id="phval-cx">0.50</span></label><input type="range" id="phcursor-x" min="0" max="1" step="0.005" value="0.50"></div>
+    <div class="ctrl"><label>Curseur Y <span class="val" id="phval-cy">0.50</span></label><input type="range" id="phcursor-y" min="0" max="1" step="0.005" value="0.50"></div>
+    <div class="quick-row" style="margin-top:4px"><button class="big-toggle" id="phbtn-click" style="flex:1"><span class="dot"></span>CLICK</button><button class="quick-fire" id="phbtn-click-fire">▶</button></div>
+    <div class="sep"></div>
+    <div class="sec">
+      <div class="quick-row">
+        <button class="big-toggle" id="phbtn-pulse" style="flex:1"><span class="dot"></span>PULSE</button>
+        <button class="quick-fire" id="phbtn-pulse-fire">▶</button>
+      </div>
+      <div class="prog-bar"><div class="prog-fill" id="phpulse-bar"></div></div>
+      <div class="ctrl" style="margin-top:6px"><label style="margin-bottom:4px">Type pulse</label>
+        <div class="btn-grid">
+          <button class="btn active" data-phptype="ring">Ring</button>
+          <button class="btn" data-phptype="clear">Clear</button>
+          <button class="btn" data-phptype="deposit_center">Center</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="tab-pane" id="tab-physarum-sim">
+    <div class="sec">
+      <div class="ctrl"><label>Agents <span class="val" id="phval-agents">100000</span></label><input type="range" id="phagent-count" min="5000" max="200000" step="5000" value="100000"></div>
+      <div class="ctrl"><label>Vitesse <span class="val" id="phval-speed">1.8</span></label><input type="range" id="phagent-speed" min="0.5" max="5" step="0.1" value="1.8"></div>
+      <div class="ctrl"><label>Angle capteur <span class="val" id="phval-sangle">15</span>°</label><input type="range" id="phsensor-angle" min="5" max="90" step="5" value="15"></div>
+      <div class="ctrl"><label>Distance capteur <span class="val" id="phval-sdist">10</span></label><input type="range" id="phsensor-dist" min="3" max="30" step="1" value="10"></div>
+      <div class="ctrl"><label>Angle rotation <span class="val" id="phval-rangle">30</span>°</label><input type="range" id="phrotation-angle" min="5" max="90" step="5" value="30"></div>
+      <div class="ctrl"><label>Dépôt <span class="val" id="phval-deposit">4.0</span></label><input type="range" id="phdeposit-amount" min="1" max="20" step="0.5" value="4.0"></div>
+      <div class="ctrl"><label>Décroissance <span class="val" id="phval-decay">0.723</span></label><input type="range" id="phdecay-rate" min="0.7" max="0.999" step="0.001" value="0.723"></div>
+      <div class="ctrl"><label>Diffusion <span class="val" id="phval-diffuse">0.75</span></label><input type="range" id="phdiffuse-rate" min="0" max="0.9" step="0.05" value="0.75"></div>
+    </div>
+    <div class="sep"></div>
+    <button class="btn-wide" id="phbtn-reset">↺ Réinitialiser Physarum</button>
+  </div>
+  <div class="tab-pane" id="tab-physarum-color">
+    <div class="ctrl"><label style="margin-bottom:5px">Couleur basse</label><input type="color" id="phcolor-low" value="#000000"></div>
+    <div class="ctrl"><label style="margin-bottom:5px">Couleur haute</label><input type="color" id="phcolor-high" value="#ffffff"></div>
+  </div>
+  <div class="tab-pane" id="tab-physarum-tempo">
+    <div class="ctrl"><label>Intervalle pulse <span class="val" id="phval-pulse-int">2.0</span>s</label><input type="range" id="phtpulse-int" min="0.1" max="20" step="0.1" value="2.0"></div>
+  </div>
+  <div class="tab-pane" id="tab-physarum-io"><div class="sec"><div class="sec-title">MIDI CC Physarum</div><div id="phmidi-cc-list" style="max-height:100px;overflow-y:auto;font-size:10px;color:#888"></div></div></div>
+  <div class="tab-pane" id="tab-physarum-save"><div class="sec"><div style="color:#444;font-size:9px">Config Physarum dans les scènes globales.</div></div></div>
+  </div><!-- /engine-panes physarum -->
+
+  <!-- ══ LORENZ ENGINE PANES ══ -->
+  <div class="engine-panes" data-engine="lorenz">
+  <div class="tab-pane active" id="tab-lorenz-live">
+    <div class="sec">
+      <div class="sec-title">Attracteur</div>
+      <div class="btn-grid" style="grid-template-columns:repeat(2,1fr)">
+        <button class="btn active" data-lattractor="lorenz">Lorenz</button>
+        <button class="btn" data-lattractor="rossler">Rössler</button>
+        <button class="btn" data-lattractor="clifford">Clifford</button>
+        <button class="btn" data-lattractor="thomas">Thomas</button>
+      </div>
+    </div>
+    <div class="sep"></div>
+    <div class="sec">
+      <div class="quick-row">
+        <button class="big-toggle" id="lbtn-pulse" style="flex:1"><span class="dot"></span>PULSE</button>
+        <button class="quick-fire" id="lbtn-pulse-fire">▶</button>
+      </div>
+      <div class="prog-bar"><div class="prog-fill" id="lpulse-bar"></div></div>
+      <div class="ctrl" style="margin-top:6px"><label style="margin-bottom:4px">Type pulse</label>
+        <div class="btn-grid">
+          <button class="btn active" data-lptype="perturb">Perturb</button>
+          <button class="btn" data-lptype="switch">Switch</button>
+          <button class="btn" data-lptype="scatter">Scatter</button>
+        </div>
+      </div>
+    </div>
+    <div class="sep"></div>
+    <div class="toggle-row"><label>Rotation auto</label><input type="checkbox" id="lauto-rotate" checked></div>
+    <div class="ctrl"><label>Rot. vitesse X <span class="val" id="lval-rotx">0.003</span></label><input type="range" id="lrotate-x" min="-0.01" max="0.01" step="0.001" value="0.003"></div>
+    <div class="ctrl"><label>Rot. vitesse Y <span class="val" id="lval-roty">0.005</span></label><input type="range" id="lrotate-y" min="-0.01" max="0.01" step="0.001" value="0.005"></div>
+    <div class="sep"></div>
+    <div class="sec">
+      <div class="sec-title">Contrôle curseur</div>
+      <div class="ctrl"><label>Rayon <span class="val" id="lval-pen">80</span></label><input type="range" id="lpen-size" min="5" max="200" value="80"></div>
+      <div class="ctrl"><label>Force <span class="val" id="lval-force">1.0</span></label><input type="range" id="lpush-force" min="0.1" max="5" step="0.1" value="1.0"></div>
+      <div class="ctrl"><label>Curseur X <span class="val" id="lval-cx">0.50</span></label><input type="range" id="lcursor-x" min="0" max="1" step="0.005" value="0.50"></div>
+      <div class="ctrl"><label>Curseur Y <span class="val" id="lval-cy">0.50</span></label><input type="range" id="lcursor-y" min="0" max="1" step="0.005" value="0.50"></div>
+      <div class="quick-row" style="margin-top:4px"><button class="big-toggle" id="lbtn-click" style="flex:1"><span class="dot"></span>CLICK</button><button class="quick-fire" id="lbtn-click-fire">▶</button></div>
+    </div>
+  </div>
+  <div class="tab-pane" id="tab-lorenz-sim">
+    <div class="sec">
+      <div class="ctrl"><label>Trajectoires <span class="val" id="lval-tcount">1000</span></label><input type="range" id="ltrajectory-count" min="100" max="5000" step="100" value="1000"></div>
+      <div class="ctrl"><label>Trail length <span class="val" id="lval-tlen">50</span></label><input type="range" id="ltrail-length" min="10" max="200" step="5" value="50"></div>
+      <div class="ctrl"><label>dt <span class="val" id="lval-dt">0.005</span></label><input type="range" id="ldt" min="0.001" max="0.02" step="0.001" value="0.005"></div>
+      <div class="ctrl"><label>Scale <span class="val" id="lval-scale">15</span></label><input type="range" id="lproj-scale" min="5" max="50" step="1" value="15"></div>
+    </div>
+    <div class="sep"></div>
+    <div id="lparams-lorenz" class="sec">
+      <div class="sec-title">Paramètres Lorenz</div>
+      <div class="ctrl"><label>σ sigma <span class="val" id="lval-sigma">10</span></label><input type="range" id="llorenz-sigma" min="1" max="20" step="0.5" value="10"></div>
+      <div class="ctrl"><label>ρ rho <span class="val" id="lval-rho">28</span></label><input type="range" id="llorenz-rho" min="1" max="50" step="0.5" value="28"></div>
+      <div class="ctrl"><label>β beta <span class="val" id="lval-beta">2.67</span></label><input type="range" id="llorenz-beta" min="0.5" max="8" step="0.1" value="2.667"></div>
+    </div>
+    <div id="lparams-rossler" class="sec" style="display:none">
+      <div class="sec-title">Paramètres Rössler</div>
+      <div class="ctrl"><label>a <span class="val" id="lval-ra">0.20</span></label><input type="range" id="lrossler-a" min="0.01" max="0.5" step="0.01" value="0.2"></div>
+      <div class="ctrl"><label>b <span class="val" id="lval-rb">0.20</span></label><input type="range" id="lrossler-b" min="0.01" max="0.5" step="0.01" value="0.2"></div>
+      <div class="ctrl"><label>c <span class="val" id="lval-rc">5.70</span></label><input type="range" id="lrossler-c" min="2" max="12" step="0.1" value="5.7"></div>
+    </div>
+    <div id="lparams-clifford" class="sec" style="display:none">
+      <div class="sec-title">Paramètres Clifford</div>
+      <div class="ctrl"><label>a <span class="val" id="lval-ca">-1.4</span></label><input type="range" id="lclifford-a" min="-2" max="2" step="0.05" value="-1.4"></div>
+      <div class="ctrl"><label>b <span class="val" id="lval-cb">1.60</span></label><input type="range" id="lclifford-b" min="-2" max="2" step="0.05" value="1.6"></div>
+      <div class="ctrl"><label>c <span class="val" id="lval-cc">1.00</span></label><input type="range" id="lclifford-c" min="-2" max="2" step="0.05" value="1.0"></div>
+      <div class="ctrl"><label>d <span class="val" id="lval-cd">0.70</span></label><input type="range" id="lclifford-d" min="-2" max="2" step="0.05" value="0.7"></div>
+    </div>
+    <div id="lparams-thomas" class="sec" style="display:none">
+      <div class="sec-title">Paramètres Thomas</div>
+      <div class="ctrl"><label>b <span class="val" id="lval-tb">0.190</span></label><input type="range" id="lthomas-b" min="0.05" max="0.4" step="0.005" value="0.19"></div>
+    </div>
+    <div class="sep"></div>
+    <button class="btn-wide" id="lbtn-reset">↺ Réinitialiser Lorenz</button>
+  </div>
+  <div class="tab-pane" id="tab-lorenz-color">
+    <div class="ctrl"><label style="margin-bottom:5px">Background</label><input type="color" id="lbg-color" value="#010508"></div>
+    <div class="sec-title" style="margin:6px 0 4px">Couleurs gradient</div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:4px;margin-bottom:6px">
+      <div class="ctrl"><label style="margin-bottom:3px;font-size:9px">Bas (lent)</label><input type="color" id="lramp-low" value="#000033"></div>
+      <div class="ctrl"><label style="margin-bottom:3px;font-size:9px">Milieu</label><input type="color" id="lramp-mid" value="#0044ff"></div>
+      <div class="ctrl"><label style="margin-bottom:3px;font-size:9px">Haut-mid</label><input type="color" id="lramp-himid" value="#44aaff"></div>
+      <div class="ctrl"><label style="margin-bottom:3px;font-size:9px">Max (rapide)</label><input type="color" id="lramp-high" value="#ffffff"></div>
+    </div>
+    <div class="sep"></div>
+    <div class="ctrl"><label>Trail <span class="val" id="lval-trail">0.05</span></label><input type="range" id="ltrail" min="0" max="0.99" step="0.01" value="0.05"></div>
+    <div class="ctrl"><label>Épaisseur <span class="val" id="lval-lw">0.7</span></label><input type="range" id="llw" min="0.2" max="3" step="0.1" value="0.7"></div>
+    <div class="ctrl"><label>Opacité <span class="val" id="lval-opacity">1.0</span></label><input type="range" id="lopacity" min="0.05" max="1" step="0.05" value="1.0"></div>
+  </div>
+  <div class="tab-pane" id="tab-lorenz-tempo">
+    <div class="ctrl"><label>Intervalle pulse <span class="val" id="lval-pulse-int">2.0</span>s</label><input type="range" id="ltpulse-int" min="0.1" max="20" step="0.1" value="2.0"></div>
+  </div>
+  <div class="tab-pane" id="tab-lorenz-io"><div class="sec"><div class="sec-title">MIDI CC Lorenz</div><div id="lmidi-cc-list" style="max-height:100px;overflow-y:auto;font-size:10px;color:#888"></div></div></div>
+  <div class="tab-pane" id="tab-lorenz-save"><div class="sec"><div style="color:#444;font-size:9px">Config Lorenz dans les scènes globales.</div></div></div>
+  </div><!-- /engine-panes lorenz -->
+
+  <!-- ══ REACT ENGINE PANES ══ -->
+  <div class="engine-panes" data-engine="react">
+  <div class="tab-pane active" id="tab-react-live">
+    <div class="sec">
+      <div class="sec-title">Preset Gray-Scott</div>
+      <div class="btn-grid" style="grid-template-columns:repeat(3,1fr)">
+        <button class="btn active" data-rpreset="coral">Coral</button>
+        <button class="btn" data-rpreset="maze">Maze</button>
+        <button class="btn" data-rpreset="spots">Spots</button>
+        <button class="btn" data-rpreset="stripes">Stripes</button>
+        <button class="btn" data-rpreset="worms">Worms</button>
+        <button class="btn" data-rpreset="bubbles">Bubbles</button>
+        <button class="btn" data-rpreset="mitosis">Mitosis</button>
+      </div>
+    </div>
+    <div class="sep"></div>
+    <div class="sec">
+      <div class="sec-title">Mode pointeur</div>
+      <div class="btn-grid">
+        <button class="btn active" data-rmode="deposit_v">Deposit V</button>
+        <button class="btn" data-rmode="deposit_u">Deposit U</button>
+        <button class="btn" data-rmode="erase">Erase</button>
+      </div>
+    </div>
+    <div class="ctrl"><label>Rayon <span class="val" id="rval-pen">30</span></label><input type="range" id="rpen-size" min="5" max="100" value="30"></div>
+    <div class="ctrl"><label>Force <span class="val" id="rval-force">1.0</span></label><input type="range" id="rpush-force" min="0.1" max="5" step="0.1" value="1.0"></div>
+    <div class="ctrl"><label>Curseur X <span class="val" id="rval-cx">0.50</span></label><input type="range" id="rcursor-x" min="0" max="1" step="0.005" value="0.50"></div>
+    <div class="ctrl"><label>Curseur Y <span class="val" id="rval-cy">0.50</span></label><input type="range" id="rcursor-y" min="0" max="1" step="0.005" value="0.50"></div>
+    <div class="quick-row" style="margin-top:4px"><button class="big-toggle" id="rbtn-click" style="flex:1"><span class="dot"></span>CLICK</button><button class="quick-fire" id="rbtn-click-fire">▶</button></div>
+    <div class="sep"></div>
+    <div class="sec">
+      <div class="quick-row">
+        <button class="big-toggle" id="rbtn-pulse" style="flex:1"><span class="dot"></span>PULSE</button>
+        <button class="quick-fire" id="rbtn-pulse-fire">▶</button>
+      </div>
+      <div class="prog-bar"><div class="prog-fill" id="rpulse-bar"></div></div>
+      <div class="ctrl" style="margin-top:6px"><label style="margin-bottom:4px">Type pulse</label>
+        <div class="btn-grid">
+          <button class="btn active" data-rptype="deposit_ring">Ring</button>
+          <button class="btn" data-rptype="clear">Clear</button>
+          <button class="btn" data-rptype="next_preset">Preset+</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="tab-pane" id="tab-react-sim">
+    <div class="sec">
+      <div class="ctrl"><label>Feed (f) <span class="val" id="rval-feed">0.055</span></label><input type="range" id="rfeed" min="0.01" max="0.1" step="0.001" value="0.055"></div>
+      <div class="ctrl"><label>Kill (k) <span class="val" id="rval-kill">0.062</span></label><input type="range" id="rkill" min="0.03" max="0.085" step="0.001" value="0.062"></div>
+      <div class="ctrl"><label>Du <span class="val" id="rval-Du">0.210</span></label><input type="range" id="rDu" min="0.05" max="0.5" step="0.01" value="0.2097"></div>
+      <div class="ctrl"><label>Dv <span class="val" id="rval-Dv">0.105</span></label><input type="range" id="rDv" min="0.02" max="0.3" step="0.005" value="0.105"></div>
+      <div class="ctrl"><label>Steps/frame <span class="val" id="rval-steps">8</span></label><input type="range" id="rsteps-per-frame" min="1" max="20" step="1" value="8"></div>
+    </div>
+  </div>
+  <div class="tab-pane" id="tab-react-color">
+    <div class="ctrl"><label style="margin-bottom:5px">Couleur basse</label><input type="color" id="rcolor-low" value="#000000"></div>
+    <div class="ctrl"><label style="margin-bottom:5px">Couleur haute</label><input type="color" id="rcolor-high" value="#ff2266"></div>
+    <div class="ctrl"><label>Opacité <span class="val" id="rval-opacity">1.0</span></label><input type="range" id="ropacity" min="0.05" max="1" step="0.05" value="1.0"></div>
+  </div>
+  <div class="tab-pane" id="tab-react-tempo">
+    <div class="ctrl"><label>Intervalle pulse <span class="val" id="rval-pulse-int">2.0</span>s</label><input type="range" id="rtpulse-int" min="0.1" max="20" step="0.1" value="2.0"></div>
+  </div>
+  <div class="tab-pane" id="tab-react-io"><div class="sec"><div class="sec-title">MIDI CC React</div><div id="rmidi-cc-list" style="max-height:100px;overflow-y:auto;font-size:10px;color:#888"></div></div></div>
+  <div class="tab-pane" id="tab-react-save"><div class="sec"><div style="color:#444;font-size:9px">Config React dans les scènes globales.</div></div></div>
+  </div><!-- /engine-panes react -->
+
+  <!-- ══ ACO ENGINE PANES ══ -->
+  <div class="engine-panes" data-engine="aco">
+  <div class="tab-pane active" id="tab-aco-live">
+    <div class="sec">
+      <div class="sec-title">Mode pointeur</div>
+      <div class="btn-grid">
+        <button class="btn active" data-acomode="food">Food</button>
+        <button class="btn" data-acomode="nest">Nest</button>
+        <button class="btn" data-acomode="erase">Erase</button>
+        <button class="btn" data-acomode="scatter">Scatter</button>
+      </div>
+    </div>
+    <div class="ctrl"><label>Rayon <span class="val" id="acoval-pen">30</span></label><input type="range" id="acopen-size" min="5" max="150" value="30"></div>
+    <div class="ctrl"><label>Force <span class="val" id="acoval-force">1.0</span></label><input type="range" id="acopush-force" min="0.1" max="5" step="0.1" value="1.0"></div>
+    <div class="ctrl"><label>Curseur X <span class="val" id="acoval-cx">0.50</span></label><input type="range" id="acocursor-x" min="0" max="1" step="0.005" value="0.50"></div>
+    <div class="ctrl"><label>Curseur Y <span class="val" id="acoval-cy">0.50</span></label><input type="range" id="acocursor-y" min="0" max="1" step="0.005" value="0.50"></div>
+    <div class="quick-row" style="margin-top:4px"><button class="big-toggle" id="acobtn-click" style="flex:1"><span class="dot"></span>CLICK</button><button class="quick-fire" id="acobtn-click-fire">▶</button></div>
+    <div class="sep"></div>
+    <div class="sec">
+      <div class="quick-row">
+        <button class="big-toggle" id="acobtn-pulse" style="flex:1"><span class="dot"></span>PULSE</button>
+        <button class="quick-fire" id="acobtn-pulse-fire">▶</button>
+      </div>
+      <div class="ctrl" style="margin-top:6px"><label style="margin-bottom:4px">Type pulse</label>
+        <div class="btn-grid">
+          <button class="btn active" data-acoptype="scatter">Scatter</button>
+          <button class="btn" data-acoptype="add_food">+ Food</button>
+          <button class="btn" data-acoptype="clear_phero">Clear</button>
+        </div>
+      </div>
+    </div>
+    <div class="sep"></div>
+    <button class="btn-wide" id="acobtn-reset">↺ Réinitialiser ACO</button>
+  </div>
+  <div class="tab-pane" id="tab-aco-sim">
+    <div class="sec">
+      <div class="ctrl"><label>Fourmis <span class="val" id="acoval-ants">3000</span></label><input type="range" id="acoant-count" min="500" max="15000" step="500" value="3000"></div>
+      <div class="ctrl"><label>Nids <span class="val" id="acoval-nests">2</span></label><input type="range" id="aconest-count" min="1" max="6" step="1" value="2"></div>
+      <div class="ctrl"><label>Sources nourrit. <span class="val" id="acoval-foods">5</span></label><input type="range" id="acofood-count" min="1" max="12" step="1" value="5"></div>
+      <div class="ctrl"><label>Vitesse <span class="val" id="acoval-speed">1.5</span></label><input type="range" id="acospeed" min="0.5" max="4" step="0.1" value="1.5"></div>
+      <div class="ctrl"><label>Evaporation <span class="val" id="acoval-evap">0.97</span></label><input type="range" id="acoevap" min="0.90" max="0.999" step="0.001" value="0.97"></div>
+      <div class="ctrl"><label>Dépôt fourmis→food <span class="val" id="acoval-df">8</span></label><input type="range" id="acodep-food" min="1" max="30" step="1" value="8"></div>
+      <div class="ctrl"><label>Dépôt fourmis→nid <span class="val" id="acoval-dn">3</span></label><input type="range" id="acodep-nest" min="1" max="30" step="1" value="3"></div>
+      <div class="ctrl"><label>Angle capteur <span class="val" id="acoval-sa">45</span>°</label><input type="range" id="acosensor-angle" min="10" max="90" step="5" value="45"></div>
+      <div class="ctrl"><label>Dist. capteur <span class="val" id="acoval-sd">8</span></label><input type="range" id="acosensor-dist" min="2" max="20" step="1" value="8"></div>
+      <div class="ctrl"><label>Errance <span class="val" id="acoval-wander">0.25</span></label><input type="range" id="acowander" min="0" max="0.8" step="0.05" value="0.25"></div>
+    </div>
+  </div>
+  <div class="tab-pane" id="tab-aco-color">
+    <div class="ctrl"><label style="margin-bottom:5px">Fond</label><input type="color" id="acobg-color" value="#050505"></div>
+    <div class="ctrl"><label style="margin-bottom:5px">Phéromone → food</label><input type="color" id="acocolor-food" value="#00ff88"></div>
+    <div class="ctrl"><label style="margin-bottom:5px">Phéromone → nid</label><input type="color" id="acocolor-nest" value="#ff8800"></div>
+  </div>
+  <div class="tab-pane" id="tab-aco-tempo">
+    <div class="ctrl"><label>Intervalle pulse <span class="val" id="acoval-pulse-int">2.0</span></label><input type="range" id="acotpulse-int" min="0.1" max="20" step="0.1" value="2.0"></div>
+  </div>
+  <div class="tab-pane" id="tab-aco-io"><div class="sec"><div class="sec-title">MIDI CC ACO</div><div id="acomidi-cc-list" style="max-height:100px;overflow-y:auto;font-size:10px;color:#888"></div></div></div>
+  <div class="tab-pane" id="tab-aco-save"><div class="sec"><div style="color:#444;font-size:9px">Config ACO dans les scènes globales.</div></div></div>
+  </div><!-- /engine-panes aco -->
+
+  <!-- ══ SHARED PANES ══ -->
+  <div class="tab-pane" id="tab-scenes">
+    <div class="sec">
+      <div class="sec-title">8 Scènes</div>
+      <div style="color:#444;font-size:9px;margin-bottom:8px">Clic=charger · Maj+clic=sauver · touches 1–8 / Maj+1–8</div>
+      <div class="scene-grid" id="scenes-grid"></div>
+      <div class="ctrl"><label style="margin-bottom:5px">Transition</label>
+        <div class="row2">
+          <button class="btn-2 active" data-scene-tr="cut">Direct</button>
+          <button class="btn-2" data-scene-tr="fade">Fondu</button>
+        </div>
+      </div>
+      <div class="ctrl"><label>Durée fondu <span class="val" id="val-fade-dur">500</span>ms</label><input type="range" id="fade-dur" min="50" max="5000" step="50" value="500"></div>
+    </div>
+    <div class="sep"></div>
+    <div class="sec">
+      <button class="btn-wide" id="btn-fullscreen">⛶ Plein écran (F)</button>
+    </div>
+  </div>
+
+  <div class="tab-pane" id="tab-output">
+    <div class="sec">
+      <div class="sec-title">Résolutions</div>
+      <div class="btn-grid" style="grid-template-columns:repeat(2,1fr);gap:4px" id="res-presets-grid">
+        <button class="btn" data-res="1920,1080">1920×1080</button>
+        <button class="btn" data-res="1280,720">1280×720</button>
+        <button class="btn" data-res="1024,768">1024×768</button>
+        <button class="btn" data-res="800,600">800×600</button>
+        <button class="btn" data-res="2560,1440">2560×1440</button>
+        <button class="btn" data-res="3840,2160">3840×2160</button>
+      </div>
+    </div>
+    <div class="sep"></div>
+    <div class="sec">
+      <div class="ctrl"><label>Largeur <span style="color:#00ffff;font-size:11px" id="val-out-w">1280</span>px</label><input type="range" id="out-w" min="320" max="3840" step="10" value="1280"></div>
+      <div class="ctrl"><label>Hauteur <span style="color:#00ffff;font-size:11px" id="val-out-h">720</span>px</label><input type="range" id="out-h" min="240" max="2160" step="10" value="720"></div>
+      <button class="btn-wide" id="btn-apply-res" style="margin-top:6px">⟳ Appliquer</button>
+      <div id="cur-res-display" style="color:#444;font-size:9px;text-align:center;margin-top:5px">—</div>
+    </div>
+  </div>
+
+  <div class="tab-pane" id="tab-info">
+    <div class="sec">
+      <div class="sec-title">Super Engine VJ — 8 moteurs</div>
+      <div style="font-size:10px;line-height:2;color:#777">
+        <div><span style="color:var(--accent);min-width:80px;display:inline-block">F</span>Plein écran</div>
+        <div><span style="color:var(--accent);min-width:80px;display:inline-block">H</span>Toggle HUD</div>
+        <div><span style="color:var(--accent);min-width:80px;display:inline-block">1–8</span>Charger scène</div>
+        <div><span style="color:var(--accent);min-width:80px;display:inline-block">Maj+1–8</span>Sauver scène</div>
+        <div><span style="color:var(--accent);min-width:80px;display:inline-block">R</span>Looper REC</div>
+        <div><span style="color:var(--accent);min-width:80px;display:inline-block">Espace</span>Looper PLAY</div>
+      </div>
+    </div>
+    <div class="sep"></div>
+    <div class="sec">
+      <div class="sec-title">Sortie vidéo — OBS</div>
+      <div style="font-size:9px;color:#667;line-height:1.7;margin-bottom:8px">
+        Super Engine VJ tourne dans le navigateur. Pour envoyer l'image vers un logiciel vidéo ou un réseau, utilisez OBS Studio comme pont.
+      </div>
+
+      <div style="color:var(--accent);font-size:9px;font-weight:700;letter-spacing:1px;margin-bottom:5px">① CAMÉRA VIRTUELLE OBS</div>
+      <div style="font-size:9px;color:#888;line-height:1.8;margin-bottom:10px">
+        <span style="color:#aaa">Principe :</span> OBS capture la fenêtre du navigateur et expose une caméra virtuelle utilisable dans n'importe quel logiciel (MadMapper, Resolume, Zoom, vMix…).<br><br>
+        <span style="color:var(--accent)">1.</span> Installer <span style="color:#ccc">OBS Studio</span> — obsproject.com<br>
+        <span style="color:var(--accent)">2.</span> Passer Super Engine en <span style="color:#ccc">plein écran (F)</span> et masquer le panneau (H)<br>
+        <span style="color:var(--accent)">3.</span> Dans OBS → Sources → <span style="color:#ccc">Capture de fenêtre</span> → sélectionner le navigateur<br>
+        <span style="color:var(--accent)">4.</span> Régler la résolution de la scène OBS pour qu'elle corresponde au canvas<br>
+        <span style="color:var(--accent)">5.</span> <span style="color:#ccc">Démarrer la caméra virtuelle</span> (menu Outils → Démarrer la caméra virtuelle)<br>
+        <span style="color:#556">La caméra virtuelle est incluse dans OBS depuis v26 — aucun plugin requis.</span>
+      </div>
+
+      <div style="color:#ffaa00;font-size:9px;font-weight:700;letter-spacing:1px;margin-bottom:5px">② NDI — RÉSEAU LOCAL (obs-ndi)</div>
+      <div style="font-size:9px;color:#888;line-height:1.8;margin-bottom:4px">
+        <span style="color:#aaa">Principe :</span> NDI envoie le flux vidéo sur le réseau local sans câble. Tout logiciel compatible NDI (Resolume, Arena, vMix, TouchDesigner…) peut recevoir le flux.<br><br>
+        <span style="color:#ffaa00">1.</span> Installer <span style="color:#ccc">NDI Tools</span> — ndi.video/tools (inclut le runtime NDI)<br>
+        <span style="color:#ffaa00">2.</span> Installer le plugin <span style="color:#ccc">obs-ndi</span> — github.com/obs-ndi/obs-ndi<br>
+        <span style="color:#ffaa00">3.</span> Redémarrer OBS — un menu <span style="color:#ccc">Outils → NDI Output Settings</span> apparaît<br>
+        <span style="color:#ffaa00">4.</span> Activer <span style="color:#ccc">Main Output</span> et nommer la source (ex : <em>SuperEngineVJ</em>)<br>
+        <span style="color:#ffaa00">5.</span> Dans le logiciel destinataire → ajouter une source NDI → sélectionner <em>SuperEngineVJ</em><br><br>
+        <span style="color:#556">Tous les appareils doivent être sur le même réseau local. Le flux est en temps réel, faible latence.</span>
+      </div>
+      <div style="font-size:8px;color:#334;margin-top:6px;border-top:1px solid #111;padding-top:6px">
+        OBS → obsproject.com &nbsp;·&nbsp; obs-ndi → github.com/obs-ndi/obs-ndi &nbsp;·&nbsp; NDI Tools → ndi.video
+      </div>
+    </div>
+    <div class="sep"></div>
+    <div class="sec" style="text-align:center">
+      <div style="color:var(--accent);font-size:11px;font-weight:700;letter-spacing:2px;margin-bottom:6px">SUPER ENGINE VJ</div>
+      <div style="color:#555;font-size:9px;line-height:2">
+        Florent Revol · Larsen Studio<br>
+        Claude Code · Anthropic<br>
+        <span id="ver-display" style="color:#2a2a2a;font-size:8px">v3.01 — Standalone · No deps</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══ MISE À JOUR ══ -->
+  <div class="tab-pane" id="tab-maj">
+    <div class="sec">
+      <div class="sec-title">Version locale</div>
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px">
+        <span style="color:var(--accent);font-size:18px;font-weight:700;letter-spacing:2px" id="maj-local-ver">v3.01</span>
+        <span style="font-size:9px;color:#556">super-engine.html</span>
+      </div>
+      <button class="btn-wide" id="maj-check-btn">⟳ Vérifier les mises à jour</button>
+    </div>
+    <div class="sep"></div>
+    <div class="sec" id="maj-result" style="display:none">
+      <div class="sec-title" id="maj-result-title">Résultat</div>
+      <div style="font-size:10px;line-height:1.8;color:#888;margin-bottom:8px" id="maj-result-msg"></div>
+      <button class="btn-wide" id="maj-dl-btn" style="display:none;background:#003300;border-color:#006600;color:#00ff88">⬇ Télécharger la mise à jour</button>
+    </div>
+    <div class="sep"></div>
+    <div class="sec">
+      <div class="sec-title">Comment mettre à jour</div>
+      <div style="font-size:9px;color:#667;line-height:1.9">
+        <span style="color:var(--accent)">1.</span> Cliquer <em>Vérifier les mises à jour</em><br>
+        <span style="color:var(--accent)">2.</span> Si une nouvelle version est disponible, cliquer <em>Télécharger</em><br>
+        <span style="color:var(--accent)">3.</span> Remplacer l'ancien fichier <span style="color:#ccc">super-engine.html</span> par le nouveau<br>
+        <span style="color:var(--accent)">4.</span> Recharger la page dans le navigateur<br>
+        <span style="color:#334;font-size:8px;margin-top:4px;display:block">La mise à jour nécessite une connexion internet. Tes scènes sauvegardées (localStorage) sont conservées.</span>
+      </div>
+    </div>
+    <div class="sep"></div>
+    <div class="sec" style="text-align:center">
+      <a href="https://github.com/ethilbalde/super-engine-vj/commits/main" target="_blank"
+         style="color:#556;font-size:8px;text-decoration:none;letter-spacing:.5px">
+        Voir l'historique des commits →
+      </a>
+    </div>
+  </div>
+
+  <!-- ══ REACTION-DIFFUSION ══ -->
+  <div class="engine-panes" data-engine="rdiff">
+  <div class="tab-pane active" id="tab-rdiff-live">
+    <div class="sec"><div class="sec-title">Preset</div>
+      <div class="btn-grid" style="grid-template-columns:repeat(3,1fr)">
+        <button class="btn active" data-rdp="coral">Corail</button><button class="btn" data-rdp="zebre">Zèbre</button>
+        <button class="btn" data-rdp="labyrinth">Labyrinthe</button><button class="btn" data-rdp="spots">Spots</button>
+        <button class="btn" data-rdp="worms">Vers</button><button class="btn" data-rdp="mitosis">Mitose</button>
+      </div>
+    </div><div class="sep"></div>
+    <div class="sec">
+      <div class="quick-row"><button class="big-toggle" id="rdbtn-pulse" style="flex:1"><span class="dot"></span>PULSE</button><button class="quick-fire" id="rdbtn-pulse-fire">▶</button></div>
+      <div class="prog-bar"><div class="prog-fill" id="rdpulse-bar"></div></div>
+      <div style="margin-top:8px"></div>
+      <div class="quick-row"><button class="big-toggle" id="rdbtn-auto" style="flex:1"><span class="dot"></span>AUTO SEED</button><button class="quick-fire" id="rdbtn-auto-fire">▶</button></div>
+      <div class="prog-bar"><div class="prog-fill" id="rdauto-bar"></div></div>
+    </div><div class="sep"></div>
+    <div class="ctrl"><label>Pinceau <span class="val" id="rdval-brush">20</span></label><input type="range" id="rdbr-size" min="5" max="80" step="1" value="20"></div>
+    <div class="ctrl"><label>Force <span class="val" id="rdval-force">1.0</span></label><input type="range" id="rdpush-force" min="0.1" max="5" step="0.1" value="1.0"></div>
+    <div class="ctrl"><label>Curseur X <span class="val" id="rdval-cx">0.50</span></label><input type="range" id="rdcursor-x" min="0" max="1" step="0.005" value="0.50"></div>
+    <div class="ctrl"><label>Curseur Y <span class="val" id="rdval-cy">0.50</span></label><input type="range" id="rdcursor-y" min="0" max="1" step="0.005" value="0.50"></div>
+    <div class="quick-row" style="margin-top:4px"><button class="big-toggle" id="rdbtn-click" style="flex:1"><span class="dot"></span>CLICK</button><button class="quick-fire" id="rdbtn-click-fire">▶</button></div>
+    <div class="sec"><div class="btn-grid" style="grid-template-columns:repeat(2,1fr)">
+      <button class="btn active" data-rdbrush="inject">Injecter B</button><button class="btn" data-rdbrush="erase">Effacer B</button>
+    </div></div>
+  </div>
+  <div class="tab-pane" id="tab-rdiff-sim">
+    <div class="sec">
+      <div class="ctrl"><label>F feed <span class="val" id="rdval-f">0.055</span></label><input type="range" id="rdf" min="0.01" max="0.1" step="0.001" value="0.055"></div>
+      <div class="ctrl"><label>k kill <span class="val" id="rdval-k">0.062</span></label><input type="range" id="rdk" min="0.03" max="0.075" step="0.001" value="0.062"></div>
+      <div class="ctrl"><label>Du <span class="val" id="rdval-du">1.00</span></label><input type="range" id="rddu" min="0.1" max="2.0" step="0.05" value="1.0"></div>
+      <div class="ctrl"><label>Dv <span class="val" id="rdval-dv">0.50</span></label><input type="range" id="rddv" min="0.05" max="1.0" step="0.025" value="0.5"></div>
+      <div class="ctrl"><label>dt vitesse <span class="val" id="rdval-dt">1.0</span></label><input type="range" id="rddt" min="0.2" max="2.0" step="0.1" value="1.0"></div>
+      <div class="ctrl"><label>Steps/frame <span class="val" id="rdval-steps">8</span></label><input type="range" id="rdsteps" min="1" max="20" step="1" value="8"></div>
+    </div><div class="sep"></div>
+    <button class="btn-wide" id="rdbtn-reset">↺ Réinitialiser</button>
+    <button class="btn-wide" id="rdbtn-seed" style="margin-top:4px">✦ Seed aléatoire</button>
+  </div>
+  <div class="tab-pane" id="tab-rdiff-color">
+    <div class="ctrl"><label style="margin-bottom:5px">Couleur A (fond)</label><input type="color" id="rdcol-a" value="#000033"></div>
+    <div class="ctrl"><label style="margin-bottom:5px">Couleur mid</label><input type="color" id="rdcol-m" value="#440055"></div>
+    <div class="ctrl"><label style="margin-bottom:5px">Couleur B (fort)</label><input type="color" id="rdcol-b" value="#ff6600"></div>
+    <div class="ctrl"><label>Contraste <span class="val" id="rdval-contrast">2.0</span></label><input type="range" id="rdcontrast" min="0.5" max="6.0" step="0.1" value="2.0"></div>
+  </div>
+  <div class="tab-pane" id="tab-rdiff-tempo">
+    <div class="ctrl"><label>Intervalle pulse <span class="val" id="rdval-pulse-int">2.0</span>s</label><input type="range" id="rdtpulse-int" min="0.1" max="20" step="0.1" value="2.0"></div>
+    <div class="ctrl"><label>Intervalle auto <span class="val" id="rdval-auto-int">8.0</span>s</label><input type="range" id="rdtauto-int" min="0.5" max="30" step="0.5" value="8.0"></div>
+  </div>
+  <div class="tab-pane" id="tab-rdiff-io"><div class="sec"><div class="sec-title">MIDI CC R-D</div><div id="rdmidi-cc-list"></div></div></div>
+  <div class="tab-pane" id="tab-rdiff-save"><div class="sec"><div style="color:#444;font-size:9px">Config R-D dans les scènes globales.</div></div></div>
+  </div><!-- /rdiff -->
+
+  <!-- ══ L-SYSTEMS ══ -->
+  <div class="engine-panes" data-engine="lsys">
+  <div class="tab-pane active" id="tab-lsys-live">
+    <div class="sec"><div class="sec-title">Système</div>
+      <div class="btn-grid" style="grid-template-columns:repeat(3,1fr)">
+        <button class="btn active" data-lsp="fern">Fougère</button><button class="btn" data-lsp="tree">Arbre</button>
+        <button class="btn" data-lsp="snowflake">Flocon</button><button class="btn" data-lsp="dragon">Dragon</button>
+        <button class="btn" data-lsp="sierpinski">Sierpinski</button><button class="btn" data-lsp="bush">Buisson</button>
+      </div>
+    </div><div class="sep"></div>
+    <div class="sec">
+      <div class="quick-row"><button class="big-toggle" id="lsbtn-pulse" style="flex:1"><span class="dot"></span>REDESSINER</button><button class="quick-fire" id="lsbtn-pulse-fire">▶</button></div>
+      <div class="prog-bar"><div class="prog-fill" id="lspulse-bar"></div></div>
+    </div><div class="sep"></div>
+    <div class="ctrl"><label>Itérations <span class="val" id="lsval-iter">5</span></label><input type="range" id="lsiter" min="1" max="8" step="1" value="5"></div>
+    <div class="ctrl"><label>Angle <span class="val" id="lsval-angle">25°</span></label><input type="range" id="lsangle" min="5" max="90" step="1" value="25"></div>
+    <div class="sep"></div>
+    <div class="sec">
+      <div class="sec-title">Contrôle curseur</div>
+      <div class="ctrl"><label>Rayon <span class="val" id="lsval-pen">60</span></label><input type="range" id="lspen-size" min="5" max="200" value="60"></div>
+      <div class="ctrl"><label>Force <span class="val" id="lsval-force">1.0</span></label><input type="range" id="lspush-force" min="0.1" max="5" step="0.1" value="1.0"></div>
+      <div class="ctrl"><label>Curseur X <span class="val" id="lsval-cx">0.50</span></label><input type="range" id="lscursor-x" min="0" max="1" step="0.005" value="0.50"></div>
+      <div class="ctrl"><label>Curseur Y <span class="val" id="lsval-cy">0.50</span></label><input type="range" id="lscursor-y" min="0" max="1" step="0.005" value="0.50"></div>
+      <div class="quick-row" style="margin-top:4px"><button class="big-toggle" id="lsbtn-click" style="flex:1"><span class="dot"></span>CLICK</button><button class="quick-fire" id="lsbtn-click-fire">▶</button></div>
+    </div>
+  </div>
+  <div class="tab-pane" id="tab-lsys-sim">
+    <div class="ctrl"><label>Longueur seg. <span class="val" id="lsval-len">5</span></label><input type="range" id="lslen" min="1" max="20" step="0.5" value="5"></div>
+    <div class="ctrl"><label>Vitesse anim. <span class="val" id="lsval-speed">300</span></label><input type="range" id="lsanim-speed" min="10" max="3000" step="10" value="300"></div>
+  </div>
+  <div class="tab-pane" id="tab-lsys-color">
+    <div class="ctrl"><label style="margin-bottom:5px">Fond</label><input type="color" id="lsbg-color" value="#060810"></div>
+    <div class="ctrl"><label style="margin-bottom:5px">Couleur base</label><input type="color" id="lscol-base" value="#44ff88"></div>
+    <div class="ctrl"><label style="margin-bottom:5px">Couleur pointe</label><input type="color" id="lscol-tip" value="#ffffff"></div>
+    <div class="ctrl"><label>Épaisseur <span class="val" id="lsval-lw">1.5</span></label><input type="range" id="lslw" min="0.3" max="5" step="0.1" value="1.5"></div>
+  </div>
+  <div class="tab-pane" id="tab-lsys-tempo">
+    <div class="ctrl"><label>Intervalle pulse <span class="val" id="lsval-pulse-int">4.0</span>s</label><input type="range" id="lstpulse-int" min="0.5" max="20" step="0.5" value="4.0"></div>
+  </div>
+  <div class="tab-pane" id="tab-lsys-io"><div class="sec"><div class="sec-title">MIDI CC L-Sys</div><div id="lsmidi-cc-list"></div></div></div>
+  <div class="tab-pane" id="tab-lsys-save"><div class="sec"><div style="color:#444;font-size:9px">Config L-Sys dans les scènes globales.</div></div></div>
+  </div><!-- /lsys -->
+
+  <!-- ══ VORONOI ══ -->
+  <div class="engine-panes" data-engine="voronoi">
+  <div class="tab-pane active" id="tab-voronoi-live">
+    <div class="sec">
+      <div class="sec-title">Presets</div>
+      <div class="btn-grid" style="grid-template-columns:repeat(2,1fr)">
+        <button class="btn" data-vopreset="classic">Classique</button>
+        <button class="btn" data-vopreset="organic">Organique</button>
+        <button class="btn" data-vopreset="waves">Vagues</button>
+        <button class="btn" data-vopreset="marble">Marbre</button>
+        <button class="btn" data-vopreset="crystal">Cristal</button>
+        <button class="btn" data-vopreset="cells">Cellules vivantes</button>
+      </div>
+    </div>
+    <div class="sep"></div>
+    <div class="sec">
+      <div class="quick-row"><button class="big-toggle" id="vobtn-pulse" style="flex:1"><span class="dot"></span>DIVISER</button><button class="quick-fire" id="vobtn-pulse-fire">▶</button></div>
+      <div class="prog-bar"><div class="prog-fill" id="vopulse-bar"></div></div>
+      <div style="margin-top:8px"></div>
+      <div class="quick-row"><button class="big-toggle" id="vobtn-auto" style="flex:1"><span class="dot"></span>AUTO RESET</button><button class="quick-fire" id="vobtn-auto-fire">▶</button></div>
+      <div class="prog-bar"><div class="prog-fill" id="voauto-bar"></div></div>
+    </div><div class="sep"></div>
+    <div class="ctrl"><label>Graines <span class="val" id="voval-seeds">40</span></label><input type="range" id="voseeds" min="3" max="120" step="1" value="40"></div>
+    <div class="ctrl"><label>Vitesse <span class="val" id="voval-speed">0.5</span></label><input type="range" id="vospeed" min="0" max="4" step="0.05" value="0.5"></div>
+    <div class="sep"></div>
+    <div class="sec">
+      <div class="sec-title">Contrôle curseur</div>
+      <div class="ctrl"><label>Rayon <span class="val" id="voval-pen">80</span></label><input type="range" id="vopen-size" min="5" max="300" value="80"></div>
+      <div class="ctrl"><label>Force <span class="val" id="voval-force">1.0</span></label><input type="range" id="vopush-force" min="0.1" max="5" step="0.1" value="1.0"></div>
+      <div class="ctrl"><label>Curseur X <span class="val" id="voval-cx">0.50</span></label><input type="range" id="vocursor-x" min="0" max="1" step="0.005" value="0.50"></div>
+      <div class="ctrl"><label>Curseur Y <span class="val" id="voval-cy">0.50</span></label><input type="range" id="vocursor-y" min="0" max="1" step="0.005" value="0.50"></div>
+      <div class="quick-row" style="margin-top:4px"><button class="big-toggle" id="vobtn-click" style="flex:1"><span class="dot"></span>CLICK</button><button class="quick-fire" id="vobtn-click-fire">▶</button></div>
+    </div>
+  </div>
+  <div class="tab-pane" id="tab-voronoi-sim">
+    <div class="ctrl"><label>Répulsion bords <span class="val" id="voval-border">60</span></label><input type="range" id="voborder-rep" min="0" max="200" step="5" value="60"></div>
+    <div class="ctrl"><label>Répulsion graines <span class="val" id="voval-repulse">40</span></label><input type="range" id="vorepulse" min="0" max="150" step="5" value="40"></div>
+    <div class="sep"></div>
+    <div class="sec-title">Courbure des cellules</div>
+    <div class="ctrl"><label>Warp (casse les lignes droites) <span class="val" id="voval-warp">0.0</span></label><input type="range" id="vowarp" min="0" max="3" step="0.05" value="0"></div>
+    <div class="ctrl"><label>Fréquence vagues <span class="val" id="voval-warpfreq">2.5</span></label><input type="range" id="vowarp-freq" min="0.3" max="8" step="0.1" value="2.5"></div>
+    <div class="ctrl"><label>Vitesse ondulation <span class="val" id="voval-warpspeed">0.3</span></label><input type="range" id="vowarp-speed" min="0" max="2" step="0.05" value="0.3"></div>
+    <div class="ctrl" style="margin-top:6px"><label style="margin-bottom:5px">Forme des cellules</label>
+      <div class="btn-grid" style="grid-template-columns:repeat(3,1fr)">
+        <button class="btn active" data-vometric="0">Rondes</button>
+        <button class="btn" data-vometric="1">Losanges</button>
+        <button class="btn" data-vometric="2">Arrondies</button>
+      </div>
+    </div>
+    <div class="sep"></div>
+    <button class="btn-wide" id="vobtn-reset" style="margin-top:8px">↺ Réinitialiser</button>
+  </div>
+  <div class="tab-pane" id="tab-voronoi-color">
+    <div class="ctrl"><label style="margin-bottom:5px">Mode couleur</label>
+      <div class="btn-grid" style="grid-template-columns:repeat(2,1fr);margin-top:5px">
+        <button class="btn active" data-voc="hue">Arc-en-ciel</button><button class="btn" data-voc="dark">Sombre</button>
+        <button class="btn" data-voc="velocity">Vitesse</button><button class="btn" data-voc="mono">Mono</button>
+      </div>
+    </div>
+    <div class="ctrl" style="margin-top:8px"><label>Épaisseur bordure <span class="val" id="voval-bw">1.5</span></label><input type="range" id="vobw" min="0" max="6" step="0.1" value="1.5"></div>
+  </div>
+  <div class="tab-pane" id="tab-voronoi-tempo">
+    <div class="ctrl"><label>Intervalle division <span class="val" id="voval-pulse-int">3.0</span>s</label><input type="range" id="votpulse-int" min="0.1" max="20" step="0.1" value="3.0"></div>
+    <div class="ctrl"><label>Intervalle auto <span class="val" id="voval-auto-int">8.0</span>s</label><input type="range" id="votauto-int" min="0.5" max="30" step="0.5" value="8.0"></div>
+  </div>
+  <div class="tab-pane" id="tab-voronoi-io"><div class="sec"><div class="sec-title">MIDI CC Voronoi</div><div id="vomidi-cc-list"></div></div></div>
+  <div class="tab-pane" id="tab-voronoi-save"><div class="sec"><div style="color:#444;font-size:9px">Config Voronoi dans les scènes globales.</div></div></div>
+  </div><!-- /voronoi -->
+
+  <!-- ══ FOLLOW ENGINE PANES ══ -->
+  <div class="engine-panes" data-engine="follow">
+  <div class="tab-pane active" id="tab-follow-live">
+    <div class="sec">
+      <div class="quick-row">
+        <button class="big-toggle" id="fwbtn-pulse" style="flex:1"><span class="dot"></span>PULSE</button>
+        <button class="quick-fire" id="fwbtn-pulse-fire">▶</button>
+      </div>
+      <div class="prog-bar"><div class="prog-fill" id="fwpulse-bar"></div></div>
+      <div class="ctrl" style="margin-top:8px"><label style="margin-bottom:4px">Type pulse</label>
+        <div class="btn-grid">
+          <button class="btn active" data-fwptype="burst">Burst</button>
+          <button class="btn" data-fwptype="scatter">Scatter</button>
+          <button class="btn" data-fwptype="reset">Reset</button>
+        </div>
+      </div>
+    </div>
+    <div class="sep"></div>
+    <div class="sec">
+      <div class="sec-title">Mode pointeur</div>
+      <div class="btn-grid" style="grid-template-columns:repeat(2,1fr)">
+        <button class="btn active" data-fwmode="attract">Attracteur</button>
+        <button class="btn" data-fwmode="scatter">Disperser</button>
+      </div>
+    </div>
+    <div class="sep"></div>
+    <div class="sec">
+      <div class="sec-title">Attracteur manuel</div>
+      <div class="ctrl"><label>Position X <span class="val" id="fwval-fx">0.50</span></label><input type="range" id="fwfocus-x" min="0" max="1" step="0.01" value="0.50"></div>
+      <div class="ctrl"><label>Position Y <span class="val" id="fwval-fy">0.48</span></label><input type="range" id="fwfocus-y" min="0" max="1" step="0.01" value="0.48"></div>
+    </div>
+    <div class="sep"></div>
+    <div class="sec">
+      <div class="sec-title">Contrôle curseur</div>
+      <div class="ctrl"><label>Rayon <span class="val" id="fwval-pen">80</span></label><input type="range" id="fwpen-size" min="5" max="300" value="80"></div>
+      <div class="ctrl"><label>Force <span class="val" id="fwval-force">1.0</span></label><input type="range" id="fwpush-force" min="0.1" max="5" step="0.1" value="1.0"></div>
+      <div class="ctrl"><label>Curseur X <span class="val" id="fwval-cx">0.50</span></label><input type="range" id="fwcursor-x" min="0" max="1" step="0.005" value="0.50"></div>
+      <div class="ctrl"><label>Curseur Y <span class="val" id="fwval-cy">0.50</span></label><input type="range" id="fwcursor-y" min="0" max="1" step="0.005" value="0.50"></div>
+      <div class="quick-row" style="margin-top:4px"><button class="big-toggle" id="fwbtn-click" style="flex:1"><span class="dot"></span>CLICK</button><button class="quick-fire" id="fwbtn-click-fire">▶</button></div>
+    </div>
+  </div>
+  <div class="tab-pane" id="tab-follow-sim">
+    <div class="ctrl"><label>Particules <span class="val" id="fwval-count">350</span></label><input type="range" id="fwcount" min="50" max="1200" step="10" value="350"></div>
+    <div class="ctrl"><label>Vitesse <span class="val" id="fwval-speed">6</span></label><input type="range" id="fwspeed" min="1" max="20" step="0.5" value="6"></div>
+    <div class="ctrl"><label>Traînée <span class="val" id="fwval-trail">12</span></label><input type="range" id="fwtrail-len" min="1" max="60" step="1" value="12"></div>
+    <div class="ctrl"><label>Amplitude vague <span class="val" id="fwval-wave">8</span></label><input type="range" id="fwwave-amp" min="0" max="40" step="1" value="8"></div>
+    <div class="ctrl"><label>Taille lueur <span class="val" id="fwval-glow">60</span></label><input type="range" id="fwglow-size" min="10" max="200" step="5" value="60"></div>
+    <div class="sep"></div>
+    <div class="toggle-row"><label>Lueur attracteur</label><input type="checkbox" id="fwglow-enabled" checked></div>
+    <div class="toggle-row"><label>Vignette</label><input type="checkbox" id="fwvignette" checked></div>
+    <div class="toggle-row"><label>Reflet sol</label><input type="checkbox" id="fwfloor" checked></div>
+    <div class="sep"></div>
+    <button class="btn-wide" id="fwbtn-reset">↺ Réinitialiser</button>
+  </div>
+  <div class="tab-pane" id="tab-follow-color">
+    <div class="ctrl"><label style="margin-bottom:5px">Fond</label><input type="color" id="fwbg-color" value="#040408"></div>
+    <div class="ctrl"><label style="margin-bottom:5px">Couleur particules</label><input type="color" id="fwparticle-color" value="#4488ff"></div>
+    <div class="sep"></div>
+    <div class="ctrl"><label>Fade trail <span class="val" id="fwval-fade">0.22</span></label><input type="range" id="fwfade" min="0.02" max="0.98" step="0.01" value="0.22"></div>
+    <div class="ctrl"><label>Opacité <span class="val" id="fwval-opacity">0.85</span></label><input type="range" id="fwopacity" min="0.05" max="1" step="0.05" value="0.85"></div>
+  </div>
+  <div class="tab-pane" id="tab-follow-tempo">
+    <div class="ctrl"><label>Intervalle <span class="val" id="fwval-pulse-int">2.0</span>s</label><input type="range" id="fwtpulse-int" min="0.1" max="20" step="0.1" value="2.0"></div>
+    <div class="ctrl"><label>BPM sync — div <span class="val" id="fwval-beat-div">1</span></label><input type="range" id="fwbeat-div" min="1" max="8" step="1" value="1"></div>
+  </div>
+  <div class="tab-pane" id="tab-follow-io"><div class="sec"><div class="sec-title">MIDI CC Follow</div><div id="fwmidi-cc-list"></div></div></div>
+  <div class="tab-pane" id="tab-follow-save"><div class="sec"><div style="color:var(--text-faint);font-size:9px">Config Follow dans les scènes globales.</div></div></div>
+  </div><!-- /follow -->
+
+  <!-- ══ RIBBON ENGINE PANES ══ -->
+  <div class="engine-panes" data-engine="ribbon">
+  <div class="tab-pane active" id="tab-ribbon-live">
+    <div class="sec">
+      <div class="quick-row">
+        <button class="big-toggle" id="rbbtn-pulse" style="flex:1"><span class="dot"></span>PULSE</button>
+        <button class="quick-fire" id="rbbtn-pulse-fire">▶</button>
+      </div>
+      <div class="prog-bar"><div class="prog-fill" id="rbpulse-bar"></div></div>
+    </div>
+    <div class="sep"></div>
+    <div class="sec">
+      <div class="sec-title">Contrôle curseur</div>
+      <div class="ctrl"><label>Rayon <span class="val" id="rbval-pen">60</span></label><input type="range" id="rbpen-size" min="5" max="300" value="60"></div>
+      <div class="ctrl"><label>Force <span class="val" id="rbval-force">1.0</span></label><input type="range" id="rbpush-force" min="0.1" max="5" step="0.1" value="1.0"></div>
+      <div class="ctrl"><label>Curseur X <span class="val" id="rbval-cx">0.50</span></label><input type="range" id="rbcursor-x" min="0" max="1" step="0.005" value="0.50"></div>
+      <div class="ctrl"><label>Curseur Y <span class="val" id="rbval-cy">0.50</span></label><input type="range" id="rbcursor-y" min="0" max="1" step="0.005" value="0.50"></div>
+      <div class="quick-row" style="margin-top:4px"><button class="big-toggle" id="rbbtn-click" style="flex:1"><span class="dot"></span>CLICK</button><button class="quick-fire" id="rbbtn-click-fire">▶</button></div>
+    </div>
+  </div>
+  <div class="tab-pane" id="tab-ribbon-sim">
+    <div class="ctrl"><label>Rubans <span class="val" id="rbval-count">120</span></label><input type="range" id="rbcount" min="10" max="500" step="5" value="120"></div>
+    <div class="ctrl"><label>Vitesse <span class="val" id="rbval-speed">3.0</span></label><input type="range" id="rbspeed" min="0.5" max="15" step="0.5" value="3.0"></div>
+    <div class="ctrl"><label>Longueur traînée <span class="val" id="rbval-trail">30</span></label><input type="range" id="rbtrail-len" min="5" max="100" step="1" value="30"></div>
+    <div class="ctrl"><label>Largeur ruban <span class="val" id="rbval-width">4.0</span></label><input type="range" id="rbwidth" min="0.5" max="16" step="0.5" value="4.0"></div>
+    <div class="ctrl"><label>Dist. connexion <span class="val" id="rbval-connect">80</span></label><input type="range" id="rbconnect-dist" min="0" max="200" step="5" value="80"></div>
+    <div class="ctrl"><label>Turbulence <span class="val" id="rbval-turb">1.0</span></label><input type="range" id="rbturb" min="0" max="5" step="0.1" value="1.0"></div>
+    <div class="sep"></div>
+    <button class="btn-wide" id="rbbtn-reset">↺ Réinitialiser</button>
+  </div>
+  <div class="tab-pane" id="tab-ribbon-color">
+    <div class="ctrl"><label style="margin-bottom:5px">Fond</label><input type="color" id="rbbg-color" value="#000000"></div>
+    <div class="ctrl"><label style="margin-bottom:5px">Tête</label><input type="color" id="rbcolor-head" value="#ff66aa"></div>
+    <div class="ctrl"><label style="margin-bottom:5px">Queue</label><input type="color" id="rbcolor-tail" value="#6622aa"></div>
+    <div class="ctrl"><label style="margin-bottom:5px">Fil connexion</label><input type="color" id="rbcolor-thread" value="#ff44aa"></div>
+    <div class="sep"></div>
+    <div class="ctrl"><label>Fade <span class="val" id="rbval-fade">0.18</span></label><input type="range" id="rbfade" min="0.02" max="0.98" step="0.01" value="0.18"></div>
+    <div class="ctrl"><label>Opacité <span class="val" id="rbval-opacity">0.90</span></label><input type="range" id="rbopacity" min="0.05" max="1" step="0.05" value="0.90"></div>
+  </div>
+  <div class="tab-pane" id="tab-ribbon-tempo">
+    <div class="ctrl"><label>Intervalle <span class="val" id="rbval-pulse-int">3.0</span>s</label><input type="range" id="rbtpulse-int" min="0.1" max="20" step="0.1" value="3.0"></div>
+    <div class="ctrl"><label>BPM sync — div <span class="val" id="rbval-beat-div">1</span></label><input type="range" id="rbbeat-div" min="1" max="8" step="1" value="1"></div>
+  </div>
+  <div class="tab-pane" id="tab-ribbon-io"><div class="sec"><div class="sec-title">MIDI CC Ribbon</div><div id="rbmidi-cc-list"></div></div></div>
+  <div class="tab-pane" id="tab-ribbon-save"><div class="sec"><div style="color:var(--text-faint);font-size:9px">Config Ribbon dans les scènes globales.</div></div></div>
+  </div><!-- /ribbon -->
+
+  <!-- ══ PHYSIKS ENGINE PANES ══ -->
+  <div class="engine-panes" data-engine="physiks">
+  <div class="tab-pane active" id="tab-physiks-live">
+    <div class="sec">
+      <div class="sec-title">Matériau actif</div>
+      <div class="btn-grid" style="grid-template-columns:repeat(4,1fr)">
+        <button class="btn active" data-phxmat="1">Sable</button>
+        <button class="btn" data-phxmat="2">Eau</button>
+        <button class="btn" data-phxmat="6">Huile</button>
+        <button class="btn" data-phxmat="9">Lave</button>
+        <button class="btn" data-phxmat="10">Glace</button>
+        <button class="btn" data-phxmat="3">Feu</button>
+        <button class="btn" data-phxmat="5">Mur</button>
+        <button class="btn" data-phxmat="0">Effacer</button>
+      </div>
+    </div>
+    <div class="sep"></div>
+    <div class="sec">
+      <div class="sec-title">Contrôle curseur</div>
+      <div class="ctrl"><label>Rayon <span class="val" id="phxval-pen">6</span></label><input type="range" id="phxpen-size" min="1" max="30" step="1" value="6"></div>
+      <div class="ctrl"><label>Curseur X <span class="val" id="phxval-cx">0.50</span></label><input type="range" id="phxcursor-x" min="0" max="1" step="0.005" value="0.50"></div>
+      <div class="ctrl"><label>Curseur Y <span class="val" id="phxval-cy">0.50</span></label><input type="range" id="phxcursor-y" min="0" max="1" step="0.005" value="0.50"></div>
+      <div class="quick-row" style="margin-top:4px"><button class="big-toggle" id="phxbtn-click" style="flex:1"><span class="dot"></span>DESSIN</button><button class="quick-fire" id="phxbtn-click-fire">▶</button></div>
+    </div>
+    <div class="sep"></div>
+    <div class="sec">
+      <div class="quick-row">
+        <button class="btn-wide" id="phxbtn-reset" style="flex:1">↺ Vider</button>
+      </div>
+    </div>
+  </div>
+  <div class="tab-pane" id="tab-physiks-sim">
+    <div class="ctrl"><label>Résolution grille <span class="val" id="phxval-res">3</span>px</label><input type="range" id="phxgrid-res" min="1" max="12" step="1" value="3"></div>
+    <div class="ctrl"><label>Fréq. mise à jour <span class="val" id="phxval-urate">1</span>/frame</label><input type="range" id="phxupdate-rate" min="1" max="4" step="1" value="1"></div>
+    <div class="ctrl"><label>Dispersion eau <span class="val" id="phxval-spread">4</span></label><input type="range" id="phxwater-spread" min="1" max="12" step="1" value="4"></div>
+    <div class="ctrl"><label>Vitesse combustion <span class="val" id="phxval-fspeed">0.3</span></label><input type="range" id="phxfire-speed" min="0.05" max="1" step="0.05" value="0.3"></div>
+    <div class="sep"></div>
+    <div class="ctrl"><label>Vent / Turbulence <span class="val" id="phxval-wind">0</span></label><input type="range" id="phxwind" min="0" max="5" step="0.1" value="0"></div>
+    <div class="ctrl"><label>Capacité suie (plafond) <span class="val" id="phxval-sootcap">6</span></label><input type="range" id="phxsoot-cap" min="2" max="15" step="1" value="6"></div>
+  </div>
+  <div class="tab-pane" id="tab-physiks-color">
+    <div class="ctrl"><label style="margin-bottom:5px">Fond</label><input type="color" id="phxbg-color" value="#0a0804"></div>
+    <div class="ctrl"><label style="margin-bottom:5px">Sable</label><input type="color" id="phxcolor-sand" value="#c8a040"></div>
+    <div class="ctrl"><label style="margin-bottom:5px">Eau</label><input type="color" id="phxcolor-water" value="#2060c0"></div>
+    <div class="ctrl"><label style="margin-bottom:5px">Huile</label><input type="color" id="phxcolor-oil" value="#664422"></div>
+    <div class="ctrl"><label style="margin-bottom:5px">Lave</label><input type="color" id="phxcolor-lava" value="#ff5500"></div>
+    <div class="ctrl"><label style="margin-bottom:5px">Glace</label><input type="color" id="phxcolor-ice" value="#bfe8ff"></div>
+    <div class="ctrl"><label style="margin-bottom:5px">Mur</label><input type="color" id="phxcolor-wall" value="#888888"></div>
+    <div class="ctrl"><label style="margin-bottom:5px">Verre</label><input type="color" id="phxcolor-glass" value="#cdeaee"></div>
+    <div class="ctrl"><label style="margin-bottom:5px">Fumée</label><input type="color" id="phxcolor-smoke" value="#554444"></div>
+    <div class="ctrl"><label style="margin-bottom:5px">Vapeur</label><input type="color" id="phxcolor-steam" value="#d6dee4"></div>
+    <div class="ctrl"><label style="margin-bottom:5px">Suie</label><input type="color" id="phxcolor-soot" value="#221d18"></div>
+    <div class="ctrl"><label style="margin-bottom:5px">Cendre</label><input type="color" id="phxcolor-ash" value="#9a9286"></div>
+  </div>
+  <div class="tab-pane" id="tab-physiks-tempo">
+    <div class="sec-title">Chaleur / Réactions</div>
+    <div class="ctrl"><label>Température ambiante <span class="val" id="phxval-amb">20</span></label><input type="range" id="phxambient" min="-20" max="60" step="1" value="20"></div>
+    <div class="ctrl"><label>Température du feu <span class="val" id="phxval-firet">850</span></label><input type="range" id="phxfire-temp" min="400" max="1200" step="10" value="850"></div>
+    <div class="ctrl"><label>Seuil inflammation huile <span class="val" id="phxval-ignite">260</span></label><input type="range" id="phxignite-temp" min="50" max="500" step="10" value="260"></div>
+    <div class="ctrl"><label>Seuil fusion sable→lave <span class="val" id="phxval-melt">1200</span></label><input type="range" id="phxmelt-temp" min="600" max="2000" step="20" value="1200"></div>
+    <div class="ctrl"><label>Seuil solidif. lave→verre <span class="val" id="phxval-solid">700</span></label><input type="range" id="phxsolidify-temp" min="300" max="1000" step="10" value="700"></div>
+    <div class="ctrl"><label>Seuil évaporation eau <span class="val" id="phxval-evap">150</span></label><input type="range" id="phxevap-temp" min="50" max="300" step="10" value="150"></div>
+    <div class="ctrl"><label>Seuil condensation vapeur <span class="val" id="phxval-cond">60</span></label><input type="range" id="phxcondense-temp" min="-20" max="150" step="5" value="60"></div>
+    <div class="ctrl"><label>Seuil gel eau→glace <span class="val" id="phxval-freeze">0</span></label><input type="range" id="phxfreeze-temp" min="-30" max="30" step="1" value="0"></div>
+    <div class="ctrl"><label>Seuil fonte glace→eau <span class="val" id="phxval-thaw">5</span></label><input type="range" id="phxthaw-temp" min="-20" max="40" step="1" value="5"></div>
+    <div class="sep"></div>
+    <div class="ctrl"><label>Diffusion thermique <span class="val" id="phxval-heatd">0.18</span></label><input type="range" id="phxheat-diff" min="0" max="0.5" step="0.01" value="0.18"></div>
+    <div class="ctrl"><label>Refroidissement <span class="val" id="phxval-cool">0.02</span></label><input type="range" id="phxcooling" min="0" max="0.2" step="0.005" value="0.02"></div>
+    <div class="sep"></div>
+    <div class="ctrl"><label>Intensité environnementale <span class="val" id="phxval-env">1.0</span></label><input type="range" id="phxenv" min="0" max="5" step="0.1" value="1"></div>
+  </div>
+  <div class="tab-pane" id="tab-physiks-io"><div class="sec"><div class="sec-title">MIDI CC Physiks</div><div id="phxmidi-cc-list"></div></div></div>
+  <div class="tab-pane" id="tab-physiks-save"><div class="sec"><div style="color:var(--text-faint);font-size:9px">Config Physiks dans les scènes globales.</div></div></div>
+  </div><!-- /physiks -->
+
+  <!-- ══ NEURAL ENGINE PANES ══ -->
+  <div class="engine-panes" data-engine="neural">
+  <div class="tab-pane active" id="tab-neural-live">
+    <div class="sec">
+      <div class="quick-row">
+        <button class="big-toggle" id="nrbtn-pulse" style="flex:1"><span class="dot"></span>PULSE</button>
+        <button class="quick-fire" id="nrbtn-pulse-fire">▶</button>
+      </div>
+      <div class="prog-bar"><div class="prog-fill" id="nrpulse-bar"></div></div>
+    </div>
+    <div class="sep"></div>
+    <div class="sec">
+      <div class="sec-title">Contrôle curseur</div>
+      <div class="ctrl"><label>Rayon activation <span class="val" id="nrval-pen">60</span></label><input type="range" id="nrpen-size" min="10" max="300" value="60"></div>
+      <div class="ctrl"><label>Curseur X <span class="val" id="nrval-cx">0.50</span></label><input type="range" id="nrcursor-x" min="0" max="1" step="0.005" value="0.50"></div>
+      <div class="ctrl"><label>Curseur Y <span class="val" id="nrval-cy">0.50</span></label><input type="range" id="nrcursor-y" min="0" max="1" step="0.005" value="0.50"></div>
+      <div class="quick-row" style="margin-top:4px"><button class="big-toggle" id="nrbtn-click" style="flex:1"><span class="dot"></span>ACTIVER</button><button class="quick-fire" id="nrbtn-click-fire">▶</button></div>
+    </div>
+  </div>
+  <div class="tab-pane" id="tab-neural-sim">
+    <div class="ctrl"><label>Neurones <span class="val" id="nrval-count">120</span></label><input type="range" id="nrcount" min="20" max="500" step="10" value="120"></div>
+    <div class="ctrl"><label>Densité synapses <span class="val" id="nrval-density">0.05</span></label><input type="range" id="nrdensity" min="0.02" max="0.5" step="0.01" value="0.05"></div>
+    <div class="ctrl"><label>Propagation max / nœud <span class="val" id="nrval-fanout">3</span></label><input type="range" id="nrfanout" min="1" max="10" step="1" value="3"></div>
+    <div class="ctrl"><label>Seuil activation <span class="val" id="nrval-thresh">0.50</span></label><input type="range" id="nrthreshold" min="0.1" max="1" step="0.05" value="0.50"></div>
+    <div class="ctrl"><label>Période réfractaire <span class="val" id="nrval-refrac">90</span>ms</label><input type="range" id="nrrefractory" min="5" max="200" step="5" value="90"></div>
+    <div class="ctrl"><label>Vitesse pulse <span class="val" id="nrval-pspeed">2.5</span></label><input type="range" id="nrpulse-speed" min="0.5" max="15" step="0.5" value="2.5"></div>
+    <div class="sep"></div>
+    <button class="btn-wide" id="nrbtn-reset">↺ Réinitialiser</button>
+  </div>
+  <div class="tab-pane" id="tab-neural-color">
+    <div class="ctrl"><label style="margin-bottom:5px">Fond</label><input type="color" id="nrbg-color" value="#03080f"></div>
+    <div class="ctrl"><label style="margin-bottom:5px">Neurone au repos</label><input type="color" id="nrcolor-node" value="#1a3a6a"></div>
+    <div class="ctrl"><label style="margin-bottom:5px">Neurone actif</label><input type="color" id="nrcolor-active" value="#44eeff"></div>
+    <div class="ctrl"><label style="margin-bottom:5px">Synapse</label><input type="color" id="nrcolor-edge" value="#0a2040"></div>
+    <div class="ctrl"><label style="margin-bottom:5px">Pulse</label><input type="color" id="nrcolor-pulse" value="#ffffff"></div>
+    <div class="sep"></div>
+    <div class="ctrl"><label>Fade <span class="val" id="nrval-fade">0.18</span></label><input type="range" id="nrfade" min="0.02" max="0.98" step="0.01" value="0.18"></div>
+  </div>
+  <div class="tab-pane" id="tab-neural-tempo">
+    <div class="ctrl"><label>Intervalle auto <span class="val" id="nrval-pulse-int">4.0</span>s</label><input type="range" id="nrtpulse-int" min="0.1" max="20" step="0.1" value="4.0"></div>
+    <div class="ctrl"><label>BPM sync — div <span class="val" id="nrval-beat-div">1</span></label><input type="range" id="nrbeat-div" min="1" max="8" step="1" value="1"></div>
+  </div>
+  <div class="tab-pane" id="tab-neural-io"><div class="sec"><div class="sec-title">MIDI CC Neural</div><div id="nrmidi-cc-list"></div></div></div>
+  <div class="tab-pane" id="tab-neural-save"><div class="sec"><div style="color:var(--text-faint);font-size:9px">Config Neural dans les scènes globales.</div></div></div>
+  </div><!-- /neural -->
+
+  <!-- ══ INK ENGINE PANES ══ -->
+  <div class="engine-panes" data-engine="ink">
+  <div class="tab-pane active" id="tab-ink-live">
+    <div class="sec">
+      <div class="sec-title">Mode fluide</div>
+      <div class="btn-grid" style="grid-template-columns:repeat(2,1fr)">
+        <button class="btn active" data-inkmode="water">Eau</button>
+        <button class="btn" data-inkmode="paint">Peinture</button>
+      </div>
+    </div>
+    <div class="sep"></div>
+    <div class="sec">
+      <div class="quick-row">
+        <button class="big-toggle" id="inkbtn-pulse" style="flex:1"><span class="dot"></span>GOUTTE</button>
+        <button class="quick-fire" id="inkbtn-pulse-fire">▶</button>
+      </div>
+      <div class="prog-bar"><div class="prog-fill" id="inkpulse-bar"></div></div>
+    </div>
+    <div class="sep"></div>
+    <div class="sec">
+      <div class="sec-title">Pinceau</div>
+      <div class="ctrl"><label>Rayon <span class="val" id="inkval-pen">5</span></label><input type="range" id="inkpen-size" min="1" max="50" step="1" value="5"></div>
+      <div class="ctrl"><label>Force <span class="val" id="inkval-force">1.5</span></label><input type="range" id="inkpen-force" min="0.5" max="20" step="0.5" value="1.5"></div>
+      <div class="ctrl"><label>Curseur X <span class="val" id="inkval-cx">0.50</span></label><input type="range" id="inkcursor-x" min="0" max="1" step="0.005" value="0.50"></div>
+      <div class="ctrl"><label>Curseur Y <span class="val" id="inkval-cy">0.50</span></label><input type="range" id="inkcursor-y" min="0" max="1" step="0.005" value="0.50"></div>
+      <div class="quick-row" style="margin-top:4px"><button class="big-toggle" id="inkbtn-click" style="flex:1"><span class="dot"></span>PEINDRE</button><button class="quick-fire" id="inkbtn-click-fire">▶</button></div>
+    </div>
+  </div>
+  <div class="tab-pane" id="tab-ink-sim">
+    <div class="ctrl"><label>Résolution grille <span class="val" id="inkval-res">22</span>px</label><input type="range" id="inkgrid-res" min="2" max="40" step="1" value="22"></div>
+    <div class="ctrl"><label>Persistance fluide <span class="val" id="inkval-damp">0.908</span></label><input type="range" id="inkdamping" min="0.90" max="1.00" step="0.002" value="0.908"></div>
+    <div class="ctrl"><label>Turbulence noise <span class="val" id="inkval-noise">0.4</span></label><input type="range" id="inknoise" min="0" max="3" step="0.1" value="0.4"></div>
+    <div style="font-size:9px;color:var(--text-muted);margin:4px 0 8px">Viscosité auto selon mode EAU / PEINTURE</div>
+    <div class="sep"></div>
+    <button class="btn-wide" id="inkbtn-reset">↺ Nettoyer toile</button>
+  </div>
+  <div class="tab-pane" id="tab-ink-color">
+    <div class="ctrl"><label style="margin-bottom:5px">Fond (toile)</label><input type="color" id="inkbg-color" value="#000000"></div>
+    <div class="sep"></div>
+    <div class="sec-title">Rampe de couleur</div>
+    <div style="display:flex;align-items:center;gap:8px;margin:6px 0">
+      <div id="inkcolor-swatch" style="width:36px;height:36px;border-radius:4px;background:#ff2200;border:1px solid var(--border-ctrl);flex-shrink:0"></div>
+      <input type="color" id="inkpaint-color" value="#ff2200" style="flex:1">
+    </div>
+    <div class="toggle-row"><label>Auto-couleur au clic</label><input type="checkbox" id="inkautocol" checked></div>
+    <div class="ctrl"><label>Pas de teinte <span class="val" id="inkval-hstep">30</span>°</label><input type="range" id="inkhue-step" min="5" max="180" step="5" value="30"></div>
+    <div style="margin:6px 0 2px">
+      <div style="height:10px;border-radius:3px;background:linear-gradient(to right,#f00,#ff0,#0f0,#0ff,#00f,#f0f,#f00)"></div>
+    </div>
+    <button class="btn-wide" id="inkbtn-nextcolor" style="margin-top:6px">→ Couleur suivante</button>
+  </div>
+  <div class="tab-pane" id="tab-ink-tempo">
+    <div class="ctrl"><label>Intervalle goutte <span class="val" id="inkval-pulse-int">3.0</span>s</label><input type="range" id="inktpulse-int" min="0.1" max="20" step="0.1" value="3.0"></div>
+    <div class="ctrl"><label>BPM sync — div <span class="val" id="inkval-beat-div">1</span></label><input type="range" id="inkbeat-div" min="1" max="8" step="1" value="1"></div>
+  </div>
+  <div class="tab-pane" id="tab-ink-io"><div class="sec"><div class="sec-title">MIDI CC Ink</div><div id="inkmidi-cc-list"></div></div></div>
+  <div class="tab-pane" id="tab-ink-save"><div class="sec"><div style="color:var(--text-faint);font-size:9px">Config Ink dans les scènes globales.</div></div></div>
+  </div><!-- /ink -->
+
+  <!-- ══ SLOPE ENGINE PANES ══ -->
+  <div class="engine-panes" data-engine="slope">
+  <div class="tab-pane active" id="tab-slope-live">
+    <div class="sec">
+      <div class="sec-title">Champ vectoriel</div>
+      <div class="btn-grid" style="grid-template-columns:repeat(5,1fr)">
+        <button class="btn active" data-slpfield="0">1</button>
+        <button class="btn" data-slpfield="1">2</button>
+        <button class="btn" data-slpfield="2">3</button>
+        <button class="btn" data-slpfield="3">4</button>
+        <button class="btn" data-slpfield="4">5</button>
+        <button class="btn" data-slpfield="5">6</button>
+        <button class="btn" data-slpfield="6">7</button>
+        <button class="btn" data-slpfield="7">8</button>
+        <button class="btn" data-slpfield="8">9</button>
+        <button class="btn" data-slpfield="9">10</button>
+      </div>
+      <div class="toggle-row" style="margin-top:6px"><label>Rotation auto. des champs</label><input type="checkbox" id="slpauto-cycle" checked></div>
+    </div>
+    <div class="sep"></div>
+    <div class="sec">
+      <div class="quick-row">
+        <button class="big-toggle" id="slpbtn-pulse" style="flex:1"><span class="dot"></span>SAUT DE CHAMP</button>
+        <button class="quick-fire" id="slpbtn-pulse-fire">▶</button>
+      </div>
+      <div class="prog-bar"><div class="prog-fill" id="slppulse-bar"></div></div>
+    </div>
+    <div class="sep"></div>
+    <div class="sec">
+      <div class="sec-title">Émission</div>
+      <div class="ctrl"><label>Rayon dispersion <span class="val" id="slpval-pen">90</span></label><input type="range" id="slppen-size" min="10" max="300" value="90"></div>
+      <div class="ctrl"><label>Débit particules <span class="val" id="slpval-force">1.0</span></label><input type="range" id="slppush-force" min="0.1" max="5" step="0.1" value="1.0"></div>
+      <div class="ctrl"><label>Curseur X <span class="val" id="slpval-cx">0.50</span></label><input type="range" id="slpcursor-x" min="0" max="1" step="0.005" value="0.50"></div>
+      <div class="ctrl"><label>Curseur Y <span class="val" id="slpval-cy">0.50</span></label><input type="range" id="slpcursor-y" min="0" max="1" step="0.005" value="0.50"></div>
+      <div class="quick-row" style="margin-top:4px"><button class="big-toggle" id="slpbtn-click" style="flex:1"><span class="dot"></span>CLICK</button><button class="quick-fire" id="slpbtn-click-fire">▶</button></div>
+    </div>
+  </div>
+  <div class="tab-pane" id="tab-slope-sim">
+    <div class="ctrl"><label>Échelle du champ <span class="val" id="slpval-scale">18</span></label><input type="range" id="slpscale" min="4" max="60" step="1" value="18"></div>
+    <div class="ctrl"><label>Vitesse</label><span class="val" id="slpval-speed">1.0</span><input type="range" id="slpspeed" min="0.1" max="4" step="0.1" value="1.0"></div>
+    <div class="ctrl"><label>Largeur min <span class="val" id="slpval-wmin">1</span></label><input type="range" id="slpwidth-min" min="0.5" max="6" step="0.5" value="1"></div>
+    <div class="ctrl"><label>Largeur max <span class="val" id="slpval-wmax">5</span></label><input type="range" id="slpwidth-max" min="1" max="12" step="0.5" value="5"></div>
+    <div class="sep"></div>
+    <div class="ctrl"><label>Intervalle rotation auto <span class="val" id="slpval-cycleint">6.0</span>s</label><input type="range" id="slpcycle-int" min="1" max="30" step="0.5" value="6.0"></div>
+    <div class="sep"></div>
+    <button class="btn-wide" id="slpbtn-reset">↺ Réinitialiser</button>
+  </div>
+  <div class="tab-pane" id="tab-slope-color">
+    <div class="ctrl"><label style="margin-bottom:5px">Fond</label><input type="color" id="slpbg-color" value="#0f0420"></div>
+    <div class="ctrl"><label style="margin-bottom:5px">Couleur 1</label><input type="color" id="slpcolor1" value="#2b0a3d"></div>
+    <div class="ctrl"><label style="margin-bottom:5px">Couleur 2</label><input type="color" id="slpcolor2" value="#7a1750"></div>
+    <div class="ctrl"><label style="margin-bottom:5px">Couleur 3</label><input type="color" id="slpcolor3" value="#c92b4f"></div>
+    <div class="ctrl"><label style="margin-bottom:5px">Couleur 4</label><input type="color" id="slpcolor4" value="#ef6a3c"></div>
+    <div class="ctrl"><label style="margin-bottom:5px">Couleur 5</label><input type="color" id="slpcolor5" value="#ffd166"></div>
+    <div class="sep"></div>
+    <div class="ctrl"><label>Fade <span class="val" id="slpval-fade">0.10</span></label><input type="range" id="slpfade" min="0.02" max="0.5" step="0.01" value="0.10"></div>
+  </div>
+  <div class="tab-pane" id="tab-slope-tempo">
+    <div class="ctrl"><label>Intervalle saut de champ <span class="val" id="slpval-pulse-int">3.0</span>s</label><input type="range" id="slptpulse-int" min="0.1" max="20" step="0.1" value="3.0"></div>
+    <div class="ctrl"><label>BPM sync — div <span class="val" id="slpval-beat-div">1</span></label><input type="range" id="slpbeat-div" min="1" max="8" step="1" value="1"></div>
+  </div>
+  <div class="tab-pane" id="tab-slope-io"><div class="sec"><div class="sec-title">MIDI CC Slope</div><div id="slpmidi-cc-list"></div></div></div>
+  <div class="tab-pane" id="tab-slope-save"><div class="sec"><div style="color:var(--text-faint);font-size:9px">Config Slope dans les scènes globales.</div></div></div>
+  </div><!-- /slope -->
+
+  <!-- ══ DUNE ENGINE PANES ══ -->
+  <div class="engine-panes" data-engine="dune">
+  <div class="tab-pane active" id="tab-dune-live">
+    <div class="sec">
+      <div class="sec-title">Palette</div>
+      <div class="btn-grid" style="grid-template-columns:repeat(5,1fr)">
+        <button class="btn active" data-dunpal="0">Sunset</button>
+        <button class="btn" data-dunpal="1">Mono</button>
+        <button class="btn" data-dunpal="2">Ocean</button>
+        <button class="btn" data-dunpal="3">Forest</button>
+        <button class="btn" data-dunpal="4">Ember</button>
+      </div>
+      <div class="toggle-row" style="margin-top:6px"><label>Évolution lente de la teinte</label><input type="checkbox" id="dunevolve" checked></div>
+    </div>
+    <div class="sep"></div>
+    <div class="sec">
+      <div class="quick-row">
+        <button class="big-toggle" id="dunbtn-pulse" style="flex:1"><span class="dot"></span>NOUVELLE GRAINE</button>
+        <button class="quick-fire" id="dunbtn-pulse-fire">▶</button>
+      </div>
+      <div class="prog-bar"><div class="prog-fill" id="dunpulse-bar"></div></div>
+    </div>
+    <div class="sep"></div>
+    <div class="sec">
+      <div class="sec-title">Curseur</div>
+      <div class="ctrl"><label>Rayon <span class="val" id="dunval-pen">70</span></label><input type="range" id="dunpen-size" min="10" max="300" value="70"></div>
+      <div class="ctrl"><label>Quantité <span class="val" id="dunval-force">1.0</span></label><input type="range" id="dunpush-force" min="0.1" max="5" step="0.1" value="1.0"></div>
+      <div class="ctrl"><label>Curseur X <span class="val" id="dunval-cx">0.50</span></label><input type="range" id="duncursor-x" min="0" max="1" step="0.005" value="0.50"></div>
+      <div class="ctrl"><label>Curseur Y <span class="val" id="dunval-cy">0.50</span></label><input type="range" id="duncursor-y" min="0" max="1" step="0.005" value="0.50"></div>
+      <div class="quick-row" style="margin-top:4px"><button class="big-toggle" id="dunbtn-click" style="flex:1"><span class="dot"></span>CLICK</button><button class="quick-fire" id="dunbtn-click-fire">▶</button></div>
+    </div>
+  </div>
+  <div class="tab-pane" id="tab-dune-sim">
+    <div class="ctrl"><label>Particules <span class="val" id="dunval-count">3000</span></label><input type="range" id="duncount" min="500" max="8000" step="100" value="3000"></div>
+    <div class="ctrl"><label>Graine bruit <span class="val" id="dunval-seed">200</span></label><input type="range" id="dunseed" min="0" max="5000" step="1" value="200"></div>
+    <div class="ctrl"><label>Échelle bruit <span class="val" id="dunval-scale">120</span></label><input type="range" id="dunscale" min="20" max="400" step="10" value="120"></div>
+    <div class="ctrl"><label>Paliers de direction <span class="val" id="dunval-steps">24</span></label><input type="range" id="dunsteps" min="4" max="64" step="1" value="24"></div>
+    <div class="ctrl"><label>Vitesse <span class="val" id="dunval-speed">1.2</span></label><input type="range" id="dunspeed" min="0.1" max="4" step="0.1" value="1.2"></div>
+    <div class="ctrl"><label>Décroissance vie <span class="val" id="dunval-decay">0.010</span></label><input type="range" id="dundecay" min="0.002" max="0.05" step="0.001" value="0.010"></div>
+    <div class="sep"></div>
+    <div class="ctrl"><label>Durée évolution <span class="val" id="dunval-evoldur">60</span>s</label><input type="range" id="dunevol-dur" min="10" max="300" step="5" value="60"></div>
+    <div class="sep"></div>
+    <button class="btn-wide" id="dunbtn-reset">↺ Réinitialiser</button>
+  </div>
+  <div class="tab-pane" id="tab-dune-color">
+    <div class="ctrl"><label style="margin-bottom:5px">Fond</label><input type="color" id="dunbg-color" value="#030303"></div>
+    <div style="color:var(--text-muted);font-size:9px;line-height:1.6;padding:4px 2px">Les deux teintes de la dune viennent de la palette choisie dans l'onglet LIVE.</div>
+    <div class="sep"></div>
+    <div class="ctrl"><label>Taille trait min <span class="val" id="dunval-szmin">0.2</span></label><input type="range" id="dunsize-min" min="0.1" max="3" step="0.1" value="0.2"></div>
+    <div class="ctrl"><label>Taille trait max <span class="val" id="dunval-szmax">1.6</span></label><input type="range" id="dunsize-max" min="0.2" max="5" step="0.1" value="1.6"></div>
+  </div>
+  <div class="tab-pane" id="tab-dune-tempo">
+    <div class="ctrl"><label>Intervalle nouvelle graine <span class="val" id="dunval-pulse-int">8.0</span>s</label><input type="range" id="duntpulse-int" min="0.5" max="30" step="0.5" value="8.0"></div>
+    <div class="ctrl"><label>BPM sync — div <span class="val" id="dunval-beat-div">1</span></label><input type="range" id="dunbeat-div" min="1" max="8" step="1" value="1"></div>
+  </div>
+  <div class="tab-pane" id="tab-dune-io"><div class="sec"><div class="sec-title">MIDI CC Dune</div><div id="dunmidi-cc-list"></div></div></div>
+  <div class="tab-pane" id="tab-dune-save"><div class="sec"><div style="color:var(--text-faint);font-size:9px">Config Dune dans les scènes globales.</div></div></div>
+  </div><!-- /dune -->
+
+  <!-- ══ GROWTH ENGINE PANES ══ -->
+  <div class="engine-panes" data-engine="growth">
+  <div class="tab-pane active" id="tab-growth-live">
+    <div class="sec">
+      <div class="sec-title">Image source des feuilles</div>
+      <label class="btn-wide" for="grwimage-file" style="display:block;text-align:center;cursor:pointer">📁 Choisir une image</label>
+      <input type="file" id="grwimage-file" accept="image/*" style="display:none">
+      <div id="grwimage-name" style="color:var(--text-faint);font-size:9px;margin-top:4px;text-align:center">Image par défaut (dégradé)</div>
+    </div>
+    <div class="sep"></div>
+    <div class="sec">
+      <div class="sec-title">Curseur — dépose des graines</div>
+      <div class="ctrl"><label>Rayon <span class="val" id="grwval-pen">20</span></label><input type="range" id="grwpen-size" min="1" max="80" value="20"></div>
+      <div class="ctrl"><label>Débit graines <span class="val" id="grwval-force">1.0</span></label><input type="range" id="grwpush-force" min="0.1" max="5" step="0.1" value="1.0"></div>
+      <div class="ctrl"><label>Curseur X <span class="val" id="grwval-cx">0.50</span></label><input type="range" id="grwcursor-x" min="0" max="1" step="0.005" value="0.50"></div>
+      <div class="ctrl"><label>Curseur Y <span class="val" id="grwval-cy">0.50</span></label><input type="range" id="grwcursor-y" min="0" max="1" step="0.005" value="0.50"></div>
+      <div class="quick-row" style="margin-top:4px"><button class="big-toggle" id="grwbtn-click" style="flex:1"><span class="dot"></span>CLICK</button><button class="quick-fire" id="grwbtn-click-fire">▶</button></div>
+    </div>
+  </div>
+  <div class="tab-pane" id="tab-growth-sim">
+    <div class="ctrl"><label>Vitesse chute graine <span class="val" id="grwval-fall">3.0</span></label><input type="range" id="grwfall-speed" min="0.5" max="10" step="0.5" value="3.0"></div>
+    <div class="ctrl"><label>Errance branches <span class="val" id="grwval-wander">0.33</span></label><input type="range" id="grwwander" min="0.05" max="1" step="0.01" value="0.33"></div>
+    <div class="ctrl"><label>Rétrécissement <span class="val" id="grwval-shrink">0.998</span></label><input type="range" id="grwshrink" min="0.97" max="1" step="0.001" value="0.998"></div>
+    <div class="ctrl"><label>Taille feuille min <span class="val" id="grwval-lfmin">3</span></label><input type="range" id="grwleaf-min" min="1" max="15" step="1" value="3"></div>
+    <div class="ctrl"><label>Taille feuille max <span class="val" id="grwval-lfmax">10</span></label><input type="range" id="grwleaf-max" min="3" max="30" step="1" value="10"></div>
+    <div class="sep"></div>
+    <div class="ctrl"><label>Échelle image <span class="val" id="grwval-imgscale">1.0</span></label><input type="range" id="grwimg-scale" min="0.2" max="3" step="0.05" value="1.0"></div>
+    <div class="ctrl"><label>Décalage image Y <span class="val" id="grwval-imgoffy">0</span>px</label><input type="range" id="grwimg-offy" min="-600" max="600" step="10" value="0"></div>
+    <div class="sep"></div>
+    <button class="btn-wide" id="grwbtn-reset">↺ Réinitialiser</button>
+  </div>
+  <div class="tab-pane" id="tab-growth-color">
+    <div class="ctrl"><label style="margin-bottom:5px">Fond</label><input type="color" id="grwbg-color" value="#000000"></div>
+    <div class="ctrl"><label style="margin-bottom:5px">Branches</label><input type="color" id="grwcolor-branch" value="#ffffff"></div>
+    <div class="toggle-row"><label>Ombre portée des feuilles</label><input type="checkbox" id="grwshadow" checked></div>
+  </div>
+  <div class="tab-pane" id="tab-growth-tempo">
+    <div style="color:var(--text-faint);font-size:9px;padding:6px 2px">Croissance organique — pas de minuterie, dirigée par les graines déposées.</div>
+  </div>
+  <div class="tab-pane" id="tab-growth-io"><div class="sec"><div class="sec-title">MIDI CC Growth</div><div id="grwmidi-cc-list"></div></div></div>
+  <div class="tab-pane" id="tab-growth-save"><div class="sec"><div style="color:var(--text-faint);font-size:9px">Config Growth dans les scènes globales.</div></div></div>
+  </div><!-- /growth -->
+
+  <!-- ══ GRIDWAVE ENGINE PANES ══ -->
+  <div class="engine-panes" data-engine="gridwave">
+  <div class="tab-pane active" id="tab-gridwave-live">
+    <div class="sec">
+      <div class="quick-row">
+        <button class="big-toggle" id="gdwbtn-pulse" style="flex:1"><span class="dot"></span>NOUVELLE PHASE</button>
+        <button class="quick-fire" id="gdwbtn-pulse-fire">▶</button>
+      </div>
+      <div class="prog-bar"><div class="prog-fill" id="gdwpulse-bar"></div></div>
+    </div>
+    <div class="sep"></div>
+    <div class="sec">
+      <div class="sec-title">Contrôle curseur</div>
+      <div class="ctrl"><label>Rayon <span class="val" id="gdwval-pen">120</span></label><input type="range" id="gdwpen-size" min="10" max="400" value="120"></div>
+      <div class="ctrl"><label>Force <span class="val" id="gdwval-force">1.0</span></label><input type="range" id="gdwpush-force" min="0.1" max="5" step="0.1" value="1.0"></div>
+      <div class="ctrl"><label>Curseur X <span class="val" id="gdwval-cx">0.50</span></label><input type="range" id="gdwcursor-x" min="0" max="1" step="0.005" value="0.50"></div>
+      <div class="ctrl"><label>Curseur Y <span class="val" id="gdwval-cy">0.50</span></label><input type="range" id="gdwcursor-y" min="0" max="1" step="0.005" value="0.50"></div>
+      <div class="quick-row" style="margin-top:4px"><button class="big-toggle" id="gdwbtn-click" style="flex:1"><span class="dot"></span>CLICK</button><button class="quick-fire" id="gdwbtn-click-fire">▶</button></div>
+    </div>
+  </div>
+  <div class="tab-pane" id="tab-gridwave-sim">
+    <div class="ctrl"><label>Espacement grille <span class="val" id="gdwval-spacing">14</span>px</label><input type="range" id="gdwspacing" min="4" max="40" step="1" value="14"></div>
+    <div class="ctrl"><label>Échelle du bruit <span class="val" id="gdwval-nscale">0.02</span></label><input type="range" id="gdwnscale" min="0.005" max="0.08" step="0.001" value="0.02"></div>
+    <div class="ctrl"><label>Vitesse animation <span class="val" id="gdwval-nspeed">1.0</span></label><input type="range" id="gdwnspeed" min="0.1" max="5" step="0.1" value="1.0"></div>
+    <div class="ctrl"><label>Amplitude déplacement <span class="val" id="gdwval-amp">10</span></label><input type="range" id="gdwamp" min="0" max="40" step="1" value="10"></div>
+    <div class="ctrl"><label>Taille point <span class="val" id="gdwval-psize">2.0</span></label><input type="range" id="gdwpsize" min="0.5" max="8" step="0.5" value="2.0"></div>
+    <div class="sep"></div>
+    <button class="btn-wide" id="gdwbtn-reset">↺ Réinitialiser</button>
+  </div>
+  <div class="tab-pane" id="tab-gridwave-color">
+    <div class="ctrl"><label style="margin-bottom:5px">Fond</label><input type="color" id="gdwbg-color" value="#040608"></div>
+    <div class="ctrl"><label style="margin-bottom:5px">Couleur basse</label><input type="color" id="gdwcolor-low" value="#0a3d62"></div>
+    <div class="ctrl"><label style="margin-bottom:5px">Couleur haute</label><input type="color" id="gdwcolor-high" value="#7ee8fa"></div>
+    <div class="sep"></div>
+    <div class="ctrl"><label>Fade (traînées) <span class="val" id="gdwval-fade">0.10</span></label><input type="range" id="gdwfade" min="0.02" max="0.8" step="0.01" value="0.10"></div>
+  </div>
+  <div class="tab-pane" id="tab-gridwave-tempo">
+    <div class="ctrl"><label>Intervalle nouvelle phase <span class="val" id="gdwval-pulse-int">6.0</span>s</label><input type="range" id="gdwtpulse-int" min="0.5" max="30" step="0.5" value="6.0"></div>
+    <div class="ctrl"><label>BPM sync — div <span class="val" id="gdwval-beat-div">1</span></label><input type="range" id="gdwbeat-div" min="1" max="8" step="1" value="1"></div>
+  </div>
+  <div class="tab-pane" id="tab-gridwave-io"><div class="sec"><div class="sec-title">MIDI CC Gridwave</div><div id="gdwmidi-cc-list"></div></div></div>
+  <div class="tab-pane" id="tab-gridwave-save"><div class="sec"><div style="color:var(--text-faint);font-size:9px">Config Gridwave dans les scènes globales.</div></div></div>
+  </div><!-- /gridwave -->
+
+  <!-- ══ BLOOM ENGINE PANES ══ -->
+  <div class="engine-panes" data-engine="bloom">
+  <div class="tab-pane active" id="tab-bloom-live">
+    <div class="sec">
+      <div class="sec-title">Image source des feuilles</div>
+      <input type="file" id="blmimg-file" accept="image/*" style="display:none">
+      <button class="btn-wide" id="blmimg-pick">📁 Choisir une image…</button>
+      <div id="blmimg-name" style="font-size:9px;color:var(--text-muted);margin-top:4px;word-break:break-all">Aucune image — dégradé par défaut</div>
+      <button class="btn-wide" id="blmimg-clear" style="margin-top:4px">✕ Retirer l'image</button>
+    </div>
+    <div class="sep"></div>
+    <div class="sec">
+      <div class="quick-row">
+        <button class="big-toggle" id="blmbtn-pulse" style="flex:1"><span class="dot"></span>PLUIE DE GRAINES</button>
+        <button class="quick-fire" id="blmbtn-pulse-fire">▶</button>
+      </div>
+      <div class="prog-bar"><div class="prog-fill" id="blmpulse-bar"></div></div>
+    </div>
+    <div class="sep"></div>
+    <div class="sec">
+      <div class="sec-title">Curseur — clique ou glisse pour semer</div>
+      <div class="ctrl"><label>Curseur X <span class="val" id="blmval-cx">0.50</span></label><input type="range" id="blmcursor-x" min="0" max="1" step="0.005" value="0.50"></div>
+      <div class="ctrl"><label>Curseur Y <span class="val" id="blmval-cy">0.50</span></label><input type="range" id="blmcursor-y" min="0" max="1" step="0.005" value="0.50"></div>
+      <div class="quick-row" style="margin-top:4px"><button class="big-toggle" id="blmbtn-click" style="flex:1"><span class="dot"></span>SEMER</button><button class="quick-fire" id="blmbtn-click-fire">▶</button></div>
+    </div>
+    <div class="sep"></div>
+    <button class="btn-wide" id="blmbtn-reset">↺ Tout effacer</button>
+  </div>
+  <div class="tab-pane" id="tab-bloom-sim">
+    <div class="ctrl"><label>Vitesse de chute <span class="val" id="blmval-fall">3.0</span></label><input type="range" id="blmfall-speed" min="0.5" max="10" step="0.5" value="3.0"></div>
+    <div class="ctrl"><label>Rayon racine min <span class="val" id="blmval-rmin">10</span></label><input type="range" id="blmradius-min" min="4" max="30" step="1" value="10"></div>
+    <div class="ctrl"><label>Rayon racine max <span class="val" id="blmval-rmax">30</span></label><input type="range" id="blmradius-max" min="10" max="60" step="1" value="30"></div>
+    <div class="ctrl"><label>Rétrécissement / génération <span class="val" id="blmval-shrink">0.998</span></label><input type="range" id="blmshrink" min="0.95" max="1" step="0.001" value="0.998"></div>
+    <div class="ctrl"><label>Oscillation de croissance <span class="val" id="blmval-wobble">0.33</span></label><input type="range" id="blmwobble" min="0" max="1" step="0.01" value="0.33"></div>
+    <div class="ctrl"><label>Biais vers le haut <span class="val" id="blmval-bias">0.09</span></label><input type="range" id="blmbias" min="0" max="0.4" step="0.01" value="0.09"></div>
+    <div class="sep"></div>
+    <div class="ctrl"><label>Taille feuille min <span class="val" id="blmval-lszmin">3</span></label><input type="range" id="blmleaf-szmin" min="1" max="15" step="1" value="3"></div>
+    <div class="ctrl"><label>Taille feuille max <span class="val" id="blmval-lszmax">10</span></label><input type="range" id="blmleaf-szmax" min="2" max="25" step="1" value="10"></div>
+    <div class="ctrl"><label>Dispersion feuille <span class="val" id="blmval-ljitter">50</span></label><input type="range" id="blmleaf-jitter" min="5" max="150" step="5" value="50"></div>
+  </div>
+  <div class="tab-pane" id="tab-bloom-color">
+    <div class="ctrl"><label style="margin-bottom:5px">Fond</label><input type="color" id="blmbg-color" value="#000000"></div>
+    <div style="color:var(--text-muted);font-size:9px;line-height:1.6;padding:4px 2px">Si aucune image n'est choisie, les feuilles utilisent un dégradé de secours ci-dessous.</div>
+    <div class="ctrl" style="margin-top:6px"><label style="margin-bottom:5px">Dégradé secours — bas</label><input type="color" id="blmfallback-low" value="#0a3d1a"></div>
+    <div class="ctrl"><label style="margin-bottom:5px">Dégradé secours — haut</label><input type="color" id="blmfallback-high" value="#ffd23f"></div>
+  </div>
+  <div class="tab-pane" id="tab-bloom-tempo">
+    <div class="ctrl"><label>Intervalle pluie de graines <span class="val" id="blmval-pulse-int">6.0</span>s</label><input type="range" id="blmtpulse-int" min="0.5" max="30" step="0.5" value="6.0"></div>
+    <div class="ctrl"><label>BPM sync — div <span class="val" id="blmval-beat-div">1</span></label><input type="range" id="blmbeat-div" min="1" max="8" step="1" value="1"></div>
+  </div>
+  <div class="tab-pane" id="tab-bloom-io"><div class="sec"><div class="sec-title">MIDI CC Bloom</div><div id="blmmidi-cc-list"></div></div></div>
+  <div class="tab-pane" id="tab-bloom-save"><div class="sec"><div style="color:var(--text-faint);font-size:9px">Config Bloom dans les scènes globales. L'image choisie n'est pas sauvegardée.</div></div></div>
+  </div><!-- /bloom -->
+
+  <!-- ══ DISPLACE ENGINE PANES ══ -->
+  <div class="engine-panes" data-engine="displace">
+  <div class="tab-pane active" id="tab-displace-live">
+    <div class="sec">
+      <div class="quick-row">
+        <button class="big-toggle" id="dspbtn-pulse" style="flex:1"><span class="dot"></span>SECOUSSE</button>
+        <button class="quick-fire" id="dspbtn-pulse-fire">▶</button>
+      </div>
+      <div class="prog-bar"><div class="prog-fill" id="dsppulse-bar"></div></div>
+    </div>
+    <div class="sep"></div>
+    <div class="sec">
+      <div class="sec-title">Contrôle curseur</div>
+      <div class="ctrl"><label>Rayon <span class="val" id="dspval-pen">120</span></label><input type="range" id="dsppen-size" min="10" max="400" value="120"></div>
+      <div class="ctrl"><label>Force <span class="val" id="dspval-force">1.0</span></label><input type="range" id="dsppush-force" min="0.1" max="5" step="0.1" value="1.0"></div>
+      <div class="ctrl"><label>Curseur X <span class="val" id="dspval-cx">0.50</span></label><input type="range" id="dspcursor-x" min="0" max="1" step="0.005" value="0.50"></div>
+      <div class="ctrl"><label>Curseur Y <span class="val" id="dspval-cy">0.50</span></label><input type="range" id="dspcursor-y" min="0" max="1" step="0.005" value="0.50"></div>
+      <div class="quick-row" style="margin-top:4px"><button class="big-toggle" id="dspbtn-click" style="flex:1"><span class="dot"></span>CLICK</button><button class="quick-fire" id="dspbtn-click-fire">▶</button></div>
+    </div>
+  </div>
+  <div class="tab-pane" id="tab-displace-sim">
+    <div class="ctrl"><label>Densité grille <span class="val" id="dspval-density">90</span></label><input type="range" id="dspdensity" min="20" max="200" step="5" value="90"></div>
+    <div class="ctrl"><label>Fréquence bruit <span class="val" id="dspval-freq">1.0</span></label><input type="range" id="dspfreq" min="0.1" max="5" step="0.1" value="1.0"></div>
+    <div class="ctrl"><label>Vitesse temporelle <span class="val" id="dspval-speed">0.6</span></label><input type="range" id="dspspeed" min="0.05" max="3" step="0.05" value="0.6"></div>
+    <div class="ctrl"><label>Amplitude déformation <span class="val" id="dspval-amount">60</span></label><input type="range" id="dspamount" min="5" max="300" step="5" value="60"></div>
+    <div class="ctrl"><label>Taille point <span class="val" id="dspval-ptsize">2.0</span></label><input type="range" id="dspptsize" min="0.5" max="8" step="0.5" value="2.0"></div>
+    <div class="sep"></div>
+    <button class="btn-wide" id="dspbtn-reset">↺ Réinitialiser</button>
+  </div>
+  <div class="tab-pane" id="tab-displace-color">
+    <div class="ctrl"><label style="margin-bottom:5px">Fond</label><input type="color" id="dspbg-color" value="#04050a"></div>
+    <div class="ctrl"><label style="margin-bottom:5px">Couleur basse vitesse</label><input type="color" id="dspcolor-low" value="#1a3a6a"></div>
+    <div class="ctrl"><label style="margin-bottom:5px">Couleur haute vitesse</label><input type="color" id="dspcolor-high" value="#5dd9ff"></div>
+    <div class="sep"></div>
+    <div class="ctrl"><label>Traînée <span class="val" id="dspval-trail">0.12</span></label><input type="range" id="dsptrail" min="0.02" max="0.6" step="0.01" value="0.12"></div>
+  </div>
+  <div class="tab-pane" id="tab-displace-tempo">
+    <div class="ctrl"><label>Intervalle secousse <span class="val" id="dspval-pulse-int">4.0</span>s</label><input type="range" id="dsptpulse-int" min="0.1" max="20" step="0.1" value="4.0"></div>
+    <div class="ctrl"><label>BPM sync — div <span class="val" id="dspval-beat-div">1</span></label><input type="range" id="dspbeat-div" min="1" max="8" step="1" value="1"></div>
+  </div>
+  <div class="tab-pane" id="tab-displace-io"><div class="sec"><div class="sec-title">MIDI CC Displace</div><div id="dspmidi-cc-list"></div></div></div>
+  <div class="tab-pane" id="tab-displace-save"><div class="sec"><div style="color:var(--text-faint);font-size:9px">Config Displace dans les scènes globales.</div></div></div>
+  </div><!-- /displace -->
+
+  <div class="tab-pane" id="tab-bug">
+    <div class="sec">
+      <div class="sec-title" style="color:#ff4466">⚠ Signaler un bug</div>
+      <div style="color:#666;font-size:9px;line-height:1.7;margin-bottom:10px">
+        Décris le problème rencontré. Les infos système seront jointes automatiquement au rapport.
+      </div>
+
+      <div style="margin-bottom:8px">
+        <label style="color:#aaa;font-size:10px;display:block;margin-bottom:4px">Sévérité</label>
+        <div style="display:flex;gap:4px">
+          <button class="bug-sev" data-sev="mineur" style="flex:1">🟡 Mineur</button>
+          <button class="bug-sev" data-sev="gênant" style="flex:1">🟠 Gênant</button>
+          <button class="bug-sev" data-sev="bloquant" style="flex:1">🔴 Bloquant</button>
+        </div>
+      </div>
+
+      <div style="margin-bottom:8px">
+        <label style="color:#aaa;font-size:10px;display:block;margin-bottom:4px">Description du bug</label>
+        <textarea id="bug-desc" placeholder="Explique ce qui se passe, ce que tu faisais, ce qui était attendu…" style="width:100%;height:90px;background:#161616;border:1px solid #2a2a2a;border-radius:4px;color:#ccc;font-size:10px;font-family:inherit;padding:7px;outline:none;resize:vertical;box-sizing:border-box;line-height:1.5"></textarea>
+      </div>
+
+      <div style="margin-bottom:10px">
+        <label style="color:#aaa;font-size:10px;display:block;margin-bottom:4px">Étapes pour reproduire <span style="color:#444">(optionnel)</span></label>
+        <textarea id="bug-steps" placeholder="1. Activer l'effet X&#10;2. Cliquer sur Y&#10;3. …" style="width:100%;height:55px;background:#161616;border:1px solid #2a2a2a;border-radius:4px;color:#ccc;font-size:10px;font-family:inherit;padding:7px;outline:none;resize:vertical;box-sizing:border-box;line-height:1.5"></textarea>
+      </div>
+
+      <div style="background:#0a0a0a;border:1px solid #1a1a1a;border-radius:4px;padding:7px;margin-bottom:10px">
+        <div style="color:#444;font-size:8px;letter-spacing:1.5px;margin-bottom:5px">INFOS SYSTÈME (auto)</div>
+        <div id="bug-sysinfo" style="color:#555;font-size:9px;line-height:1.8;font-family:monospace"></div>
+      </div>
+
+      <button id="btn-send-bug" style="width:100%;padding:9px;background:#1a0008;border:1px solid #ff2244;border-radius:4px;color:#ff4466;font-size:11px;font-weight:700;letter-spacing:1px;cursor:pointer;font-family:inherit;transition:all .15s">
+        ✉ Envoyer le rapport
+      </button>
+      <div id="bug-sent-msg" style="display:none;text-align:center;color:#00ff88;font-size:10px;margin-top:8px;padding:6px;background:#001a08;border-radius:4px;border:1px solid #007733">
+        ✓ GitHub ouvert — finalise et soumets l'issue, merci !
+      </div>
+    </div>
+  </div>
+
+  </div><!-- /panel-body -->
+</div><!-- /panel -->
+
+<div id="hud">
+  <div id="hud-bpm">120 BPM</div>
+  <div id="hud-mode">FLUID</div>
+  <div id="hud-scene">SCN —</div>
+</div>
+
+<div id="canvas-area">
+  <div id="canvas-wrapper">
+    <canvas id="c"></canvas>
+    <canvas id="gl-canvas"></canvas>
+    <canvas id="cursor-overlay"></canvas>
+    <canvas id="react-gl-canvas"></canvas>
+  </div>
+</div>
+

@@ -1,0 +1,102 @@
+<!-- ══ INFO MODAL ══ -->
+<div id="info-modal" onclick="if(event.target===this)this.classList.remove('open')">
+  <div id="info-modal-inner">
+    <h1>Les 8 moteurs de simulation</h1>
+
+    <div class="info-card" style="--ec:#00ffff">
+      <div class="info-card-head">
+        <span class="info-card-name">FLUID</span>
+        <span class="info-card-tag">Eulérien · Grille</span>
+      </div>
+      <p>Simulation de fluide incompressible sur une <strong>grille fixe</strong>. Le champ de vélocité est mis à jour par advection, diffusion et projection (divergence nulle). Les particules sont de simples traceurs qui suivent le flux — elles ne sont pas le fluide.</p>
+      <p>La souris injecte de la vélocité dans les cellules voisines. Le post-process WebGL applique un <strong>warp</strong> (déformation de l'image) synchronisé sur les pulses.</p>
+      <div class="info-tag-row"><span class="info-tag">Navier-Stokes simplifié</span><span class="info-tag">Advection</span><span class="info-tag">WebGL warp</span></div>
+    </div>
+
+    <div class="info-card" style="--ec:#ff6600">
+      <div class="info-card-head">
+        <span class="info-card-name">VORTEX</span>
+        <span class="info-card-tag">Lagrangien · Tourbillons ponctuels</span>
+      </div>
+      <p>Chaque tourbillon (vortex de Rankine) génère un <strong>champ de rotation</strong> à distance. Les tourbillons s'influencent mutuellement et se déplacent selon la somme des champs. Avec 3 tourbillons ou plus, le système devient <strong>chaotique</strong>.</p>
+      <p>Les particules légères tracent les lignes de courant. La souris peut injecter de nouveaux tourbillons positifs ou négatifs (sens horaire / anti-horaire).</p>
+      <div class="info-tag-row"><span class="info-tag">Mécanique des fluides 2D</span><span class="info-tag">Chaos déterministe</span><span class="info-tag">O(n²)</span></div>
+    </div>
+
+    <div class="info-card" style="--ec:#aa44ff">
+      <div class="info-card-head">
+        <span class="info-card-name">N-BODY</span>
+        <span class="info-card-tag">Gravitation newtonienne</span>
+      </div>
+      <p>Les corps massifs s'attirent selon <strong>F = G·m₁·m₂/r²</strong>. Un softening évite les singularités à courte distance. Phénomènes observables : orbites stables, éjections hyperboliques, captures, fusions.</p>
+      <p>Les particules légères (specks) tracent le champ gravitationnel sans masse propre. La souris attire ou repousse les corps.</p>
+      <div class="info-tag-row"><span class="info-tag">Problème à N corps</span><span class="info-tag">O(n²)</span><span class="info-tag">Intégration Euler</span></div>
+    </div>
+
+    <div class="info-card" style="--ec:#00ff88">
+      <div class="info-card-head">
+        <span class="info-card-name">SPH</span>
+        <span class="info-card-tag">Smoothed Particle Hydrodynamics</span>
+      </div>
+      <p>Contrairement au Fluid, <strong>les particules sont le fluide</strong>. Chaque particule calcule sa densité locale (kernel Poly6) et sa pression. Les forces de pression (gradient Spiky) et de viscosité (laplacien) agissent entre voisins dans un rayon h.</p>
+      <p>Simule des comportements eau : gouttelettes, splash, tension de surface implicite. Plus lent que l'Eulérien mais plus réaliste pour les fluides libres.</p>
+      <div class="info-tag-row"><span class="info-tag">Lagrangien</span><span class="info-tag">Kernel Poly6 / Spiky</span><span class="info-tag">Grille spatiale</span></div>
+    </div>
+
+    <div class="info-card" style="--ec:#ffdd00">
+      <div class="info-card-head">
+        <span class="info-card-name">BOIDS</span>
+        <span class="info-card-tag">Intelligence collective émergente</span>
+      </div>
+      <p>Algorithme de Craig Reynolds (1986). Chaque boid applique <strong>trois règles locales</strong> : <em>Séparation</em> (éviter les collisions), <em>Alignement</em> (adopter la direction du voisinage), <em>Cohésion</em> (se rapprocher du centre du groupe).</p>
+      <p>Aucun chef, aucune coordination globale — le banc, la nuée ou le troupeau <strong>émerge spontanément</strong> des interactions locales.</p>
+      <div class="info-tag-row"><span class="info-tag">Vie artificielle</span><span class="info-tag">Comportement émergent</span><span class="info-tag">O(n²) naïf</span></div>
+    </div>
+
+    <div class="info-card" style="--ec:#ff44aa">
+      <div class="info-card-head">
+        <span class="info-card-name">PHYSARUM</span>
+        <span class="info-card-tag">Moisissure visqueuse · Phéromones</span>
+      </div>
+      <p>Inspire du <em>Physarum polycephalum</em>, un organisme unicellulaire réel capable de résoudre des labyrinthes. Des milliers d'agents déposent des <strong>phéromones</strong> et orientent leurs capteurs vers les concentrations les plus fortes — les traces se renforcent mutuellement.</p>
+      <p>Résultat : des <strong>réseaux tubulaires optimaux</strong> apparaissent spontanément, similaires aux réseaux de transport biologiques. Proche des fourmis (ACO) mais l'organisme est unicellulaire.</p>
+      <div class="info-tag-row"><span class="info-tag">Stigmergie</span><span class="info-tag">Phéromones</span><span class="info-tag">Diffusion · Décroissance</span><span class="info-tag">60 000 agents</span></div>
+    </div>
+
+    <div class="info-card" style="--ec:#44aaff">
+      <div class="info-card-head">
+        <span class="info-card-name">LORENZ</span>
+        <span class="info-card-tag">Attracteurs étranges · Chaos</span>
+      </div>
+      <p>Trajectoires de systèmes dynamiques chaotiques projetées en 2D. Quatre attracteurs disponibles : <strong>Lorenz</strong> (papillon, 1963), <strong>Rössler</strong>, <strong>Clifford</strong> (attracteur plan), <strong>Thomas</strong> (cyclique).</p>
+      <p>Deux trajectoires initialement voisines divergent exponentiellement (<strong>exposant de Lyapunov positif</strong>) — c'est l'effet papillon. Les trajectoires restent pourtant confinées dans le volume de l'attracteur.</p>
+      <div class="info-tag-row"><span class="info-tag">Systèmes dynamiques</span><span class="info-tag">Chaos déterministe</span><span class="info-tag">Projection 3D→2D</span></div>
+    </div>
+
+    <div class="info-card" style="--ec:#ff2266">
+      <div class="info-card-head">
+        <span class="info-card-name">REACT</span>
+        <span class="info-card-tag">Réaction-Diffusion · Gray-Scott · GPU</span>
+      </div>
+      <p>Deux substances chimiques <strong>U</strong> et <strong>V</strong> réagissent (V consomme U, se reproduit, se dégrade) et diffusent à des vitesses différentes. Le modèle <strong>Gray-Scott</strong> : dU/dt = Dᵤ∇²U − UV² + f(1−U) · dV/dt = D_v∇²V + UV² − (f+k)V.</p>
+      <p>Selon les paramètres f (feed) et k (kill) : <em>spots</em>, <em>labyrinthes</em>, <em>ondes spirales</em>, <em>mitose cellulaire</em>. Calculé entièrement sur le <strong>GPU via WebGL</strong> — des millions de cellules en temps réel.</p>
+      <div class="info-tag-row"><span class="info-tag">Alan Turing (1952)</span><span class="info-tag">Gray-Scott</span><span class="info-tag">WebGL compute</span><span class="info-tag">Morphogenèse</span></div>
+    </div>
+
+    <div class="info-card" style="--ec:#ff8800">
+      <div class="info-card-head">
+        <span class="info-card-name">ACO</span>
+        <span class="info-card-tag">Ant Colony Optimization</span>
+      </div>
+      <p>Des milliers de fourmis partent de <strong>nids</strong> et cherchent des <strong>sources de nourriture</strong>. Deux couches de phéromones coexistent : <em>phéromone-nid</em> (déposée en cherchant, guide le retour) et <em>phéromone-food</em> (déposée en retournant, guide vers la nourriture).</p>
+      <p>Contrairement à Physarum, les fourmis ont un <strong>état mémoire</strong> (cherche / retourne) et un comportement d'inversion de direction à chaque source trouvée. Les chemins les plus courts se renforcent automatiquement — c'est le principe utilisé pour optimiser des réseaux réels (routage, logistique).</p>
+      <p>Souris : <strong>Food</strong> place une source, <strong>Nest</strong> place un nid, <strong>Erase</strong> supprime une source, <strong>Scatter</strong> disperse les fourmis proches.</p>
+      <div class="info-tag-row"><span class="info-tag">Stigmergie</span><span class="info-tag">Deux phéromones</span><span class="info-tag">Machine à états</span><span class="info-tag">Optimisation combinatoire</span></div>
+    </div>
+
+    <button id="info-close" onclick="document.getElementById('info-modal').classList.remove('open')">Fermer</button>
+  </div>
+</div>
+
+</body>
+</html>

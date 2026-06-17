@@ -222,8 +222,8 @@ input[type=color]::-webkit-color-swatch{border:none;border-radius:3px}
 .theme-preview-chip{flex:1;height:28px;border-radius:5px;border:2px solid transparent;cursor:pointer;transition:all .15s;position:relative;overflow:hidden}
 .theme-preview-chip.active{border-color:var(--accent)}
 .theme-preview-chip:hover{transform:scale(1.05)}
+
 </style>
-</head>
 <body>
 
 <div id="panel">
@@ -2221,6 +2221,7 @@ input[type=color]::-webkit-color-swatch{border:none;border-radius:3px}
   </div>
 </div>
 
+
 <script>
 /* ═══════════════════════════════════════════
    COLOUR UTILS
@@ -2291,6 +2292,7 @@ window._mouse={x:0,y:0,px:0,py:0,down:false};
 window._warpAmount=0;
 window._cursorHidden=false;
 window._cursorOnCanvas=false;
+
 
 /* ═══════════════════════════════════════════
    FLUID SIM ENGINE
@@ -2637,6 +2639,7 @@ window._cursorOnCanvas=false;
   };
 }(window));
 
+
 /* ═══════════════════════════════════════════
    VORTEX ENGINE
 ═══════════════════════════════════════════ */
@@ -2747,6 +2750,7 @@ var VortexEngine=(function(){
   return{cfg:cfg,init:init,draw:draw,activate:activate,deactivate:deactivate,reset:_reset,triggerPulse:triggerPulse,markReset:function(){_needsReset=true;}};
 })();
 
+
 /* ═══════════════════════════════════════════
    N-BODY ENGINE
 ═══════════════════════════════════════════ */
@@ -2820,6 +2824,7 @@ var NBodyEngine=(function(){
   function deactivate(){_active=false;}
   return{cfg:cfg,init:init,draw:draw,activate:activate,deactivate:deactivate,reset:_reset,triggerPulse:triggerPulse,_getBodies:function(){return bodies;},markReset:function(){_needsReset=true;}};
 })();
+
 
 /* ═══════════════════════════════════════════
    SPH ENGINE
@@ -2895,6 +2900,7 @@ var Engine_SPH=(function(){
   return{cfg:cfg,init:init,draw:draw,activate:activate,deactivate:deactivate,reset:_reset,triggerPulse:triggerPulse,markReset:function(){_needsReset=true;}};
 })();
 
+
 /* ═══════════════════════════════════════════
    BOIDS ENGINE
 ═══════════════════════════════════════════ */
@@ -2962,6 +2968,7 @@ var Engine_Boids=(function(){
   function deactivate(){_active=false;}
   return{cfg:cfg,init:init,draw:draw,activate:activate,deactivate:deactivate,reset:_reset,triggerPulse:triggerPulse,markReset:function(){_needsReset=true;}};
 })();
+
 
 /* ═══════════════════════════════════════════
    PHYSARUM ENGINE
@@ -3067,6 +3074,7 @@ var Engine_Physarum=(function(){
   return{cfg:cfg,init:init,draw:draw,activate:activate,deactivate:deactivate,reset:initArrays,triggerPulse:triggerPulse,markReset:function(){_needsReset=true;}};
 })();
 
+
 /* ═══════════════════════════════════════════
    LORENZ ENGINE
 ═══════════════════════════════════════════ */
@@ -3164,6 +3172,7 @@ var Engine_Lorenz=(function(){
   return{cfg:cfg,init:init,draw:draw,activate:activate,deactivate:deactivate,reset:_reset,triggerPulse:triggerPulse,buildLUT:buildLorzLUT,markReset:function(){_needsReset=true;}};
 })();
 
+
 /* ═══════════════════════════════════════════
    REACT (GRAY-SCOTT) ENGINE
 ═══════════════════════════════════════════ */
@@ -3252,6 +3261,7 @@ var Engine_React=(function(){
   function deactivate(){_active=false;}
   return{cfg:cfg,init:init,draw:draw,activate:activate,deactivate:deactivate,reset:initGL,triggerPulse:triggerPulse,applyPreset:applyPreset,PRESETS:REACT_PRESETS,markReset:function(){_needsReset=true;}};
 })();
+
 
 /* ═══════════════════════════════════════════
    ACO ENGINE  (Ant Colony Optimization)
@@ -3438,6 +3448,7 @@ var Engine_ACO=(function(){
   return{cfg:cfg,init:init,draw:draw,activate:activate,deactivate:deactivate,reset:_reset,triggerPulse:triggerPulse,markReset:function(){_needsReset=true;}};
 })();
 
+
 /* ═══════════════════════════════════════════
    ENGINE: REACTION-DIFFUSION (Gray-Scott)
 ═══════════════════════════════════════════ */
@@ -3543,6 +3554,7 @@ window.Engine_RDiff=(function(){
   };
 })();
 
+
 /* ═══════════════════════════════════════════
    ENGINE: L-SYSTEMS
 ═══════════════════════════════════════════ */
@@ -3623,6 +3635,7 @@ window.Engine_LSystem=(function(){
     }
   };
 })();
+
 
 /* ═══════════════════════════════════════════
    ENGINE: VORONOI VIVANT (WebGL)
@@ -3765,6 +3778,7 @@ void main(){\
     }
   };
 })();
+
 
 /* ═══════════════════════════════════════════
    FOLLOW ENGINE — Flow Field Particles
@@ -3956,6 +3970,7 @@ var Engine_Follow=(function(){
   return{cfg:cfg,init:init,draw:draw,activate:activate,deactivate:deactivate,reset:_reset,triggerPulse:triggerPulse,markReset:function(){_needsReset=true;}};
 })();
 
+
 /* ═══════════════════════════════════════════
    RIBBON ENGINE — Ribbon Trail Particles
 ═══════════════════════════════════════════ */
@@ -4090,6 +4105,7 @@ var Engine_Ribbon=(function(){
   Object.defineProperty(cfg,'opacity',{get:function(){return _opacity;},set:function(v){_opacity=v;}});
   return{cfg:cfg,init:init,draw:draw,activate:activate,deactivate:deactivate,reset:_reset,triggerPulse:triggerPulse,markReset:function(){_needsReset=true;}};
 })();
+
 
 /* ═══════════════════════════════════════════
    PHYSIKS ENGINE — Cellular Automaton physique cohérent
@@ -4403,6 +4419,7 @@ var Engine_Physiks=(function(){
   return{cfg:cfg,init:init,draw:draw,activate:activate,deactivate:deactivate,reset:_reset,triggerPulse:triggerPulse,markReset:function(){_needsReset=true;}};
 })();
 
+
 /* ═══════════════════════════════════════════
    NEURAL ENGINE — Neural Network Pulses
 ═══════════════════════════════════════════ */
@@ -4567,6 +4584,7 @@ var Engine_Neural=(function(){
   Object.defineProperty(cfg,'fade',{get:function(){return _fade;},set:function(v){_fade=v;}});
   return{cfg:cfg,init:init,draw:draw,activate:activate,deactivate:deactivate,reset:_reset,triggerPulse:triggerPulse,markReset:function(){_needsReset=true;}};
 })();
+
 
 /* ═══════════════════════════════════════════
    INK ENGINE — Paint & Fluid Advection
@@ -4816,6 +4834,7 @@ var Engine_Ink=(function(){
   return{cfg:cfg,init:init,draw:draw,activate:activate,deactivate:deactivate,reset:_reset,triggerPulse:triggerPulse,advanceColor:advanceColor,markReset:function(){_needsReset=true;}};
 })();
 
+
 /* ═══════════════════════════════════════════
    SLOPE ENGINE — Champs de vecteurs commutables
    Particules émises au clic, intégrées pas à pas dans un champ
@@ -4958,6 +4977,7 @@ var Engine_Slope=(function(){
   return{cfg:cfg,init:init,draw:draw,activate:activate,deactivate:deactivate,reset:_reset,triggerPulse:triggerPulse,markReset:function(){_needsReset=true;}};
 })();
 
+
 /* ═══════════════════════════════════════════
    DUNE ENGINE — Champ de particules guidé par bruit, direction quantifiée
    Stries façon dunes de sable, deux teintes alternées par palier, palette évolutive.
@@ -5078,6 +5098,7 @@ var Engine_Dune=(function(){
 
   return{cfg:cfg,init:init,draw:draw,activate:activate,deactivate:deactivate,reset:_reset,triggerPulse:triggerPulse,markReset:function(){_needsReset=true;}};
 })();
+
 
 /* ═══════════════════════════════════════════
    BLOOM ENGINE — Croissance de branches organiques
@@ -5227,6 +5248,7 @@ var Engine_Bloom=(function(){
   return{cfg:cfg,init:init,draw:draw,activate:activate,deactivate:deactivate,reset:_reset,triggerPulse:triggerPulse,setImage:setImage,clearImage:clearImage,markReset:function(){_needsReset=true;}};
 })();
 
+
 /* ═══════════════════════════════════════════
    DISPLACE ENGINE — Grille de points déformée par un champ de bruit
    Chaque point d'une grille régulière est décalé par un bruit qui évolue
@@ -5320,6 +5342,7 @@ var Engine_Displace=(function(){
 
   return{cfg:cfg,init:init,draw:draw,activate:activate,deactivate:deactivate,reset:_reset,triggerPulse:triggerPulse,markReset:function(){_needsReset=true;}};
 })();
+
 
 /* ═══════════════════════════════════════════
    GROWTH ENGINE — Arbres organiques, feuilles colorées depuis une image
@@ -5480,6 +5503,7 @@ var Engine_Growth=(function(){
 
   return{cfg:cfg,init:init,draw:draw,activate:activate,deactivate:deactivate,reset:_reset,triggerPulse:triggerPulse,loadImageFile:loadImageFile,markReset:function(){_needsReset=true;}};
 })();
+
 
 /* ═══════════════════════════════════════════
    ENGINE MANAGER
@@ -7394,8 +7418,8 @@ updateResDisplay();
     });
   })();
 })();
-</script>
 
+</script>
 <!-- ══ INFO MODAL ══ -->
 <div id="info-modal" onclick="if(event.target===this)this.classList.remove('open')">
   <div id="info-modal-inner">
