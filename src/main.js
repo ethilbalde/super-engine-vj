@@ -9,10 +9,10 @@ var EngineManager=(function(){
     rdiff:window.Engine_RDiff,
     voronoi:window.Engine_Voronoi,follow:window.Engine_Follow,
     ribbon:window.Engine_Ribbon,physiks:window.Engine_Physiks,neural:window.Engine_Neural,
-    ink:window.Engine_Ink,slope:window.Engine_Slope,dune:window.Engine_Dune,trees:window.Engine_Trees,sphere:window.Engine_Sphere
+    ink:window.Engine_Ink,slope:window.Engine_Slope,dune:window.Engine_Dune,sphere:window.Engine_Sphere
   };
-  var ACCENT={fluid:'#00ffff',vortex:'#ff6600',nbody:'#aa44ff',sph:'#00ff88',boids:'#ffdd00',physarum:'#ff44aa',lorenz:'#44aaff',react:'#ff2266',aco:'#ff8800',rdiff:'#ff5500',voronoi:'#ffcc00',follow:'#6688ff',ribbon:'#ff66aa',physiks:'#c8a040',neural:'#44eeff',ink:'#a044ff',slope:'#ff3d6e',dune:'#e8772e',trees:'#2d7a3e',sphere:'#ffffff'};
-  var NAMES={fluid:'FLUID SIM',vortex:'VORTEX',nbody:'N-BODY',sph:'SPH FLUID',boids:'BOIDS',physarum:'PHYSARUM',lorenz:'LORENZ',react:'REACT',aco:'ACO FOURMIS',rdiff:'REACTION-DIFFUSION',voronoi:'VORONOI VIVANT',follow:'FOLLOW — FLOW FIELD',ribbon:'RIBBON — RUBANS',physiks:'PHYSIKS — PHYSIQUE DES MATÉRIAUX',neural:'NEURAL — RÉSEAU',ink:'INK — ENCRE & PEINTURE',slope:'SLOPE — CHAMPS DE VECTEURS',dune:'DUNE — SABLE & BRUIT',trees:'TREES — ARBRES GÉNÉRÉS',sphere:'SPHERE — NUAGE ROTATIF'};
+  var ACCENT={fluid:'#00ffff',vortex:'#ff6600',nbody:'#aa44ff',sph:'#00ff88',boids:'#ffdd00',physarum:'#ff44aa',lorenz:'#44aaff',react:'#ff2266',aco:'#ff8800',rdiff:'#ff5500',voronoi:'#ffcc00',follow:'#6688ff',ribbon:'#ff66aa',physiks:'#c8a040',neural:'#44eeff',ink:'#a044ff',slope:'#ff3d6e',dune:'#e8772e',sphere:'#ffffff'};
+  var NAMES={fluid:'FLUID SIM',vortex:'VORTEX',nbody:'N-BODY',sph:'SPH FLUID',boids:'BOIDS',physarum:'PHYSARUM',lorenz:'LORENZ',react:'REACT',aco:'ACO FOURMIS',rdiff:'REACTION-DIFFUSION',voronoi:'VORONOI VIVANT',follow:'FOLLOW — FLOW FIELD',ribbon:'RIBBON — RUBANS',physiks:'PHYSIKS — PHYSIQUE DES MATÉRIAUX',neural:'NEURAL — RÉSEAU',ink:'INK — ENCRE & PEINTURE',slope:'SLOPE — CHAMPS DE VECTEURS',dune:'DUNE — SABLE & BRUIT',sphere:'SPHERE — NUAGE ROTATIF'};
   window.activeEngine='fluid';
   window.overlayEngine=null;window.overlayAlpha=0.3;
 
@@ -97,7 +97,7 @@ function autoResize(){
   FluidSim.cfg.canvas_height=Math.max(res*10,Math.floor(availH/res)*res);
   FluidSim.resize();updateResDisplay();
   /* sync canvas size to all engines and mark them for reset on next activate */
-  var engineNames=['VortexEngine','NBodyEngine','Engine_SPH','Engine_Boids','Engine_Physarum','Engine_Lorenz','Engine_React','Engine_ACO','Engine_RDiff','Engine_LSystem','Engine_Voronoi','Engine_Follow','Engine_Ribbon','Engine_Physiks','Engine_Neural','Engine_Ink','Engine_Slope','Engine_Dune','Engine_Trees','Engine_Sphere'];
+  var engineNames=['VortexEngine','NBodyEngine','Engine_SPH','Engine_Boids','Engine_Physarum','Engine_Lorenz','Engine_React','Engine_ACO','Engine_RDiff','Engine_LSystem','Engine_Voronoi','Engine_Follow','Engine_Ribbon','Engine_Physiks','Engine_Neural','Engine_Ink','Engine_Slope','Engine_Dune','Engine_Sphere'];
   engineNames.forEach(function(n){var e=window[n];if(e&&e.cfg){e.cfg.canvas_width=FluidSim.cfg.canvas_width;e.cfg.canvas_height=FluidSim.cfg.canvas_height;if(e.markReset)e.markReset();}});
 }
 function updateResDisplay(){

@@ -34,7 +34,6 @@ const ENGINE_FILES = [
   'engines/ink.js',
   'engines/slope.js',
   'engines/dune.js',
-  'engines/trees.js',
   'engines/sphere.js',
   // ── Add new engines here ──
 ];

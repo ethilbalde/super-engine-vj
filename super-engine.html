@@ -276,7 +276,6 @@ input[type=color]::-webkit-color-swatch{border:none;border-radius:3px}
     <button class="eng-btn"        data-engine="ink"      style="--e:#a044ff">INK</button>
     <button class="eng-btn"        data-engine="slope"    style="--e:#ff3d6e">SLOPE</button>
     <button class="eng-btn"        data-engine="dune"     style="--e:#e8772e">DUNE</button>
-    <button class="eng-btn"        data-engine="trees"    style="--e:#2d7a3e">TREES</button>
     <button class="eng-btn"        data-engine="sphere"   style="--e:#ffffff">SPHERE</button>
   </div>
 
@@ -2159,38 +2158,6 @@ input[type=color]::-webkit-color-swatch{border:none;border-radius:3px}
   <div class="tab-pane" id="tab-displace-io"><div class="sec"><div class="sec-title">MIDI CC Displace</div><div id="dspmidi-cc-list"></div></div></div>
   <div class="tab-pane" id="tab-displace-save"><div class="sec"><div style="color:var(--text-faint);font-size:9px">Config Displace dans les scènes globales.</div></div></div>
   </div><!-- /displace -->
-
-  <!-- ══ TREES ENGINE PANES ══ -->
-  <div class="engine-panes" data-engine="trees">
-  <div class="tab-pane active" id="tab-trees-live">
-    <div class="sec">
-      <div class="quick-row">
-        <button class="big-toggle" id="treebtn-pulse" style="flex:1"><span class="dot"></span>REGÉNÉRER</button>
-        <button class="quick-fire" id="treebtn-pulse-fire">▶</button>
-      </div>
-      <div class="prog-bar"><div class="prog-fill" id="treepulse-bar"></div></div>
-    </div>
-  </div>
-  <div class="tab-pane" id="tab-trees-sim">
-    <div class="ctrl"><label>Arbres horizontaux <span class="val" id="treeval-nh">8</span></label><input type="range" id="treenh" min="2" max="16" step="1" value="8"></div>
-    <div class="ctrl"><label>Arbres verticaux <span class="val" id="treeval-nv">3</span></label><input type="range" id="treenv" min="1" max="8" step="1" value="3"></div>
-    <div class="ctrl"><label>Durée de vie max <span class="val" id="treeval-life">15</span></label><input type="range" id="treemax-life" min="5" max="40" step="1" value="15"></div>
-    <div class="sep"></div>
-    <button class="btn-wide" id="treebtn-reset">↺ Réinitialiser</button>
-  </div>
-  <div class="tab-pane" id="tab-trees-color">
-    <div class="ctrl"><label style="margin-bottom:5px">Fond</label><input type="color" id="treebg-color" value="#281a33"></div>
-    <div class="ctrl"><label>Teinte base <span class="val" id="treeval-hue">40</span>°</label><input type="range" id="treehue" min="0" max="360" step="5" value="40"></div>
-    <div class="ctrl"><label>Variation teinte <span class="val" id="treeval-huevar">30</span></label><input type="range" id="treehuevar" min="0" max="120" step="5" value="30"></div>
-    <div class="ctrl"><label>Opacité ombres <span class="val" id="treeval-shad">0.15</span></label><input type="range" id="treeshadow-op" min="0.05" max="0.6" step="0.05" value="0.15"></div>
-  </div>
-  <div class="tab-pane" id="tab-trees-tempo">
-    <div class="ctrl"><label>Intervalle régénération <span class="val" id="treeval-pulse-int">8.0</span>s</label><input type="range" id="treetpulse-int" min="1" max="30" step="0.5" value="8.0"></div>
-    <div class="ctrl"><label>BPM sync — div <span class="val" id="treeval-beat-div">1</span></label><input type="range" id="treebeat-div" min="1" max="8" step="1" value="1"></div>
-  </div>
-  <div class="tab-pane" id="tab-trees-io"><div class="sec"><div class="sec-title">MIDI CC Trees</div><div id="treemidi-cc-list"></div></div></div>
-  <div class="tab-pane" id="tab-trees-save"><div class="sec"><div style="color:var(--text-faint);font-size:9px">Config Trees dans les scènes globales.</div></div></div>
-  </div><!-- /trees -->
 
   <!-- ══ SPHERE ENGINE PANES ══ -->
   <div class="engine-panes" data-engine="sphere">
@@ -5100,224 +5067,6 @@ var Engine_Dune=(function(){
 
 
 /* ═══════════════════════════════════════════
-   TREES ENGINE — Procedural Branch Growth
-═══════════════════════════════════════════ */
-var Engine_Trees=(function(){
-  var canvas,ctx,mouse=window._mouse,_active=false;
-  var trees=[],_t=0,frameCount=0,_needsReset=false;
-  var maxlife=15;
-
-  var cfg={
-    canvas_width:800,canvas_height:600,
-    num_trees_h:8,num_trees_v:3,
-    max_life:15,max_generations:4,
-    base_hue:40,hue_variation:30,
-    bg_color:'#281a33',
-    shadow_opacity:0.15,light_opacity:0.8,dark_opacity:0.6,
-    pen_size:80,push_force:1.0,
-    pulse_enabled:false,pulse_interval:2.0,
-    bpm:120,time_mode:'bpm',pulse_beat_div:1
-  };
-
-  function Vec2(x,y){this.x=x||0;this.y=y||0;}
-  Vec2.prototype.copy=function(){return new Vec2(this.x,this.y);};
-  Vec2.prototype.add=function(v){this.x+=v.x;this.y+=v.y;return this;};
-
-  function Branch(start,stw,angle,gen,treeIndex,proba){
-    this.position=start.copy();
-    this.stw=stw;
-    this.gen=gen;
-    this.alive=true;
-    this.age=0;
-    this.angle=angle;
-    this.speed=new Vec2(0,-3);
-    this.treeIndex=treeIndex;
-    this.maxlife=cfg.max_life*(0.3+Math.random()*0.5);
-    this.proba1=proba.p1;
-    this.proba2=proba.p2;
-    this.proba3=proba.p3;
-    this.proba4=proba.p4;
-    this.deviation=0.2+Math.random()*0.5;
-  }
-
-  Branch.prototype.grow=function(){
-    if(Math.floor(this.age)===Math.floor(this.maxlife/this.gen)||Math.random()<0.05*this.gen){
-      this.alive=false;
-      if(this.stw>0.2){
-        var brs=trees[this.treeIndex].branches;
-        var proba={p1:this.proba1,p2:this.proba2,p3:this.proba3,p4:this.proba4};
-        if(Math.random()<this.proba1/this.gen)
-          brs.push(new Branch(this.position.copy(),this.stw*(0.2+Math.random()*0.8),
-            this.angle+(0.7+Math.random()*0.4)*this.deviation,this.gen+0.1,this.treeIndex,proba));
-        if(Math.random()<this.proba2/this.gen)
-          brs.push(new Branch(this.position.copy(),this.stw*(0.2+Math.random()*0.8),
-            this.angle-(0.7+Math.random()*0.4)*this.deviation,this.gen+0.1,this.treeIndex,proba));
-        if(Math.random()<this.proba3/this.gen)
-          brs.push(new Branch(this.position.copy(),this.stw*(0.5+Math.random()*0.3),
-            this.angle+(0.2+Math.random()*0.8)*this.deviation,this.gen+0.1,this.treeIndex,proba));
-        if(Math.random()<this.proba4/this.gen)
-          brs.push(new Branch(this.position.copy(),this.stw*(0.5+Math.random()*0.3),
-            this.angle-(0.2+Math.random()*0.8)*this.deviation,this.gen+0.1,this.treeIndex,proba));
-      }
-    } else {
-      this.speed.x+=(-0.5+Math.random());
-      this.age++;
-    }
-  };
-
-  Branch.prototype.display=function(){
-    var st=trees[this.treeIndex].start;
-    var x0=this.position.x;
-    var y0=this.position.y;
-    var c=cfg.max_life/this.maxlife;
-
-    var cos_a=Math.cos(this.angle);
-    var sin_a=Math.sin(this.angle);
-    this.position.x+=-this.speed.x*cos_a+this.speed.y*sin_a;
-    this.position.y+=this.speed.x*sin_a+this.speed.y*cos_a;
-
-    var dis=0.005*Math.pow(Math.max(0,st.y-y0),1.8);
-    var stw_shadow=map(this.age,0,this.maxlife,this.stw*1.3,this.stw*0.9);
-    var stw_main=map(this.age,0,this.maxlife,this.stw,this.stw*0.6);
-
-    var t=trees[this.treeIndex];
-    var hue=(t.teinte+this.age+10*this.gen)%360;
-
-    ctx.strokeStyle=hslToRgba(hue,0,0,cfg.shadow_opacity);
-    ctx.lineWidth=stw_shadow;
-    ctx.beginPath();
-    ctx.moveTo(x0+dis*0.8,2*st.y-y0+dis*0.8);
-    ctx.lineTo(this.position.x+dis*0.8,2*st.y-this.position.y+dis*0.8);
-    ctx.stroke();
-
-    var hue2=(t.teinte+this.age+20*this.gen)%360;
-    ctx.strokeStyle=hslToRgba(hue2,150*c,200+20*this.gen,cfg.light_opacity);
-    ctx.lineWidth=stw_main;
-    ctx.beginPath();
-    ctx.moveTo(x0+0.1*this.stw,y0);
-    ctx.lineTo(this.position.x+0.1*this.stw,this.position.y);
-    ctx.stroke();
-
-    ctx.strokeStyle=hslToRgba(hue2,100*c,50+20*this.gen,cfg.dark_opacity);
-    ctx.lineWidth=stw_main;
-    ctx.beginPath();
-    ctx.moveTo(x0,y0);
-    ctx.lineTo(this.position.x,this.position.y);
-    ctx.stroke();
-  };
-
-  function Tree(start,coeff,index){
-    this.branches=[];
-    this.start=start;
-    this.coeff=coeff;
-    this.teinte=Math.random()*cfg.hue_variation;
-    this.index=index;
-    this.proba1=0.8+Math.random()*0.2;
-    this.proba2=0.8+Math.random()*0.2;
-    this.proba3=0.4+Math.random()*0.1;
-    this.proba4=0.4+Math.random()*0.1;
-  }
-
-  Tree.prototype.grow=function(){
-    for(var i=0;i<this.branches.length;i++){
-      var b=this.branches[i];
-      if(b.alive){
-        b.grow();
-        b.display();
-      }
-    }
-  };
-
-  function createTree(i,j){
-    var W=cfg.canvas_width,H=cfg.canvas_height;
-    var nh=cfg.num_trees_h,nv=cfg.num_trees_v;
-    var x=0.1*W+i*Math.floor(0.9*W/nh);
-    var y=Math.floor(0.2*H+j*Math.floor(0.8*H/nv));
-    var start=new Vec2(x,y);
-    var idx=i+j*nh;
-    var tree=new Tree(start,start.y/(H-130),idx);
-    trees[idx]=tree;
-    var proba={p1:tree.proba1,p2:tree.proba2,p3:tree.proba3,p4:tree.proba4};
-    tree.branches[0]=new Branch(start,15*Math.sqrt(start.y/H),0,1,idx,proba);
-  };
-
-  function map(val,a,b,c,d){
-    return c+(d-c)*(val-a)/(b-a);
-  }
-
-  function hslToRgba(h,s,l,a){
-    h=h%360;
-    s=Math.min(100,Math.max(0,s));
-    l=Math.min(100,Math.max(0,l));
-    var c=(1-Math.abs(2*l/100-1))*s/100;
-    var x=c*(1-Math.abs((h/60)%2-1));
-    var m=l/100-c/2;
-    var r,g,b;
-    if(h<60){r=c;g=x;b=0;}
-    else if(h<120){r=x;g=c;b=0;}
-    else if(h<180){r=0;g=c;b=x;}
-    else if(h<240){r=0;g=x;b=c;}
-    else if(h<300){r=x;g=0;b=c;}
-    else{r=c;g=0;b=x;}
-    r=Math.round((r+m)*255);g=Math.round((g+m)*255);b=Math.round((b+m)*255);
-    return 'rgba('+r+','+g+','+b+','+a+')';
-  }
-
-  var ENG={
-    cfg:cfg,
-    init:function(){
-      canvas=document.getElementById('c');
-      if(!canvas||!canvas.getContext)return;
-      ctx=canvas.getContext('2d');
-      reset();
-    },
-    draw:function(){
-      if(!ctx)return;
-      ctx.fillStyle=cfg.bg_color;
-      ctx.fillRect(0,0,cfg.canvas_width,cfg.canvas_height);
-      for(var i=0;i<cfg.num_trees_h*cfg.num_trees_v;i++){
-        if(trees[i])trees[i].grow();
-      }
-      _t+=0.016;
-    },
-    activate:function(){
-      _active=true;
-      if(_needsReset){reset();_needsReset=false;}
-    },
-    deactivate:function(){
-      _active=false;
-    },
-    reset:function(){
-      reset();
-    },
-    triggerPulse:function(){
-      if(cfg.pulse_type==='reset'){
-        reset();
-      }
-    },
-    markReset:function(){
-      _needsReset=true;
-    }
-  };
-
-  function reset(){
-    trees=[];
-    for(var i=0;i<cfg.num_trees_h;i++){
-      for(var j=0;j<cfg.num_trees_v;j++){
-        createTree(i,j);
-      }
-    }
-    if(ctx){
-      ctx.fillStyle=cfg.bg_color;
-      ctx.fillRect(0,0,cfg.canvas_width,cfg.canvas_height);
-    }
-  }
-
-  return ENG;
-})();
-window.Engine_Trees=Engine_Trees;
-
-/* ═══════════════════════════════════════════
    SPHERE ENGINE — Rotating Particle Cloud
 ═══════════════════════════════════════════ */
 var Engine_Sphere=(function(){
@@ -5539,10 +5288,10 @@ var EngineManager=(function(){
     rdiff:window.Engine_RDiff,
     voronoi:window.Engine_Voronoi,follow:window.Engine_Follow,
     ribbon:window.Engine_Ribbon,physiks:window.Engine_Physiks,neural:window.Engine_Neural,
-    ink:window.Engine_Ink,slope:window.Engine_Slope,dune:window.Engine_Dune,trees:window.Engine_Trees,sphere:window.Engine_Sphere
+    ink:window.Engine_Ink,slope:window.Engine_Slope,dune:window.Engine_Dune,sphere:window.Engine_Sphere
   };
-  var ACCENT={fluid:'#00ffff',vortex:'#ff6600',nbody:'#aa44ff',sph:'#00ff88',boids:'#ffdd00',physarum:'#ff44aa',lorenz:'#44aaff',react:'#ff2266',aco:'#ff8800',rdiff:'#ff5500',voronoi:'#ffcc00',follow:'#6688ff',ribbon:'#ff66aa',physiks:'#c8a040',neural:'#44eeff',ink:'#a044ff',slope:'#ff3d6e',dune:'#e8772e',trees:'#2d7a3e',sphere:'#ffffff'};
-  var NAMES={fluid:'FLUID SIM',vortex:'VORTEX',nbody:'N-BODY',sph:'SPH FLUID',boids:'BOIDS',physarum:'PHYSARUM',lorenz:'LORENZ',react:'REACT',aco:'ACO FOURMIS',rdiff:'REACTION-DIFFUSION',voronoi:'VORONOI VIVANT',follow:'FOLLOW — FLOW FIELD',ribbon:'RIBBON — RUBANS',physiks:'PHYSIKS — PHYSIQUE DES MATÉRIAUX',neural:'NEURAL — RÉSEAU',ink:'INK — ENCRE & PEINTURE',slope:'SLOPE — CHAMPS DE VECTEURS',dune:'DUNE — SABLE & BRUIT',trees:'TREES — ARBRES GÉNÉRÉS',sphere:'SPHERE — NUAGE ROTATIF'};
+  var ACCENT={fluid:'#00ffff',vortex:'#ff6600',nbody:'#aa44ff',sph:'#00ff88',boids:'#ffdd00',physarum:'#ff44aa',lorenz:'#44aaff',react:'#ff2266',aco:'#ff8800',rdiff:'#ff5500',voronoi:'#ffcc00',follow:'#6688ff',ribbon:'#ff66aa',physiks:'#c8a040',neural:'#44eeff',ink:'#a044ff',slope:'#ff3d6e',dune:'#e8772e',sphere:'#ffffff'};
+  var NAMES={fluid:'FLUID SIM',vortex:'VORTEX',nbody:'N-BODY',sph:'SPH FLUID',boids:'BOIDS',physarum:'PHYSARUM',lorenz:'LORENZ',react:'REACT',aco:'ACO FOURMIS',rdiff:'REACTION-DIFFUSION',voronoi:'VORONOI VIVANT',follow:'FOLLOW — FLOW FIELD',ribbon:'RIBBON — RUBANS',physiks:'PHYSIKS — PHYSIQUE DES MATÉRIAUX',neural:'NEURAL — RÉSEAU',ink:'INK — ENCRE & PEINTURE',slope:'SLOPE — CHAMPS DE VECTEURS',dune:'DUNE — SABLE & BRUIT',sphere:'SPHERE — NUAGE ROTATIF'};
   window.activeEngine='fluid';
   window.overlayEngine=null;window.overlayAlpha=0.3;
 
@@ -5627,7 +5376,7 @@ function autoResize(){
   FluidSim.cfg.canvas_height=Math.max(res*10,Math.floor(availH/res)*res);
   FluidSim.resize();updateResDisplay();
   /* sync canvas size to all engines and mark them for reset on next activate */
-  var engineNames=['VortexEngine','NBodyEngine','Engine_SPH','Engine_Boids','Engine_Physarum','Engine_Lorenz','Engine_React','Engine_ACO','Engine_RDiff','Engine_LSystem','Engine_Voronoi','Engine_Follow','Engine_Ribbon','Engine_Physiks','Engine_Neural','Engine_Ink','Engine_Slope','Engine_Dune','Engine_Trees','Engine_Sphere'];
+  var engineNames=['VortexEngine','NBodyEngine','Engine_SPH','Engine_Boids','Engine_Physarum','Engine_Lorenz','Engine_React','Engine_ACO','Engine_RDiff','Engine_LSystem','Engine_Voronoi','Engine_Follow','Engine_Ribbon','Engine_Physiks','Engine_Neural','Engine_Ink','Engine_Slope','Engine_Dune','Engine_Sphere'];
   engineNames.forEach(function(n){var e=window[n];if(e&&e.cfg){e.cfg.canvas_width=FluidSim.cfg.canvas_width;e.cfg.canvas_height=FluidSim.cfg.canvas_height;if(e.markReset)e.markReset();}});
 }
 function updateResDisplay(){

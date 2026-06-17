@@ -50,7 +50,6 @@
     <button class="eng-btn"        data-engine="ink"      style="--e:#a044ff">INK</button>
     <button class="eng-btn"        data-engine="slope"    style="--e:#ff3d6e">SLOPE</button>
     <button class="eng-btn"        data-engine="dune"     style="--e:#e8772e">DUNE</button>
-    <button class="eng-btn"        data-engine="trees"    style="--e:#2d7a3e">TREES</button>
     <button class="eng-btn"        data-engine="sphere"   style="--e:#ffffff">SPHERE</button>
   </div>
 
@@ -1933,38 +1932,6 @@
   <div class="tab-pane" id="tab-displace-io"><div class="sec"><div class="sec-title">MIDI CC Displace</div><div id="dspmidi-cc-list"></div></div></div>
   <div class="tab-pane" id="tab-displace-save"><div class="sec"><div style="color:var(--text-faint);font-size:9px">Config Displace dans les scènes globales.</div></div></div>
   </div><!-- /displace -->
-
-  <!-- ══ TREES ENGINE PANES ══ -->
-  <div class="engine-panes" data-engine="trees">
-  <div class="tab-pane active" id="tab-trees-live">
-    <div class="sec">
-      <div class="quick-row">
-        <button class="big-toggle" id="treebtn-pulse" style="flex:1"><span class="dot"></span>REGÉNÉRER</button>
-        <button class="quick-fire" id="treebtn-pulse-fire">▶</button>
-      </div>
-      <div class="prog-bar"><div class="prog-fill" id="treepulse-bar"></div></div>
-    </div>
-  </div>
-  <div class="tab-pane" id="tab-trees-sim">
-    <div class="ctrl"><label>Arbres horizontaux <span class="val" id="treeval-nh">8</span></label><input type="range" id="treenh" min="2" max="16" step="1" value="8"></div>
-    <div class="ctrl"><label>Arbres verticaux <span class="val" id="treeval-nv">3</span></label><input type="range" id="treenv" min="1" max="8" step="1" value="3"></div>
-    <div class="ctrl"><label>Durée de vie max <span class="val" id="treeval-life">15</span></label><input type="range" id="treemax-life" min="5" max="40" step="1" value="15"></div>
-    <div class="sep"></div>
-    <button class="btn-wide" id="treebtn-reset">↺ Réinitialiser</button>
-  </div>
-  <div class="tab-pane" id="tab-trees-color">
-    <div class="ctrl"><label style="margin-bottom:5px">Fond</label><input type="color" id="treebg-color" value="#281a33"></div>
-    <div class="ctrl"><label>Teinte base <span class="val" id="treeval-hue">40</span>°</label><input type="range" id="treehue" min="0" max="360" step="5" value="40"></div>
-    <div class="ctrl"><label>Variation teinte <span class="val" id="treeval-huevar">30</span></label><input type="range" id="treehuevar" min="0" max="120" step="5" value="30"></div>
-    <div class="ctrl"><label>Opacité ombres <span class="val" id="treeval-shad">0.15</span></label><input type="range" id="treeshadow-op" min="0.05" max="0.6" step="0.05" value="0.15"></div>
-  </div>
-  <div class="tab-pane" id="tab-trees-tempo">
-    <div class="ctrl"><label>Intervalle régénération <span class="val" id="treeval-pulse-int">8.0</span>s</label><input type="range" id="treetpulse-int" min="1" max="30" step="0.5" value="8.0"></div>
-    <div class="ctrl"><label>BPM sync — div <span class="val" id="treeval-beat-div">1</span></label><input type="range" id="treebeat-div" min="1" max="8" step="1" value="1"></div>
-  </div>
-  <div class="tab-pane" id="tab-trees-io"><div class="sec"><div class="sec-title">MIDI CC Trees</div><div id="treemidi-cc-list"></div></div></div>
-  <div class="tab-pane" id="tab-trees-save"><div class="sec"><div style="color:var(--text-faint);font-size:9px">Config Trees dans les scènes globales.</div></div></div>
-  </div><!-- /trees -->
 
   <!-- ══ SPHERE ENGINE PANES ══ -->
   <div class="engine-panes" data-engine="sphere">
