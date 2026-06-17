@@ -9,10 +9,10 @@ var EngineManager=(function(){
     rdiff:window.Engine_RDiff,
     voronoi:window.Engine_Voronoi,follow:window.Engine_Follow,
     ribbon:window.Engine_Ribbon,physiks:window.Engine_Physiks,neural:window.Engine_Neural,
-    ink:window.Engine_Ink,slope:window.Engine_Slope,dune:window.Engine_Dune,mandala:window.Engine_Mandala
+    ink:window.Engine_Ink,slope:window.Engine_Slope,dune:window.Engine_Dune
   };
-  var ACCENT={fluid:'#00ffff',vortex:'#ff6600',nbody:'#aa44ff',sph:'#00ff88',boids:'#ffdd00',physarum:'#ff44aa',lorenz:'#44aaff',react:'#ff2266',aco:'#ff8800',rdiff:'#ff5500',voronoi:'#ffcc00',follow:'#6688ff',ribbon:'#ff66aa',physiks:'#c8a040',neural:'#44eeff',ink:'#a044ff',slope:'#ff3d6e',dune:'#e8772e',mandala:'#ff44aa'};
-  var NAMES={fluid:'FLUID SIM',vortex:'VORTEX',nbody:'N-BODY',sph:'SPH FLUID',boids:'BOIDS',physarum:'PHYSARUM',lorenz:'LORENZ',react:'REACT',aco:'ACO FOURMIS',rdiff:'REACTION-DIFFUSION',voronoi:'VORONOI VIVANT',follow:'FOLLOW — FLOW FIELD',ribbon:'RIBBON — RUBANS',physiks:'PHYSIKS — PHYSIQUE DES MATÉRIAUX',neural:'NEURAL — RÉSEAU',ink:'INK — ENCRE & PEINTURE',slope:'SLOPE — CHAMPS DE VECTEURS',dune:'DUNE — SABLE & BRUIT',mandala:'MANDALA — GÉOMÉTRIE SACRÉE'};
+  var ACCENT={fluid:'#00ffff',vortex:'#ff6600',nbody:'#aa44ff',sph:'#00ff88',boids:'#ffdd00',physarum:'#ff44aa',lorenz:'#44aaff',react:'#ff2266',aco:'#ff8800',rdiff:'#ff5500',voronoi:'#ffcc00',follow:'#6688ff',ribbon:'#ff66aa',physiks:'#c8a040',neural:'#44eeff',ink:'#a044ff',slope:'#ff3d6e',dune:'#e8772e'};
+  var NAMES={fluid:'FLUID SIM',vortex:'VORTEX',nbody:'N-BODY',sph:'SPH FLUID',boids:'BOIDS',physarum:'PHYSARUM',lorenz:'LORENZ',react:'REACT',aco:'ACO FOURMIS',rdiff:'REACTION-DIFFUSION',voronoi:'VORONOI VIVANT',follow:'FOLLOW — FLOW FIELD',ribbon:'RIBBON — RUBANS',physiks:'PHYSIKS — PHYSIQUE DES MATÉRIAUX',neural:'NEURAL — RÉSEAU',ink:'INK — ENCRE & PEINTURE',slope:'SLOPE — CHAMPS DE VECTEURS',dune:'DUNE — SABLE & BRUIT'};
   window.activeEngine='fluid';
   window.overlayEngine=null;window.overlayAlpha=0.3;
 
@@ -97,7 +97,7 @@ function autoResize(){
   FluidSim.cfg.canvas_height=Math.max(res*10,Math.floor(availH/res)*res);
   FluidSim.resize();updateResDisplay();
   /* sync canvas size to all engines and mark them for reset on next activate */
-  var engineNames=['VortexEngine','NBodyEngine','Engine_SPH','Engine_Boids','Engine_Physarum','Engine_Lorenz','Engine_React','Engine_ACO','Engine_RDiff','Engine_LSystem','Engine_Voronoi','Engine_Follow','Engine_Ribbon','Engine_Physiks','Engine_Neural','Engine_Ink','Engine_Slope','Engine_Dune','Engine_Mandala'];
+  var engineNames=['VortexEngine','NBodyEngine','Engine_SPH','Engine_Boids','Engine_Physarum','Engine_Lorenz','Engine_React','Engine_ACO','Engine_RDiff','Engine_LSystem','Engine_Voronoi','Engine_Follow','Engine_Ribbon','Engine_Physiks','Engine_Neural','Engine_Ink','Engine_Slope','Engine_Dune'];
   engineNames.forEach(function(n){var e=window[n];if(e&&e.cfg){e.cfg.canvas_width=FluidSim.cfg.canvas_width;e.cfg.canvas_height=FluidSim.cfg.canvas_height;if(e.markReset)e.markReset();}});
 }
 function updateResDisplay(){
@@ -1720,53 +1720,14 @@ updateResDisplay();
   var rst2=document.getElementById('dunbtn-reset');if(rst2)rst2.addEventListener('click',function(){E.reset();});
 })();
 
-/* ── MANDALA WIRING ── */
-(function(){
-  var E=Engine_Mandala;
-  function man(id,key,valId,dec){var sl=document.getElementById(id);if(!sl)return;sl.addEventListener('input',function(){var v=parseFloat(this.value);E.cfg[key]=v;var sp=document.getElementById(valId);if(sp)sp.textContent=v.toFixed(dec!==undefined?dec:2);});}
-  man('manbranch-count','branch_count','manval-count',0);
-  man('mansym-order','symmetry_order','manval-sym',0);
-  man('mangrow-speed','growth_speed','manval-speed',1);
-  man('manbranch-len','branch_length','manval-len',0);
-  man('manangle-spread','branch_angle_spread','manval-spread',0);
-  man('manattr-strength','attraction_strength','manval-attr',2);
-  man('mandamp','damping','manval-damp',2);
-  man('manrot-speed','rotation_speed','manval-rot',1);
-  man('manopacity','opacity','manval-opacity',2);
-  man('manline-width','line_width','manval-width',1);
-  man('mantpulse-int','pulse_interval','manval-pulse-int',1);
-  man('manbeat-div','pulse_beat_div','manval-beat-div',0);
-  man('manhue-speed','hue_speed','manval-hue-speed',0);
-  /* toggle: spiral */
-  var spiralb=document.getElementById('manspiral-enabled');
-  if(spiralb)spiralb.addEventListener('change',function(){E.cfg.spiral_enabled=this.checked;});
-  /* toggle: twist */
-  var twistb=document.getElementById('mantwist-enabled');
-  if(twistb)twistb.addEventListener('change',function(){E.cfg.twist_enabled=this.checked;});
-  /* toggle: hue shift */
-  var hueb=document.getElementById('manhue-shift-enabled');
-  if(hueb)hueb.addEventListener('change',function(){E.cfg.hue_shift_enabled=this.checked;});
-  /* color mode dropdown */
-  var cmsel=document.getElementById('mancolor-mode');
-  if(cmsel)cmsel.addEventListener('change',function(){E.cfg.color_mode=this.value;});
-  /* colors */
-  var bgc=document.getElementById('manbg-color');if(bgc)bgc.addEventListener('input',function(){E.cfg.bg_color=this.value;});
-  var col1=document.getElementById('mancolor');if(col1)col1.addEventListener('input',function(){E.cfg.color=this.value;});
-  var col2=document.getElementById('mancolor2');if(col2)col2.addEventListener('input',function(){E.cfg.color2=this.value;});
-  /* pulse */
-  var pbtn=document.getElementById('manbtn-pulse');
-  if(pbtn)pbtn.addEventListener('click',function(){E.cfg.pulse_enabled=!E.cfg.pulse_enabled;this.classList.toggle('on',E.cfg.pulse_enabled);var d=this.querySelector('.dot');if(d)d.style.background=E.cfg.pulse_enabled?'var(--accent)':'var(--text-faint)';});
-  var pbf=document.getElementById('manbtn-pulse-fire');if(pbf)pbf.addEventListener('click',function(){E.triggerPulse();});
-})();
-
 
 /* ═══════════════════════════════════════════
    CURSOR X/Y + CLICK — câblage global MIDI
 ═══════════════════════════════════════════ */
 (function(){
   /* préfixe HTML → clé activeEngine */
-  var ENG_PFX={fluid:'',vortex:'v',nbody:'nb',sph:'sph',boids:'b',physarum:'ph',lorenz:'l',react:'r',aco:'aco',rdiff:'rd',lsys:'ls',voronoi:'vo',follow:'fw',ribbon:'rb',physiks:'phx',neural:'nr',ink:'ink',slope:'slp',dune:'dun',mandala:'man'};
-  var ALL_PFX=['','v','nb','sph','b','ph','l','r','aco','rd','ls','vo','fw','rb','phx','nr','ink','slp','dun','man'];
+  var ENG_PFX={fluid:'',vortex:'v',nbody:'nb',sph:'sph',boids:'b',physarum:'ph',lorenz:'l',react:'r',aco:'aco',rdiff:'rd',lsys:'ls',voronoi:'vo',follow:'fw',ribbon:'rb',physiks:'phx',neural:'nr',ink:'ink',slope:'slp',dune:'dun'};
+  var ALL_PFX=['','v','nb','sph','b','ph','l','r','aco','rd','ls','vo','fw','rb','phx','nr','ink','slp','dun'];
 
   function getCanvas(){return document.getElementById('c');}
 
