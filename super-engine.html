@@ -6999,13 +6999,45 @@ updateResDisplay();
   var rst2=document.getElementById('dunbtn-reset');if(rst2)rst2.addEventListener('click',function(){E.reset();});
 })();
 
+/* ── SPHERE WIRING ── */
+(function(){
+  var E=window.Engine_Sphere;if(!E)return;
+  function sp(id,key,valId,dec){var sl=document.getElementById(id);if(!sl)return;sl.addEventListener('input',function(){var v=parseFloat(this.value);E.cfg[key]=v;var sp=document.getElementById(valId);if(sp)sp.textContent=v.toFixed(dec!==undefined?dec:1);});}
+  sp('sphereparticle-count','particle_count','sphereval-count',0);
+  sp('sphereradius','radius','sphereval-radius',0);
+  sp('sphereattraction','attraction','sphereval-attr',3);
+  sp('spheredamping','damping','sphereval-damp',2);
+  sp('spherepoint-size','point_size','sphereval-ptsize',1);
+  sp('sphererepel-radius','repel_radius','sphereval-repel',0);
+  sp('sphererepel-strength','repel_strength','sphereval-repel-str',0);
+  sp('spherepen-size','pen_size','sphereval-pen',0);
+  sp('spherepush-force','push_force','sphereval-force',1);
+  sp('spherebg-color','bg_color','','');
+  var bgc=document.getElementById('spherebg-color');if(bgc)bgc.addEventListener('input',function(){E.cfg.bg_color=this.value;});
+  sp('spherecolor','color','','');
+  var col=document.getElementById('spherecolor');if(col)col.addEventListener('input',function(){E.cfg.color=this.value;});
+  sp('spheretpulse-int','pulse_interval','sphereval-pulse-int',1);
+  sp('spherebeat-div','pulse_beat_div','sphereval-beat-div',0);
+  /* formes */
+  document.querySelectorAll('[id^="sphereshape-"]').forEach(function(b){
+    b.addEventListener('click',function(){
+      document.querySelectorAll('[id^="sphereshape-"]').forEach(function(x){x.classList.remove('active');});
+      this.classList.add('active');E.cfg.shape=parseInt(this.id.split('-')[1]);
+    });
+  });
+  /* pulse */
+  var pbtn=document.getElementById('spherebtn-pulse');
+  if(pbtn)pbtn.addEventListener('click',function(){E.cfg.pulse_enabled=!E.cfg.pulse_enabled;this.classList.toggle('on',E.cfg.pulse_enabled);var d=this.querySelector('.dot');if(d)d.style.background=E.cfg.pulse_enabled?'var(--accent)':'var(--text-faint)';});
+  var pbf=document.getElementById('spherebtn-pulse-fire');if(pbf)pbf.addEventListener('click',function(){E.triggerPulse();});
+})();
+
 /* ═══════════════════════════════════════════
    CURSOR X/Y + CLICK — câblage global MIDI
 ═══════════════════════════════════════════ */
 (function(){
   /* préfixe HTML → clé activeEngine */
-  var ENG_PFX={fluid:'',vortex:'v',nbody:'nb',sph:'sph',boids:'b',physarum:'ph',lorenz:'l',react:'r',aco:'aco',rdiff:'rd',lsys:'ls',voronoi:'vo',follow:'fw',ribbon:'rb',physiks:'phx',neural:'nr',ink:'ink',slope:'slp',dune:'dun'};
-  var ALL_PFX=['','v','nb','sph','b','ph','l','r','aco','rd','ls','vo','fw','rb','phx','nr','ink','slp','dun'];
+  var ENG_PFX={fluid:'',vortex:'v',nbody:'nb',sph:'sph',boids:'b',physarum:'ph',lorenz:'l',react:'r',aco:'aco',rdiff:'rd',lsys:'ls',voronoi:'vo',follow:'fw',ribbon:'rb',physiks:'phx',neural:'nr',ink:'ink',slope:'slp',dune:'dun',sphere:'sphere'};
+  var ALL_PFX=['','v','nb','sph','b','ph','l','r','aco','rd','ls','vo','fw','rb','phx','nr','ink','slp','dun','sphere'];
 
   function getCanvas(){return document.getElementById('c');}
 
