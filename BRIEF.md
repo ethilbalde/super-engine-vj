@@ -20,6 +20,10 @@ Outil VJ (performance visuelle live) : un fichier HTML unique autonome (`super-e
 - **Tests** : `node test.js` (81 checks statiques) + `test.html` (tests runtime browser)
 - Trace morte : `'lsys'` dans la liste des tabs (moteur supprimé, sans impact)
 
+## Règles de livraison
+- **Avant chaque `git push`** : mettre à jour `CHANGELOG.md` avec les ajouts et corrections du commit
+- **Mémoire Claude** : les règles importantes sont sauvegardées dans `C:\Users\florent\.claude\projects\E--claude-programe-super-engine-vj\memory\` pour persister entre les sessions
+
 ## Infrastructure de test
 - `node test.js` : build, fichiers moteurs, cohérence ENGINES/ACCENT/NAMES/ENG_PFX/tab-list, FX system, presets
 - `test.html` : globals runtime, interface moteurs, activate/deactivate, fxRenderUI par type FX, DOM, presets localStorage
