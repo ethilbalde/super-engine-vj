@@ -1,43 +1,33 @@
 # Changelog — Super Engine VJ
 
-Format de versioning :
-- `v4.0.0.001` micro — changement atomique pendant la session (code + CHANGELOG, pas de release GitHub)
-- `v4.0.01` daily — fin de session, release GitHub compilée (Added/Fixed/Changed)
-- `v4.1`, `v4.2` — jalon fonctionnel (nouveau moteur, refonte UI…)
-- `v5.0` — version majeure (réécriture, changement d'architecture)
+---
+
+## [2026-06-18] — commit `9f58d2b`
+
+### Ajouts
+- **FX Color Ramp** : nouvel effet inspiré de Blender — ramp de couleur avec stops draggables, ajout/suppression de stops par double-clic, interpolation Linear / Constant / Ease
+- **Turbulence fluide** : bruit cohérent sin/cos dans le moteur FLUID (plus organique que le bruit blanc précédent) — sliders "Force turbulence" et "Vitesse turbulence" dans l'onglet SIM
+- **Presets factory v4** : 42 presets couvrant tous les paramètres LIVE / SIM / COLOR des 21 moteurs
+- **Suite de tests** :
+  - `node test.js` — 81 vérifications statiques (build, fichiers moteurs, cohérence des registres, système FX, presets)
+  - `test.html` — tests runtime browser (globals, interface moteurs, activate/deactivate, fxRenderUI par type FX, DOM)
+- **BRIEF.md** : document de référence du projet mis à jour
+
+### Corrections
+- **FX panel vide** : crash silencieux dans `fxRenderUI` causé par l'utilisation de `fx` au lieu de `e` comme variable de boucle — tous les effets disparaissaient de la liste
+- **FX WebGL texture units** : bug dans `applyEffect` colorramp — `gl.bindTexture` sans `setTex` écrasait TEXTURE0 avec les données LUT, cassant tous les effets suivants
+- **Cloth activate()** : crash `Cannot set properties of undefined (setting 'fillStyle')` quand `activate()` était appelé sans `init()` — `ctx` est maintenant initialisé au besoin dans `activate()`
+- **FPaint preset Default** : `pointer_mode` corrigé en `repel`
+- **syncUIFromCfg** : les boutons pointer_mode des moteurs non-fluid (FPaint, Vortex, NBody, SPH, Boids, Physarum, React, ACO, Follow) n'étaient pas synchronisés au chargement d'un preset
 
 ---
 
-## v4.01 — 2026-06-12
+## Historique antérieur
 
-### Added
-- Editable numeric values on all sliders (click the number, type a precise value, Enter to confirm)
-- L-System random variation per cycle: angle ±35%, length 0.75–1.25×, position jitter — each redraw is unique
-- MAJ tab: version number display + direct HTML update via GitHub (fetch + Blob download)
-- MAJ tab: auto-check on startup, silent badge + red highlight if update available
-- INFO tab: OBS Virtual Camera setup guide
-- INFO tab: OBS-NDI setup guide (obs-ndi plugin + NDI Tools)
-- MIDI tab: loopMIDI + MIDI-OX bridge guide for proprietary controllers (Novation, etc.)
-- README.md: full project documentation (13 engines, interface, shortcuts, OBS, MIDI, versioning)
-- CHANGELOG.md: this file
-
-### Fixed
-- ACO: `H` key now hides Food (F) and Nest (N) icons correctly
-- R-D: cursor Y-axis no longer inverted (correct WebGL→Canvas coordinate mapping)
-- R-D: patterns no longer collapse in 1s (initial seed conditions A=0.5/B=0.25, Pearson standard)
-- R-D: texture wrapping set to REPEAT for seamless edge behavior
-- R-D coral preset: f=0.055 k=0.062 du=0.4 dv=0.13 dt=0.5 steps=8
-- R-D worms preset: du=0.45 dv=0.075 dt=0.4
-- Strange Attractors: twinkling lines eliminated (path break on jump > 0.6×scale)
-- Strange Attractors: Gingerbread formula corrected (`1-y+|x|`), no more crash/black screen
-- Voronoi: engine now displays correctly (GL context destroyed on canvas resize — fixed)
-
-### Changed
-- Versioning system: moved from v3.x to v4.x with 3-level scheme (major / daily / micro)
-- Strange Attractors: per-type safe initial positions to avoid divergence
-
----
-
-## v3.01 — 2026-06-11
-
-Initial public release on GitHub.
+| Commit | Description |
+|--------|-------------|
+| `066f6d7` | Add CLAUDE.md — règles de dev et checklist intégration moteur |
+| `7ed9597` | Add FLUID PAINTING engine — shader WebGL2 domain-warping |
+| `c77de9c` | Fix CLOTH tabs — ajout de 'cloth' dans la liste d'activation |
+| `9999f1d` | Add CLOTH engine — simulation tissu avec interaction de coupe |
+| `09908eb` | Remove MANDALA engine |
