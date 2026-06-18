@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<title>Super Engine VJ — Tests</title>
+<style>
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:monospace;font-size:13px;background:#0e0e0e;color:#ccc;display:flex;flex-direction:column;height:100vh;overflow:hidden}
+  #header{padding:12px 18px;background:#151515;border-bottom:1px solid #222;display:flex;align-items:center;gap:16px;flex-shrink:0}
+  #header h1{font-size:13px;letter-spacing:.08em;color:#fff}
+  #run-btn{padding:6px 18px;background:#1a1a1a;border:1px solid #333;color:#fff;font-family:monospace;font-size:12px;cursor:pointer;border-radius:3px}
+  #run-btn:hover{background:#222;border-color:#555}
+  #status{font-size:11px;color:#555}
+  #results{flex:1;overflow-y:auto;padding:18px;display:flex;flex-direction:column;gap:16px}
+  .section-title{font-size:10px;letter-spacing:.12em;color:#444;text-transform:uppercase;border-bottom:1px solid #1a1a1a;padding-bottom:4px;margin-bottom:6px}
+  .row{display:flex;align-items:baseline;gap:8px;padding:2px 0;line-height:1.5}
+  .icon{min-width:14px;font-size:12px}
+  .ok .icon{color:#3c3}
+  .ko .icon{color:#c33}
+  .label{flex:1}
+  .detail{color:#555;font-size:11px;margin-left:22px;padding-bottom:1px}
+  #summary{padding:10px 18px;background:#111;border-top:1px solid #1e1e1e;font-size:12px;flex-shrink:0}
+  .pass{color:#3c3} .fail{color:#c33}
+  /* Hidden DOM that engines need */
+  #engine-stage{position:fixed;left:-9999px;top:-9999px;width:800px;height:600px}
+</style>
+</head>
+<body>
+
+<div id="header">
+  <h1>SUPER ENGINE VJ — TESTS RUNTIME</h1>
+  <button id="run-btn" onclick="runTests()">▶ Lancer les tests</button>
+  <button id="copy-btn" onclick="copyReport()" style="padding:6px 14px;background:#1a1a1a;border:1px solid #333;color:#888;font-family:monospace;font-size:12px;cursor:pointer;border-radius:3px">⎘ Copier rapport</button>
+  <span id="status">Cliquer pour lancer</span>
+</div>
+<div id="results"><div style="color:#333;padding:20px">Appuyer sur "Lancer les tests"…</div></div>
+<div id="summary"></div>
+
+<!-- Minimal DOM required by engines -->
+<div id="engine-stage">
+  <canvas id="c" width="800" height="600"></canvas>
+  <canvas id="cursor-overlay" width="800" height="600"></canvas>
+  <div id="panel"></div>
+  <div id="fx-chain-list"></div>
+  <div id="tab-live" class="tab-pane"></div>
+  <div id="tab-color" class="tab-pane"></div>
+  <div id="tab-sim" class="tab-pane"></div>
+  <div id="tab-tempo" class="tab-pane"></div>
+  <div id="tab-io" class="tab-pane"></div>
+  <div id="tab-save" class="tab-pane"></div>
+  <div id="panel-header"><span></span></div>
+  <div id="cur-res-display"></div>
+  <div id="screen-info"></div>
+  <div id="out-w"></div><div id="out-h"></div>
+  <div id="val-out-w"></div><div id="val-out-h"></div>
+  <div id="ramp-canvas"></div>
+  <div id="ramp-bar"></div>
+  <div id="stop-det"></div>
+  <input id="stop-color" type="color">
+  <input id="stop-pos-inp" type="number">
+  <button id="btn-del-stop"></button>
+  <div id="tap-bpm-display"></div>
+  <div id="fx-pre-chips"></div>
+  <div id="fx-post-chips"></div>
+  <div id="midi-learn-overlay"></div>
+  <div id="hud"></div>
+  <!-- Fluid sliders -->
+  <input id="pen-size" type="range" min="1" max="200" value="40"><span id="val-pen-size">40</span>
+  <input id="push-force" type="range" min="0" max="20" value="8"><span id="val-push-force">8</span>
+  <input id="inj-angle" type="range" min="0" max="360" value="0"><span id="val-inj-angle">0</span>
+  <input id="lw" type="range" min="1" max="10" value="2"><span id="val-lw">2</span>
+  <input id="ff" type="range" min="0" max="1" value="0.5"><span id="val-ff">0.5</span>
+  <input id="drag" type="range" min="0" max="1" value="0.98"><span id="val-drag">0.98</span>
+  <input id="visc" type="range" min="0" max="0.1" value="0.001"><span id="val-visc">0.001</span>
+  <input id="turb" type="range" min="0" max="5" value="0"><span id="val-turb">0</span>
+  <input id="turb-speed" type="range" min="0.02" max="3" value="0.4"><span id="val-turb-speed">0.4</span>
+  <input id="trail" type="range" min="0" max="1" value="0.15"><span id="val-trail">0.15</span>
+  <input id="opa" type="range" min="0" max="1" value="1"><span id="val-opa">1</span>
+  <input id="gx" type="range" min="-1" max="1" value="0"><span id="val-gx">0</span>
+  <input id="gy" type="range" min="-1" max="1" value="0"><span id="val-gy">0</span>
+  <input id="vmax" type="range" min="1" max="20" value="8"><span id="val-vmax">8</span>
+  <input id="res" type="range" min="4" max="20" value="8"><span id="val-res">8</span>
+  <input id="pulse-str" type="range" min="0" max="20" value="5"><span id="val-pulse-str">5</span>
+  <input id="pulse-noise" type="range" min="0" max="1" value="0.2"><span id="val-pulse-noise">0.2</span>
+  <input id="pulse-int" type="range" min="0.1" max="16" value="4"><span id="val-pulse-int">4</span>
+  <input id="auto-pen-size" type="range" min="1" max="200" value="60"><span id="val-auto-pen-size">60</span>
+  <input id="auto-int" type="range" min="0.1" max="10" value="2"><span id="val-auto-int">2</span>
+  <input id="auto-count" type="range" min="1" max="20" value="3"><span id="val-auto-count">3</span>
+  <input id="auto-length" type="range" min="10" max="500" value="80"><span id="val-auto-length">80</span>
+  <input id="auto-speed" type="range" min="1" max="60" value="20"><span id="val-auto-speed">20</span>
+  <input id="auto-force" type="range" min="0" max="20" value="8"><span id="val-auto-force">8</span>
+  <input id="bpm" type="range" min="20" max="300" value="120"><span id="val-bpm">120</span>
+  <input id="speck" type="range" min="100" max="50000" value="5000"><span id="val-speck">5000</span>
+  <!-- Toggles -->
+  <button id="btn-pulse-toggle"><div class="dot"></div></button>
+  <button id="btn-auto-toggle"><div class="dot"></div></button>
+  <button id="btn-pulse-fire"></button>
+  <button id="btn-auto-fire"></button>
+  <!-- Tabs -->
+  <div class="tab-btn" data-tab="live"></div>
+  <div class="tab-btn" data-tab="sim"></div>
+  <div class="tab-btn" data-tab="color"></div>
+  <div class="tab-btn" data-tab="tempo"></div>
+  <div class="tab-btn" data-tab="io"></div>
+  <div class="tab-btn" data-tab="save"></div>
+  <!-- Engine buttons -->
+  <button class="eng-btn" data-engine="fluid"></button>
+  <button class="eng-btn" data-engine="vortex"></button>
+  <button class="eng-btn" data-engine="nbody"></button>
+  <button class="eng-btn" data-engine="sph"></button>
+  <button class="eng-btn" data-engine="boids"></button>
+  <button class="eng-btn" data-engine="physarum"></button>
+  <button class="eng-btn" data-engine="lorenz"></button>
+  <button class="eng-btn" data-engine="react"></button>
+  <button class="eng-btn" data-engine="aco"></button>
+  <button class="eng-btn" data-engine="rdiff"></button>
+  <button class="eng-btn" data-engine="voronoi"></button>
+  <button class="eng-btn" data-engine="follow"></button>
+  <button class="eng-btn" data-engine="ribbon"></button>
+  <button class="eng-btn" data-engine="physiks"></button>
+  <button class="eng-btn" data-engine="neural"></button>
+  <button class="eng-btn" data-engine="ink"></button>
+  <button class="eng-btn" data-engine="slope"></button>
+  <button class="eng-btn" data-engine="dune"></button>
+  <button class="eng-btn" data-engine="cloth"></button>
+  <button class="eng-btn" data-engine="fpaint"></button>
+  <button class="eng-btn" data-engine="wfc"></button>
+  <!-- Engine panes -->
+  <div class="engine-panes" data-engine="fluid"></div>
+  <div class="engine-panes" data-engine="vortex"></div>
+  <div class="engine-panes" data-engine="nbody"></div>
+  <div class="engine-panes" data-engine="sph"></div>
+  <div class="engine-panes" data-engine="boids"></div>
+  <div class="engine-panes" data-engine="physarum"></div>
+  <div class="engine-panes" data-engine="lorenz"></div>
+  <div class="engine-panes" data-engine="react"></div>
+  <div class="engine-panes" data-engine="aco"></div>
+  <div class="engine-panes" data-engine="rdiff"></div>
+  <div class="engine-panes" data-engine="voronoi"></div>
+  <div class="engine-panes" data-engine="follow"></div>
+  <div class="engine-panes" data-engine="ribbon"></div>
+  <div class="engine-panes" data-engine="physiks"></div>
+  <div class="engine-panes" data-engine="neural"></div>
+  <div class="engine-panes" data-engine="ink"></div>
+  <div class="engine-panes" data-engine="slope"></div>
+  <div class="engine-panes" data-engine="dune"></div>
+  <div class="engine-panes" data-engine="cloth"></div>
+  <div class="engine-panes" data-engine="fpaint"></div>
+  <div class="engine-panes" data-engine="wfc"></div>
+</div>
+
+<!-- Load all source files directly (same as build.js order) -->
+<script src="src/utils.js"></script>
+<script src="src/engines/fluid.js"></script>
+<script src="src/engines/vortex.js"></script>
+<script src="src/engines/nbody.js"></script>
+<script src="src/engines/sph.js"></script>
+<script src="src/engines/boids.js"></script>
+<script src="src/engines/physarum.js"></script>
+<script src="src/engines/lorenz.js"></script>
+<script src="src/engines/react.js"></script>
+<script src="src/engines/aco.js"></script>
+<script src="src/engines/rdiff.js"></script>
+<script src="src/engines/voronoi.js"></script>
+<script src="src/engines/follow.js"></script>
+<script src="src/engines/ribbon.js"></script>
+<script src="src/engines/physiks.js"></script>
+<script src="src/engines/neural.js"></script>
+<script src="src/engines/ink.js"></script>
+<script src="src/engines/slope.js"></script>
+<script src="src/engines/dune.js"></script>
+<script src="src/engines/cloth.js"></script>
+<script src="src/engines/fpaint.js"></script>
+<script src="src/engines/wfc.js"></script>
+<script src="src/main.js"></script>
+<script src="src/presets.js"></script>
+
+<script>
+function copyReport() {
+  var lines = [];
+  _results.forEach(function(r) { lines.push((r.ok ? '✓ ' : '✗ ') + '[' + r.s + '] ' + r.label + (r.detail ? ' → ' + r.detail : '')); });
+  lines.push('');
+  lines.push(_pass + ' passed   ' + _fail + ' failed');
+  navigator.clipboard.writeText(lines.join('\n')).then(function() {
+    var btn = document.getElementById('copy-btn');
+    btn.textContent = '✓ Copié';
+    setTimeout(function(){ btn.textContent = '⎘ Copier rapport'; }, 2000);
+  });
+}
+/* ── Test framework ──────────────────────────────────────────────────────── */
+var _results = [], _pass = 0, _fail = 0, _curSection = '';
+
+function section(t) { _curSection = t; }
+function ok(label, detail) { _results.push({ok:true,  s:_curSection, label:label, detail:detail||null}); _pass++; }
+function ko(label, detail) { _results.push({ok:false, s:_curSection, label:label, detail:detail||null}); _fail++; }
+
+function renderResults() {
+  var el = document.getElementById('results');
+  el.innerHTML = '';
+  var sections = {}, order = [];
+  _results.forEach(function(r) {
+    if (!sections[r.s]) { sections[r.s] = []; order.push(r.s); }
+    sections[r.s].push(r);
+  });
+  order.forEach(function(s) {
+    var sec = document.createElement('div');
+    sec.innerHTML = '<div class="section-title">' + s + '</div>';
+    sections[s].forEach(function(r) {
+      var row = document.createElement('div');
+      row.className = 'row ' + (r.ok ? 'ok' : 'ko');
+      row.innerHTML = '<span class="icon">' + (r.ok ? '✓' : '✗') + '</span><span class="label">' + r.label + '</span>';
+      sec.appendChild(row);
+      if (r.detail) {
+        var d = document.createElement('div');
+        d.className = 'detail';
+        d.textContent = '→ ' + r.detail;
+        sec.appendChild(d);
+      }
+    });
+    el.appendChild(sec);
+  });
+  var sum = document.getElementById('summary');
+  sum.innerHTML = '<span class="pass">' + _pass + ' passed</span>  <span class="fail">' + _fail + ' failed</span>';
+  var st = document.getElementById('status');
+  st.textContent = _fail === 0 ? '✓ Tous les tests passent' : _fail + ' test(s) échoué(s)';
+  st.style.color = _fail === 0 ? '#3c3' : '#c33';
+}
+
+/* ── Tests ───────────────────────────────────────────────────────────────── */
+function runTests() {
+  _results = []; _pass = 0; _fail = 0;
+  document.getElementById('status').textContent = 'En cours…';
+  document.getElementById('status').style.color = '#888';
+
+  // ── Globals moteurs
+  section('GLOBALS MOTEURS');
+  var engineGlobals = [
+    'FluidSim','VortexEngine','NBodyEngine','Engine_SPH','Engine_Boids',
+    'Engine_Physarum','Engine_Lorenz','Engine_React','Engine_ACO','Engine_RDiff',
+    'Engine_Voronoi','Engine_Follow','Engine_Ribbon','Engine_Physiks','Engine_Neural',
+    'Engine_Ink','Engine_Slope','Engine_Dune','Engine_Cloth','Engine_FPaint','Engine_WFC'
+  ];
+  engineGlobals.forEach(function(name) {
+    if (window[name]) ok(name);
+    else ko(name + ' — non défini');
+  });
+
+  // ── Système FX
+  section('SYSTÈME FX');
+  // FXEngine is WebGL-dependent and may not init outside super-engine.html — excluded here
+  ['FXCHAIN','FX_TYPES','fxRenderUI','fxAdd','fxRemove','EngineManager'].forEach(function(sym) {
+    if (window[sym] !== undefined) ok(sym);
+    else ko(sym + ' — non défini');
+  });
+
+  // ── Interface moteurs (init/reset sont optionnels)
+  section('INTERFACE MOTEURS (cfg / draw / activate / deactivate requis)');
+  engineGlobals.forEach(function(name) {
+    var eng = window[name];
+    if (!eng) return;
+    var miss = ['cfg','draw','activate','deactivate'].filter(function(m){ return eng[m]===undefined; });
+    if (miss.length === 0) ok(name);
+    else ko(name, 'manquant: ' + miss.join(', '));
+  });
+
+  // ── Activate / Deactivate
+  section('ACTIVATE / DEACTIVATE sans erreur');
+  engineGlobals.forEach(function(name) {
+    var eng = window[name];
+    if (!eng || !eng.activate || !eng.deactivate) return;
+    try { eng.activate(); eng.deactivate(); ok(name); }
+    catch(e) { ko(name, e.message); }
+  });
+
+  // ── fxRenderUI par type FX
+  section('FX — fxRenderUI par type');
+  if (window.FXCHAIN && window.fxRenderUI && window.FX_TYPES) {
+    var saved = FXCHAIN.slice();
+    Object.keys(FX_TYPES).forEach(function(type) {
+      FXCHAIN.length = 0;
+      try {
+        fxAdd(type);
+        fxRenderUI();
+        var list = document.getElementById('fx-chain-list');
+        if (list && list.children.length > 0) ok('FX "' + type + '" — slot affiché');
+        else ko('FX "' + type + '" — liste vide après fxAdd');
+      } catch(e) {
+        ko('FX "' + type + '" — erreur dans fxRenderUI', e.message);
+      }
+    });
+    FXCHAIN.length = 0;
+    saved.forEach(function(e) { FXCHAIN.push(e); });
+    try { fxRenderUI(); } catch(e) {}
+  } else {
+    ko('FXCHAIN/fxRenderUI/FX_TYPES absent');
+  }
+
+  // ── DOM critiques
+  section('ÉLÉMENTS DOM CRITIQUES');
+  ['c','cursor-overlay','panel','fx-chain-list','tab-live','tab-color','tab-sim'].forEach(function(id) {
+    if (document.getElementById(id)) ok('#' + id);
+    else ko('#' + id + ' — introuvable');
+  });
+
+  // ── Presets (stockés en localStorage)
+  section('PRESETS');
+  var PKEY = 'super_engine_presets';
+  var presetsRaw = localStorage.getItem(PKEY);
+  if (presetsRaw) {
+    try {
+      var presetsObj = JSON.parse(presetsRaw);
+      var names = Object.keys(presetsObj);
+      ok(names.length + ' presets trouvés en localStorage');
+      var engineKeys = ['fluid','vortex','nbody','sph','boids','physarum','lorenz','react',
+        'aco','rdiff','voronoi','follow','ribbon','physiks','neural','ink','slope','dune','cloth','fpaint','wfc'];
+      engineKeys.forEach(function(key) {
+        var has = names.some(function(n){ return presetsObj[n] && presetsObj[n].engine === key; });
+        if (has) ok('Presets pour "' + key + '"');
+        else ko('Aucun preset pour "' + key + '"');
+      });
+    } catch(e) { ko('Erreur parsing presets localStorage', e.message); }
+  } else {
+    ko('Aucun preset en localStorage — ouvre super-engine.html une fois pour les initialiser');
+  }
+
+  renderResults();
+}
+</script>
+</body>
+</html>

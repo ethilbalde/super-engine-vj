@@ -20,7 +20,7 @@ var Engine_FPaint=(function(){
     brightness:1.25,
     vignette:0.125,
     boost_r:1.0,boost_g:1.0,boost_b:1.0,
-    pen_size:0.25,push_force:1.0,
+    pen_size:0.35,push_force:3.2,
     pointer_mode:'attract',
     pulse_enabled:false,pulse_interval:4.0,pulse_beat_div:1,
     time_mode:'bpm',bpm:120

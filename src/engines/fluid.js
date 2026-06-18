@@ -43,7 +43,8 @@
     note_map:[],
     scene_transition:'cut',scene_fade_dur:500,loop_length:2,
     ws_send_rate:0,
-    curl_noise_enabled:false,curl_scale:1.5,curl_speed:0.5,curl_strength:1.0,_curl_t:0
+    curl_noise_enabled:false,curl_scale:1.5,curl_speed:0.5,curl_strength:1.0,_curl_t:0,
+    turb_speed:0.4,_turb_t:0
   };
 
   var num_cols,num_rows,vec_cells=[],particles=[];
@@ -121,6 +122,7 @@
     var autoEff=cfg.time_mode==='bpm'?(60/cfg.bpm)*cfg.auto_beat_div:cfg.auto_interval;
     var dt=lastFrameTime>0?Math.min(now-lastFrameTime,0.1):0.016;lastFrameTime=now;
     if(cfg.curl_noise_enabled)cfg._curl_t+=dt*cfg.curl_speed*0.3;
+    if(cfg.turbulence>0)cfg._turb_t+=dt*cfg.turb_speed;
     if(cfg.hue_shift_enabled&&cfg.hue_speed!==0){var hDegsPerSec=cfg.hue_speed*(cfg.bpm/60)/cfg.hue_beat_div;cfg.hue_shift=((cfg.hue_shift+hDegsPerSec*dt)%360+360)%360;}
     var hOff=cfg.hue_shift_enabled?cfg.hue_shift:0;
     if(warpAmount>0.001){warpAmount=cfg.warp_strength*Math.exp(-(now*1000-warpStartTime)/Math.max(1,cfg.warp_decay));if(warpAmount<0.001)warpAmount=0;}
@@ -146,7 +148,15 @@
     for(var i=0;i<num_cols;i++)for(var j=0;j<num_rows;j++){
       var cd=vec_cells[i][j];
       if(mouse.down)applyCellMode(cd,mxv,myv);
-      if(cfg.turbulence>0){cd.xv+=(Math.random()-.5)*cfg.turbulence*.1;cd.yv+=(Math.random()-.5)*cfg.turbulence*.1;}
+      if(cfg.turbulence>0){
+        /* coherent flow-field turbulence: 2-octave layered sines — spatially
+           and temporally smooth, creates organic swirling currents */
+        var _tt=cfg._turb_t,nx=cd.col*.14,ny=cd.row*.12;
+        var angle=(Math.sin(nx+_tt)*Math.cos(ny-_tt*.73)
+                  +Math.sin(nx*.45-_tt*.55+ny*.38)*.55)*6.283;
+        cd.xv+=Math.cos(angle)*cfg.turbulence*.09;
+        cd.yv+=Math.sin(angle)*cfg.turbulence*.09;
+      }
       if(cfg.curl_noise_enabled&&window.perlin3){var nx=i/num_cols*cfg.curl_scale,ny=j/num_rows*cfg.curl_scale,nt=cfg._curl_t,eps=0.01;var curlX=(perlin3(nx,ny+eps,nt)-perlin3(nx,ny-eps,nt))/(2*eps),curlY=-(perlin3(nx+eps,ny,nt)-perlin3(nx-eps,ny,nt))/(2*eps);cd.xv+=curlX*cfg.curl_strength*0.05;cd.yv+=curlY*cfg.curl_strength*0.05;}
       updatePressure(cd);
     }

@@ -211,6 +211,7 @@ var Engine_Cloth=(function(){
   function activate(){
     _active=true;
     var cv=document.getElementById('c');
+    if(!ctx){canvas=cv;ctx=cv.getContext('2d');}
     cfg.canvas_width=cv.width||cfg.canvas_width;
     cfg.canvas_height=cv.height||cfg.canvas_height;
     if(nodeArray.length===0||_needsReset){_needsReset=false;_reset();}

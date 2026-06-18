@@ -52,6 +52,7 @@
     <button class="eng-btn"        data-engine="dune"     style="--e:#e8772e">DUNE</button>
     <button class="eng-btn"        data-engine="cloth"    style="--e:#00aa88">CLOTH</button>
     <button class="eng-btn"        data-engine="fpaint"   style="--e:#ff6644">PAINT</button>
+    <button class="eng-btn"        data-engine="wfc"      style="--e:#00ffcc">WFC</button>
   </div>
 
   <!-- ══ FX CHAIN PANEL ══ -->
@@ -176,7 +177,8 @@
     <div class="sec">
       <div class="sec-title">Fluide</div>
       <div class="ctrl"><label>Viscosité <span class="val" id="val-visc">0.990</span></label><input type="range" id="visc" min="0.80" max="0.999" step="0.001" value="0.99"></div>
-      <div class="ctrl"><label>Turbulence <span class="val" id="val-turb">0.00</span></label><input type="range" id="turb" min="0" max="2" step="0.05" value="0"></div>
+      <div class="ctrl"><label>Force turbulence <span class="val" id="val-turb">0.00</span></label><input type="range" id="turb" min="0" max="2" step="0.05" value="0"></div>
+      <div class="ctrl"><label>Vitesse turbulence <span class="val" id="val-turb-speed">0.4</span></label><input type="range" id="turb-speed" min="0.02" max="3" step="0.02" value="0.4"></div>
       <div class="ctrl"><label>Résolution grille <span class="val" id="val-res">10</span>px</label><input type="range" id="res" min="4" max="30" step="2" value="10"></div>
     </div>
     <div class="sep"></div>
@@ -1837,8 +1839,8 @@
         <button class="btn"        data-fpmode="repel">Repousser</button>
         <button class="btn"        data-fpmode="freeze">Geler</button>
       </div>
-      <div class="ctrl"><label>Rayon <span class="val" id="fpval-pen">0.25</span></label><input type="range" id="fppen-size" min="0.05" max="1.0" step="0.01" value="0.25"></div>
-      <div class="ctrl"><label>Force <span class="val" id="fpval-force">1.0</span></label><input type="range" id="fppush-force" min="0.1" max="5" step="0.1" value="1.0"></div>
+      <div class="ctrl"><label>Rayon <span class="val" id="fpval-pen">0.35</span></label><input type="range" id="fppen-size" min="0.05" max="1.0" step="0.01" value="0.35"></div>
+      <div class="ctrl"><label>Force <span class="val" id="fpval-force">3.2</span></label><input type="range" id="fppush-force" min="0.1" max="5" step="0.1" value="3.2"></div>
     </div>
     <div class="sep"></div>
     <div class="sec">
@@ -1909,6 +1911,53 @@
   <div class="tab-pane" id="tab-fpaint-save"><div class="sec"><div style="color:var(--text-faint);font-size:9px">Config Paint dans les scènes globales.</div></div></div>
 
   </div><!-- /fpaint -->
+
+  <!-- ══ WFC ENGINE PANES ══ -->
+  <div class="engine-panes" data-engine="wfc">
+  <div class="tab-pane active" id="tab-wfc-live">
+    <div class="sec">
+      <div class="quick-row">
+        <button class="big-toggle" id="wfcbtn-pulse" style="flex:1"><span class="dot"></span>PULSE AUTO</button>
+        <button class="quick-fire" id="wfcbtn-pulse-fire">▶</button>
+      </div>
+      <div class="prog-bar"><div class="prog-fill" id="wfcpulse-bar"></div></div>
+    </div>
+    <div class="sep"></div>
+    <div class="sec">
+      <div class="sec-title">Vitesse révélation</div>
+      <div class="ctrl"><label>Cellules/frame <span class="val" id="wfcval-collapse-speed">6</span></label><input type="range" id="wfccollapse-speed" min="1" max="40" step="1" value="6"></div>
+    </div>
+    <div class="sep"></div>
+    <div class="sec">
+      <div class="sec-title">Curseur</div>
+      <div class="ctrl"><label>Curseur X <span class="val" id="wfcval-cx">0.50</span></label><input type="range" id="wfccursor-x" min="0" max="1" step="0.005" value="0.50"></div>
+      <div class="ctrl"><label>Curseur Y <span class="val" id="wfcval-cy">0.50</span></label><input type="range" id="wfccursor-y" min="0" max="1" step="0.005" value="0.50"></div>
+      <div class="quick-row" style="margin-top:4px"><button class="big-toggle" id="wfcbtn-click" style="flex:1"><span class="dot"></span>CLICK</button><button class="quick-fire" id="wfcbtn-click-fire">▶</button></div>
+    </div>
+  </div>
+
+  <div class="tab-pane" id="tab-wfc-sim">
+    <div class="ctrl"><label>Taille tuile <span class="val" id="wfcval-tile-size">24</span>px</label><input type="range" id="wfctile-size" min="8" max="64" step="2" value="24"></div>
+    <div class="ctrl"><label>Épaisseur trait <span class="val" id="wfcval-line-width">2.8</span></label><input type="range" id="wfcline-width" min="0.5" max="8" step="0.1" value="2.8"></div>
+    <div class="ctrl"><label>Proportion vide <span class="val" id="wfcval-blank-weight">0.12</span></label><input type="range" id="wfcblank-weight" min="0.01" max="0.8" step="0.01" value="0.12"></div>
+    <div class="toggle-row" style="margin-top:6px"><label>Coins courbés</label><input type="checkbox" id="wfcuse-curves" checked></div>
+    <div class="sep"></div>
+    <button class="btn-wide" id="wfcbtn-reset">↺ Nouvelle génération</button>
+  </div>
+
+  <div class="tab-pane" id="tab-wfc-color">
+    <div class="ctrl"><label style="margin-bottom:5px">Fond</label><input type="color" id="wfcbg-color" value="#05050f"></div>
+    <div class="ctrl"><label style="margin-bottom:5px">Tuiles</label><input type="color" id="wfcfg-color" value="#00ffcc"></div>
+  </div>
+
+  <div class="tab-pane" id="tab-wfc-tempo">
+    <div class="ctrl"><label>Intervalle pulse <span class="val" id="wfcval-pulse-int">6.0</span>s</label><input type="range" id="wfctpulse-int" min="0.5" max="30" step="0.5" value="6.0"></div>
+    <div class="ctrl"><label>BPM div <span class="val" id="wfcval-beat-div">1</span></label><input type="range" id="wfcbeat-div" min="1" max="8" step="1" value="1"></div>
+  </div>
+
+  <div class="tab-pane" id="tab-wfc-io"><div class="sec"><div class="sec-title">MIDI CC WFC</div><div id="wfcmidi-cc-list"></div></div></div>
+  <div class="tab-pane" id="tab-wfc-save"><div class="sec"><div style="color:var(--text-faint);font-size:9px">Config WFC dans les scènes globales.</div></div></div>
+  </div><!-- /wfc -->
 
   <!-- ══ GROWTH ENGINE PANES ══ -->
   <div class="engine-panes" data-engine="growth">

@@ -36,6 +36,7 @@ const ENGINE_FILES = [
   'engines/dune.js',
   'engines/cloth.js',
   'engines/fpaint.js',
+  'engines/wfc.js',
   // ── Add new engines here ──
 ];
 
@@ -49,9 +50,10 @@ function build() {
   const utils      = read('utils.js');
   const engines    = ENGINE_FILES.map(f => read(f)).join('\n');
   const main       = read('main.js');
+  const presets    = read('presets.js');
   const infoModal  = read('info-modal.html');
 
-  const js = utils + '\n' + engines + '\n' + main;
+  const js = utils + '\n' + engines + '\n' + main + '\n' + presets;
 
   const html =
 `<!DOCTYPE html>
