@@ -3,7 +3,7 @@ var Engine_NSFluid = (function () {
   var mouse = window._mouse;
   var _active = false, _needsReset = false;
   var _lastTime = 0, _pmx = 0, _pmy = 0;
-  var _lastPulse = 0;
+  var _lastPulse = 0, _lastPgen = 0;
 
   var cfg = {
     canvas_width: 800, canvas_height: 600,
@@ -22,6 +22,17 @@ var Engine_NSFluid = (function () {
     bg_color: '#000000',
     particle_color: '#ffffff',
     color_mode: 0,   /* 0=uniforme  1=vélocité  2=position */
+    /* GÉNÉRATEURS */
+    turb_enabled: false,
+    turb_strength: 0.5,
+    turb_scale: 3.0,
+    turb_speed: 1.0,
+    wind_enabled: false,
+    wind_angle: 0,
+    wind_strength: 0.2,
+    pgen_enabled: false,
+    pgen_strength: 6.0,
+    pgen_beat_div: 1,
     /* TEMPO */
     pulse_enabled: false, pulse_interval: 8.0, pulse_beat_div: 1,
     time_mode: 'bpm', bpm: 120
@@ -149,6 +160,43 @@ var Engine_NSFluid = (function () {
     return 'hsl('+((x/W*300)|0)+',80%,60%)';
   }
 
+  /* ── Generateurs de mouvement ── */
+
+  function applyTurbulence(t) {
+    var N = solver.N, sc = cfg.turb_scale, str = cfg.turb_strength * 0.015;
+    for (var i = 0; i < N; i++) {
+      for (var j = 0; j < N; j++) {
+        var vx = str * Math.sin(i * sc + t * cfg.turb_speed);
+        var vy = str * Math.cos(j * sc + t * cfg.turb_speed * 0.7 + 1.5);
+        solver.applyForce(i, j, vx, vy);
+      }
+    }
+  }
+
+  function applyWind() {
+    var ang = cfg.wind_angle * Math.PI / 180;
+    var vx = cfg.wind_strength * Math.cos(ang) * 0.015;
+    var vy = cfg.wind_strength * Math.sin(ang) * 0.015;
+    var N = solver.N;
+    for (var i = 0; i < N; i++) {
+      for (var j = 0; j < N; j++) {
+        solver.applyForce(i, j, vx, vy);
+      }
+    }
+  }
+
+  function applyPulseForce() {
+    var N = solver.N, cx = N * 0.5, cy = N * 0.5, str = cfg.pgen_strength * 0.02;
+    for (var i = 0; i < N; i++) {
+      for (var j = 0; j < N; j++) {
+        var dx = i - cx, dy = j - cy;
+        var d = Math.sqrt(dx * dx + dy * dy) + 0.01;
+        var f = str / d;
+        solver.applyForce(i, j, dx / d * f, dy / d * f);
+      }
+    }
+  }
+
   /* ── draw ── */
   function draw() {
     if (!_active) return;
@@ -187,6 +235,17 @@ var Engine_NSFluid = (function () {
       }
     }
     _pmx = mouse.x; _pmy = mouse.y;
+
+    /* générateurs de mouvement */
+    if (cfg.turb_enabled) applyTurbulence(now);
+    if (cfg.wind_enabled) applyWind();
+    if (cfg.pgen_enabled) {
+      var pgenInterval = (60 / cfg.bpm) / cfg.pgen_beat_div;
+      if (now - _lastPgen >= pgenInterval) {
+        applyPulseForce();
+        _lastPgen = now;
+      }
+    }
 
     /* simulate */
     solver.tick(dt, cfg.viscosity);

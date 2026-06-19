@@ -2129,7 +2129,9 @@ input[type=color]::-webkit-color-swatch{border:none;border-radius:3px}
     <div class="sep"></div>
     <div class="sec">
       <div class="sec-title">Vitesse révélation</div>
-      <div class="ctrl"><label>Cellules/frame <span class="val" id="wfcval-collapse-speed">6</span></label><input type="range" id="wfccollapse-speed" min="1" max="40" step="1" value="6"></div>
+      <div class="ctrl"><label>Générations <span class="val" id="wfcval-max-gens">4</span></label><input type="range" id="wfcmax-gens" min="1" max="8" step="1" value="4"></div>
+    <div class="ctrl"><label>Cellules/frame <span class="val" id="wfcval-collapse-speed">10</span></label><input type="range" id="wfccollapse-speed" min="1" max="60" step="1" value="10"></div>
+    <div class="ctrl"><label>Délai respawn <span class="val" id="wfcval-done-delay">2.0</span>s</label><input type="range" id="wfcdone-delay" min="0" max="10" step="0.5" value="2.0"></div>
     </div>
     <div class="sep"></div>
     <div class="sec">
@@ -2139,9 +2141,9 @@ input[type=color]::-webkit-color-swatch{border:none;border-radius:3px}
       <div class="quick-row" style="margin-top:4px"><button class="big-toggle" id="wfcbtn-click" style="flex:1"><span class="dot"></span>CLICK</button><button class="quick-fire" id="wfcbtn-click-fire">▶</button></div>
     </div>
     <div class="sep"></div>
-    <div class="ctrl"><label>Taille tuile <span class="val" id="wfcval-tile-size">24</span>px</label><input type="range" id="wfctile-size" min="8" max="64" step="2" value="24"></div>
-    <div class="ctrl"><label>Épaisseur trait <span class="val" id="wfcval-line-width">2.8</span></label><input type="range" id="wfcline-width" min="0.5" max="8" step="0.1" value="2.8"></div>
-    <div class="ctrl"><label>Proportion vide <span class="val" id="wfcval-blank-weight">0.12</span></label><input type="range" id="wfcblank-weight" min="0.01" max="0.8" step="0.01" value="0.12"></div>
+    <div class="ctrl"><label>Taille tuile min <span class="val" id="wfcval-ts-min">14</span>px</label><input type="range" id="wfcts-min" min="8" max="60" step="2" value="14"></div>
+    <div class="ctrl"><label>Taille tuile max <span class="val" id="wfcval-ts-max">72</span>px</label><input type="range" id="wfcts-max" min="16" max="120" step="2" value="72"></div>
+    <div class="ctrl"><label>Proportion vide <span class="val" id="wfcval-blank-weight">0.08</span></label><input type="range" id="wfcblank-weight" min="0.01" max="0.8" step="0.01" value="0.08"></div>
     <div class="toggle-row" style="margin-top:6px"><label>Coins courbés</label><input type="checkbox" id="wfcuse-curves" checked></div>
     <div class="sep"></div>
     <button class="btn-wide" id="wfcbtn-reset">↺ Nouvelle génération</button>
@@ -2149,7 +2151,8 @@ input[type=color]::-webkit-color-swatch{border:none;border-radius:3px}
 
   <div class="tab-pane" id="tab-wfc-color">
     <div class="ctrl"><label style="margin-bottom:5px">Fond</label><input type="color" id="wfcbg-color" value="#05050f"></div>
-    <div class="ctrl"><label style="margin-bottom:5px">Tuiles</label><input type="color" id="wfcfg-color" value="#00ffcc"></div>
+    <div class="ctrl"><label>Couleur <span class="val" id="wfcval-color-scheme">aléatoire</span></label><input type="range" id="wfccolor-scheme" min="-1" max="14" step="1" value="-1"></div>
+    <div class="ctrl"><label>Glow <span class="val" id="wfcval-glow">8</span>px</label><input type="range" id="wfcglow-radius" min="0" max="40" step="1" value="8"></div>
   </div>
 
   <div class="tab-pane" id="tab-wfc-tempo">
@@ -2204,9 +2207,13 @@ input[type=color]::-webkit-color-swatch{border:none;border-radius:3px}
 
   <div class="tab-pane" id="tab-sketch-color">
     <div class="ctrl"><label style="margin-bottom:5px">Fond</label><input type="color" id="skbg-color" value="#000000"></div>
-    <div class="toggle-row"><label>Grille visible</label><input type="checkbox" id="skgrid-visible"></div>
     <div class="sep"></div>
     <div class="ctrl"><label>Palette <span class="val" id="skval-pal">aléatoire</span></label><input type="range" id="skpal-index" min="-1" max="36" step="1" value="-1"></div>
+    <div class="ctrl"><label>Opacité min <span class="val" id="skval-omin">0.30</span></label><input type="range" id="skopacity-min" min="0" max="1" step="0.05" value="0.30"></div>
+    <div class="ctrl"><label>Opacité max <span class="val" id="skval-omax">0.90</span></label><input type="range" id="skopacity-max" min="0" max="1" step="0.05" value="0.90"></div>
+    <div class="ctrl"><label>Prob. contour <span class="val" id="skval-stroke">0.10</span></label><input type="range" id="skstroke-prob" min="0" max="1" step="0.05" value="0.10"></div>
+    <div class="sep"></div>
+    <div class="toggle-row"><label>Grille visible</label><input type="checkbox" id="skgrid-visible"></div>
   </div>
 
   <div class="tab-pane" id="tab-sketch-tempo">
@@ -2249,6 +2256,22 @@ input[type=color]::-webkit-color-swatch{border:none;border-radius:3px}
     <div class="ctrl"><label>Nb particules <span class="val" id="nsval-npart">8000</span></label><input type="range" id="nsnum-part" min="500" max="30000" step="500" value="8000"></div>
     <div class="ctrl"><label>Taille point <span class="val" id="nsval-psize">1.5</span></label><input type="range" id="nspoint-size" min="0.5" max="6" step="0.5" value="1.5"></div>
     <div class="ctrl"><label>Alpha trail <span class="val" id="nsval-trail">0.15</span></label><input type="range" id="nstrail-alpha" min="0.01" max="1" step="0.01" value="0.15"></div>
+    <div class="sep"></div>
+    <div class="sec">
+      <div class="sec-title">Générateurs de mouvement</div>
+      <div class="toggle-row"><label>Turbulence</label><input type="checkbox" id="nsturb-enabled"></div>
+      <div class="ctrl"><label>Force turb. <span class="val" id="nsval-turb-str">0.5</span></label><input type="range" id="nsturb-strength" min="0.1" max="5" step="0.1" value="0.5"></div>
+      <div class="ctrl"><label>Échelle turb. <span class="val" id="nsval-turb-sc">3.0</span></label><input type="range" id="nsturb-scale" min="0.5" max="10" step="0.5" value="3.0"></div>
+      <div class="ctrl"><label>Vitesse turb. <span class="val" id="nsval-turb-spd">1.0</span></label><input type="range" id="nsturb-speed" min="0.1" max="5" step="0.1" value="1.0"></div>
+      <div class="sep"></div>
+      <div class="toggle-row"><label>Vent</label><input type="checkbox" id="nswind-enabled"></div>
+      <div class="ctrl"><label>Angle <span class="val" id="nsval-wind-ang">0</span>°</label><input type="range" id="nswind-angle" min="0" max="360" step="5" value="0"></div>
+      <div class="ctrl"><label>Force vent <span class="val" id="nsval-wind-str">0.2</span></label><input type="range" id="nswind-strength" min="0.05" max="2" step="0.05" value="0.2"></div>
+      <div class="sep"></div>
+      <div class="toggle-row"><label>Pulse radial</label><input type="checkbox" id="nspgen-enabled"></div>
+      <div class="ctrl"><label>Force pulse <span class="val" id="nsval-pgen-str">6.0</span></label><input type="range" id="nspgen-strength" min="1" max="20" step="0.5" value="6.0"></div>
+      <div class="ctrl"><label>Div. beat <span class="val" id="nsval-pgen-div">1</span></label><input type="range" id="nspgen-beat-div" min="1" max="16" step="1" value="1"></div>
+    </div>
     <div class="sep"></div>
     <button class="btn-wide" id="nsbtn-reset-p" style="margin-bottom:6px">↺ Reset particules</button>
     <button class="btn-wide" id="nsbtn-reset">↺ Reset simulation</button>
@@ -5812,267 +5835,322 @@ var Engine_FPaint=(function(){
 })();
 
 /* ═══════════════════════════════════════════
-   WFC ENGINE — Wave Function Collapse procédural
-   Grille de tuiles procedurales (lignes, coins, croix) générée par WFC,
-   révélée progressivement frame par frame.
+   WFC ENGINE — Wave Function Collapse multi-génération
+   Plusieurs grilles simultanées, tailles/positions/couleurs aléatoires,
+   fonds transparents pour superposition, effet glow optionnel.
 ═══════════════════════════════════════════ */
-var Engine_WFC=(function(){
-  var canvas,ctx,mouse=window._mouse,_active=false;
-  var _needsReset=false,lastPulseTime=0;
-  var COLS,ROWS,grid,collapseQueue,_collapseIdx;
-  var _offCanvas=null,_offCtx=null;
+var Engine_WFC = (function () {
+  var canvas, ctx, mouse = window._mouse, _active = false;
+  var _needsReset = false, lastPulseTime = 0;
+  var _gens = [];
 
-  var cfg={
-    canvas_width:800,canvas_height:600,
-    tile_size:24,
-    line_width:2.8,
-    bg_color:'#05050f',
-    fg_color:'#00ffcc',
-    collapse_speed:6,
-    blank_weight:0.12,
-    use_curves:true,
-    pen_size:60,push_force:1.0,
-    pulse_enabled:false,pulse_interval:6.0,pulse_beat_div:1,
-    bpm:120,time_mode:'bpm'
+  var cfg = {
+    canvas_width: 800, canvas_height: 600,
+    /* LIVE */
+    max_gens: 4,
+    collapse_speed: 10,
+    done_delay: 2.0,
+    /* SIM */
+    tile_size_min: 14,
+    tile_size_max: 72,
+    blank_weight: 0.08,
+    use_curves: true,
+    glow_radius: 8,
+    /* COLOR */
+    bg_color: '#05050f',
+    color_scheme: -1,   /* -1 = aléatoire par génération */
+    /* TEMPO */
+    pulse_enabled: false, pulse_interval: 6.0, pulse_beat_div: 1,
+    bpm: 120, time_mode: 'bpm',
+    pen_size: 60, push_force: 1.0
   };
 
-  /* Tile definitions: [N, E, S, W] — 1=connected, 0=open */
-  var TILES=[
-    [0,0,0,0], /* 0  blank      */
-    [0,1,0,1], /* 1  H-line     */
-    [1,0,1,0], /* 2  V-line     */
-    [1,1,0,0], /* 3  corner NE  */
-    [1,0,0,1], /* 4  corner NW  */
-    [0,1,1,0], /* 5  corner SE  */
-    [0,0,1,1], /* 6  corner SW  */
-    [1,1,0,1], /* 7  T no-S     */
-    [0,1,1,1], /* 8  T no-N     */
-    [1,1,1,0], /* 9  T no-W     */
-    [1,0,1,1], /* 10 T no-E     */
-    [1,1,1,1]  /* 11 cross      */
+  /* Palette de 15 couleurs vives sur fond sombre */
+  var COLORS = [
+    '#00ffcc', '#c084fc', '#38bdf8', '#ff6644', '#ffd23f',
+    '#4ade80', '#f472b6', '#818cf8', '#fb923c', '#e2e8f0',
+    '#ff4757', '#2ed573', '#eccc68', '#1e90ff', '#ff6b81'
   ];
-  var WEIGHTS=[0.6,2.2,2.2,1.5,1.5,1.5,1.5,0.65,0.65,0.65,0.65,0.35];
 
-  /* ── WFC algorithm (pre-computed offline, played back in draw) ── */
+  var TILES = [
+    [0,0,0,0], [0,1,0,1], [1,0,1,0],
+    [1,1,0,0], [1,0,0,1], [0,1,1,0], [0,0,1,1],
+    [1,1,0,1], [0,1,1,1], [1,1,1,0], [1,0,1,1],
+    [1,1,1,1]
+  ];
+  var BASE_W = [0.6, 2.2, 2.2, 1.5, 1.5, 1.5, 1.5, 0.65, 0.65, 0.65, 0.65, 0.35];
 
-  function allIndices(){
-    var a=[];for(var i=0;i<TILES.length;i++)a.push(i);return a;
+  /* ── WFC algorithm ── */
+
+  function allIndices() {
+    var a = []; for (var i = 0; i < TILES.length; i++) a.push(i); return a;
   }
 
-  function weightedChoice(indices){
-    var total=0;
-    for(var i=0;i<indices.length;i++){
-      var w=WEIGHTS[indices[i]];
-      if(indices[i]===0)w=cfg.blank_weight*5;
-      total+=w;
+  function weightedChoice(indices, bw) {
+    var total = 0;
+    for (var i = 0; i < indices.length; i++) {
+      var w = (indices[i] === 0) ? bw * 5 : BASE_W[indices[i]];
+      total += w;
     }
-    var r=Math.random()*total,acc=0;
-    for(var i=0;i<indices.length;i++){
-      var w=WEIGHTS[indices[i]];
-      if(indices[i]===0)w=cfg.blank_weight*5;
-      acc+=w;
-      if(r<=acc)return indices[i];
+    var r = Math.random() * total, acc = 0;
+    for (var i = 0; i < indices.length; i++) {
+      var w = (indices[i] === 0) ? bw * 5 : BASE_W[indices[i]];
+      acc += w;
+      if (r <= acc) return indices[i];
     }
-    return indices[indices.length-1];
+    return indices[indices.length - 1];
   }
 
-  function computeWFC(){
-    var N=ROWS*COLS;
-    var g=new Int8Array(N).fill(-1);
-    var poss=[];
-    for(var i=0;i<N;i++)poss.push(allIndices());
-    var order=[],uncollapsed=N,maxIter=N*5,iter=0;
+  function computeWFC(COLS, ROWS, bw) {
+    var N = ROWS * COLS;
+    var g = new Int8Array(N).fill(-1);
+    var poss = [];
+    for (var i = 0; i < N; i++) poss.push(allIndices());
+    var order = [], uncollapsed = N, maxIter = N * 6, iter = 0;
 
-    while(uncollapsed>0&&iter++<maxIter){
-      var minE=9999,best=-1;
-      for(var i=0;i<N;i++){
-        if(g[i]>=0)continue;
-        var e=poss[i].length;
-        if(e===0){g[i]=0;order.push((i<<8)|0);uncollapsed--;continue;}
-        /* add jitter to break ties randomly */
-        var ej=e+Math.random()*0.9;
-        if(ej<minE){minE=ej;best=i;}
+    while (uncollapsed > 0 && iter++ < maxIter) {
+      var minE = 9999, best = -1;
+      for (var i = 0; i < N; i++) {
+        if (g[i] >= 0) continue;
+        var e = poss[i].length;
+        if (e === 0) { g[i] = 0; order.push((i << 8) | 0); uncollapsed--; continue; }
+        var ej = e + Math.random() * 0.9;
+        if (ej < minE) { minE = ej; best = i; }
       }
-      if(best<0)break;
-      var chosen=weightedChoice(poss[best]);
-      g[best]=chosen;
-      order.push((best<<8)|chosen);
+      if (best < 0) break;
+      var chosen = weightedChoice(poss[best], bw);
+      g[best] = chosen;
+      order.push((best << 8) | chosen);
       uncollapsed--;
-      propagate(g,poss,best);
+      _propagate(g, poss, best, COLS, ROWS);
     }
-    /* fill stragglers */
-    for(var i=0;i<N;i++){if(g[i]<0)order.push((i<<8)|0);}
+    for (var i = 0; i < N; i++) { if (g[i] < 0) order.push((i << 8) | 0); }
     return order;
   }
 
-  function propagate(g,poss,startIdx){
-    var stack=[startIdx];
-    var inStack=new Uint8Array(ROWS*COLS);
-    inStack[startIdx]=1;
-    while(stack.length>0){
-      var idx=stack.pop();
-      inStack[idx]=0;
-      if(g[idx]<0)continue;
-      var t=TILES[g[idx]];
-      var r=Math.floor(idx/COLS),c=idx%COLS;
-      /* [nidx, myEdgeIdx, theirEdgeIdx] — N=0,E=1,S=2,W=3 */
-      var nbrs=[];
-      if(r>0)      nbrs.push([idx-COLS,0,2]);
-      if(r<ROWS-1) nbrs.push([idx+COLS,2,0]);
-      if(c<COLS-1) nbrs.push([idx+1,   1,3]);
-      if(c>0)      nbrs.push([idx-1,   3,1]);
-      for(var ni=0;ni<nbrs.length;ni++){
-        var nidx=nbrs[ni][0],me=nbrs[ni][1],them=nbrs[ni][2];
-        if(g[nidx]>=0)continue;
-        var req=t[me];
-        var filtered=[],before=poss[nidx].length;
-        for(var j=0;j<poss[nidx].length;j++){
-          if(TILES[poss[nidx][j]][them]===req)filtered.push(poss[nidx][j]);
+  function _propagate(g, poss, startIdx, COLS, ROWS) {
+    var stack = [startIdx];
+    var inStack = new Uint8Array(ROWS * COLS);
+    inStack[startIdx] = 1;
+    while (stack.length > 0) {
+      var idx = stack.pop(); inStack[idx] = 0;
+      if (g[idx] < 0) continue;
+      var t = TILES[g[idx]];
+      var r = Math.floor(idx / COLS), c = idx % COLS;
+      var nbrs = [];
+      if (r > 0)        nbrs.push([idx - COLS, 0, 2]);
+      if (r < ROWS - 1) nbrs.push([idx + COLS, 2, 0]);
+      if (c < COLS - 1) nbrs.push([idx + 1,    1, 3]);
+      if (c > 0)        nbrs.push([idx - 1,    3, 1]);
+      for (var ni = 0; ni < nbrs.length; ni++) {
+        var nidx = nbrs[ni][0], me = nbrs[ni][1], them = nbrs[ni][2];
+        if (g[nidx] >= 0) continue;
+        var req = t[me], filtered = [], before = poss[nidx].length;
+        for (var j = 0; j < poss[nidx].length; j++) {
+          if (TILES[poss[nidx][j]][them] === req) filtered.push(poss[nidx][j]);
         }
-        if(filtered.length===0)filtered=[0];
-        if(filtered.length<before){
-          poss[nidx]=filtered;
-          if(!inStack[nidx]){stack.push(nidx);inStack[nidx]=1;}
+        if (filtered.length === 0) filtered = [0];
+        if (filtered.length < before) {
+          poss[nidx] = filtered;
+          if (!inStack[nidx]) { stack.push(nidx); inStack[nidx] = 1; }
         }
       }
-    }
-  }
-
-  /* ── Grid lifecycle ── */
-
-  function initGrid(){
-    COLS=Math.max(2,Math.floor(cfg.canvas_width/cfg.tile_size));
-    ROWS=Math.max(2,Math.floor(cfg.canvas_height/cfg.tile_size));
-    grid=new Int8Array(ROWS*COLS).fill(-1);
-    collapseQueue=computeWFC();
-    _collapseIdx=0;
-    if(_offCtx){
-      _offCtx.fillStyle=cfg.bg_color;
-      _offCtx.fillRect(0,0,_offCanvas.width,_offCanvas.height);
     }
   }
 
   /* ── Tile rendering ── */
 
-  function drawTileAt(ctx2,cellIdx,tileType){
-    var r=Math.floor(cellIdx/COLS),c=cellIdx%COLS;
-    var ts=cfg.tile_size,lw=cfg.line_width;
-    var x=c*ts,y=r*ts;
-    var cx=x+ts*0.5,cy=y+ts*0.5;
-    var t=TILES[tileType];
+  function edgeMid(x, y, ts, dir) {
+    var h = ts * 0.5;
+    if (dir === 0) return [x + h, y];
+    if (dir === 1) return [x + ts, y + h];
+    if (dir === 2) return [x + h, y + ts];
+    return [x, y + h];
+  }
 
-    /* clear cell */
-    ctx2.fillStyle=cfg.bg_color;
-    ctx2.fillRect(x,y,ts,ts);
-    if(tileType===0)return;
+  function cornerCtrl(x, y, ts, d1, d2) {
+    var top = (d1===0||d2===0), right = (d1===1||d2===1);
+    var bot = (d1===2||d2===2), left  = (d1===3||d2===3);
+    if (top && right) return [x + ts, y];
+    if (top && left)  return [x, y];
+    if (bot && right) return [x + ts, y + ts];
+    return [x, y + ts];
+  }
 
-    ctx2.strokeStyle=cfg.fg_color;
-    ctx2.lineWidth=lw;
-    ctx2.lineCap='round';
-    ctx2.lineJoin='round';
+  function drawTileAt(oc, cellIdx, tileType, gen) {
+    var r = Math.floor(cellIdx / gen.cols), c = cellIdx % gen.cols;
+    var ts = gen.ts, x = c * ts, y = r * ts;
+    var cx = x + ts * 0.5, cy = y + ts * 0.5;
+    var t = TILES[tileType];
 
-    var conns=t[0]+t[1]+t[2]+t[3];
+    oc.clearRect(x, y, ts, ts);
+    if (tileType === 0) return;
 
-    ctx2.beginPath();
-    if(cfg.use_curves&&conns===2&&!(t[0]&&t[2])&&!(t[1]&&t[3])){
-      /* corner: quadratic curve from one edge midpoint to another */
-      var dirs=[];
-      for(var d=0;d<4;d++)if(t[d])dirs.push(d);
-      var p1=edgeMid(x,y,ts,dirs[0]);
-      var p2=edgeMid(x,y,ts,dirs[1]);
-      var cp=cornerCtrl(x,y,ts,dirs[0],dirs[1]);
-      ctx2.moveTo(p1[0],p1[1]);
-      ctx2.quadraticCurveTo(cp[0],cp[1],p2[0],p2[1]);
-    }else{
-      /* straight lines from edge midpoints to center */
-      if(t[0]){ctx2.moveTo(cx,y);ctx2.lineTo(cx,cy);}
-      if(t[2]){ctx2.moveTo(cx,cy);ctx2.lineTo(cx,y+ts);}
-      if(t[1]){ctx2.moveTo(cx,cy);ctx2.lineTo(x+ts,cy);}
-      if(t[3]){ctx2.moveTo(x,cy);ctx2.lineTo(cx,cy);}
+    oc.strokeStyle = gen.fg;
+    oc.lineWidth = gen.lw;
+    oc.lineCap = (gen.style === 2) ? 'butt' : 'round';
+    oc.lineJoin = 'round';
+
+    var conns = t[0] + t[1] + t[2] + t[3];
+
+    oc.beginPath();
+    if (cfg.use_curves && gen.style !== 1 && conns === 2 && !(t[0]&&t[2]) && !(t[1]&&t[3])) {
+      var dirs = [];
+      for (var d = 0; d < 4; d++) if (t[d]) dirs.push(d);
+      var p1 = edgeMid(x, y, ts, dirs[0]);
+      var p2 = edgeMid(x, y, ts, dirs[1]);
+      var cp = cornerCtrl(x, y, ts, dirs[0], dirs[1]);
+      oc.moveTo(p1[0], p1[1]);
+      oc.quadraticCurveTo(cp[0], cp[1], p2[0], p2[1]);
+    } else {
+      if (t[0]) { oc.moveTo(cx, y);      oc.lineTo(cx, cy); }
+      if (t[2]) { oc.moveTo(cx, cy);     oc.lineTo(cx, y + ts); }
+      if (t[1]) { oc.moveTo(cx, cy);     oc.lineTo(x + ts, cy); }
+      if (t[3]) { oc.moveTo(x, cy);      oc.lineTo(cx, cy); }
     }
-    ctx2.stroke();
+    oc.stroke();
+
+    /* dot au centre pour jonctions (style épaisseur) */
+    if (gen.style === 2 && conns >= 3) {
+      oc.beginPath();
+      oc.arc(cx, cy, gen.lw * 0.75, 0, Math.PI * 2);
+      oc.fillStyle = gen.fg;
+      oc.fill();
+    }
   }
 
-  function edgeMid(x,y,ts,dir){
-    var h=ts*0.5;
-    if(dir===0)return[x+h,y];
-    if(dir===1)return[x+ts,y+h];
-    if(dir===2)return[x+h,y+ts];
-    return[x,y+h];
-  }
+  /* ── Spawning ── */
 
-  function cornerCtrl(x,y,ts,d1,d2){
-    var top=(d1===0||d2===0),right=(d1===1||d2===1);
-    var bot=(d1===2||d2===2),left=(d1===3||d2===3);
-    if(top&&right) return[x+ts,y];
-    if(top&&left)  return[x,y];
-    if(bot&&right) return[x+ts,y+ts];
-    return[x,y+ts];
+  function spawnGen() {
+    var W = cfg.canvas_width, H = cfg.canvas_height;
+    var tsMin = Math.max(8,  cfg.tile_size_min | 0);
+    var tsMax = Math.max(tsMin + 4, cfg.tile_size_max | 0);
+    var ts = tsMin + Math.floor(Math.random() * (tsMax - tsMin + 1));
+
+    var maxC = Math.floor(W / ts);
+    var maxR = Math.floor(H / ts);
+    var cols = Math.max(3, Math.floor(3 + Math.random() * (maxC - 2)));
+    var rows = Math.max(3, Math.floor(3 + Math.random() * (maxR - 2)));
+    cols = Math.min(cols, maxC);
+    rows = Math.min(rows, maxR);
+
+    var gw = cols * ts, gh = rows * ts;
+    var x = Math.random() * Math.max(1, W - gw);
+    var y = Math.random() * Math.max(1, H - gh);
+
+    var fg;
+    if (cfg.color_scheme >= 0 && cfg.color_scheme < COLORS.length) {
+      fg = COLORS[cfg.color_scheme];
+    } else {
+      fg = COLORS[Math.floor(Math.random() * COLORS.length)];
+    }
+
+    /* 3 styles : 0=courbes lisses  1=segments droits  2=épais+dots */
+    var style = Math.floor(Math.random() * 3);
+    var lw = style === 2 ? Math.max(2, ts * 0.22) : Math.max(1, ts * 0.11 + 0.5);
+
+    var off = document.createElement('canvas');
+    off.width = gw; off.height = gh;
+    var oCtx = off.getContext('2d', { alpha: true });
+
+    return {
+      x: x, y: y,
+      cols: cols, rows: rows, ts: ts,
+      fg: fg, lw: lw, style: style,
+      off: off, oCtx: oCtx,
+      queue: computeWFC(cols, rows, cfg.blank_weight),
+      idx: 0,
+      done: false, doneAt: 0
+    };
   }
 
   /* ── Draw loop ── */
 
-  function draw(){
-    if(!_active)return;
+  function draw() {
+    if (!_active) return;
 
-    /* setup offscreen buffer */
-    if(!_offCanvas||_offCanvas.width!==cfg.canvas_width||_offCanvas.height!==cfg.canvas_height){
-      _offCanvas=document.createElement('canvas');
-      _offCanvas.width=cfg.canvas_width;_offCanvas.height=cfg.canvas_height;
-      _offCtx=_offCanvas.getContext('2d');
-      _offCtx.fillStyle=cfg.bg_color;
-      _offCtx.fillRect(0,0,cfg.canvas_width,cfg.canvas_height);
-      initGrid();
+    var W = cfg.canvas_width, H = cfg.canvas_height;
+    var now = performance.now() / 1000;
+    var maxG = Math.max(1, cfg.max_gens | 0);
+    var speed = Math.max(1, cfg.collapse_speed | 0);
+
+    /* fond principal */
+    ctx.fillStyle = cfg.bg_color;
+    ctx.fillRect(0, 0, W, H);
+
+    /* garantir le bon nombre de générations */
+    while (_gens.length < maxG) _gens.push(spawnGen());
+    if (_gens.length > maxG) _gens.length = maxG;
+
+    for (var gi = 0; gi < _gens.length; gi++) {
+      var gen = _gens[gi];
+
+      /* remplacer une génération terminée après done_delay */
+      if (gen.done && (now - gen.doneAt) >= cfg.done_delay) {
+        _gens[gi] = spawnGen();
+        gen = _gens[gi];
+      }
+
+      /* avancer le collapse */
+      if (!gen.done) {
+        for (var s = 0; s < speed && gen.idx < gen.queue.length; s++, gen.idx++) {
+          var packed = gen.queue[gen.idx];
+          drawTileAt(gen.oCtx, packed >> 8, packed & 0xFF, gen);
+        }
+        if (gen.idx >= gen.queue.length) {
+          gen.done = true;
+          gen.doneAt = now;
+        }
+      }
+
+      /* composite vers canvas principal avec glow optionnel */
+      var gr = cfg.glow_radius | 0;
+      if (gr > 0) {
+        ctx.shadowBlur = gr;
+        ctx.shadowColor = gen.fg;
+      }
+      ctx.drawImage(gen.off, gen.x, gen.y);
+      ctx.shadowBlur = 0;
     }
 
-    /* reveal collapse_speed cells per frame */
-    var speed=Math.max(1,cfg.collapse_speed|0);
-    for(var i=0;i<speed&&_collapseIdx<collapseQueue.length;i++,_collapseIdx++){
-      var packed=collapseQueue[_collapseIdx];
-      var cellIdx=packed>>8,tileType=packed&0xFF;
-      grid[cellIdx]=tileType;
-      drawTileAt(_offCtx,cellIdx,tileType);
+    /* pulse auto */
+    var pulseEff = cfg.time_mode === 'bpm'
+      ? (60 / cfg.bpm) * cfg.pulse_beat_div
+      : cfg.pulse_interval;
+    if (cfg.pulse_enabled && now - lastPulseTime >= pulseEff) {
+      triggerPulse(); lastPulseTime = now;
     }
-
-    /* pulse timer */
-    var now=performance.now()/1000;
-    var pulseEff=cfg.time_mode==='bpm'?(60/cfg.bpm)*cfg.pulse_beat_div:cfg.pulse_interval;
-    if(cfg.pulse_enabled&&now-lastPulseTime>=pulseEff){triggerPulse();lastPulseTime=now;}
-
-    /* mouse click: reset grid */
-    if(mouse.down&&!window._cursorHidden){
-      if(!draw._wasDown){initGrid();}
-    }
-    draw._wasDown=!!mouse.down;
-
-    ctx.drawImage(_offCanvas,0,0);
-  }
-  draw._wasDown=false;
-
-  function triggerPulse(){initGrid();}
-
-  function _reset(){initGrid();}
-
-  function activate(){
-    _active=true;
-    var cv=document.getElementById('c');
-    cfg.canvas_width=cv.width||cfg.canvas_width;
-    cfg.canvas_height=cv.height||cfg.canvas_height;
-    if(!collapseQueue||_needsReset){_needsReset=false;initGrid();}
   }
 
-  function deactivate(){_active=false;}
+  function triggerPulse() { _gens = []; }
 
-  function init(){
-    canvas=document.getElementById('c');
-    ctx=canvas.getContext('2d');
-    cfg.canvas_width=FluidSim.cfg.canvas_width;
-    cfg.canvas_height=FluidSim.cfg.canvas_height;
-    initGrid();
+  function _reset() { _gens = []; }
+
+  function activate() {
+    _active = true;
+    var cv = document.getElementById('c');
+    canvas = cv;
+    ctx = cv.getContext('2d');
+    cfg.canvas_width  = cv.width  || cfg.canvas_width;
+    cfg.canvas_height = cv.height || cfg.canvas_height;
+    if (_needsReset) { _needsReset = false; _gens = []; }
   }
 
-  return{cfg:cfg,init:init,draw:draw,activate:activate,deactivate:deactivate,
-    reset:_reset,triggerPulse:triggerPulse,markReset:function(){_needsReset=true;}};
+  function deactivate() { _active = false; }
+
+  function init() {
+    canvas = document.getElementById('c');
+    if (canvas) ctx = canvas.getContext('2d');
+    cfg.canvas_width  = FluidSim.cfg.canvas_width;
+    cfg.canvas_height = FluidSim.cfg.canvas_height;
+  }
+
+  return {
+    cfg: cfg, init: init, draw: draw,
+    activate: activate, deactivate: deactivate,
+    reset: _reset, triggerPulse: triggerPulse,
+    markReset: function () { _needsReset = true; }
+  };
 })();
 
 var Engine_Sketch = (function () {
@@ -6102,6 +6180,9 @@ var Engine_Sketch = (function () {
     grid_weight: 0.5,
     /* COLOR */
     bg_color: '#000000',
+    opacity_min: 0.3,
+    opacity_max: 0.9,
+    stroke_prob: 0.1,
     palette_index: -1,   /* -1 = aléatoire à chaque reset */
     /* TEMPO */
     pulse_enabled: false,
@@ -6233,10 +6314,10 @@ var Engine_Sketch = (function () {
     oc.translate(x, y);
     oc.rotate(angle);
 
-    if (Math.random() < 0.9) {
+    if (Math.random() >= cfg.stroke_prob) {
       var grad = oc.createLinearGradient(0, -d, 0, d);
-      grad.addColorStop(0, hex2rgba(col1, 0.55));
-      grad.addColorStop(1, hex2rgba(col2, 0.9));
+      grad.addColorStop(0, hex2rgba(col1, cfg.opacity_min));
+      grad.addColorStop(1, hex2rgba(col2, cfg.opacity_max));
       oc.fillStyle = grad;
       oc.strokeStyle = 'transparent';
     } else {
@@ -6297,7 +6378,7 @@ var Engine_Sketch = (function () {
     _offscreen = document.createElement('canvas');
     _offscreen.width = cfg.canvas_width;
     _offscreen.height = cfg.canvas_height;
-    _offCtx = _offscreen.getContext('2d');
+    _offCtx = _offscreen.getContext('2d', { alpha: false });
   }
 
   function _reset() {
@@ -6369,8 +6450,7 @@ var Engine_Sketch = (function () {
       }
     }
 
-    /* copy offscreen → main canvas */
-    ctx.clearRect(0, 0, W, H);
+    /* copy offscreen → main canvas (alpha:false garantit l'opacité, pas de clearRect) */
     ctx.drawImage(_offscreen, 0, 0);
 
     _frame++;
@@ -6410,7 +6490,7 @@ var Engine_NSFluid = (function () {
   var mouse = window._mouse;
   var _active = false, _needsReset = false;
   var _lastTime = 0, _pmx = 0, _pmy = 0;
-  var _lastPulse = 0;
+  var _lastPulse = 0, _lastPgen = 0;
 
   var cfg = {
     canvas_width: 800, canvas_height: 600,
@@ -6429,6 +6509,17 @@ var Engine_NSFluid = (function () {
     bg_color: '#000000',
     particle_color: '#ffffff',
     color_mode: 0,   /* 0=uniforme  1=vélocité  2=position */
+    /* GÉNÉRATEURS */
+    turb_enabled: false,
+    turb_strength: 0.5,
+    turb_scale: 3.0,
+    turb_speed: 1.0,
+    wind_enabled: false,
+    wind_angle: 0,
+    wind_strength: 0.2,
+    pgen_enabled: false,
+    pgen_strength: 6.0,
+    pgen_beat_div: 1,
     /* TEMPO */
     pulse_enabled: false, pulse_interval: 8.0, pulse_beat_div: 1,
     time_mode: 'bpm', bpm: 120
@@ -6556,6 +6647,43 @@ var Engine_NSFluid = (function () {
     return 'hsl('+((x/W*300)|0)+',80%,60%)';
   }
 
+  /* ── Generateurs de mouvement ── */
+
+  function applyTurbulence(t) {
+    var N = solver.N, sc = cfg.turb_scale, str = cfg.turb_strength * 0.015;
+    for (var i = 0; i < N; i++) {
+      for (var j = 0; j < N; j++) {
+        var vx = str * Math.sin(i * sc + t * cfg.turb_speed);
+        var vy = str * Math.cos(j * sc + t * cfg.turb_speed * 0.7 + 1.5);
+        solver.applyForce(i, j, vx, vy);
+      }
+    }
+  }
+
+  function applyWind() {
+    var ang = cfg.wind_angle * Math.PI / 180;
+    var vx = cfg.wind_strength * Math.cos(ang) * 0.015;
+    var vy = cfg.wind_strength * Math.sin(ang) * 0.015;
+    var N = solver.N;
+    for (var i = 0; i < N; i++) {
+      for (var j = 0; j < N; j++) {
+        solver.applyForce(i, j, vx, vy);
+      }
+    }
+  }
+
+  function applyPulseForce() {
+    var N = solver.N, cx = N * 0.5, cy = N * 0.5, str = cfg.pgen_strength * 0.02;
+    for (var i = 0; i < N; i++) {
+      for (var j = 0; j < N; j++) {
+        var dx = i - cx, dy = j - cy;
+        var d = Math.sqrt(dx * dx + dy * dy) + 0.01;
+        var f = str / d;
+        solver.applyForce(i, j, dx / d * f, dy / d * f);
+      }
+    }
+  }
+
   /* ── draw ── */
   function draw() {
     if (!_active) return;
@@ -6594,6 +6722,17 @@ var Engine_NSFluid = (function () {
       }
     }
     _pmx = mouse.x; _pmy = mouse.y;
+
+    /* générateurs de mouvement */
+    if (cfg.turb_enabled) applyTurbulence(now);
+    if (cfg.wind_enabled) applyWind();
+    if (cfg.pgen_enabled) {
+      var pgenInterval = (60 / cfg.bpm) / cfg.pgen_beat_div;
+      if (now - _lastPgen >= pgenInterval) {
+        applyPulseForce();
+        _lastPgen = now;
+      }
+    }
 
     /* simulate */
     solver.tick(dt, cfg.viscosity);
@@ -8025,7 +8164,7 @@ wire('loop-len','loop_length','val-loop-len',0);
    INIT
 ═══════════════════════════════════════════ */
 window.requestAnimationFrame=window.requestAnimationFrame||window.webkitRequestAnimationFrame||window.mozRequestAnimationFrame;
-var VERSION='v4.0.0.044';
+var VERSION='v4.0.0.048';
 /* EngineManager.init() appelle FluidSim.init() qui initialise canvas+ctx AVANT autoResize */
 EngineManager.init();
 /* ── VERSION DISPLAY ── */
@@ -8704,14 +8843,25 @@ updateResDisplay();
     if(!sl||!sp)return;
     sl.addEventListener('input',function(){E.cfg[key]=parseFloat(this.value);if(sp)sp.textContent=parseFloat(this.value).toFixed(dec!==undefined?dec:1);});
   }
-  wireE('wfctile-size','tile_size','wfcval-tile-size',0);
-  wireE('wfcline-width','line_width','wfcval-line-width',1);
-  wireE('wfcblank-weight','blank_weight','wfcval-blank-weight',2);
-  wireE('wfccollapse-speed','collapse_speed','wfcval-collapse-speed',0);
-  wireE('wfctpulse-int','pulse_interval','wfcval-pulse-int',1);
-  wireE('wfcbeat-div','pulse_beat_div','wfcval-beat-div',0);
+  wireE('wfcmax-gens',      'max_gens',      'wfcval-max-gens',       0);
+  wireE('wfccollapse-speed','collapse_speed','wfcval-collapse-speed',  0);
+  wireE('wfcdone-delay',    'done_delay',    'wfcval-done-delay',      1);
+  wireE('wfcts-min',        'tile_size_min', 'wfcval-ts-min',          0);
+  wireE('wfcts-max',        'tile_size_max', 'wfcval-ts-max',          0);
+  wireE('wfcblank-weight',  'blank_weight',  'wfcval-blank-weight',    2);
+  wireE('wfcglow-radius',   'glow_radius',   'wfcval-glow',            0);
+  wireE('wfctpulse-int',    'pulse_interval','wfcval-pulse-int',       1);
+  wireE('wfcbeat-div',      'pulse_beat_div','wfcval-beat-div',        0);
+  (function(){
+    var sl=document.getElementById('wfccolor-scheme'),sp=document.getElementById('wfcval-color-scheme');
+    if(!sl)return;
+    sl.addEventListener('input',function(){
+      var v=parseInt(this.value);
+      E.cfg.color_scheme=v;
+      if(sp)sp.textContent=v<0?'aléatoire':('c'+v);
+    });
+  })();
   (function(){var b=document.getElementById('wfcbg-color');if(b)b.addEventListener('input',function(){E.cfg.bg_color=this.value;});})();
-  (function(){var b=document.getElementById('wfcfg-color');if(b)b.addEventListener('input',function(){E.cfg.fg_color=this.value;});})();
   (function(){var b=document.getElementById('wfcuse-curves');if(b)b.addEventListener('change',function(){E.cfg.use_curves=this.checked;E.reset();});})();
   (function(){
     var bt=document.getElementById('wfcbtn-pulse');
@@ -8744,6 +8894,9 @@ updateResDisplay();
   wireE('skgrid-refresh',    'grid_refresh',      'skval-grid-refresh', 0);
   wireE('skgrid-weight',     'grid_weight',       'skval-grid-weight', 1);
   wireE('sklife',            'life',               'skval-life',      0);
+  wireE('skopacity-min',    'opacity_min',        'skval-omin',      2);
+  wireE('skopacity-max',    'opacity_max',        'skval-omax',      2);
+  wireE('skstroke-prob',    'stroke_prob',        'skval-stroke',    2);
   wireE('skspawn-beat-div',  'spawn_beat_div',    'skval-spawn-div', 0);
   (function(){
     var bt=document.getElementById('skbtn-spawn-sync');
@@ -8785,9 +8938,19 @@ updateResDisplay();
     if(!sl||!sp)return;
     sl.addEventListener('input',function(){E.cfg[key]=parseFloat(this.value);sp.textContent=parseFloat(this.value).toFixed(dec!==undefined?dec:1);});
   }
-  wireE('nsvel-scale',   'velocity_scale', 'nsval-vel',    1);
-  wireE('nsmouse-force', 'mouse_force',    'nsval-mforce', 3);
-  wireE('nsmouse-radius', 'mouse_radius', 'nsval-mradius', 0);
+  wireE('nsvel-scale',      'velocity_scale', 'nsval-vel',       1);
+  wireE('nsmouse-force',    'mouse_force',    'nsval-mforce',    3);
+  wireE('nsmouse-radius',   'mouse_radius',   'nsval-mradius',   0);
+  wireE('nsturb-strength',  'turb_strength',  'nsval-turb-str',  1);
+  wireE('nsturb-scale',     'turb_scale',     'nsval-turb-sc',   1);
+  wireE('nsturb-speed',     'turb_speed',     'nsval-turb-spd',  1);
+  wireE('nswind-angle',     'wind_angle',     'nsval-wind-ang',  0);
+  wireE('nswind-strength',  'wind_strength',  'nsval-wind-str',  2);
+  wireE('nspgen-strength',  'pgen_strength',  'nsval-pgen-str',  1);
+  wireE('nspgen-beat-div',  'pgen_beat_div',  'nsval-pgen-div',  0);
+  (function(){var b=document.getElementById('nsturb-enabled'); if(b)b.addEventListener('change',function(){E.cfg.turb_enabled=this.checked;});})();
+  (function(){var b=document.getElementById('nswind-enabled'); if(b)b.addEventListener('change',function(){E.cfg.wind_enabled=this.checked;});})();
+  (function(){var b=document.getElementById('nspgen-enabled'); if(b)b.addEventListener('change',function(){E.cfg.pgen_enabled=this.checked;});})();
   wireE('nsviscosity',   'viscosity',      'nsval-visc',   5);
   wireE('nsnum-part',    'num_particles',  'nsval-npart',  0);
   wireE('nspoint-size',  'point_size',     'nsval-psize',  1);

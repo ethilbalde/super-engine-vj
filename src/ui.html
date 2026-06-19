@@ -1903,7 +1903,9 @@
     <div class="sep"></div>
     <div class="sec">
       <div class="sec-title">Vitesse révélation</div>
-      <div class="ctrl"><label>Cellules/frame <span class="val" id="wfcval-collapse-speed">6</span></label><input type="range" id="wfccollapse-speed" min="1" max="40" step="1" value="6"></div>
+      <div class="ctrl"><label>Générations <span class="val" id="wfcval-max-gens">4</span></label><input type="range" id="wfcmax-gens" min="1" max="8" step="1" value="4"></div>
+    <div class="ctrl"><label>Cellules/frame <span class="val" id="wfcval-collapse-speed">10</span></label><input type="range" id="wfccollapse-speed" min="1" max="60" step="1" value="10"></div>
+    <div class="ctrl"><label>Délai respawn <span class="val" id="wfcval-done-delay">2.0</span>s</label><input type="range" id="wfcdone-delay" min="0" max="10" step="0.5" value="2.0"></div>
     </div>
     <div class="sep"></div>
     <div class="sec">
@@ -1913,9 +1915,9 @@
       <div class="quick-row" style="margin-top:4px"><button class="big-toggle" id="wfcbtn-click" style="flex:1"><span class="dot"></span>CLICK</button><button class="quick-fire" id="wfcbtn-click-fire">▶</button></div>
     </div>
     <div class="sep"></div>
-    <div class="ctrl"><label>Taille tuile <span class="val" id="wfcval-tile-size">24</span>px</label><input type="range" id="wfctile-size" min="8" max="64" step="2" value="24"></div>
-    <div class="ctrl"><label>Épaisseur trait <span class="val" id="wfcval-line-width">2.8</span></label><input type="range" id="wfcline-width" min="0.5" max="8" step="0.1" value="2.8"></div>
-    <div class="ctrl"><label>Proportion vide <span class="val" id="wfcval-blank-weight">0.12</span></label><input type="range" id="wfcblank-weight" min="0.01" max="0.8" step="0.01" value="0.12"></div>
+    <div class="ctrl"><label>Taille tuile min <span class="val" id="wfcval-ts-min">14</span>px</label><input type="range" id="wfcts-min" min="8" max="60" step="2" value="14"></div>
+    <div class="ctrl"><label>Taille tuile max <span class="val" id="wfcval-ts-max">72</span>px</label><input type="range" id="wfcts-max" min="16" max="120" step="2" value="72"></div>
+    <div class="ctrl"><label>Proportion vide <span class="val" id="wfcval-blank-weight">0.08</span></label><input type="range" id="wfcblank-weight" min="0.01" max="0.8" step="0.01" value="0.08"></div>
     <div class="toggle-row" style="margin-top:6px"><label>Coins courbés</label><input type="checkbox" id="wfcuse-curves" checked></div>
     <div class="sep"></div>
     <button class="btn-wide" id="wfcbtn-reset">↺ Nouvelle génération</button>
@@ -1923,7 +1925,8 @@
 
   <div class="tab-pane" id="tab-wfc-color">
     <div class="ctrl"><label style="margin-bottom:5px">Fond</label><input type="color" id="wfcbg-color" value="#05050f"></div>
-    <div class="ctrl"><label style="margin-bottom:5px">Tuiles</label><input type="color" id="wfcfg-color" value="#00ffcc"></div>
+    <div class="ctrl"><label>Couleur <span class="val" id="wfcval-color-scheme">aléatoire</span></label><input type="range" id="wfccolor-scheme" min="-1" max="14" step="1" value="-1"></div>
+    <div class="ctrl"><label>Glow <span class="val" id="wfcval-glow">8</span>px</label><input type="range" id="wfcglow-radius" min="0" max="40" step="1" value="8"></div>
   </div>
 
   <div class="tab-pane" id="tab-wfc-tempo">
@@ -1978,9 +1981,13 @@
 
   <div class="tab-pane" id="tab-sketch-color">
     <div class="ctrl"><label style="margin-bottom:5px">Fond</label><input type="color" id="skbg-color" value="#000000"></div>
-    <div class="toggle-row"><label>Grille visible</label><input type="checkbox" id="skgrid-visible"></div>
     <div class="sep"></div>
     <div class="ctrl"><label>Palette <span class="val" id="skval-pal">aléatoire</span></label><input type="range" id="skpal-index" min="-1" max="36" step="1" value="-1"></div>
+    <div class="ctrl"><label>Opacité min <span class="val" id="skval-omin">0.30</span></label><input type="range" id="skopacity-min" min="0" max="1" step="0.05" value="0.30"></div>
+    <div class="ctrl"><label>Opacité max <span class="val" id="skval-omax">0.90</span></label><input type="range" id="skopacity-max" min="0" max="1" step="0.05" value="0.90"></div>
+    <div class="ctrl"><label>Prob. contour <span class="val" id="skval-stroke">0.10</span></label><input type="range" id="skstroke-prob" min="0" max="1" step="0.05" value="0.10"></div>
+    <div class="sep"></div>
+    <div class="toggle-row"><label>Grille visible</label><input type="checkbox" id="skgrid-visible"></div>
   </div>
 
   <div class="tab-pane" id="tab-sketch-tempo">
@@ -2023,6 +2030,22 @@
     <div class="ctrl"><label>Nb particules <span class="val" id="nsval-npart">8000</span></label><input type="range" id="nsnum-part" min="500" max="30000" step="500" value="8000"></div>
     <div class="ctrl"><label>Taille point <span class="val" id="nsval-psize">1.5</span></label><input type="range" id="nspoint-size" min="0.5" max="6" step="0.5" value="1.5"></div>
     <div class="ctrl"><label>Alpha trail <span class="val" id="nsval-trail">0.15</span></label><input type="range" id="nstrail-alpha" min="0.01" max="1" step="0.01" value="0.15"></div>
+    <div class="sep"></div>
+    <div class="sec">
+      <div class="sec-title">Générateurs de mouvement</div>
+      <div class="toggle-row"><label>Turbulence</label><input type="checkbox" id="nsturb-enabled"></div>
+      <div class="ctrl"><label>Force turb. <span class="val" id="nsval-turb-str">0.5</span></label><input type="range" id="nsturb-strength" min="0.1" max="5" step="0.1" value="0.5"></div>
+      <div class="ctrl"><label>Échelle turb. <span class="val" id="nsval-turb-sc">3.0</span></label><input type="range" id="nsturb-scale" min="0.5" max="10" step="0.5" value="3.0"></div>
+      <div class="ctrl"><label>Vitesse turb. <span class="val" id="nsval-turb-spd">1.0</span></label><input type="range" id="nsturb-speed" min="0.1" max="5" step="0.1" value="1.0"></div>
+      <div class="sep"></div>
+      <div class="toggle-row"><label>Vent</label><input type="checkbox" id="nswind-enabled"></div>
+      <div class="ctrl"><label>Angle <span class="val" id="nsval-wind-ang">0</span>°</label><input type="range" id="nswind-angle" min="0" max="360" step="5" value="0"></div>
+      <div class="ctrl"><label>Force vent <span class="val" id="nsval-wind-str">0.2</span></label><input type="range" id="nswind-strength" min="0.05" max="2" step="0.05" value="0.2"></div>
+      <div class="sep"></div>
+      <div class="toggle-row"><label>Pulse radial</label><input type="checkbox" id="nspgen-enabled"></div>
+      <div class="ctrl"><label>Force pulse <span class="val" id="nsval-pgen-str">6.0</span></label><input type="range" id="nspgen-strength" min="1" max="20" step="0.5" value="6.0"></div>
+      <div class="ctrl"><label>Div. beat <span class="val" id="nsval-pgen-div">1</span></label><input type="range" id="nspgen-beat-div" min="1" max="16" step="1" value="1"></div>
+    </div>
     <div class="sep"></div>
     <button class="btn-wide" id="nsbtn-reset-p" style="margin-bottom:6px">↺ Reset particules</button>
     <button class="btn-wide" id="nsbtn-reset">↺ Reset simulation</button>

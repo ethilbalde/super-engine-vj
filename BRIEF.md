@@ -14,14 +14,16 @@ Outil VJ (performance visuelle live) : un fichier HTML unique autonome (`super-e
 - **Onglet SIM supprimé** : le contenu SIM est fusionné à la suite du pane LIVE (séparé par un `<div class="sep">`) — plus de pane SIM séparé ni de bouton SIM dans le tab bar
 
 ## État actuel (2026-06-19)
-- **23 moteurs** opérationnels : + SKETCH (bloom organique 2D, fond noir), NS FLUID (Navier-Stokes CPU)
-- **SKETCH** : fond noir uni par défaut, sans grille, paramètre `life` (fondu des formes), tempo d'apparition syncable au BPM (`spawn_sync` + `spawn_beat_div`)
-- **NS FLUID** : Navier-Stokes Stam 2003, particules CPU, force souris diffusée sur voisinage N×N (`mouse_radius` 1–4), artefact de bloc corrigé
+- **23 moteurs** opérationnels (FEEDBACK retiré — incompatibilité RGBA32F WebGL2)
+- **SKETCH** : fond noir uni par défaut (`alpha:false` sur offscreen canvas), sans grille, paramètre `life` (fondu vers bg_color propre), tempo d'apparition syncable au BPM (`spawn_sync` + `spawn_beat_div`) ; paramètres COLOR enrichis : `opacity_min`, `opacity_max`, `stroke_prob`
+- **NS FLUID** : Navier-Stokes Stam 2003, particules CPU, force souris diffusée sur voisinage N×N (`mouse_radius` 1–4), artefact de bloc corrigé ; générateurs de mouvement : turbulence sin/cos (`turb_enabled` + 3 params), vent directionnel (`wind_enabled` + angle/force), impulsion radiale BPM (`pgen_enabled` + beat_div)
+- **WFC** : refonte complète — `max_gens` (1–8) grilles simultanées, tailles/positions/couleurs aléatoires, 3 styles de dessin (courbes lisses / segments / épais+dots), glow optionnel (`glow_radius`), `done_delay` avant respawn, palette de 15 couleurs vives, fonds transparents pour superposition, `triggerPulse` = respawn immédiat total
 - **FX Chain GPU** : 17 effets dont `colorramp` (ramp Blender-style avec stops draggables)
 - **Turbulence fluide** : bruit cohérent sin/cos dans `fluid.js`
-- **Presets factory v4** : presets couvrant SKETCH et NS FLUID
-- **Tests** : `node test.js` (checks statiques) + `test.html` (tests runtime browser)
-- **Tab bar** : LIVE · COLOR · TEMPO · MIDI · SAVE · SCN (SIM supprimé)
+- **Presets factory v4** : presets couvrant SKETCH, NS FLUID et WFC
+- **Tests** : `node test.js` — 87/87 ; `test.html` (tests runtime browser)
+- **Tab bar** : LIVE · COLOR · TEMPO · MIDI · SAVE · SCN (SIM supprimé, contenu fusionné dans LIVE)
+- **Pre-commit hook** : `.git/hooks/pre-commit` exécute `node test.js` automatiquement
 
 ## Règles de livraison
 - **Avant chaque `git push`** : mettre à jour `CHANGELOG.md` avec les ajouts et corrections du commit

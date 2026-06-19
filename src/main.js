@@ -1327,7 +1327,7 @@ wire('loop-len','loop_length','val-loop-len',0);
    INIT
 ═══════════════════════════════════════════ */
 window.requestAnimationFrame=window.requestAnimationFrame||window.webkitRequestAnimationFrame||window.mozRequestAnimationFrame;
-var VERSION='v4.0.0.044';
+var VERSION='v4.0.0.048';
 /* EngineManager.init() appelle FluidSim.init() qui initialise canvas+ctx AVANT autoResize */
 EngineManager.init();
 /* ── VERSION DISPLAY ── */
@@ -2006,14 +2006,25 @@ updateResDisplay();
     if(!sl||!sp)return;
     sl.addEventListener('input',function(){E.cfg[key]=parseFloat(this.value);if(sp)sp.textContent=parseFloat(this.value).toFixed(dec!==undefined?dec:1);});
   }
-  wireE('wfctile-size','tile_size','wfcval-tile-size',0);
-  wireE('wfcline-width','line_width','wfcval-line-width',1);
-  wireE('wfcblank-weight','blank_weight','wfcval-blank-weight',2);
-  wireE('wfccollapse-speed','collapse_speed','wfcval-collapse-speed',0);
-  wireE('wfctpulse-int','pulse_interval','wfcval-pulse-int',1);
-  wireE('wfcbeat-div','pulse_beat_div','wfcval-beat-div',0);
+  wireE('wfcmax-gens',      'max_gens',      'wfcval-max-gens',       0);
+  wireE('wfccollapse-speed','collapse_speed','wfcval-collapse-speed',  0);
+  wireE('wfcdone-delay',    'done_delay',    'wfcval-done-delay',      1);
+  wireE('wfcts-min',        'tile_size_min', 'wfcval-ts-min',          0);
+  wireE('wfcts-max',        'tile_size_max', 'wfcval-ts-max',          0);
+  wireE('wfcblank-weight',  'blank_weight',  'wfcval-blank-weight',    2);
+  wireE('wfcglow-radius',   'glow_radius',   'wfcval-glow',            0);
+  wireE('wfctpulse-int',    'pulse_interval','wfcval-pulse-int',       1);
+  wireE('wfcbeat-div',      'pulse_beat_div','wfcval-beat-div',        0);
+  (function(){
+    var sl=document.getElementById('wfccolor-scheme'),sp=document.getElementById('wfcval-color-scheme');
+    if(!sl)return;
+    sl.addEventListener('input',function(){
+      var v=parseInt(this.value);
+      E.cfg.color_scheme=v;
+      if(sp)sp.textContent=v<0?'aléatoire':('c'+v);
+    });
+  })();
   (function(){var b=document.getElementById('wfcbg-color');if(b)b.addEventListener('input',function(){E.cfg.bg_color=this.value;});})();
-  (function(){var b=document.getElementById('wfcfg-color');if(b)b.addEventListener('input',function(){E.cfg.fg_color=this.value;});})();
   (function(){var b=document.getElementById('wfcuse-curves');if(b)b.addEventListener('change',function(){E.cfg.use_curves=this.checked;E.reset();});})();
   (function(){
     var bt=document.getElementById('wfcbtn-pulse');
@@ -2046,6 +2057,9 @@ updateResDisplay();
   wireE('skgrid-refresh',    'grid_refresh',      'skval-grid-refresh', 0);
   wireE('skgrid-weight',     'grid_weight',       'skval-grid-weight', 1);
   wireE('sklife',            'life',               'skval-life',      0);
+  wireE('skopacity-min',    'opacity_min',        'skval-omin',      2);
+  wireE('skopacity-max',    'opacity_max',        'skval-omax',      2);
+  wireE('skstroke-prob',    'stroke_prob',        'skval-stroke',    2);
   wireE('skspawn-beat-div',  'spawn_beat_div',    'skval-spawn-div', 0);
   (function(){
     var bt=document.getElementById('skbtn-spawn-sync');
@@ -2087,9 +2101,19 @@ updateResDisplay();
     if(!sl||!sp)return;
     sl.addEventListener('input',function(){E.cfg[key]=parseFloat(this.value);sp.textContent=parseFloat(this.value).toFixed(dec!==undefined?dec:1);});
   }
-  wireE('nsvel-scale',   'velocity_scale', 'nsval-vel',    1);
-  wireE('nsmouse-force', 'mouse_force',    'nsval-mforce', 3);
-  wireE('nsmouse-radius', 'mouse_radius', 'nsval-mradius', 0);
+  wireE('nsvel-scale',      'velocity_scale', 'nsval-vel',       1);
+  wireE('nsmouse-force',    'mouse_force',    'nsval-mforce',    3);
+  wireE('nsmouse-radius',   'mouse_radius',   'nsval-mradius',   0);
+  wireE('nsturb-strength',  'turb_strength',  'nsval-turb-str',  1);
+  wireE('nsturb-scale',     'turb_scale',     'nsval-turb-sc',   1);
+  wireE('nsturb-speed',     'turb_speed',     'nsval-turb-spd',  1);
+  wireE('nswind-angle',     'wind_angle',     'nsval-wind-ang',  0);
+  wireE('nswind-strength',  'wind_strength',  'nsval-wind-str',  2);
+  wireE('nspgen-strength',  'pgen_strength',  'nsval-pgen-str',  1);
+  wireE('nspgen-beat-div',  'pgen_beat_div',  'nsval-pgen-div',  0);
+  (function(){var b=document.getElementById('nsturb-enabled'); if(b)b.addEventListener('change',function(){E.cfg.turb_enabled=this.checked;});})();
+  (function(){var b=document.getElementById('nswind-enabled'); if(b)b.addEventListener('change',function(){E.cfg.wind_enabled=this.checked;});})();
+  (function(){var b=document.getElementById('nspgen-enabled'); if(b)b.addEventListener('change',function(){E.cfg.pgen_enabled=this.checked;});})();
   wireE('nsviscosity',   'viscosity',      'nsval-visc',   5);
   wireE('nsnum-part',    'num_particles',  'nsval-npart',  0);
   wireE('nspoint-size',  'point_size',     'nsval-psize',  1);

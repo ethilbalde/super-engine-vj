@@ -25,6 +25,9 @@ var Engine_Sketch = (function () {
     grid_weight: 0.5,
     /* COLOR */
     bg_color: '#000000',
+    opacity_min: 0.3,
+    opacity_max: 0.9,
+    stroke_prob: 0.1,
     palette_index: -1,   /* -1 = aléatoire à chaque reset */
     /* TEMPO */
     pulse_enabled: false,
@@ -156,10 +159,10 @@ var Engine_Sketch = (function () {
     oc.translate(x, y);
     oc.rotate(angle);
 
-    if (Math.random() < 0.9) {
+    if (Math.random() >= cfg.stroke_prob) {
       var grad = oc.createLinearGradient(0, -d, 0, d);
-      grad.addColorStop(0, hex2rgba(col1, 0.55));
-      grad.addColorStop(1, hex2rgba(col2, 0.9));
+      grad.addColorStop(0, hex2rgba(col1, cfg.opacity_min));
+      grad.addColorStop(1, hex2rgba(col2, cfg.opacity_max));
       oc.fillStyle = grad;
       oc.strokeStyle = 'transparent';
     } else {
@@ -220,7 +223,7 @@ var Engine_Sketch = (function () {
     _offscreen = document.createElement('canvas');
     _offscreen.width = cfg.canvas_width;
     _offscreen.height = cfg.canvas_height;
-    _offCtx = _offscreen.getContext('2d');
+    _offCtx = _offscreen.getContext('2d', { alpha: false });
   }
 
   function _reset() {
@@ -292,8 +295,7 @@ var Engine_Sketch = (function () {
       }
     }
 
-    /* copy offscreen → main canvas */
-    ctx.clearRect(0, 0, W, H);
+    /* copy offscreen → main canvas (alpha:false garantit l'opacité, pas de clearRect) */
     ctx.drawImage(_offscreen, 0, 0);
 
     _frame++;

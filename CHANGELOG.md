@@ -2,6 +2,27 @@
 
 ---
 
+## [2026-06-19] — v4.0.0.047
+
+### Améliorations moteurs
+
+- **SKETCH — fond propre** : offscreen canvas créé avec `{ alpha: false }` → le fondu `life` transite proprement vers `bg_color` sans tache grise résiduelle
+- **SKETCH — params COLOR enrichis** : `opacity_min` (plancher opacité dégradé), `opacity_max` (plafond opacité dégradé), `stroke_prob` (probabilité contour vs remplissage)
+- **NS FLUID — générateurs de mouvement** :
+  - `turb_enabled` : turbulence cohérente sin/cos sur toute la grille (force, échelle, vitesse réglables)
+  - `wind_enabled` : vent directionnel uniforme (angle 0–360°, force réglable)
+  - `pgen_enabled` : impulsion radiale depuis le centre, synchronisée au BPM (`pgen_beat_div`)
+- **WFC — refonte complète** : remplace le système mono-grille par `max_gens` (1–8) générations simultanées indépendantes, chacune avec taille de tuile, position, couleur et style aléatoires ; `done_delay` configurable avant respawn ; `triggerPulse` efface et recrée toutes les générations instantanément
+  - 3 styles de dessin : courbes lisses (quadBézier), segments droits, trait épais + dots aux jonctions
+  - Palette de 15 couleurs vives prédéfinies, sélectionnable ou aléatoire (`color_scheme`)
+  - Effet glow optionnel (`glow_radius`) via `shadowBlur`/`shadowColor` canvas 2D
+  - Fonds d'offscreen transparents (`{ alpha: true }`) → superposition naturelle sur le fond `bg_color`
+
+### Technique
+- **BRIEF.md** mis à jour : WFC multi-gen, SKETCH alpha:false, NS FLUID générateurs, pre-commit hook
+
+---
+
 ## [2026-06-19] — v4.0.0.044
 
 ### Ajouts
