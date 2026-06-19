@@ -511,6 +511,58 @@
       pulse_enabled:false,pulse_interval:6.0,pulse_beat_div:1
     }}
 
+    /* ── SKETCH ── */
+    ,'Sketch — Risographie':{engine:'sketch',sketch:{
+      forms_per_frame:60,flower_prob:0.001,spread:0.12,
+      size_min:0.5,size_max:2.0,grid_refresh:80,grid_visible:true,grid_weight:0.5,
+      bg_color:'#e9dbce',palette_index:-1,
+      pulse_enabled:false,pulse_interval:8.0,pulse_beat_div:1
+    }}
+    ,'Sketch — Neon Storm':{engine:'sketch',sketch:{
+      forms_per_frame:150,flower_prob:0.003,spread:0.22,
+      size_min:1.0,size_max:5.0,grid_refresh:40,grid_visible:true,grid_weight:0.3,
+      bg_color:'#0a0010',palette_index:7,
+      pulse_enabled:true,pulse_interval:6.0,pulse_beat_div:2
+    }}
+    ,'Sketch — Pale Bloom':{engine:'sketch',sketch:{
+      forms_per_frame:30,flower_prob:0.005,spread:0.08,
+      size_min:0.3,size_max:3.0,grid_refresh:200,grid_visible:false,grid_weight:0.5,
+      bg_color:'#f2ede8',palette_index:24,
+      pulse_enabled:false,pulse_interval:12.0,pulse_beat_div:1
+    }}
+    ,'Sketch — Dark Scatter':{engine:'sketch',sketch:{
+      forms_per_frame:100,flower_prob:0.0,spread:0.35,
+      size_min:0.5,size_max:4.0,grid_refresh:60,grid_visible:true,grid_weight:0.8,
+      bg_color:'#111111',palette_index:35,
+      pulse_enabled:true,pulse_interval:4.0,pulse_beat_div:1
+    }}
+
+    /* ── NS FLUID ── */
+    ,'NS Fluid — Doux':{engine:'nstokes',nstokes:{
+      velocity_scale:11,mouse_force:0.1,grid_n:15,viscosity:0.00025,
+      num_particles:8000,point_size:1.5,trail_alpha:0.15,
+      bg_color:'#000000',particle_color:'#ffffff',color_mode:0,
+      pulse_enabled:false,pulse_interval:8.0,pulse_beat_div:1
+    }}
+    ,'NS Fluid — Vélocité Color':{engine:'nstokes',nstokes:{
+      velocity_scale:18,mouse_force:0.15,grid_n:20,viscosity:0.0001,
+      num_particles:12000,point_size:2.0,trail_alpha:0.08,
+      bg_color:'#000000',particle_color:'#38bdf8',color_mode:1,
+      pulse_enabled:false,pulse_interval:8.0,pulse_beat_div:1
+    }}
+    ,'NS Fluid — Tempête':{engine:'nstokes',nstokes:{
+      velocity_scale:25,mouse_force:0.25,grid_n:25,viscosity:0.00005,
+      num_particles:20000,point_size:1.0,trail_alpha:0.05,
+      bg_color:'#050510',particle_color:'#ff6644',color_mode:1,
+      pulse_enabled:true,pulse_interval:6.0,pulse_beat_div:2
+    }}
+    ,'NS Fluid — Position Arc-en-ciel':{engine:'nstokes',nstokes:{
+      velocity_scale:14,mouse_force:0.12,grid_n:18,viscosity:0.0002,
+      num_particles:10000,point_size:2.5,trail_alpha:0.2,
+      bg_color:'#0a0a0a',particle_color:'#ffffff',color_mode:2,
+      pulse_enabled:false,pulse_interval:10.0,pulse_beat_div:1
+    }}
+
     /* ── Ajouter ici les presets de tout nouveau moteur ── */
 
   };

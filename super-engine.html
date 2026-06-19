@@ -279,6 +279,8 @@ input[type=color]::-webkit-color-swatch{border:none;border-radius:3px}
     <button class="eng-btn"        data-engine="cloth"    style="--e:#00aa88">CLOTH</button>
     <button class="eng-btn"        data-engine="fpaint"   style="--e:#ff6644">PAINT</button>
     <button class="eng-btn"        data-engine="wfc"      style="--e:#00ffcc">WFC</button>
+    <button class="eng-btn"        data-engine="sketch"   style="--e:#ea526f">SKETCH</button>
+    <button class="eng-btn"        data-engine="nstokes"  style="--e:#38bdf8">NS FLUID</button>
   </div>
 
   <!-- ══ FX CHAIN PANEL ══ -->
@@ -296,7 +298,7 @@ input[type=color]::-webkit-color-swatch{border:none;border-radius:3px}
 
   <div id="tab-bar">
     <button class="tab-btn active" data-tab="live">LIVE</button>
-    <button class="tab-btn" data-tab="sim">SIM</button>
+
     <button class="tab-btn" data-tab="color">COLOR</button>
     <button class="tab-btn" data-tab="tempo">TEMPO</button>
     <button class="tab-btn" data-tab="io">MIDI</button>
@@ -389,9 +391,7 @@ input[type=color]::-webkit-color-swatch{border:none;border-radius:3px}
       <div class="ctrl"><label>Longueur <span class="val" id="val-loop-len">2</span> bars</label><input type="range" id="loop-len" min="1" max="16" step="1" value="2"></div>
       <div id="looper-status" style="color:#333;font-size:9px;text-align:center;margin-top:3px">ARRÊTÉ · 0 event(s)</div>
     </div>
-  </div><!-- /tab-live -->
-
-  <div class="tab-pane" id="tab-sim">
+    <div class="sep"></div>
     <div class="sec">
       <div class="sec-title">Particules</div>
       <div class="ctrl"><label>Nombre <span class="val" id="val-speck">5000</span></label><input type="range" id="speck" min="100" max="30000" step="100" value="5000"></div>
@@ -423,7 +423,7 @@ input[type=color]::-webkit-color-swatch{border:none;border-radius:3px}
     </div>
     <div class="sep"></div>
     <button class="btn-wide" id="btn-reinit">↺ Réinitialiser simulation</button>
-  </div><!-- /tab-sim -->
+  </div><!-- /tab-live -->
 
   <div class="tab-pane" id="tab-color">
     <div class="sec">
@@ -710,8 +710,7 @@ input[type=color]::-webkit-color-swatch{border:none;border-radius:3px}
       </div>
       <div class="prog-bar"><div class="prog-fill" id="vauto-bar"></div></div>
     </div>
-  </div>
-  <div class="tab-pane" id="tab-vortex-sim">
+    <div class="sep"></div>
     <div class="sec">
       <div class="ctrl"><label>Particules <span class="val" id="vval-speck">8000</span></label><input type="range" id="vspeck" min="100" max="30000" step="100" value="8000"></div>
       <div class="ctrl"><label>Épaisseur <span class="val" id="vval-lw">1.0</span></label><input type="range" id="vlw" min="0.2" max="5" step="0.1" value="1.0"></div>
@@ -816,8 +815,7 @@ input[type=color]::-webkit-color-swatch{border:none;border-radius:3px}
       </div>
       <div class="prog-bar"><div class="prog-fill" id="nbauto-bar"></div></div>
     </div>
-  </div>
-  <div class="tab-pane" id="tab-nbody-sim">
+    <div class="sep"></div>
     <div class="sec">
       <div class="ctrl"><label>Particules <span class="val" id="nbval-speck">10000</span></label><input type="range" id="nbspeck" min="100" max="40000" step="100" value="10000"></div>
       <div class="ctrl"><label>Flow force <span class="val" id="nbval-ff">0.10</span></label><input type="range" id="nbff" min="0.005" max="0.5" step="0.005" value="0.1"></div>
@@ -894,8 +892,7 @@ input[type=color]::-webkit-color-swatch{border:none;border-radius:3px}
         </div>
       </div>
     </div>
-  </div>
-  <div class="tab-pane" id="tab-sph-sim">
+    <div class="sep"></div>
     <div class="sec">
       <div class="ctrl"><label>Particules <span class="val" id="sphval-count">2000</span></label><input type="range" id="sphere-particle-count" min="100" max="10000" step="100" value="2000"></div>
       <div class="ctrl"><label>Smoothing h <span class="val" id="sphval-h">30</span></label><input type="range" id="sphsmoothing-h" min="10" max="80" step="2" value="30"></div>
@@ -954,8 +951,7 @@ input[type=color]::-webkit-color-swatch{border:none;border-radius:3px}
         </div>
       </div>
     </div>
-  </div>
-  <div class="tab-pane" id="tab-boids-sim">
+    <div class="sep"></div>
     <div class="sec">
       <div class="ctrl"><label>Nombre boids <span class="val" id="bval-count">300</span></label><input type="range" id="bboid-count" min="50" max="2000" step="50" value="300"></div>
       <div class="ctrl"><label>Rayon vision <span class="val" id="bval-perc">80</span></label><input type="range" id="bperception" min="20" max="200" step="5" value="80"></div>
@@ -1013,8 +1009,7 @@ input[type=color]::-webkit-color-swatch{border:none;border-radius:3px}
         </div>
       </div>
     </div>
-  </div>
-  <div class="tab-pane" id="tab-physarum-sim">
+    <div class="sep"></div>
     <div class="sec">
       <div class="ctrl"><label>Agents <span class="val" id="phval-agents">100000</span></label><input type="range" id="phagent-count" min="5000" max="200000" step="5000" value="100000"></div>
       <div class="ctrl"><label>Vitesse <span class="val" id="phval-speed">1.8</span></label><input type="range" id="phagent-speed" min="0.5" max="5" step="0.1" value="1.8"></div>
@@ -1079,8 +1074,7 @@ input[type=color]::-webkit-color-swatch{border:none;border-radius:3px}
       <div class="ctrl"><label>Curseur Y <span class="val" id="lval-cy">0.50</span></label><input type="range" id="lcursor-y" min="0" max="1" step="0.005" value="0.50"></div>
       <div class="quick-row" style="margin-top:4px"><button class="big-toggle" id="lbtn-click" style="flex:1"><span class="dot"></span>CLICK</button><button class="quick-fire" id="lbtn-click-fire">▶</button></div>
     </div>
-  </div>
-  <div class="tab-pane" id="tab-lorenz-sim">
+    <div class="sep"></div>
     <div class="sec">
       <div class="ctrl"><label>Trajectoires <span class="val" id="lval-tcount">1000</span></label><input type="range" id="ltrajectory-count" min="100" max="5000" step="100" value="1000"></div>
       <div class="ctrl"><label>Trail length <span class="val" id="lval-tlen">50</span></label><input type="range" id="ltrail-length" min="10" max="200" step="5" value="50"></div>
@@ -1179,8 +1173,7 @@ input[type=color]::-webkit-color-swatch{border:none;border-radius:3px}
         </div>
       </div>
     </div>
-  </div>
-  <div class="tab-pane" id="tab-react-sim">
+    <div class="sep"></div>
     <div class="sec">
       <div class="ctrl"><label>Feed (f) <span class="val" id="rval-feed">0.055</span></label><input type="range" id="rfeed" min="0.01" max="0.1" step="0.001" value="0.055"></div>
       <div class="ctrl"><label>Kill (k) <span class="val" id="rval-kill">0.062</span></label><input type="range" id="rkill" min="0.03" max="0.085" step="0.001" value="0.062"></div>
@@ -1234,8 +1227,7 @@ input[type=color]::-webkit-color-swatch{border:none;border-radius:3px}
     </div>
     <div class="sep"></div>
     <button class="btn-wide" id="acobtn-reset">↺ Réinitialiser ACO</button>
-  </div>
-  <div class="tab-pane" id="tab-aco-sim">
+    <div class="sep"></div>
     <div class="sec">
       <div class="ctrl"><label>Fourmis <span class="val" id="acoval-ants">3000</span></label><input type="range" id="acoant-count" min="500" max="15000" step="500" value="3000"></div>
       <div class="ctrl"><label>Nids <span class="val" id="acoval-nests">2</span></label><input type="range" id="aconest-count" min="1" max="6" step="1" value="2"></div>
@@ -1418,8 +1410,7 @@ input[type=color]::-webkit-color-swatch{border:none;border-radius:3px}
     <div class="sec"><div class="btn-grid" style="grid-template-columns:repeat(2,1fr)">
       <button class="btn active" data-rdbrush="inject">Injecter B</button><button class="btn" data-rdbrush="erase">Effacer B</button>
     </div></div>
-  </div>
-  <div class="tab-pane" id="tab-rdiff-sim">
+    <div class="sep"></div>
     <div class="sec">
       <div class="ctrl"><label>F feed <span class="val" id="rdval-f">0.055</span></label><input type="range" id="rdf" min="0.01" max="0.1" step="0.001" value="0.055"></div>
       <div class="ctrl"><label>k kill <span class="val" id="rdval-k">0.062</span></label><input type="range" id="rdk" min="0.03" max="0.075" step="0.001" value="0.062"></div>
@@ -1470,8 +1461,7 @@ input[type=color]::-webkit-color-swatch{border:none;border-radius:3px}
       <div class="ctrl"><label>Curseur Y <span class="val" id="lsval-cy">0.50</span></label><input type="range" id="lscursor-y" min="0" max="1" step="0.005" value="0.50"></div>
       <div class="quick-row" style="margin-top:4px"><button class="big-toggle" id="lsbtn-click" style="flex:1"><span class="dot"></span>CLICK</button><button class="quick-fire" id="lsbtn-click-fire">▶</button></div>
     </div>
-  </div>
-  <div class="tab-pane" id="tab-lsys-sim">
+    <div class="sep"></div>
     <div class="ctrl"><label>Longueur seg. <span class="val" id="lsval-len">5</span></label><input type="range" id="lslen" min="1" max="20" step="0.5" value="5"></div>
     <div class="ctrl"><label>Vitesse anim. <span class="val" id="lsval-speed">300</span></label><input type="range" id="lsanim-speed" min="10" max="3000" step="10" value="300"></div>
   </div>
@@ -1521,8 +1511,7 @@ input[type=color]::-webkit-color-swatch{border:none;border-radius:3px}
       <div class="ctrl"><label>Curseur Y <span class="val" id="voval-cy">0.50</span></label><input type="range" id="vocursor-y" min="0" max="1" step="0.005" value="0.50"></div>
       <div class="quick-row" style="margin-top:4px"><button class="big-toggle" id="vobtn-click" style="flex:1"><span class="dot"></span>CLICK</button><button class="quick-fire" id="vobtn-click-fire">▶</button></div>
     </div>
-  </div>
-  <div class="tab-pane" id="tab-voronoi-sim">
+    <div class="sep"></div>
     <div class="ctrl"><label>Répulsion bords <span class="val" id="voval-border">60</span></label><input type="range" id="voborder-rep" min="0" max="200" step="5" value="60"></div>
     <div class="ctrl"><label>Répulsion graines <span class="val" id="voval-repulse">40</span></label><input type="range" id="vorepulse" min="0" max="150" step="5" value="40"></div>
     <div class="sep"></div>
@@ -1597,8 +1586,7 @@ input[type=color]::-webkit-color-swatch{border:none;border-radius:3px}
       <div class="ctrl"><label>Curseur Y <span class="val" id="fwval-cy">0.50</span></label><input type="range" id="fwcursor-y" min="0" max="1" step="0.005" value="0.50"></div>
       <div class="quick-row" style="margin-top:4px"><button class="big-toggle" id="fwbtn-click" style="flex:1"><span class="dot"></span>CLICK</button><button class="quick-fire" id="fwbtn-click-fire">▶</button></div>
     </div>
-  </div>
-  <div class="tab-pane" id="tab-follow-sim">
+    <div class="sep"></div>
     <div class="ctrl"><label>Particules <span class="val" id="fwval-count">350</span></label><input type="range" id="fwcount" min="50" max="1200" step="10" value="350"></div>
     <div class="ctrl"><label>Vitesse <span class="val" id="fwval-speed">6</span></label><input type="range" id="fwspeed" min="1" max="20" step="0.5" value="6"></div>
     <div class="ctrl"><label>Traînée <span class="val" id="fwval-trail">12</span></label><input type="range" id="fwtrail-len" min="1" max="60" step="1" value="12"></div>
@@ -1645,8 +1633,7 @@ input[type=color]::-webkit-color-swatch{border:none;border-radius:3px}
       <div class="ctrl"><label>Curseur Y <span class="val" id="rbval-cy">0.50</span></label><input type="range" id="rbcursor-y" min="0" max="1" step="0.005" value="0.50"></div>
       <div class="quick-row" style="margin-top:4px"><button class="big-toggle" id="rbbtn-click" style="flex:1"><span class="dot"></span>CLICK</button><button class="quick-fire" id="rbbtn-click-fire">▶</button></div>
     </div>
-  </div>
-  <div class="tab-pane" id="tab-ribbon-sim">
+    <div class="sep"></div>
     <div class="ctrl"><label>Rubans <span class="val" id="rbval-count">120</span></label><input type="range" id="rbcount" min="10" max="500" step="5" value="120"></div>
     <div class="ctrl"><label>Vitesse <span class="val" id="rbval-speed">3.0</span></label><input type="range" id="rbspeed" min="0.5" max="15" step="0.5" value="3.0"></div>
     <div class="ctrl"><label>Longueur traînée <span class="val" id="rbval-trail">30</span></label><input type="range" id="rbtrail-len" min="5" max="100" step="1" value="30"></div>
@@ -1703,8 +1690,7 @@ input[type=color]::-webkit-color-swatch{border:none;border-radius:3px}
         <button class="btn-wide" id="phxbtn-reset" style="flex:1">↺ Vider</button>
       </div>
     </div>
-  </div>
-  <div class="tab-pane" id="tab-physiks-sim">
+    <div class="sep"></div>
     <div class="ctrl"><label>Résolution grille <span class="val" id="phxval-res">3</span>px</label><input type="range" id="phxgrid-res" min="1" max="12" step="1" value="3"></div>
     <div class="ctrl"><label>Fréq. mise à jour <span class="val" id="phxval-urate">1</span>/frame</label><input type="range" id="phxupdate-rate" min="1" max="4" step="1" value="1"></div>
     <div class="ctrl"><label>Dispersion eau <span class="val" id="phxval-spread">4</span></label><input type="range" id="phxwater-spread" min="1" max="12" step="1" value="4"></div>
@@ -1766,8 +1752,7 @@ input[type=color]::-webkit-color-swatch{border:none;border-radius:3px}
       <div class="ctrl"><label>Curseur Y <span class="val" id="nrval-cy">0.50</span></label><input type="range" id="nrcursor-y" min="0" max="1" step="0.005" value="0.50"></div>
       <div class="quick-row" style="margin-top:4px"><button class="big-toggle" id="nrbtn-click" style="flex:1"><span class="dot"></span>ACTIVER</button><button class="quick-fire" id="nrbtn-click-fire">▶</button></div>
     </div>
-  </div>
-  <div class="tab-pane" id="tab-neural-sim">
+    <div class="sep"></div>
     <div class="ctrl"><label>Neurones <span class="val" id="nrval-count">120</span></label><input type="range" id="nrcount" min="20" max="500" step="10" value="120"></div>
     <div class="ctrl"><label>Densité synapses <span class="val" id="nrval-density">0.05</span></label><input type="range" id="nrdensity" min="0.02" max="0.5" step="0.01" value="0.05"></div>
     <div class="ctrl"><label>Propagation max / nœud <span class="val" id="nrval-fanout">3</span></label><input type="range" id="nrfanout" min="1" max="10" step="1" value="3"></div>
@@ -1821,8 +1806,7 @@ input[type=color]::-webkit-color-swatch{border:none;border-radius:3px}
       <div class="ctrl"><label>Curseur Y <span class="val" id="inkval-cy">0.50</span></label><input type="range" id="inkcursor-y" min="0" max="1" step="0.005" value="0.50"></div>
       <div class="quick-row" style="margin-top:4px"><button class="big-toggle" id="inkbtn-click" style="flex:1"><span class="dot"></span>PEINDRE</button><button class="quick-fire" id="inkbtn-click-fire">▶</button></div>
     </div>
-  </div>
-  <div class="tab-pane" id="tab-ink-sim">
+    <div class="sep"></div>
     <div class="ctrl"><label>Résolution grille <span class="val" id="inkval-res">22</span>px</label><input type="range" id="inkgrid-res" min="2" max="40" step="1" value="22"></div>
     <div class="ctrl"><label>Persistance fluide <span class="val" id="inkval-damp">0.908</span></label><input type="range" id="inkdamping" min="0.90" max="1.00" step="0.002" value="0.908"></div>
     <div class="ctrl"><label>Turbulence noise <span class="val" id="inkval-noise">0.4</span></label><input type="range" id="inknoise" min="0" max="3" step="0.1" value="0.4"></div>
@@ -1889,8 +1873,7 @@ input[type=color]::-webkit-color-swatch{border:none;border-radius:3px}
       <div class="ctrl"><label>Curseur Y <span class="val" id="slpval-cy">0.50</span></label><input type="range" id="slpcursor-y" min="0" max="1" step="0.005" value="0.50"></div>
       <div class="quick-row" style="margin-top:4px"><button class="big-toggle" id="slpbtn-click" style="flex:1"><span class="dot"></span>CLICK</button><button class="quick-fire" id="slpbtn-click-fire">▶</button></div>
     </div>
-  </div>
-  <div class="tab-pane" id="tab-slope-sim">
+    <div class="sep"></div>
     <div class="ctrl"><label>Échelle du champ <span class="val" id="slpval-scale">18</span></label><input type="range" id="slpscale" min="4" max="60" step="1" value="18"></div>
     <div class="ctrl"><label>Vitesse</label><span class="val" id="slpval-speed">1.0</span><input type="range" id="slpspeed" min="0.1" max="4" step="0.1" value="1.0"></div>
     <div class="ctrl"><label>Largeur min <span class="val" id="slpval-wmin">1</span></label><input type="range" id="slpwidth-min" min="0.5" max="6" step="0.5" value="1"></div>
@@ -1949,8 +1932,7 @@ input[type=color]::-webkit-color-swatch{border:none;border-radius:3px}
       <div class="ctrl"><label>Curseur Y <span class="val" id="dunval-cy">0.50</span></label><input type="range" id="duncursor-y" min="0" max="1" step="0.005" value="0.50"></div>
       <div class="quick-row" style="margin-top:4px"><button class="big-toggle" id="dunbtn-click" style="flex:1"><span class="dot"></span>CLICK</button><button class="quick-fire" id="dunbtn-click-fire">▶</button></div>
     </div>
-  </div>
-  <div class="tab-pane" id="tab-dune-sim">
+    <div class="sep"></div>
     <div class="ctrl"><label>Particules <span class="val" id="dunval-count">3000</span></label><input type="range" id="duncount" min="500" max="8000" step="100" value="3000"></div>
     <div class="ctrl"><label>Graine bruit <span class="val" id="dunval-seed">200</span></label><input type="range" id="dunseed" min="0" max="5000" step="1" value="200"></div>
     <div class="ctrl"><label>Échelle bruit <span class="val" id="dunval-scale">120</span></label><input type="range" id="dunscale" min="20" max="400" step="10" value="120"></div>
@@ -2000,9 +1982,7 @@ input[type=color]::-webkit-color-swatch{border:none;border-radius:3px}
       <button class="btn-wide" id="clthbtn-undo">↶ Undo Cut</button>
       <button class="btn-wide" id="clthbtn-reset">↺ Réinitialiser</button>
     </div>
-  </div>
-
-  <div class="tab-pane" id="tab-cloth-sim">
+    <div class="sep"></div>
     <div class="sec">
       <div class="sec-title">Grille</div>
       <div class="ctrl"><label>Densité grille <span class="val" id="clthval-grid">50</span></label><input type="range" id="clthgrid-count" min="10" max="100" step="5" value="50"></div>
@@ -2090,9 +2070,7 @@ input[type=color]::-webkit-color-swatch{border:none;border-radius:3px}
       </div>
       <div class="prog-bar"><div class="prog-fill" id="fppulse-bar"></div></div>
     </div>
-  </div>
-
-  <div class="tab-pane" id="tab-fpaint-sim">
+    <div class="sep"></div>
     <div class="sec">
       <div class="sec-title">Animation</div>
       <div class="ctrl"><label>Vitesse <span class="val" id="fpval-speed">1.0</span></label><input type="range" id="fpspeed" min="0.05" max="4" step="0.05" value="1.0"></div>
@@ -2160,9 +2138,7 @@ input[type=color]::-webkit-color-swatch{border:none;border-radius:3px}
       <div class="ctrl"><label>Curseur Y <span class="val" id="wfcval-cy">0.50</span></label><input type="range" id="wfccursor-y" min="0" max="1" step="0.005" value="0.50"></div>
       <div class="quick-row" style="margin-top:4px"><button class="big-toggle" id="wfcbtn-click" style="flex:1"><span class="dot"></span>CLICK</button><button class="quick-fire" id="wfcbtn-click-fire">▶</button></div>
     </div>
-  </div>
-
-  <div class="tab-pane" id="tab-wfc-sim">
+    <div class="sep"></div>
     <div class="ctrl"><label>Taille tuile <span class="val" id="wfcval-tile-size">24</span>px</label><input type="range" id="wfctile-size" min="8" max="64" step="2" value="24"></div>
     <div class="ctrl"><label>Épaisseur trait <span class="val" id="wfcval-line-width">2.8</span></label><input type="range" id="wfcline-width" min="0.5" max="8" step="0.1" value="2.8"></div>
     <div class="ctrl"><label>Proportion vide <span class="val" id="wfcval-blank-weight">0.12</span></label><input type="range" id="wfcblank-weight" min="0.01" max="0.8" step="0.01" value="0.12"></div>
@@ -2185,6 +2161,122 @@ input[type=color]::-webkit-color-swatch{border:none;border-radius:3px}
   <div class="tab-pane" id="tab-wfc-save"><div class="sec"><div style="color:var(--text-faint);font-size:9px">Config WFC dans les scènes globales.</div></div></div>
   </div><!-- /wfc -->
 
+  <!-- ══ SKETCH ENGINE PANES ══ -->
+  <div class="engine-panes" data-engine="sketch">
+  <div class="tab-pane active" id="tab-sketch-live">
+    <div class="sec">
+      <div class="quick-row">
+        <button class="big-toggle" id="skbtn-pulse" style="flex:1"><span class="dot"></span>NOUVELLE COMPOSITION</button>
+        <button class="quick-fire" id="skbtn-pulse-fire">▶</button>
+      </div>
+      <div class="prog-bar"><div class="prog-fill" id="skpulse-bar"></div></div>
+    </div>
+    <div class="sep"></div>
+    <div class="sec">
+      <div class="sec-title">Tempo apparition</div>
+      <div class="quick-row">
+        <button class="big-toggle" id="skbtn-spawn-sync" style="flex:1"><span class="dot"></span>SYNC TEMPO</button>
+      </div>
+      <div class="ctrl" style="margin-top:6px"><label>Div. beat <span class="val" id="skval-spawn-div">1</span></label><input type="range" id="skspawn-beat-div" min="1" max="16" step="1" value="1"></div>
+    </div>
+    <div class="sep"></div>
+    <div class="sec">
+      <div class="sec-title">Accumulation</div>
+      <div class="ctrl"><label>Formes/burst <span class="val" id="skval-forms">60</span></label><input type="range" id="skforms-per-frame" min="1" max="300" step="1" value="60"></div>
+      <div class="ctrl"><label>Prob. fleurs <span class="val" id="skval-flower">0.0010</span></label><input type="range" id="skflower-prob" min="0" max="0.02" step="0.0001" value="0.001"></div>
+    </div>
+    <div class="sep"></div>
+    <div class="sec">
+      <div class="sec-title">Curseur</div>
+      <div class="ctrl"><label>Curseur X <span class="val" id="skval-cx">0.50</span></label><input type="range" id="skcursor-x" min="0" max="1" step="0.005" value="0.50"></div>
+      <div class="ctrl"><label>Curseur Y <span class="val" id="skval-cy">0.50</span></label><input type="range" id="skcursor-y" min="0" max="1" step="0.005" value="0.50"></div>
+      <div class="quick-row" style="margin-top:4px"><button class="big-toggle" id="skbtn-click" style="flex:1"><span class="dot"></span>CLICK</button><button class="quick-fire" id="skbtn-click-fire">▶</button></div>
+    </div>
+    <div class="sep"></div>
+    <div class="ctrl"><label>Dispersion <span class="val" id="skval-spread">0.12</span></label><input type="range" id="skspread" min="0.02" max="0.5" step="0.01" value="0.12"></div>
+    <div class="ctrl"><label>Taille min <span class="val" id="skval-smin">0.5</span></label><input type="range" id="sksize-min" min="0.1" max="5" step="0.1" value="0.5"></div>
+    <div class="ctrl"><label>Taille max <span class="val" id="skval-smax">2.0</span></label><input type="range" id="sksize-max" min="0.1" max="10" step="0.1" value="2.0"></div>
+    <div class="sep"></div>
+    <div class="ctrl"><label>Life <span class="val" id="skval-life">0</span> <small style="opacity:.5">(0=∞)</small></label><input type="range" id="sklife" min="0" max="300" step="1" value="0"></div>
+    <div class="sep"></div>
+    <button class="btn-wide" id="skbtn-reset">↺ Nouvelle composition</button>
+  </div>
+
+  <div class="tab-pane" id="tab-sketch-color">
+    <div class="ctrl"><label style="margin-bottom:5px">Fond</label><input type="color" id="skbg-color" value="#000000"></div>
+    <div class="toggle-row"><label>Grille visible</label><input type="checkbox" id="skgrid-visible"></div>
+    <div class="sep"></div>
+    <div class="ctrl"><label>Palette <span class="val" id="skval-pal">aléatoire</span></label><input type="range" id="skpal-index" min="-1" max="36" step="1" value="-1"></div>
+  </div>
+
+  <div class="tab-pane" id="tab-sketch-tempo">
+    <div class="ctrl"><label>Intervalle pulse <span class="val" id="skval-pulse-int">8.0</span>s</label><input type="range" id="sktpulse-int" min="0.5" max="30" step="0.5" value="8.0"></div>
+    <div class="ctrl"><label>BPM div <span class="val" id="skval-beat-div">1</span></label><input type="range" id="skbeat-div" min="1" max="8" step="1" value="1"></div>
+  </div>
+
+  <div class="tab-pane" id="tab-sketch-io"><div class="sec"><div class="sec-title">MIDI CC Sketch</div><div id="skmidi-cc-list"></div></div></div>
+  <div class="tab-pane" id="tab-sketch-save"><div class="sec"><div style="color:var(--text-faint);font-size:9px">Config Sketch dans les scènes globales.</div></div></div>
+  </div><!-- /sketch -->
+
+
+  <!-- ══ NS FLUID ENGINE PANES ══ -->
+  <div class="engine-panes" data-engine="nstokes">
+  <div class="tab-pane active" id="tab-nstokes-live">
+    <div class="sec">
+      <div class="quick-row">
+        <button class="big-toggle" id="nsbtn-pulse" style="flex:1"><span class="dot"></span>RESET PARTICULES</button>
+        <button class="quick-fire" id="nsbtn-pulse-fire">▶</button>
+      </div>
+      <div class="prog-bar"><div class="prog-fill" id="nspulse-bar"></div></div>
+    </div>
+    <div class="sep"></div>
+    <div class="sec">
+      <div class="sec-title">Contrôle fluide</div>
+      <div class="ctrl"><label>Échelle vélocité <span class="val" id="nsval-vel">11.0</span></label><input type="range" id="nsvel-scale" min="1" max="40" step="0.5" value="11"></div>
+      <div class="ctrl"><label>Force souris <span class="val" id="nsval-mforce">0.100</span></label><input type="range" id="nsmouse-force" min="0.01" max="0.5" step="0.01" value="0.1"></div>
+      <div class="ctrl"><label>Rayon pointeur <span class="val" id="nsval-mradius">1</span></label><input type="range" id="nsmouse-radius" min="1" max="4" step="1" value="1"></div>
+    </div>
+    <div class="sep"></div>
+    <div class="sec">
+      <div class="sec-title">Curseur</div>
+      <div class="ctrl"><label>Curseur X <span class="val" id="nsval-cx">0.50</span></label><input type="range" id="nscursor-x" min="0" max="1" step="0.005" value="0.50"></div>
+      <div class="ctrl"><label>Curseur Y <span class="val" id="nsval-cy">0.50</span></label><input type="range" id="nscursor-y" min="0" max="1" step="0.005" value="0.50"></div>
+      <div class="quick-row" style="margin-top:4px"><button class="big-toggle" id="nsbtn-click" style="flex:1"><span class="dot"></span>CLICK</button><button class="quick-fire" id="nsbtn-click-fire">▶</button></div>
+    </div>
+    <div class="sep"></div>
+    <div class="ctrl"><label>Résolution grille N <span class="val" id="nsval-gridn">15</span></label><input type="range" id="nsgrid-n" min="5" max="35" step="1" value="15"></div>
+    <div class="ctrl"><label>Viscosité <span class="val" id="nsval-visc">0.00025</span></label><input type="range" id="nsviscosity" min="0.00001" max="0.005" step="0.00001" value="0.00025"></div>
+    <div class="ctrl"><label>Nb particules <span class="val" id="nsval-npart">8000</span></label><input type="range" id="nsnum-part" min="500" max="30000" step="500" value="8000"></div>
+    <div class="ctrl"><label>Taille point <span class="val" id="nsval-psize">1.5</span></label><input type="range" id="nspoint-size" min="0.5" max="6" step="0.5" value="1.5"></div>
+    <div class="ctrl"><label>Alpha trail <span class="val" id="nsval-trail">0.15</span></label><input type="range" id="nstrail-alpha" min="0.01" max="1" step="0.01" value="0.15"></div>
+    <div class="sep"></div>
+    <button class="btn-wide" id="nsbtn-reset-p" style="margin-bottom:6px">↺ Reset particules</button>
+    <button class="btn-wide" id="nsbtn-reset">↺ Reset simulation</button>
+  </div>
+
+  <div class="tab-pane" id="tab-nstokes-color">
+    <div class="ctrl"><label style="margin-bottom:5px">Fond</label><input type="color" id="nsbg-color" value="#000000"></div>
+    <div class="ctrl"><label style="margin-bottom:5px">Particules</label><input type="color" id="nspart-color" value="#ffffff"></div>
+    <div class="sep"></div>
+    <div class="ctrl">
+      <label>Mode couleur</label>
+      <select id="nscolor-mode" style="width:100%;margin-top:4px;background:#1a1a1a;color:#ccc;border:1px solid #333;padding:4px;border-radius:4px">
+        <option value="0">Uniforme</option>
+        <option value="1">Vélocité</option>
+        <option value="2">Position</option>
+      </select>
+    </div>
+  </div>
+
+  <div class="tab-pane" id="tab-nstokes-tempo">
+    <div class="ctrl"><label>Intervalle pulse <span class="val" id="nsval-pint">8.0</span>s</label><input type="range" id="nstpulse-int" min="0.5" max="30" step="0.5" value="8.0"></div>
+    <div class="ctrl"><label>BPM div <span class="val" id="nsval-bdiv">1</span></label><input type="range" id="nsbeat-div" min="1" max="8" step="1" value="1"></div>
+  </div>
+
+  <div class="tab-pane" id="tab-nstokes-io"><div class="sec"><div class="sec-title">MIDI CC NS Fluid</div><div id="nsmidi-cc-list"></div></div></div>
+  <div class="tab-pane" id="tab-nstokes-save"><div class="sec"><div style="color:var(--text-faint);font-size:9px">Config NS Fluid dans les scènes globales.</div></div></div>
+  </div><!-- /nstokes -->
+
   <!-- ══ GROWTH ENGINE PANES ══ -->
   <div class="engine-panes" data-engine="growth">
   <div class="tab-pane active" id="tab-growth-live">
@@ -2203,8 +2295,7 @@ input[type=color]::-webkit-color-swatch{border:none;border-radius:3px}
       <div class="ctrl"><label>Curseur Y <span class="val" id="grwval-cy">0.50</span></label><input type="range" id="grwcursor-y" min="0" max="1" step="0.005" value="0.50"></div>
       <div class="quick-row" style="margin-top:4px"><button class="big-toggle" id="grwbtn-click" style="flex:1"><span class="dot"></span>CLICK</button><button class="quick-fire" id="grwbtn-click-fire">▶</button></div>
     </div>
-  </div>
-  <div class="tab-pane" id="tab-growth-sim">
+    <div class="sep"></div>
     <div class="ctrl"><label>Vitesse chute graine <span class="val" id="grwval-fall">3.0</span></label><input type="range" id="grwfall-speed" min="0.5" max="10" step="0.5" value="3.0"></div>
     <div class="ctrl"><label>Errance branches <span class="val" id="grwval-wander">0.33</span></label><input type="range" id="grwwander" min="0.05" max="1" step="0.01" value="0.33"></div>
     <div class="ctrl"><label>Rétrécissement <span class="val" id="grwval-shrink">0.998</span></label><input type="range" id="grwshrink" min="0.97" max="1" step="0.001" value="0.998"></div>
@@ -2247,8 +2338,7 @@ input[type=color]::-webkit-color-swatch{border:none;border-radius:3px}
       <div class="ctrl"><label>Curseur Y <span class="val" id="gdwval-cy">0.50</span></label><input type="range" id="gdwcursor-y" min="0" max="1" step="0.005" value="0.50"></div>
       <div class="quick-row" style="margin-top:4px"><button class="big-toggle" id="gdwbtn-click" style="flex:1"><span class="dot"></span>CLICK</button><button class="quick-fire" id="gdwbtn-click-fire">▶</button></div>
     </div>
-  </div>
-  <div class="tab-pane" id="tab-gridwave-sim">
+    <div class="sep"></div>
     <div class="ctrl"><label>Espacement grille <span class="val" id="gdwval-spacing">14</span>px</label><input type="range" id="gdwspacing" min="4" max="40" step="1" value="14"></div>
     <div class="ctrl"><label>Échelle du bruit <span class="val" id="gdwval-nscale">0.02</span></label><input type="range" id="gdwnscale" min="0.005" max="0.08" step="0.001" value="0.02"></div>
     <div class="ctrl"><label>Vitesse animation <span class="val" id="gdwval-nspeed">1.0</span></label><input type="range" id="gdwnspeed" min="0.1" max="5" step="0.1" value="1.0"></div>
@@ -2299,8 +2389,7 @@ input[type=color]::-webkit-color-swatch{border:none;border-radius:3px}
     </div>
     <div class="sep"></div>
     <button class="btn-wide" id="blmbtn-reset">↺ Tout effacer</button>
-  </div>
-  <div class="tab-pane" id="tab-bloom-sim">
+    <div class="sep"></div>
     <div class="ctrl"><label>Vitesse de chute <span class="val" id="blmval-fall">3.0</span></label><input type="range" id="blmfall-speed" min="0.5" max="10" step="0.5" value="3.0"></div>
     <div class="ctrl"><label>Rayon racine min <span class="val" id="blmval-rmin">10</span></label><input type="range" id="blmradius-min" min="4" max="30" step="1" value="10"></div>
     <div class="ctrl"><label>Rayon racine max <span class="val" id="blmval-rmax">30</span></label><input type="range" id="blmradius-max" min="10" max="60" step="1" value="30"></div>
@@ -2345,8 +2434,7 @@ input[type=color]::-webkit-color-swatch{border:none;border-radius:3px}
       <div class="ctrl"><label>Curseur Y <span class="val" id="dspval-cy">0.50</span></label><input type="range" id="dspcursor-y" min="0" max="1" step="0.005" value="0.50"></div>
       <div class="quick-row" style="margin-top:4px"><button class="big-toggle" id="dspbtn-click" style="flex:1"><span class="dot"></span>CLICK</button><button class="quick-fire" id="dspbtn-click-fire">▶</button></div>
     </div>
-  </div>
-  <div class="tab-pane" id="tab-displace-sim">
+    <div class="sep"></div>
     <div class="ctrl"><label>Densité grille <span class="val" id="dspval-density">90</span></label><input type="range" id="dspdensity" min="20" max="200" step="5" value="90"></div>
     <div class="ctrl"><label>Fréquence bruit <span class="val" id="dspval-freq">1.0</span></label><input type="range" id="dspfreq" min="0.1" max="5" step="0.1" value="1.0"></div>
     <div class="ctrl"><label>Vitesse temporelle <span class="val" id="dspval-speed">0.6</span></label><input type="range" id="dspspeed" min="0.05" max="3" step="0.05" value="0.6"></div>
@@ -5987,6 +6075,627 @@ var Engine_WFC=(function(){
     reset:_reset,triggerPulse:triggerPulse,markReset:function(){_needsReset=true;}};
 })();
 
+var Engine_Sketch = (function () {
+  var canvas, ctx;
+  var mouse = window._mouse;
+  var _active = false;
+  var _needsReset = false;
+  var _offscreen = null;
+  var _offCtx = null;
+  var _frame = 0;
+
+  var cfg = {
+    canvas_width: 800, canvas_height: 600,
+    /* LIVE */
+    forms_per_frame: 60,
+    flower_prob: 0.001,
+    pen_size: 40,
+    /* SIM */
+    spread: 0.12,
+    size_min: 0.5,
+    size_max: 2.0,
+    life: 0,
+    spawn_sync: false,
+    spawn_beat_div: 1,
+    grid_refresh: 80,
+    grid_visible: false,
+    grid_weight: 0.5,
+    /* COLOR */
+    bg_color: '#000000',
+    palette_index: -1,   /* -1 = aléatoire à chaque reset */
+    /* TEMPO */
+    pulse_enabled: false,
+    pulse_interval: 8.0,
+    pulse_beat_div: 1,
+    time_mode: 'bpm',
+    bpm: 120
+  };
+
+  /* ── 37 palettes from original sketch ── */
+  var PALETTES = [
+    ["#e9dbce","#fceade","#ea526f","#e2c290","#6b2d5c","#25ced1"],
+    ["#223843","#e9dbce","#eff1f3","#dbd3d8","#d8b4a0","#d77a61"],
+    ["#e29578","#ffffff","#006d77","#83c5be","#ffddd2","#edf6f9"],
+    ["#e9dbce","#ffffff","#cc3528","#028090","#00a896","#f8c522"],
+    ["#e9dbce","#f8f7c1","#f46902","#da506a","#fae402","#92accc"],
+    ["#e42268","#fb8075","#761871","#5b7d9c","#a38cb4","#476590"],
+    ["#f9b4ab","#fdebd3","#264e70","#679186","#bbd4ce"],
+    ["#1f306e","#553772","#8f3b76","#c7417b","#f5487f"],
+    ["#e0f0ea","#95adbe","#574f7d","#503a65","#3c2a4d"],
+    ["#413e4a","#73626e","#b38184","#f0b49e","#f7e4be"],
+    ["#ff4e50","#fc913a","#f9d423","#ede574","#e1f5c4"],
+    ["#99b898","#fecea8","#ff847c","#e84a5f","#2a363b"],
+    ["#69d2e7","#a7dbd8","#e0e4cc","#f38630","#fa6900"],
+    ["#fe4365","#fc9d9a","#f9cdad","#c8c8a9","#83af9b"],
+    ["#ecd078","#d95b43","#c02942","#542437","#53777a"],
+    ["#556270","#4ecdc4","#c7f464","#ff6b6b","#c44d58"],
+    ["#774f38","#e08e79","#f1d4af","#ece5ce","#c5e0dc"],
+    ["#e8ddcb","#cdb380","#036564","#033649","#031634"],
+    ["#490a3d","#bd1550","#e97f02","#f8ca00","#8a9b0f"],
+    ["#594f4f","#547980","#45ada8","#9de0ad","#e5fcc2"],
+    ["#00a0b0","#6a4a3c","#cc333f","#eb6841","#edc951"],
+    ["#5bc0eb","#fde74c","#9bc53d","#e55934","#fa7921"],
+    ["#ed6a5a","#f4f1bb","#9bc1bc","#5ca4a9","#e6ebe0"],
+    ["#ef476f","#ffd166","#06d6a0","#118ab2","#073b4c"],
+    ["#22223b","#4a4e69","#9a8c98","#c9ada7","#f2e9e4"],
+    ["#114b5f","#1a936f","#88d498","#c6dabf","#f3e9d2"],
+    ["#3d5a80","#98c1d9","#e0fbfc","#ee6c4d","#293241"],
+    ["#06aed5","#086788","#f0c808","#fff1d0","#dd1c1a"],
+    ["#540d6e","#ee4266","#ffd23f","#3bceac","#0ead69"],
+    ["#c9cba3","#ffe1a8","#e26d5c","#723d46","#472d30"],
+    ["#3c4cad","#5FB49C","#e8a49c"],
+    ["#1c3560","#f2efdb","#fea985","#ff6343"],
+    ["#e0d7c5","#488a50","#b59a55","#bf5513","#3b6fb6","#4f3224","#9a7f6e"],
+    ["#ffb53c","#eeb3a3","#f3553c","#642a02"],
+    ["#DEEFB7","#5FB49C","#ed6a5a"],
+    ["#2B2B2B","#91B3E1","#2F5FB3","#3D4B89","#AE99E8","#DBE2EC"],
+    ["#ffbe0b","#fb5607","#ff006e","#8338ec","#3a86ff"]
+  ];
+
+  var _lastSpawn = 0;
+
+  var _pal, _pal1, _pal2;
+
+  /* ── Box-Muller gaussian ── */
+  function gauss(mean, std) {
+    var u = 0, v = 0;
+    while (u === 0) u = Math.random();
+    while (v === 0) v = Math.random();
+    return mean + std * Math.sqrt(-2 * Math.log(u)) * Math.cos(2 * Math.PI * v);
+  }
+
+  function randPal() {
+    return PALETTES[Math.floor(Math.random() * PALETTES.length)];
+  }
+
+  function pickPal() {
+    return cfg.palette_index >= 0 ? PALETTES[cfg.palette_index % PALETTES.length] : randPal();
+  }
+
+  /* ── hex → rgba string ── */
+  function hex2rgba(hex, alpha) {
+    var r = parseInt(hex.slice(1, 3), 16);
+    var g = parseInt(hex.slice(3, 5), 16);
+    var b = parseInt(hex.slice(5, 7), 16);
+    return 'rgba(' + r + ',' + g + ',' + b + ',' + alpha + ')';
+  }
+
+  function randFrom(arr) { return arr[Math.floor(Math.random() * arr.length)]; }
+
+  /* ── Flower shape ── */
+  function drawFlower(oc, x, y, r) {
+    var d = Math.random() * 0.2;
+    var topNum = Math.floor(Math.random() * 10);
+    var angle = Math.random() * Math.PI * 2;
+
+    oc.save();
+    oc.translate(x, y);
+    oc.rotate(angle);
+
+    oc.beginPath();
+    for (var i = 0; i <= 360; i++) {
+      var rad = i * Math.PI / 180;
+      var radius = r + (r * d) * Math.sin(rad * topNum);
+      var ex = radius * Math.sin(rad);
+      var ey = radius * Math.cos(rad);
+      if (i === 0) oc.moveTo(ex, ey); else oc.lineTo(ex, ey);
+    }
+    oc.closePath();
+    oc.clip();
+
+    /* fill with dot grid */
+    var nums = 140;
+    var w = (cfg.canvas_width * 2) / nums;
+    oc.fillStyle = randFrom(_pal);
+    oc.translate(-cfg.canvas_width, -cfg.canvas_height);
+    for (var jj = 0; jj < nums; jj++) {
+      for (var ii = 0; ii < nums; ii++) {
+        oc.beginPath();
+        if (jj % 2) {
+          oc.arc(ii * w + w / 2, jj * w, w * 0.25, 0, Math.PI * 2);
+        } else {
+          oc.arc(ii * w, jj * w, w * 0.25, 0, Math.PI * 2);
+        }
+        oc.fill();
+      }
+    }
+    oc.restore();
+  }
+
+  /* ── Poly shape ── */
+  function drawPoly(oc, x, y, r) {
+    var angle = Math.random() * Math.PI * 2;
+    var d = r * (0.3 + Math.random() * 0.5);
+    var col1 = randFrom(_pal1);
+    var col2 = randFrom(_pal2);
+
+    oc.save();
+    oc.translate(x, y);
+    oc.rotate(angle);
+
+    if (Math.random() < 0.9) {
+      var grad = oc.createLinearGradient(0, -d, 0, d);
+      grad.addColorStop(0, hex2rgba(col1, 0.55));
+      grad.addColorStop(1, hex2rgba(col2, 0.9));
+      oc.fillStyle = grad;
+      oc.strokeStyle = 'transparent';
+    } else {
+      oc.fillStyle = 'transparent';
+      oc.strokeStyle = col1;
+      oc.lineWidth = 0.8;
+    }
+
+    if (Math.random() < 0.5) {
+      var nums2 = Math.floor(3 + Math.random() * 3);
+      var dep = 0.1 + Math.random() * 0.2;
+      oc.beginPath();
+      for (var i = 0; i <= 360; i++) {
+        var rad = i * Math.PI / 180;
+        var radius = d + (d * dep * Math.sin(rad * nums2));
+        var ex = radius * Math.sin(rad);
+        var ey = radius * Math.cos(rad);
+        if (i === 0) oc.moveTo(ex, ey); else oc.lineTo(ex, ey);
+      }
+      oc.closePath();
+      oc.fill();
+      if (oc.strokeStyle !== 'transparent') oc.stroke();
+    } else {
+      var h = d * (0.2 + Math.random() * 0.8);
+      var rr = Math.abs(h / 2);
+      oc.beginPath();
+      oc.roundRect ? oc.roundRect(0, 0, d, h, rr) : oc.rect(0, 0, d, h);
+      oc.fill();
+      if (oc.strokeStyle !== 'transparent') oc.stroke();
+    }
+    oc.restore();
+  }
+
+  function drawGrid(oc) {
+    if (!cfg.grid_visible) return;
+    var W = cfg.canvas_width, H = cfg.canvas_height;
+    var gNum = 60;
+    var w = W / gNum;
+    oc.lineWidth = cfg.grid_weight;
+    for (var x = 0; x < gNum; x++) {
+      for (var y = 0; y < gNum; y++) {
+        oc.strokeStyle = randFrom(_pal);
+        if (x % 2 || y % 2) {
+          oc.save();
+          oc.setLineDash([1, 2]);
+          oc.beginPath(); oc.moveTo(x * w, 0); oc.lineTo(x * w, H); oc.stroke();
+          oc.beginPath(); oc.moveTo(0, y * w); oc.lineTo(W, y * w); oc.stroke();
+          oc.restore();
+        } else {
+          oc.beginPath(); oc.moveTo(x * w, 0); oc.lineTo(x * w, H); oc.stroke();
+          oc.beginPath(); oc.moveTo(0, y * w); oc.lineTo(W, y * w); oc.stroke();
+        }
+      }
+    }
+  }
+
+  function _initOffscreen() {
+    _offscreen = document.createElement('canvas');
+    _offscreen.width = cfg.canvas_width;
+    _offscreen.height = cfg.canvas_height;
+    _offCtx = _offscreen.getContext('2d');
+  }
+
+  function _reset() {
+    if (!_offCtx) _initOffscreen();
+    _offscreen.width = cfg.canvas_width;
+    _offscreen.height = cfg.canvas_height;
+    _pal  = pickPal();
+    _pal1 = randPal();
+    _pal2 = randPal();
+    _offCtx.fillStyle = cfg.bg_color;
+    _offCtx.fillRect(0, 0, cfg.canvas_width, cfg.canvas_height);
+    drawGrid(_offCtx);
+    _frame = 0;
+  }
+
+  function draw() {
+    if (!_active) return;
+    if (_needsReset) { _reset(); _needsReset = false; }
+
+    var W = cfg.canvas_width, H = cfg.canvas_height;
+    var spread = cfg.spread;
+    var n = Math.floor(cfg.forms_per_frame);
+
+    /* refresh palette grid periodically */
+    if (_frame > 0 && _frame % cfg.grid_refresh === 0) {
+      _pal1 = randPal();
+      _pal2 = randPal();
+      drawGrid(_offCtx);
+    }
+
+    /* tempo-gated spawning */
+    var spawnOk = true;
+    if (cfg.spawn_sync) {
+      var now = performance.now() / 1000;
+      var beatInterval = (60 / cfg.bpm) / cfg.spawn_beat_div;
+      if (now - _lastSpawn < beatInterval) {
+        spawnOk = false;
+      } else {
+        _lastSpawn += beatInterval;
+        if (now - _lastSpawn > beatInterval) _lastSpawn = now;
+      }
+    }
+
+    /* fade old forms toward bg when life > 0 */
+    if (cfg.life > 0) {
+      _offCtx.globalAlpha = Math.min(1, 4 / cfg.life);
+      _offCtx.fillStyle = cfg.bg_color;
+      _offCtx.fillRect(0, 0, W, H);
+      _offCtx.globalAlpha = 1;
+    }
+
+    if (!spawnOk) {
+      ctx.clearRect(0, 0, W, H);
+      ctx.drawImage(_offscreen, 0, 0);
+      _frame++;
+      return;
+    }
+
+    /* draw N forms onto offscreen */
+    for (var i = 0; i < n; i++) {
+      var x = gauss(W / 2, W * spread);
+      var y = gauss(H / 2, H * spread);
+      var r = gauss(H * 0.001, H * (cfg.size_min * 0.005 + Math.random() * cfg.size_max * 0.01));
+      r = Math.max(1, r);
+      if (Math.random() < cfg.flower_prob) {
+        drawFlower(_offCtx, x, y, r * 3);
+      } else {
+        drawPoly(_offCtx, x, y, r);
+      }
+    }
+
+    /* copy offscreen → main canvas */
+    ctx.clearRect(0, 0, W, H);
+    ctx.drawImage(_offscreen, 0, 0);
+
+    _frame++;
+  }
+
+  function triggerPulse() { _reset(); }
+
+  function activate() {
+    _active = true;
+    canvas = document.getElementById('c');
+    ctx = canvas.getContext('2d');
+    canvas.width = cfg.canvas_width;
+    canvas.height = cfg.canvas_height;
+    if (!_offscreen || _offscreen.width !== cfg.canvas_width || _offscreen.height !== cfg.canvas_height) {
+      _reset();
+    }
+  }
+
+  function deactivate() { _active = false; }
+
+  function init() { _initOffscreen(); }
+
+  return {
+    cfg: cfg,
+    init: init,
+    draw: draw,
+    activate: activate,
+    deactivate: deactivate,
+    reset: _reset,
+    triggerPulse: triggerPulse,
+    markReset: function () { _needsReset = true; }
+  };
+})();
+
+var Engine_NSFluid = (function () {
+  var canvas, ctx;
+  var mouse = window._mouse;
+  var _active = false, _needsReset = false;
+  var _lastTime = 0, _pmx = 0, _pmy = 0;
+  var _lastPulse = 0;
+
+  var cfg = {
+    canvas_width: 800, canvas_height: 600,
+    /* LIVE */
+    velocity_scale: 11,
+    mouse_force: 0.1,
+    mouse_radius: 1,
+    pen_size: 40,
+    /* SIM */
+    grid_n: 15,
+    viscosity: 0.00025,
+    num_particles: 8000,
+    point_size: 1.5,
+    trail_alpha: 0.15,
+    /* COLOR */
+    bg_color: '#000000',
+    particle_color: '#ffffff',
+    color_mode: 0,   /* 0=uniforme  1=vélocité  2=position */
+    /* TEMPO */
+    pulse_enabled: false, pulse_interval: 8.0, pulse_beat_div: 1,
+    time_mode: 'bpm', bpm: 120
+  };
+
+  /* ── Navier-Stokes solver (Stam 2003) ── */
+  function Solver(N) {
+    this.N    = N;
+    this.SIZE = (N + 2) * (N + 2);
+    this.u  = new Float32Array(this.SIZE);
+    this.v  = new Float32Array(this.SIZE);
+    this.u0 = new Float32Array(this.SIZE);
+    this.v0 = new Float32Array(this.SIZE);
+  }
+
+  Solver.prototype.idx = function (i, j) { return i + (this.N + 2) * j; };
+
+  Solver.prototype.getDx = function (x, y) { return this.u[this.idx(x + 1, y + 1)]; };
+  Solver.prototype.getDy = function (x, y) { return this.v[this.idx(x + 1, y + 1)]; };
+
+  Solver.prototype.applyForce = function (cx, cy, vx, vy) {
+    cx++; cy++;
+    var i = this.idx(cx, cy);
+    if (vx !== 0) this.u[i] = vx + (this.u[i] - vx) * 0.85;
+    if (vy !== 0) this.v[i] = vy + (this.v[i] - vy) * 0.85;
+  };
+
+  Solver.prototype.setBnd = function (b, x) {
+    var N = this.N;
+    for (var i = 1; i <= N; i++) {
+      x[this.idx(0,   i)] = b === 1 ? -x[this.idx(1, i)] : x[this.idx(1, i)];
+      x[this.idx(N+1, i)] = b === 1 ? -x[this.idx(N, i)] : x[this.idx(N, i)];
+      x[this.idx(i,   0)] = b === 2 ? -x[this.idx(i, 1)] : x[this.idx(i, 1)];
+      x[this.idx(i, N+1)] = b === 2 ? -x[this.idx(i, N)] : x[this.idx(i, N)];
+    }
+    x[this.idx(0,   0  )] = 0.5*(x[this.idx(1,0)]   + x[this.idx(0,1)]);
+    x[this.idx(0,   N+1)] = 0.5*(x[this.idx(1,N+1)] + x[this.idx(0,N)]);
+    x[this.idx(N+1, 0  )] = 0.5*(x[this.idx(N,0)]   + x[this.idx(N+1,1)]);
+    x[this.idx(N+1, N+1)] = 0.5*(x[this.idx(N,N+1)] + x[this.idx(N+1,N)]);
+  };
+
+  Solver.prototype.diffuse = function (b, x, x0, diff, dt) {
+    var a = dt * diff * this.N * this.N, N = this.N;
+    for (var k = 0; k < 20; k++) {
+      for (var i = 1; i <= N; i++) {
+        for (var j = 1; j <= N; j++) {
+          x[this.idx(i,j)] = (x0[this.idx(i,j)] + a*(
+            x[this.idx(i-1,j)] + x[this.idx(i+1,j)] +
+            x[this.idx(i,j-1)] + x[this.idx(i,j+1)]
+          )) / (1 + 4*a);
+        }
+      }
+      this.setBnd(b, x);
+    }
+  };
+
+  Solver.prototype.project = function (u, v, p, div) {
+    var h = 1.0 / this.N, N = this.N;
+    for (var i = 1; i <= N; i++) {
+      for (var j = 1; j <= N; j++) {
+        div[this.idx(i,j)] = -0.5*h*(
+          u[this.idx(i+1,j)] - u[this.idx(i-1,j)] +
+          v[this.idx(i,j+1)] - v[this.idx(i,j-1)]);
+        p[this.idx(i,j)] = 0;
+      }
+    }
+    this.setBnd(0, div); this.setBnd(0, p);
+    for (var k = 0; k < 20; k++) {
+      for (var i = 1; i <= N; i++) {
+        for (var j = 1; j <= N; j++) {
+          p[this.idx(i,j)] = (div[this.idx(i,j)] +
+            p[this.idx(i-1,j)] + p[this.idx(i+1,j)] +
+            p[this.idx(i,j-1)] + p[this.idx(i,j+1)]) / 4;
+        }
+      }
+      this.setBnd(0, p);
+    }
+    for (var i = 1; i <= N; i++) {
+      for (var j = 1; j <= N; j++) {
+        u[this.idx(i,j)] -= 0.5*(p[this.idx(i+1,j)] - p[this.idx(i-1,j)]) / h;
+        v[this.idx(i,j)] -= 0.5*(p[this.idx(i,j+1)] - p[this.idx(i,j-1)]) / h;
+      }
+    }
+    this.setBnd(1, u); this.setBnd(2, v);
+  };
+
+  Solver.prototype.tick = function (dt, visc) {
+    this.diffuse(1, this.u, this.u, visc, dt);
+    this.diffuse(2, this.v, this.v, visc, dt);
+    this.project(this.u, this.v, this.u0, this.v0);
+  };
+
+  /* ── Particles ── */
+  var solver, particles;
+
+  function lp(a, b, t) { return a + (b - a) * t; }
+
+  function initParticles() {
+    var W = cfg.canvas_width, H = cfg.canvas_height;
+    var n = Math.floor(cfg.num_particles);
+    particles = new Float32Array(n * 2);
+    for (var i = 0; i < n; i++) {
+      particles[i*2]   = Math.random() * W;
+      particles[i*2+1] = Math.random() * H;
+    }
+  }
+
+  function initSolver() {
+    solver = new Solver(cfg.grid_n);
+  }
+
+  function hexRgb(hex) {
+    return [parseInt(hex.slice(1,3),16), parseInt(hex.slice(3,5),16), parseInt(hex.slice(5,7),16)];
+  }
+
+  /* velocity magnitude → HSL color string */
+  function velColor(speed) {
+    var t = Math.min(speed * 8, 1);
+    var h = (220 - t * 220)|0;
+    var l = (30 + t * 55)|0;
+    return 'hsl('+h+',90%,'+l+'%)';
+  }
+
+  function posColor(x, W) {
+    return 'hsl('+((x/W*300)|0)+',80%,60%)';
+  }
+
+  /* ── draw ── */
+  function draw() {
+    if (!_active) return;
+    if (_needsReset) { _reset(); _needsReset = false; }
+
+    var W = cfg.canvas_width, H = cfg.canvas_height;
+    var now = performance.now() / 1000;
+    var dt  = Math.min(now - _lastTime, 0.05);
+    _lastTime = now;
+
+    /* pulse */
+    var pulseEff = cfg.time_mode === 'bpm'
+      ? (60 / cfg.bpm) * cfg.pulse_beat_div
+      : cfg.pulse_interval;
+    if (cfg.pulse_enabled && now - _lastPulse >= pulseEff) {
+      initParticles(); _lastPulse = now;
+    }
+
+    /* mouse force — spread over 3×3 neighbourhood to avoid single-cell block artefact */
+    if (mouse.x > 0 && mouse.x < W && mouse.y > 0 && mouse.y < H) {
+      var mdx = Math.max(-20, Math.min(20, mouse.x - _pmx));
+      var mdy = Math.max(-20, Math.min(20, mouse.y - _pmy));
+      if (Math.abs(mdx) + Math.abs(mdy) > 0.3 || mouse.down) {
+        var cx = Math.floor(cfg.grid_n * mouse.x / W);
+        var cy = Math.floor(cfg.grid_n * mouse.y / H);
+        for (var di = -cfg.mouse_radius; di <= cfg.mouse_radius; di++) {
+          for (var dj = -cfg.mouse_radius; dj <= cfg.mouse_radius; dj++) {
+            var nx = cx + di, ny = cy + dj;
+            if (nx >= 0 && nx < cfg.grid_n && ny >= 0 && ny < cfg.grid_n) {
+              var dist = Math.sqrt(di*di + dj*dj);
+              var falloff = 1 / (1 + dist);
+              solver.applyForce(nx, ny, mdx * cfg.mouse_force * falloff, mdy * cfg.mouse_force * falloff);
+            }
+          }
+        }
+      }
+    }
+    _pmx = mouse.x; _pmy = mouse.y;
+
+    /* simulate */
+    solver.tick(dt, cfg.viscosity);
+
+    /* trail */
+    var bg = hexRgb(cfg.bg_color);
+    ctx.fillStyle = 'rgba('+bg[0]+','+bg[1]+','+bg[2]+','+cfg.trail_alpha+')';
+    ctx.fillRect(0, 0, W, H);
+
+    /* particles */
+    var n    = solver.N;
+    var cW   = W / n;
+    var cH   = H / n;
+    var vSc  = cfg.velocity_scale;
+    var ps   = cfg.point_size;
+    var mode = cfg.color_mode;
+    var pc   = hexRgb(cfg.particle_color);
+    var uniformCol = 'rgb('+pc[0]+','+pc[1]+','+pc[2]+')';
+    var count = (particles.length / 2)|0;
+
+    if (mode === 0) ctx.fillStyle = uniformCol;
+
+    for (var i = 0; i < count; i++) {
+      var px = particles[i*2];
+      var py = particles[i*2+1];
+
+      var cxp = Math.max(0, Math.min(n-1, (px / cW)|0));
+      var cyp = Math.max(0, Math.min(n-1, (py / cH)|0));
+
+      var dx = solver.getDx(cxp, cyp);
+      var dy = solver.getDy(cxp, cyp);
+
+      /* bilinear interpolation of velocity */
+      var lX = px - cxp * cW - cW * 0.5;
+      var lY = py - cyp * cH - cH * 0.5;
+      var vn, hn, vf, hf;
+      if (lX > 0) { vn = Math.min(n, cxp+1); vf=1; } else { vn = Math.max(0, cxp-1); vf=-1; }
+      if (lY > 0) { hn = Math.min(n, cyp+1); hf=1; } else { hn = Math.max(0, cyp-1); hf=-1; }
+      var tx = vf * lX / cW;
+      var ty = hf * lY / cH;
+      dx = lp(lp(dx, solver.getDx(vn,cyp), tx), lp(solver.getDx(cxp,hn), solver.getDx(vn,hn), tx), ty);
+      dy = lp(lp(dy, solver.getDy(vn,cyp), tx), lp(solver.getDy(cxp,hn), solver.getDy(vn,hn), tx), ty);
+
+      px += dx * vSc;
+      py += dy * vSc;
+      if (px < 0) px = 0; if (px > W) px = W;
+      if (py < 0) py = 0; if (py > H) py = H;
+      particles[i*2]   = px;
+      particles[i*2+1] = py;
+
+      if (mode === 1) ctx.fillStyle = velColor(Math.sqrt(dx*dx+dy*dy));
+      else if (mode === 2) ctx.fillStyle = posColor(px, W);
+
+      ctx.fillRect(px, py, ps, ps);
+    }
+  }
+
+  function _reset() {
+    initSolver();
+    initParticles();
+    _lastTime  = performance.now() / 1000;
+    _lastPulse = _lastTime;
+    _pmx = mouse.x; _pmy = mouse.y;
+    /* clear canvas */
+    if (ctx) {
+      var bg = hexRgb(cfg.bg_color);
+      ctx.fillStyle = 'rgb('+bg[0]+','+bg[1]+','+bg[2]+')';
+      ctx.fillRect(0, 0, cfg.canvas_width, cfg.canvas_height);
+    }
+  }
+
+  function triggerPulse() { initParticles(); }
+
+  function activate() {
+    _active = true;
+    canvas = document.getElementById('c');
+    ctx    = canvas.getContext('2d');
+    cfg.canvas_width  = canvas.width  || cfg.canvas_width;
+    cfg.canvas_height = canvas.height || cfg.canvas_height;
+    _pmx = mouse.x; _pmy = mouse.y;
+    if (!solver) _reset();
+    if (_needsReset) { _needsReset = false; _reset(); }
+  }
+
+  function deactivate() { _active = false; }
+
+  function init() {
+    canvas = document.getElementById('c');
+    if (canvas) ctx = canvas.getContext('2d');
+  }
+
+  return {
+    cfg: cfg,
+    init: init, draw: draw,
+    activate: activate, deactivate: deactivate,
+    reset: _reset, triggerPulse: triggerPulse,
+    resetSolver:    function () { initSolver(); },
+    resetParticles: function () { initParticles(); },
+    markReset: function () { _needsReset = true; }
+  };
+})();
+
 /* ═══════════════════════════════════════════
    ENGINE MANAGER
 ═══════════════════════════════════════════ */
@@ -5998,10 +6707,10 @@ var EngineManager=(function(){
     rdiff:window.Engine_RDiff,
     voronoi:window.Engine_Voronoi,follow:window.Engine_Follow,
     ribbon:window.Engine_Ribbon,physiks:window.Engine_Physiks,neural:window.Engine_Neural,
-    ink:window.Engine_Ink,slope:window.Engine_Slope,dune:window.Engine_Dune,cloth:window.Engine_Cloth,fpaint:window.Engine_FPaint,wfc:window.Engine_WFC
+    ink:window.Engine_Ink,slope:window.Engine_Slope,dune:window.Engine_Dune,cloth:window.Engine_Cloth,fpaint:window.Engine_FPaint,wfc:window.Engine_WFC,sketch:window.Engine_Sketch,nstokes:window.Engine_NSFluid
   };
-  var ACCENT={fluid:'#00ffff',vortex:'#ff6600',nbody:'#aa44ff',sph:'#00ff88',boids:'#ffdd00',physarum:'#ff44aa',lorenz:'#44aaff',react:'#ff2266',aco:'#ff8800',rdiff:'#ff5500',voronoi:'#ffcc00',follow:'#6688ff',ribbon:'#ff66aa',physiks:'#c8a040',neural:'#44eeff',ink:'#a044ff',slope:'#ff3d6e',dune:'#e8772e',cloth:'#00aa88',fpaint:'#ff6644',wfc:'#00ffcc'};
-  var NAMES={fluid:'FLUID SIM',vortex:'VORTEX',nbody:'N-BODY',sph:'SPH FLUID',boids:'BOIDS',physarum:'PHYSARUM',lorenz:'LORENZ',react:'REACT',aco:'ACO FOURMIS',rdiff:'REACTION-DIFFUSION',voronoi:'VORONOI VIVANT',follow:'FOLLOW — FLOW FIELD',ribbon:'RIBBON — RUBANS',physiks:'PHYSIKS — PHYSIQUE DES MATÉRIAUX',neural:'NEURAL — RÉSEAU',ink:'INK — ENCRE & PEINTURE',slope:'SLOPE — CHAMPS DE VECTEURS',dune:'DUNE — SABLE & BRUIT',cloth:'CLOTH — TISSU PHYSIQUE',fpaint:'FLUID PAINTING — PEINTURE GPU',wfc:'WFC — WAVE FUNCTION COLLAPSE'};
+  var ACCENT={fluid:'#00ffff',vortex:'#ff6600',nbody:'#aa44ff',sph:'#00ff88',boids:'#ffdd00',physarum:'#ff44aa',lorenz:'#44aaff',react:'#ff2266',aco:'#ff8800',rdiff:'#ff5500',voronoi:'#ffcc00',follow:'#6688ff',ribbon:'#ff66aa',physiks:'#c8a040',neural:'#44eeff',ink:'#a044ff',slope:'#ff3d6e',dune:'#e8772e',cloth:'#00aa88',fpaint:'#ff6644',wfc:'#00ffcc',sketch:'#ea526f',nstokes:'#38bdf8'};
+  var NAMES={fluid:'FLUID SIM',vortex:'VORTEX',nbody:'N-BODY',sph:'SPH FLUID',boids:'BOIDS',physarum:'PHYSARUM',lorenz:'LORENZ',react:'REACT',aco:'ACO FOURMIS',rdiff:'REACTION-DIFFUSION',voronoi:'VORONOI VIVANT',follow:'FOLLOW — FLOW FIELD',ribbon:'RIBBON — RUBANS',physiks:'PHYSIKS — PHYSIQUE DES MATÉRIAUX',neural:'NEURAL — RÉSEAU',ink:'INK — ENCRE & PEINTURE',slope:'SLOPE — CHAMPS DE VECTEURS',dune:'DUNE — SABLE & BRUIT',cloth:'CLOTH — TISSU PHYSIQUE',fpaint:'FLUID PAINTING — PEINTURE GPU',wfc:'WFC — WAVE FUNCTION COLLAPSE',sketch:'SKETCH — ORGANIC BLOOM',nstokes:'NS FLUID — NAVIER-STOKES'};
   window.activeEngine='fluid';
   window.overlayEngine=null;window.overlayAlpha=0.3;
 
@@ -6086,7 +6795,7 @@ function autoResize(){
   FluidSim.cfg.canvas_height=Math.max(res*10,Math.floor(availH/res)*res);
   FluidSim.resize();updateResDisplay();
   /* sync canvas size to all engines and mark them for reset on next activate */
-  var engineNames=['VortexEngine','NBodyEngine','Engine_SPH','Engine_Boids','Engine_Physarum','Engine_Lorenz','Engine_React','Engine_ACO','Engine_RDiff','Engine_LSystem','Engine_Voronoi','Engine_Follow','Engine_Ribbon','Engine_Physiks','Engine_Neural','Engine_Ink','Engine_Slope','Engine_Dune','Engine_Cloth','Engine_FPaint','Engine_WFC'];
+  var engineNames=['VortexEngine','NBodyEngine','Engine_SPH','Engine_Boids','Engine_Physarum','Engine_Lorenz','Engine_React','Engine_ACO','Engine_RDiff','Engine_LSystem','Engine_Voronoi','Engine_Follow','Engine_Ribbon','Engine_Physiks','Engine_Neural','Engine_Ink','Engine_Slope','Engine_Dune','Engine_Cloth','Engine_FPaint','Engine_WFC','Engine_Sketch','Engine_NSFluid'];
   engineNames.forEach(function(n){var e=window[n];if(e&&e.cfg){e.cfg.canvas_width=FluidSim.cfg.canvas_width;e.cfg.canvas_height=FluidSim.cfg.canvas_height;if(e.markReset)e.markReset();}});
 }
 function updateResDisplay(){
@@ -6164,7 +6873,7 @@ document.querySelectorAll('.tab-btn').forEach(function(btn){
     document.querySelectorAll('.tab-pane').forEach(function(p){p.classList.remove('active');});
     this.classList.add('active');
     var el=document.getElementById('tab-'+_activeTab);if(el)el.classList.add('active');
-    ['vortex','nbody','sph','boids','physarum','lorenz','react','aco','rdiff','lsys','voronoi','follow','ribbon','physiks','neural','ink','slope','dune','cloth','fpaint','wfc'].forEach(function(eng){
+    ['vortex','nbody','sph','boids','physarum','lorenz','react','aco','rdiff','lsys','voronoi','follow','ribbon','physiks','neural','ink','slope','dune','cloth','fpaint','wfc','sketch','nstokes'].forEach(function(eng){
       var vel=document.getElementById('tab-'+eng+'-'+_activeTab);if(vel)vel.classList.add('active');
     });
   });
@@ -7316,7 +8025,7 @@ wire('loop-len','loop_length','val-loop-len',0);
    INIT
 ═══════════════════════════════════════════ */
 window.requestAnimationFrame=window.requestAnimationFrame||window.webkitRequestAnimationFrame||window.mozRequestAnimationFrame;
-var VERSION='v4.0.0.029';
+var VERSION='v4.0.0.044';
 /* EngineManager.init() appelle FluidSim.init() qui initialise canvas+ctx AVANT autoResize */
 EngineManager.init();
 /* ── VERSION DISPLAY ── */
@@ -8018,12 +8727,105 @@ updateResDisplay();
 })();
 
 /* ═══════════════════════════════════════════
+   SKETCH WIRING
+═══════════════════════════════════════════ */
+(function(){
+  var E = Engine_Sketch;
+  function wireE(sid, key, spid, dec) {
+    var sl = document.getElementById(sid), sp = document.getElementById(spid);
+    if (!sl || !sp) return;
+    sl.addEventListener('input', function () { E.cfg[key] = parseFloat(this.value); sp.textContent = parseFloat(this.value).toFixed(dec !== undefined ? dec : 1); });
+  }
+  wireE('skforms-per-frame', 'forms_per_frame', 'skval-forms', 0);
+  wireE('skflower-prob',     'flower_prob',      'skval-flower', 4);
+  wireE('skspread',          'spread',            'skval-spread', 2);
+  wireE('sksize-min',        'size_min',          'skval-smin',  1);
+  wireE('sksize-max',        'size_max',          'skval-smax',  1);
+  wireE('skgrid-refresh',    'grid_refresh',      'skval-grid-refresh', 0);
+  wireE('skgrid-weight',     'grid_weight',       'skval-grid-weight', 1);
+  wireE('sklife',            'life',               'skval-life',      0);
+  wireE('skspawn-beat-div',  'spawn_beat_div',    'skval-spawn-div', 0);
+  (function(){
+    var bt=document.getElementById('skbtn-spawn-sync');
+    if(!bt)return;
+    function upd(){bt.classList.toggle('on',E.cfg.spawn_sync);bt.querySelector('.dot').style.background=E.cfg.spawn_sync?'var(--accent)':'#444';}
+    bt.addEventListener('click',function(){E.cfg.spawn_sync=!E.cfg.spawn_sync;upd();});
+    upd();
+  })();
+  wireE('sktpulse-int',      'pulse_interval',    'skval-pulse-int', 1);
+  wireE('skbeat-div',        'pulse_beat_div',    'skval-beat-div', 0);
+  (function(){ var b=document.getElementById('skbg-color'); if(b) b.addEventListener('input',function(){ E.cfg.bg_color=this.value; }); })();
+  (function(){ var b=document.getElementById('skgrid-visible'); if(b) b.addEventListener('change',function(){ E.cfg.grid_visible=this.checked; }); })();
+  (function(){ var b=document.getElementById('skpal-index'); if(b) b.addEventListener('input',function(){
+    var v=parseInt(this.value);
+    E.cfg.palette_index=v;
+    var sp=document.getElementById('skval-pal');
+    if(sp) sp.textContent = v<0 ? 'aléatoire' : ('n°'+v);
+  }); })();
+  (function(){
+    var bt=document.getElementById('skbtn-pulse');
+    if(bt){
+      function upd(){ bt.classList.toggle('on',E.cfg.pulse_enabled); bt.querySelector('.dot').style.background=E.cfg.pulse_enabled?'var(--accent)':'#444'; }
+      bt.addEventListener('click',function(){ E.cfg.pulse_enabled=!E.cfg.pulse_enabled; upd(); });
+      upd();
+    }
+  })();
+  (function(){ var b=document.getElementById('skbtn-pulse-fire'); if(b) b.addEventListener('click',function(){ E.triggerPulse(); }); })();
+  (function(){ var b=document.getElementById('skbtn-reset');      if(b) b.addEventListener('click',function(){ E.reset(); }); })();
+})();
+
+
+/* ═══════════════════════════════════════════
+   NS FLUID WIRING
+═══════════════════════════════════════════ */
+(function(){
+  var E = Engine_NSFluid;
+  function wireE(sid,key,spid,dec){
+    var sl=document.getElementById(sid),sp=document.getElementById(spid);
+    if(!sl||!sp)return;
+    sl.addEventListener('input',function(){E.cfg[key]=parseFloat(this.value);sp.textContent=parseFloat(this.value).toFixed(dec!==undefined?dec:1);});
+  }
+  wireE('nsvel-scale',   'velocity_scale', 'nsval-vel',    1);
+  wireE('nsmouse-force', 'mouse_force',    'nsval-mforce', 3);
+  wireE('nsmouse-radius', 'mouse_radius', 'nsval-mradius', 0);
+  wireE('nsviscosity',   'viscosity',      'nsval-visc',   5);
+  wireE('nsnum-part',    'num_particles',  'nsval-npart',  0);
+  wireE('nspoint-size',  'point_size',     'nsval-psize',  1);
+  wireE('nstrail-alpha', 'trail_alpha',    'nsval-trail',  2);
+  wireE('nstpulse-int',  'pulse_interval', 'nsval-pint',   1);
+  wireE('nsbeat-div',    'pulse_beat_div', 'nsval-bdiv',   0);
+  (function(){
+    var sl=document.getElementById('nsgrid-n'), sp=document.getElementById('nsval-gridn');
+    if(!sl||!sp)return;
+    sl.addEventListener('change',function(){
+      E.cfg.grid_n=parseInt(this.value);
+      sp.textContent=this.value;
+      E.reset();
+    });
+  })();
+  (function(){var b=document.getElementById('nsbg-color');    if(b)b.addEventListener('input',function(){E.cfg.bg_color=this.value;});})();
+  (function(){var b=document.getElementById('nspart-color');  if(b)b.addEventListener('input',function(){E.cfg.particle_color=this.value;});})();
+  (function(){var b=document.getElementById('nscolor-mode');  if(b)b.addEventListener('change',function(){E.cfg.color_mode=parseInt(this.value);});})();
+  (function(){var b=document.getElementById('nsbtn-reset-p'); if(b)b.addEventListener('click',function(){E.resetParticles();});})();
+  (function(){var b=document.getElementById('nsbtn-reset');   if(b)b.addEventListener('click',function(){E.reset();});})();
+  (function(){
+    var bt=document.getElementById('nsbtn-pulse');
+    if(bt){
+      function upd(){bt.classList.toggle('on',E.cfg.pulse_enabled);bt.querySelector('.dot').style.background=E.cfg.pulse_enabled?'var(--accent)':'#444';}
+      bt.addEventListener('click',function(){E.cfg.pulse_enabled=!E.cfg.pulse_enabled;upd();});
+      upd();
+    }
+  })();
+  (function(){var b=document.getElementById('nsbtn-pulse-fire');if(b)b.addEventListener('click',function(){E.triggerPulse();});})();
+})();
+
+/* ═══════════════════════════════════════════
    CURSOR X/Y + CLICK — câblage global MIDI
 ═══════════════════════════════════════════ */
 (function(){
   /* préfixe HTML → clé activeEngine */
-  var ENG_PFX={fluid:'',vortex:'v',nbody:'nb',sph:'sph',boids:'b',physarum:'ph',lorenz:'l',react:'r',aco:'aco',rdiff:'rd',lsys:'ls',voronoi:'vo',follow:'fw',ribbon:'rb',physiks:'phx',neural:'nr',ink:'ink',slope:'slp',dune:'dun',cloth:'clth',fpaint:'fp',wfc:'wfc'};
-  var ALL_PFX=['','v','nb','sph','b','ph','l','r','aco','rd','ls','vo','fw','rb','phx','nr','ink','slp','dun','clth','fp','wfc'];
+  var ENG_PFX={fluid:'',vortex:'v',nbody:'nb',sph:'sph',boids:'b',physarum:'ph',lorenz:'l',react:'r',aco:'aco',rdiff:'rd',lsys:'ls',voronoi:'vo',follow:'fw',ribbon:'rb',physiks:'phx',neural:'nr',ink:'ink',slope:'slp',dune:'dun',cloth:'clth',fpaint:'fp',wfc:'wfc',sketch:'sk',nstokes:'ns'};
+  var ALL_PFX=['','v','nb','sph','b','ph','l','r','aco','rd','ls','vo','fw','rb','phx','nr','ink','slp','dun','clth','fp','wfc','sk','ns'];
 
   function getCanvas(){return document.getElementById('c');}
 
@@ -8721,6 +9523,58 @@ updateResDisplay();
       blank_weight:0.04,use_curves:false,collapse_speed:8,
       pen_size:60,push_force:1.0,
       pulse_enabled:false,pulse_interval:6.0,pulse_beat_div:1
+    }}
+
+    /* ── SKETCH ── */
+    ,'Sketch — Risographie':{engine:'sketch',sketch:{
+      forms_per_frame:60,flower_prob:0.001,spread:0.12,
+      size_min:0.5,size_max:2.0,grid_refresh:80,grid_visible:true,grid_weight:0.5,
+      bg_color:'#e9dbce',palette_index:-1,
+      pulse_enabled:false,pulse_interval:8.0,pulse_beat_div:1
+    }}
+    ,'Sketch — Neon Storm':{engine:'sketch',sketch:{
+      forms_per_frame:150,flower_prob:0.003,spread:0.22,
+      size_min:1.0,size_max:5.0,grid_refresh:40,grid_visible:true,grid_weight:0.3,
+      bg_color:'#0a0010',palette_index:7,
+      pulse_enabled:true,pulse_interval:6.0,pulse_beat_div:2
+    }}
+    ,'Sketch — Pale Bloom':{engine:'sketch',sketch:{
+      forms_per_frame:30,flower_prob:0.005,spread:0.08,
+      size_min:0.3,size_max:3.0,grid_refresh:200,grid_visible:false,grid_weight:0.5,
+      bg_color:'#f2ede8',palette_index:24,
+      pulse_enabled:false,pulse_interval:12.0,pulse_beat_div:1
+    }}
+    ,'Sketch — Dark Scatter':{engine:'sketch',sketch:{
+      forms_per_frame:100,flower_prob:0.0,spread:0.35,
+      size_min:0.5,size_max:4.0,grid_refresh:60,grid_visible:true,grid_weight:0.8,
+      bg_color:'#111111',palette_index:35,
+      pulse_enabled:true,pulse_interval:4.0,pulse_beat_div:1
+    }}
+
+    /* ── NS FLUID ── */
+    ,'NS Fluid — Doux':{engine:'nstokes',nstokes:{
+      velocity_scale:11,mouse_force:0.1,grid_n:15,viscosity:0.00025,
+      num_particles:8000,point_size:1.5,trail_alpha:0.15,
+      bg_color:'#000000',particle_color:'#ffffff',color_mode:0,
+      pulse_enabled:false,pulse_interval:8.0,pulse_beat_div:1
+    }}
+    ,'NS Fluid — Vélocité Color':{engine:'nstokes',nstokes:{
+      velocity_scale:18,mouse_force:0.15,grid_n:20,viscosity:0.0001,
+      num_particles:12000,point_size:2.0,trail_alpha:0.08,
+      bg_color:'#000000',particle_color:'#38bdf8',color_mode:1,
+      pulse_enabled:false,pulse_interval:8.0,pulse_beat_div:1
+    }}
+    ,'NS Fluid — Tempête':{engine:'nstokes',nstokes:{
+      velocity_scale:25,mouse_force:0.25,grid_n:25,viscosity:0.00005,
+      num_particles:20000,point_size:1.0,trail_alpha:0.05,
+      bg_color:'#050510',particle_color:'#ff6644',color_mode:1,
+      pulse_enabled:true,pulse_interval:6.0,pulse_beat_div:2
+    }}
+    ,'NS Fluid — Position Arc-en-ciel':{engine:'nstokes',nstokes:{
+      velocity_scale:14,mouse_force:0.12,grid_n:18,viscosity:0.0002,
+      num_particles:10000,point_size:2.5,trail_alpha:0.2,
+      bg_color:'#0a0a0a',particle_color:'#ffffff',color_mode:2,
+      pulse_enabled:false,pulse_interval:10.0,pulse_beat_div:1
     }}
 
     /* ── Ajouter ici les presets de tout nouveau moteur ── */

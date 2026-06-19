@@ -9,10 +9,10 @@ var EngineManager=(function(){
     rdiff:window.Engine_RDiff,
     voronoi:window.Engine_Voronoi,follow:window.Engine_Follow,
     ribbon:window.Engine_Ribbon,physiks:window.Engine_Physiks,neural:window.Engine_Neural,
-    ink:window.Engine_Ink,slope:window.Engine_Slope,dune:window.Engine_Dune,cloth:window.Engine_Cloth,fpaint:window.Engine_FPaint,wfc:window.Engine_WFC
+    ink:window.Engine_Ink,slope:window.Engine_Slope,dune:window.Engine_Dune,cloth:window.Engine_Cloth,fpaint:window.Engine_FPaint,wfc:window.Engine_WFC,sketch:window.Engine_Sketch,nstokes:window.Engine_NSFluid
   };
-  var ACCENT={fluid:'#00ffff',vortex:'#ff6600',nbody:'#aa44ff',sph:'#00ff88',boids:'#ffdd00',physarum:'#ff44aa',lorenz:'#44aaff',react:'#ff2266',aco:'#ff8800',rdiff:'#ff5500',voronoi:'#ffcc00',follow:'#6688ff',ribbon:'#ff66aa',physiks:'#c8a040',neural:'#44eeff',ink:'#a044ff',slope:'#ff3d6e',dune:'#e8772e',cloth:'#00aa88',fpaint:'#ff6644',wfc:'#00ffcc'};
-  var NAMES={fluid:'FLUID SIM',vortex:'VORTEX',nbody:'N-BODY',sph:'SPH FLUID',boids:'BOIDS',physarum:'PHYSARUM',lorenz:'LORENZ',react:'REACT',aco:'ACO FOURMIS',rdiff:'REACTION-DIFFUSION',voronoi:'VORONOI VIVANT',follow:'FOLLOW — FLOW FIELD',ribbon:'RIBBON — RUBANS',physiks:'PHYSIKS — PHYSIQUE DES MATÉRIAUX',neural:'NEURAL — RÉSEAU',ink:'INK — ENCRE & PEINTURE',slope:'SLOPE — CHAMPS DE VECTEURS',dune:'DUNE — SABLE & BRUIT',cloth:'CLOTH — TISSU PHYSIQUE',fpaint:'FLUID PAINTING — PEINTURE GPU',wfc:'WFC — WAVE FUNCTION COLLAPSE'};
+  var ACCENT={fluid:'#00ffff',vortex:'#ff6600',nbody:'#aa44ff',sph:'#00ff88',boids:'#ffdd00',physarum:'#ff44aa',lorenz:'#44aaff',react:'#ff2266',aco:'#ff8800',rdiff:'#ff5500',voronoi:'#ffcc00',follow:'#6688ff',ribbon:'#ff66aa',physiks:'#c8a040',neural:'#44eeff',ink:'#a044ff',slope:'#ff3d6e',dune:'#e8772e',cloth:'#00aa88',fpaint:'#ff6644',wfc:'#00ffcc',sketch:'#ea526f',nstokes:'#38bdf8'};
+  var NAMES={fluid:'FLUID SIM',vortex:'VORTEX',nbody:'N-BODY',sph:'SPH FLUID',boids:'BOIDS',physarum:'PHYSARUM',lorenz:'LORENZ',react:'REACT',aco:'ACO FOURMIS',rdiff:'REACTION-DIFFUSION',voronoi:'VORONOI VIVANT',follow:'FOLLOW — FLOW FIELD',ribbon:'RIBBON — RUBANS',physiks:'PHYSIKS — PHYSIQUE DES MATÉRIAUX',neural:'NEURAL — RÉSEAU',ink:'INK — ENCRE & PEINTURE',slope:'SLOPE — CHAMPS DE VECTEURS',dune:'DUNE — SABLE & BRUIT',cloth:'CLOTH — TISSU PHYSIQUE',fpaint:'FLUID PAINTING — PEINTURE GPU',wfc:'WFC — WAVE FUNCTION COLLAPSE',sketch:'SKETCH — ORGANIC BLOOM',nstokes:'NS FLUID — NAVIER-STOKES'};
   window.activeEngine='fluid';
   window.overlayEngine=null;window.overlayAlpha=0.3;
 
@@ -97,7 +97,7 @@ function autoResize(){
   FluidSim.cfg.canvas_height=Math.max(res*10,Math.floor(availH/res)*res);
   FluidSim.resize();updateResDisplay();
   /* sync canvas size to all engines and mark them for reset on next activate */
-  var engineNames=['VortexEngine','NBodyEngine','Engine_SPH','Engine_Boids','Engine_Physarum','Engine_Lorenz','Engine_React','Engine_ACO','Engine_RDiff','Engine_LSystem','Engine_Voronoi','Engine_Follow','Engine_Ribbon','Engine_Physiks','Engine_Neural','Engine_Ink','Engine_Slope','Engine_Dune','Engine_Cloth','Engine_FPaint','Engine_WFC'];
+  var engineNames=['VortexEngine','NBodyEngine','Engine_SPH','Engine_Boids','Engine_Physarum','Engine_Lorenz','Engine_React','Engine_ACO','Engine_RDiff','Engine_LSystem','Engine_Voronoi','Engine_Follow','Engine_Ribbon','Engine_Physiks','Engine_Neural','Engine_Ink','Engine_Slope','Engine_Dune','Engine_Cloth','Engine_FPaint','Engine_WFC','Engine_Sketch','Engine_NSFluid'];
   engineNames.forEach(function(n){var e=window[n];if(e&&e.cfg){e.cfg.canvas_width=FluidSim.cfg.canvas_width;e.cfg.canvas_height=FluidSim.cfg.canvas_height;if(e.markReset)e.markReset();}});
 }
 function updateResDisplay(){
@@ -175,7 +175,7 @@ document.querySelectorAll('.tab-btn').forEach(function(btn){
     document.querySelectorAll('.tab-pane').forEach(function(p){p.classList.remove('active');});
     this.classList.add('active');
     var el=document.getElementById('tab-'+_activeTab);if(el)el.classList.add('active');
-    ['vortex','nbody','sph','boids','physarum','lorenz','react','aco','rdiff','lsys','voronoi','follow','ribbon','physiks','neural','ink','slope','dune','cloth','fpaint','wfc'].forEach(function(eng){
+    ['vortex','nbody','sph','boids','physarum','lorenz','react','aco','rdiff','lsys','voronoi','follow','ribbon','physiks','neural','ink','slope','dune','cloth','fpaint','wfc','sketch','nstokes'].forEach(function(eng){
       var vel=document.getElementById('tab-'+eng+'-'+_activeTab);if(vel)vel.classList.add('active');
     });
   });
@@ -1327,7 +1327,7 @@ wire('loop-len','loop_length','val-loop-len',0);
    INIT
 ═══════════════════════════════════════════ */
 window.requestAnimationFrame=window.requestAnimationFrame||window.webkitRequestAnimationFrame||window.mozRequestAnimationFrame;
-var VERSION='v4.0.0.029';
+var VERSION='v4.0.0.044';
 /* EngineManager.init() appelle FluidSim.init() qui initialise canvas+ctx AVANT autoResize */
 EngineManager.init();
 /* ── VERSION DISPLAY ── */
@@ -2029,12 +2029,105 @@ updateResDisplay();
 })();
 
 /* ═══════════════════════════════════════════
+   SKETCH WIRING
+═══════════════════════════════════════════ */
+(function(){
+  var E = Engine_Sketch;
+  function wireE(sid, key, spid, dec) {
+    var sl = document.getElementById(sid), sp = document.getElementById(spid);
+    if (!sl || !sp) return;
+    sl.addEventListener('input', function () { E.cfg[key] = parseFloat(this.value); sp.textContent = parseFloat(this.value).toFixed(dec !== undefined ? dec : 1); });
+  }
+  wireE('skforms-per-frame', 'forms_per_frame', 'skval-forms', 0);
+  wireE('skflower-prob',     'flower_prob',      'skval-flower', 4);
+  wireE('skspread',          'spread',            'skval-spread', 2);
+  wireE('sksize-min',        'size_min',          'skval-smin',  1);
+  wireE('sksize-max',        'size_max',          'skval-smax',  1);
+  wireE('skgrid-refresh',    'grid_refresh',      'skval-grid-refresh', 0);
+  wireE('skgrid-weight',     'grid_weight',       'skval-grid-weight', 1);
+  wireE('sklife',            'life',               'skval-life',      0);
+  wireE('skspawn-beat-div',  'spawn_beat_div',    'skval-spawn-div', 0);
+  (function(){
+    var bt=document.getElementById('skbtn-spawn-sync');
+    if(!bt)return;
+    function upd(){bt.classList.toggle('on',E.cfg.spawn_sync);bt.querySelector('.dot').style.background=E.cfg.spawn_sync?'var(--accent)':'#444';}
+    bt.addEventListener('click',function(){E.cfg.spawn_sync=!E.cfg.spawn_sync;upd();});
+    upd();
+  })();
+  wireE('sktpulse-int',      'pulse_interval',    'skval-pulse-int', 1);
+  wireE('skbeat-div',        'pulse_beat_div',    'skval-beat-div', 0);
+  (function(){ var b=document.getElementById('skbg-color'); if(b) b.addEventListener('input',function(){ E.cfg.bg_color=this.value; }); })();
+  (function(){ var b=document.getElementById('skgrid-visible'); if(b) b.addEventListener('change',function(){ E.cfg.grid_visible=this.checked; }); })();
+  (function(){ var b=document.getElementById('skpal-index'); if(b) b.addEventListener('input',function(){
+    var v=parseInt(this.value);
+    E.cfg.palette_index=v;
+    var sp=document.getElementById('skval-pal');
+    if(sp) sp.textContent = v<0 ? 'aléatoire' : ('n°'+v);
+  }); })();
+  (function(){
+    var bt=document.getElementById('skbtn-pulse');
+    if(bt){
+      function upd(){ bt.classList.toggle('on',E.cfg.pulse_enabled); bt.querySelector('.dot').style.background=E.cfg.pulse_enabled?'var(--accent)':'#444'; }
+      bt.addEventListener('click',function(){ E.cfg.pulse_enabled=!E.cfg.pulse_enabled; upd(); });
+      upd();
+    }
+  })();
+  (function(){ var b=document.getElementById('skbtn-pulse-fire'); if(b) b.addEventListener('click',function(){ E.triggerPulse(); }); })();
+  (function(){ var b=document.getElementById('skbtn-reset');      if(b) b.addEventListener('click',function(){ E.reset(); }); })();
+})();
+
+
+/* ═══════════════════════════════════════════
+   NS FLUID WIRING
+═══════════════════════════════════════════ */
+(function(){
+  var E = Engine_NSFluid;
+  function wireE(sid,key,spid,dec){
+    var sl=document.getElementById(sid),sp=document.getElementById(spid);
+    if(!sl||!sp)return;
+    sl.addEventListener('input',function(){E.cfg[key]=parseFloat(this.value);sp.textContent=parseFloat(this.value).toFixed(dec!==undefined?dec:1);});
+  }
+  wireE('nsvel-scale',   'velocity_scale', 'nsval-vel',    1);
+  wireE('nsmouse-force', 'mouse_force',    'nsval-mforce', 3);
+  wireE('nsmouse-radius', 'mouse_radius', 'nsval-mradius', 0);
+  wireE('nsviscosity',   'viscosity',      'nsval-visc',   5);
+  wireE('nsnum-part',    'num_particles',  'nsval-npart',  0);
+  wireE('nspoint-size',  'point_size',     'nsval-psize',  1);
+  wireE('nstrail-alpha', 'trail_alpha',    'nsval-trail',  2);
+  wireE('nstpulse-int',  'pulse_interval', 'nsval-pint',   1);
+  wireE('nsbeat-div',    'pulse_beat_div', 'nsval-bdiv',   0);
+  (function(){
+    var sl=document.getElementById('nsgrid-n'), sp=document.getElementById('nsval-gridn');
+    if(!sl||!sp)return;
+    sl.addEventListener('change',function(){
+      E.cfg.grid_n=parseInt(this.value);
+      sp.textContent=this.value;
+      E.reset();
+    });
+  })();
+  (function(){var b=document.getElementById('nsbg-color');    if(b)b.addEventListener('input',function(){E.cfg.bg_color=this.value;});})();
+  (function(){var b=document.getElementById('nspart-color');  if(b)b.addEventListener('input',function(){E.cfg.particle_color=this.value;});})();
+  (function(){var b=document.getElementById('nscolor-mode');  if(b)b.addEventListener('change',function(){E.cfg.color_mode=parseInt(this.value);});})();
+  (function(){var b=document.getElementById('nsbtn-reset-p'); if(b)b.addEventListener('click',function(){E.resetParticles();});})();
+  (function(){var b=document.getElementById('nsbtn-reset');   if(b)b.addEventListener('click',function(){E.reset();});})();
+  (function(){
+    var bt=document.getElementById('nsbtn-pulse');
+    if(bt){
+      function upd(){bt.classList.toggle('on',E.cfg.pulse_enabled);bt.querySelector('.dot').style.background=E.cfg.pulse_enabled?'var(--accent)':'#444';}
+      bt.addEventListener('click',function(){E.cfg.pulse_enabled=!E.cfg.pulse_enabled;upd();});
+      upd();
+    }
+  })();
+  (function(){var b=document.getElementById('nsbtn-pulse-fire');if(b)b.addEventListener('click',function(){E.triggerPulse();});})();
+})();
+
+/* ═══════════════════════════════════════════
    CURSOR X/Y + CLICK — câblage global MIDI
 ═══════════════════════════════════════════ */
 (function(){
   /* préfixe HTML → clé activeEngine */
-  var ENG_PFX={fluid:'',vortex:'v',nbody:'nb',sph:'sph',boids:'b',physarum:'ph',lorenz:'l',react:'r',aco:'aco',rdiff:'rd',lsys:'ls',voronoi:'vo',follow:'fw',ribbon:'rb',physiks:'phx',neural:'nr',ink:'ink',slope:'slp',dune:'dun',cloth:'clth',fpaint:'fp',wfc:'wfc'};
-  var ALL_PFX=['','v','nb','sph','b','ph','l','r','aco','rd','ls','vo','fw','rb','phx','nr','ink','slp','dun','clth','fp','wfc'];
+  var ENG_PFX={fluid:'',vortex:'v',nbody:'nb',sph:'sph',boids:'b',physarum:'ph',lorenz:'l',react:'r',aco:'aco',rdiff:'rd',lsys:'ls',voronoi:'vo',follow:'fw',ribbon:'rb',physiks:'phx',neural:'nr',ink:'ink',slope:'slp',dune:'dun',cloth:'clth',fpaint:'fp',wfc:'wfc',sketch:'sk',nstokes:'ns'};
+  var ALL_PFX=['','v','nb','sph','b','ph','l','r','aco','rd','ls','vo','fw','rb','phx','nr','ink','slp','dun','clth','fp','wfc','sk','ns'];
 
   function getCanvas(){return document.getElementById('c');}
 

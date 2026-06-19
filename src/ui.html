@@ -53,6 +53,8 @@
     <button class="eng-btn"        data-engine="cloth"    style="--e:#00aa88">CLOTH</button>
     <button class="eng-btn"        data-engine="fpaint"   style="--e:#ff6644">PAINT</button>
     <button class="eng-btn"        data-engine="wfc"      style="--e:#00ffcc">WFC</button>
+    <button class="eng-btn"        data-engine="sketch"   style="--e:#ea526f">SKETCH</button>
+    <button class="eng-btn"        data-engine="nstokes"  style="--e:#38bdf8">NS FLUID</button>
   </div>
 
   <!-- ══ FX CHAIN PANEL ══ -->
@@ -70,7 +72,7 @@
 
   <div id="tab-bar">
     <button class="tab-btn active" data-tab="live">LIVE</button>
-    <button class="tab-btn" data-tab="sim">SIM</button>
+
     <button class="tab-btn" data-tab="color">COLOR</button>
     <button class="tab-btn" data-tab="tempo">TEMPO</button>
     <button class="tab-btn" data-tab="io">MIDI</button>
@@ -163,9 +165,7 @@
       <div class="ctrl"><label>Longueur <span class="val" id="val-loop-len">2</span> bars</label><input type="range" id="loop-len" min="1" max="16" step="1" value="2"></div>
       <div id="looper-status" style="color:#333;font-size:9px;text-align:center;margin-top:3px">ARRÊTÉ · 0 event(s)</div>
     </div>
-  </div><!-- /tab-live -->
-
-  <div class="tab-pane" id="tab-sim">
+    <div class="sep"></div>
     <div class="sec">
       <div class="sec-title">Particules</div>
       <div class="ctrl"><label>Nombre <span class="val" id="val-speck">5000</span></label><input type="range" id="speck" min="100" max="30000" step="100" value="5000"></div>
@@ -197,7 +197,7 @@
     </div>
     <div class="sep"></div>
     <button class="btn-wide" id="btn-reinit">↺ Réinitialiser simulation</button>
-  </div><!-- /tab-sim -->
+  </div><!-- /tab-live -->
 
   <div class="tab-pane" id="tab-color">
     <div class="sec">
@@ -484,8 +484,7 @@
       </div>
       <div class="prog-bar"><div class="prog-fill" id="vauto-bar"></div></div>
     </div>
-  </div>
-  <div class="tab-pane" id="tab-vortex-sim">
+    <div class="sep"></div>
     <div class="sec">
       <div class="ctrl"><label>Particules <span class="val" id="vval-speck">8000</span></label><input type="range" id="vspeck" min="100" max="30000" step="100" value="8000"></div>
       <div class="ctrl"><label>Épaisseur <span class="val" id="vval-lw">1.0</span></label><input type="range" id="vlw" min="0.2" max="5" step="0.1" value="1.0"></div>
@@ -590,8 +589,7 @@
       </div>
       <div class="prog-bar"><div class="prog-fill" id="nbauto-bar"></div></div>
     </div>
-  </div>
-  <div class="tab-pane" id="tab-nbody-sim">
+    <div class="sep"></div>
     <div class="sec">
       <div class="ctrl"><label>Particules <span class="val" id="nbval-speck">10000</span></label><input type="range" id="nbspeck" min="100" max="40000" step="100" value="10000"></div>
       <div class="ctrl"><label>Flow force <span class="val" id="nbval-ff">0.10</span></label><input type="range" id="nbff" min="0.005" max="0.5" step="0.005" value="0.1"></div>
@@ -668,8 +666,7 @@
         </div>
       </div>
     </div>
-  </div>
-  <div class="tab-pane" id="tab-sph-sim">
+    <div class="sep"></div>
     <div class="sec">
       <div class="ctrl"><label>Particules <span class="val" id="sphval-count">2000</span></label><input type="range" id="sphere-particle-count" min="100" max="10000" step="100" value="2000"></div>
       <div class="ctrl"><label>Smoothing h <span class="val" id="sphval-h">30</span></label><input type="range" id="sphsmoothing-h" min="10" max="80" step="2" value="30"></div>
@@ -728,8 +725,7 @@
         </div>
       </div>
     </div>
-  </div>
-  <div class="tab-pane" id="tab-boids-sim">
+    <div class="sep"></div>
     <div class="sec">
       <div class="ctrl"><label>Nombre boids <span class="val" id="bval-count">300</span></label><input type="range" id="bboid-count" min="50" max="2000" step="50" value="300"></div>
       <div class="ctrl"><label>Rayon vision <span class="val" id="bval-perc">80</span></label><input type="range" id="bperception" min="20" max="200" step="5" value="80"></div>
@@ -787,8 +783,7 @@
         </div>
       </div>
     </div>
-  </div>
-  <div class="tab-pane" id="tab-physarum-sim">
+    <div class="sep"></div>
     <div class="sec">
       <div class="ctrl"><label>Agents <span class="val" id="phval-agents">100000</span></label><input type="range" id="phagent-count" min="5000" max="200000" step="5000" value="100000"></div>
       <div class="ctrl"><label>Vitesse <span class="val" id="phval-speed">1.8</span></label><input type="range" id="phagent-speed" min="0.5" max="5" step="0.1" value="1.8"></div>
@@ -853,8 +848,7 @@
       <div class="ctrl"><label>Curseur Y <span class="val" id="lval-cy">0.50</span></label><input type="range" id="lcursor-y" min="0" max="1" step="0.005" value="0.50"></div>
       <div class="quick-row" style="margin-top:4px"><button class="big-toggle" id="lbtn-click" style="flex:1"><span class="dot"></span>CLICK</button><button class="quick-fire" id="lbtn-click-fire">▶</button></div>
     </div>
-  </div>
-  <div class="tab-pane" id="tab-lorenz-sim">
+    <div class="sep"></div>
     <div class="sec">
       <div class="ctrl"><label>Trajectoires <span class="val" id="lval-tcount">1000</span></label><input type="range" id="ltrajectory-count" min="100" max="5000" step="100" value="1000"></div>
       <div class="ctrl"><label>Trail length <span class="val" id="lval-tlen">50</span></label><input type="range" id="ltrail-length" min="10" max="200" step="5" value="50"></div>
@@ -953,8 +947,7 @@
         </div>
       </div>
     </div>
-  </div>
-  <div class="tab-pane" id="tab-react-sim">
+    <div class="sep"></div>
     <div class="sec">
       <div class="ctrl"><label>Feed (f) <span class="val" id="rval-feed">0.055</span></label><input type="range" id="rfeed" min="0.01" max="0.1" step="0.001" value="0.055"></div>
       <div class="ctrl"><label>Kill (k) <span class="val" id="rval-kill">0.062</span></label><input type="range" id="rkill" min="0.03" max="0.085" step="0.001" value="0.062"></div>
@@ -1008,8 +1001,7 @@
     </div>
     <div class="sep"></div>
     <button class="btn-wide" id="acobtn-reset">↺ Réinitialiser ACO</button>
-  </div>
-  <div class="tab-pane" id="tab-aco-sim">
+    <div class="sep"></div>
     <div class="sec">
       <div class="ctrl"><label>Fourmis <span class="val" id="acoval-ants">3000</span></label><input type="range" id="acoant-count" min="500" max="15000" step="500" value="3000"></div>
       <div class="ctrl"><label>Nids <span class="val" id="acoval-nests">2</span></label><input type="range" id="aconest-count" min="1" max="6" step="1" value="2"></div>
@@ -1192,8 +1184,7 @@
     <div class="sec"><div class="btn-grid" style="grid-template-columns:repeat(2,1fr)">
       <button class="btn active" data-rdbrush="inject">Injecter B</button><button class="btn" data-rdbrush="erase">Effacer B</button>
     </div></div>
-  </div>
-  <div class="tab-pane" id="tab-rdiff-sim">
+    <div class="sep"></div>
     <div class="sec">
       <div class="ctrl"><label>F feed <span class="val" id="rdval-f">0.055</span></label><input type="range" id="rdf" min="0.01" max="0.1" step="0.001" value="0.055"></div>
       <div class="ctrl"><label>k kill <span class="val" id="rdval-k">0.062</span></label><input type="range" id="rdk" min="0.03" max="0.075" step="0.001" value="0.062"></div>
@@ -1244,8 +1235,7 @@
       <div class="ctrl"><label>Curseur Y <span class="val" id="lsval-cy">0.50</span></label><input type="range" id="lscursor-y" min="0" max="1" step="0.005" value="0.50"></div>
       <div class="quick-row" style="margin-top:4px"><button class="big-toggle" id="lsbtn-click" style="flex:1"><span class="dot"></span>CLICK</button><button class="quick-fire" id="lsbtn-click-fire">▶</button></div>
     </div>
-  </div>
-  <div class="tab-pane" id="tab-lsys-sim">
+    <div class="sep"></div>
     <div class="ctrl"><label>Longueur seg. <span class="val" id="lsval-len">5</span></label><input type="range" id="lslen" min="1" max="20" step="0.5" value="5"></div>
     <div class="ctrl"><label>Vitesse anim. <span class="val" id="lsval-speed">300</span></label><input type="range" id="lsanim-speed" min="10" max="3000" step="10" value="300"></div>
   </div>
@@ -1295,8 +1285,7 @@
       <div class="ctrl"><label>Curseur Y <span class="val" id="voval-cy">0.50</span></label><input type="range" id="vocursor-y" min="0" max="1" step="0.005" value="0.50"></div>
       <div class="quick-row" style="margin-top:4px"><button class="big-toggle" id="vobtn-click" style="flex:1"><span class="dot"></span>CLICK</button><button class="quick-fire" id="vobtn-click-fire">▶</button></div>
     </div>
-  </div>
-  <div class="tab-pane" id="tab-voronoi-sim">
+    <div class="sep"></div>
     <div class="ctrl"><label>Répulsion bords <span class="val" id="voval-border">60</span></label><input type="range" id="voborder-rep" min="0" max="200" step="5" value="60"></div>
     <div class="ctrl"><label>Répulsion graines <span class="val" id="voval-repulse">40</span></label><input type="range" id="vorepulse" min="0" max="150" step="5" value="40"></div>
     <div class="sep"></div>
@@ -1371,8 +1360,7 @@
       <div class="ctrl"><label>Curseur Y <span class="val" id="fwval-cy">0.50</span></label><input type="range" id="fwcursor-y" min="0" max="1" step="0.005" value="0.50"></div>
       <div class="quick-row" style="margin-top:4px"><button class="big-toggle" id="fwbtn-click" style="flex:1"><span class="dot"></span>CLICK</button><button class="quick-fire" id="fwbtn-click-fire">▶</button></div>
     </div>
-  </div>
-  <div class="tab-pane" id="tab-follow-sim">
+    <div class="sep"></div>
     <div class="ctrl"><label>Particules <span class="val" id="fwval-count">350</span></label><input type="range" id="fwcount" min="50" max="1200" step="10" value="350"></div>
     <div class="ctrl"><label>Vitesse <span class="val" id="fwval-speed">6</span></label><input type="range" id="fwspeed" min="1" max="20" step="0.5" value="6"></div>
     <div class="ctrl"><label>Traînée <span class="val" id="fwval-trail">12</span></label><input type="range" id="fwtrail-len" min="1" max="60" step="1" value="12"></div>
@@ -1419,8 +1407,7 @@
       <div class="ctrl"><label>Curseur Y <span class="val" id="rbval-cy">0.50</span></label><input type="range" id="rbcursor-y" min="0" max="1" step="0.005" value="0.50"></div>
       <div class="quick-row" style="margin-top:4px"><button class="big-toggle" id="rbbtn-click" style="flex:1"><span class="dot"></span>CLICK</button><button class="quick-fire" id="rbbtn-click-fire">▶</button></div>
     </div>
-  </div>
-  <div class="tab-pane" id="tab-ribbon-sim">
+    <div class="sep"></div>
     <div class="ctrl"><label>Rubans <span class="val" id="rbval-count">120</span></label><input type="range" id="rbcount" min="10" max="500" step="5" value="120"></div>
     <div class="ctrl"><label>Vitesse <span class="val" id="rbval-speed">3.0</span></label><input type="range" id="rbspeed" min="0.5" max="15" step="0.5" value="3.0"></div>
     <div class="ctrl"><label>Longueur traînée <span class="val" id="rbval-trail">30</span></label><input type="range" id="rbtrail-len" min="5" max="100" step="1" value="30"></div>
@@ -1477,8 +1464,7 @@
         <button class="btn-wide" id="phxbtn-reset" style="flex:1">↺ Vider</button>
       </div>
     </div>
-  </div>
-  <div class="tab-pane" id="tab-physiks-sim">
+    <div class="sep"></div>
     <div class="ctrl"><label>Résolution grille <span class="val" id="phxval-res">3</span>px</label><input type="range" id="phxgrid-res" min="1" max="12" step="1" value="3"></div>
     <div class="ctrl"><label>Fréq. mise à jour <span class="val" id="phxval-urate">1</span>/frame</label><input type="range" id="phxupdate-rate" min="1" max="4" step="1" value="1"></div>
     <div class="ctrl"><label>Dispersion eau <span class="val" id="phxval-spread">4</span></label><input type="range" id="phxwater-spread" min="1" max="12" step="1" value="4"></div>
@@ -1540,8 +1526,7 @@
       <div class="ctrl"><label>Curseur Y <span class="val" id="nrval-cy">0.50</span></label><input type="range" id="nrcursor-y" min="0" max="1" step="0.005" value="0.50"></div>
       <div class="quick-row" style="margin-top:4px"><button class="big-toggle" id="nrbtn-click" style="flex:1"><span class="dot"></span>ACTIVER</button><button class="quick-fire" id="nrbtn-click-fire">▶</button></div>
     </div>
-  </div>
-  <div class="tab-pane" id="tab-neural-sim">
+    <div class="sep"></div>
     <div class="ctrl"><label>Neurones <span class="val" id="nrval-count">120</span></label><input type="range" id="nrcount" min="20" max="500" step="10" value="120"></div>
     <div class="ctrl"><label>Densité synapses <span class="val" id="nrval-density">0.05</span></label><input type="range" id="nrdensity" min="0.02" max="0.5" step="0.01" value="0.05"></div>
     <div class="ctrl"><label>Propagation max / nœud <span class="val" id="nrval-fanout">3</span></label><input type="range" id="nrfanout" min="1" max="10" step="1" value="3"></div>
@@ -1595,8 +1580,7 @@
       <div class="ctrl"><label>Curseur Y <span class="val" id="inkval-cy">0.50</span></label><input type="range" id="inkcursor-y" min="0" max="1" step="0.005" value="0.50"></div>
       <div class="quick-row" style="margin-top:4px"><button class="big-toggle" id="inkbtn-click" style="flex:1"><span class="dot"></span>PEINDRE</button><button class="quick-fire" id="inkbtn-click-fire">▶</button></div>
     </div>
-  </div>
-  <div class="tab-pane" id="tab-ink-sim">
+    <div class="sep"></div>
     <div class="ctrl"><label>Résolution grille <span class="val" id="inkval-res">22</span>px</label><input type="range" id="inkgrid-res" min="2" max="40" step="1" value="22"></div>
     <div class="ctrl"><label>Persistance fluide <span class="val" id="inkval-damp">0.908</span></label><input type="range" id="inkdamping" min="0.90" max="1.00" step="0.002" value="0.908"></div>
     <div class="ctrl"><label>Turbulence noise <span class="val" id="inkval-noise">0.4</span></label><input type="range" id="inknoise" min="0" max="3" step="0.1" value="0.4"></div>
@@ -1663,8 +1647,7 @@
       <div class="ctrl"><label>Curseur Y <span class="val" id="slpval-cy">0.50</span></label><input type="range" id="slpcursor-y" min="0" max="1" step="0.005" value="0.50"></div>
       <div class="quick-row" style="margin-top:4px"><button class="big-toggle" id="slpbtn-click" style="flex:1"><span class="dot"></span>CLICK</button><button class="quick-fire" id="slpbtn-click-fire">▶</button></div>
     </div>
-  </div>
-  <div class="tab-pane" id="tab-slope-sim">
+    <div class="sep"></div>
     <div class="ctrl"><label>Échelle du champ <span class="val" id="slpval-scale">18</span></label><input type="range" id="slpscale" min="4" max="60" step="1" value="18"></div>
     <div class="ctrl"><label>Vitesse</label><span class="val" id="slpval-speed">1.0</span><input type="range" id="slpspeed" min="0.1" max="4" step="0.1" value="1.0"></div>
     <div class="ctrl"><label>Largeur min <span class="val" id="slpval-wmin">1</span></label><input type="range" id="slpwidth-min" min="0.5" max="6" step="0.5" value="1"></div>
@@ -1723,8 +1706,7 @@
       <div class="ctrl"><label>Curseur Y <span class="val" id="dunval-cy">0.50</span></label><input type="range" id="duncursor-y" min="0" max="1" step="0.005" value="0.50"></div>
       <div class="quick-row" style="margin-top:4px"><button class="big-toggle" id="dunbtn-click" style="flex:1"><span class="dot"></span>CLICK</button><button class="quick-fire" id="dunbtn-click-fire">▶</button></div>
     </div>
-  </div>
-  <div class="tab-pane" id="tab-dune-sim">
+    <div class="sep"></div>
     <div class="ctrl"><label>Particules <span class="val" id="dunval-count">3000</span></label><input type="range" id="duncount" min="500" max="8000" step="100" value="3000"></div>
     <div class="ctrl"><label>Graine bruit <span class="val" id="dunval-seed">200</span></label><input type="range" id="dunseed" min="0" max="5000" step="1" value="200"></div>
     <div class="ctrl"><label>Échelle bruit <span class="val" id="dunval-scale">120</span></label><input type="range" id="dunscale" min="20" max="400" step="10" value="120"></div>
@@ -1774,9 +1756,7 @@
       <button class="btn-wide" id="clthbtn-undo">↶ Undo Cut</button>
       <button class="btn-wide" id="clthbtn-reset">↺ Réinitialiser</button>
     </div>
-  </div>
-
-  <div class="tab-pane" id="tab-cloth-sim">
+    <div class="sep"></div>
     <div class="sec">
       <div class="sec-title">Grille</div>
       <div class="ctrl"><label>Densité grille <span class="val" id="clthval-grid">50</span></label><input type="range" id="clthgrid-count" min="10" max="100" step="5" value="50"></div>
@@ -1864,9 +1844,7 @@
       </div>
       <div class="prog-bar"><div class="prog-fill" id="fppulse-bar"></div></div>
     </div>
-  </div>
-
-  <div class="tab-pane" id="tab-fpaint-sim">
+    <div class="sep"></div>
     <div class="sec">
       <div class="sec-title">Animation</div>
       <div class="ctrl"><label>Vitesse <span class="val" id="fpval-speed">1.0</span></label><input type="range" id="fpspeed" min="0.05" max="4" step="0.05" value="1.0"></div>
@@ -1934,9 +1912,7 @@
       <div class="ctrl"><label>Curseur Y <span class="val" id="wfcval-cy">0.50</span></label><input type="range" id="wfccursor-y" min="0" max="1" step="0.005" value="0.50"></div>
       <div class="quick-row" style="margin-top:4px"><button class="big-toggle" id="wfcbtn-click" style="flex:1"><span class="dot"></span>CLICK</button><button class="quick-fire" id="wfcbtn-click-fire">▶</button></div>
     </div>
-  </div>
-
-  <div class="tab-pane" id="tab-wfc-sim">
+    <div class="sep"></div>
     <div class="ctrl"><label>Taille tuile <span class="val" id="wfcval-tile-size">24</span>px</label><input type="range" id="wfctile-size" min="8" max="64" step="2" value="24"></div>
     <div class="ctrl"><label>Épaisseur trait <span class="val" id="wfcval-line-width">2.8</span></label><input type="range" id="wfcline-width" min="0.5" max="8" step="0.1" value="2.8"></div>
     <div class="ctrl"><label>Proportion vide <span class="val" id="wfcval-blank-weight">0.12</span></label><input type="range" id="wfcblank-weight" min="0.01" max="0.8" step="0.01" value="0.12"></div>
@@ -1959,6 +1935,122 @@
   <div class="tab-pane" id="tab-wfc-save"><div class="sec"><div style="color:var(--text-faint);font-size:9px">Config WFC dans les scènes globales.</div></div></div>
   </div><!-- /wfc -->
 
+  <!-- ══ SKETCH ENGINE PANES ══ -->
+  <div class="engine-panes" data-engine="sketch">
+  <div class="tab-pane active" id="tab-sketch-live">
+    <div class="sec">
+      <div class="quick-row">
+        <button class="big-toggle" id="skbtn-pulse" style="flex:1"><span class="dot"></span>NOUVELLE COMPOSITION</button>
+        <button class="quick-fire" id="skbtn-pulse-fire">▶</button>
+      </div>
+      <div class="prog-bar"><div class="prog-fill" id="skpulse-bar"></div></div>
+    </div>
+    <div class="sep"></div>
+    <div class="sec">
+      <div class="sec-title">Tempo apparition</div>
+      <div class="quick-row">
+        <button class="big-toggle" id="skbtn-spawn-sync" style="flex:1"><span class="dot"></span>SYNC TEMPO</button>
+      </div>
+      <div class="ctrl" style="margin-top:6px"><label>Div. beat <span class="val" id="skval-spawn-div">1</span></label><input type="range" id="skspawn-beat-div" min="1" max="16" step="1" value="1"></div>
+    </div>
+    <div class="sep"></div>
+    <div class="sec">
+      <div class="sec-title">Accumulation</div>
+      <div class="ctrl"><label>Formes/burst <span class="val" id="skval-forms">60</span></label><input type="range" id="skforms-per-frame" min="1" max="300" step="1" value="60"></div>
+      <div class="ctrl"><label>Prob. fleurs <span class="val" id="skval-flower">0.0010</span></label><input type="range" id="skflower-prob" min="0" max="0.02" step="0.0001" value="0.001"></div>
+    </div>
+    <div class="sep"></div>
+    <div class="sec">
+      <div class="sec-title">Curseur</div>
+      <div class="ctrl"><label>Curseur X <span class="val" id="skval-cx">0.50</span></label><input type="range" id="skcursor-x" min="0" max="1" step="0.005" value="0.50"></div>
+      <div class="ctrl"><label>Curseur Y <span class="val" id="skval-cy">0.50</span></label><input type="range" id="skcursor-y" min="0" max="1" step="0.005" value="0.50"></div>
+      <div class="quick-row" style="margin-top:4px"><button class="big-toggle" id="skbtn-click" style="flex:1"><span class="dot"></span>CLICK</button><button class="quick-fire" id="skbtn-click-fire">▶</button></div>
+    </div>
+    <div class="sep"></div>
+    <div class="ctrl"><label>Dispersion <span class="val" id="skval-spread">0.12</span></label><input type="range" id="skspread" min="0.02" max="0.5" step="0.01" value="0.12"></div>
+    <div class="ctrl"><label>Taille min <span class="val" id="skval-smin">0.5</span></label><input type="range" id="sksize-min" min="0.1" max="5" step="0.1" value="0.5"></div>
+    <div class="ctrl"><label>Taille max <span class="val" id="skval-smax">2.0</span></label><input type="range" id="sksize-max" min="0.1" max="10" step="0.1" value="2.0"></div>
+    <div class="sep"></div>
+    <div class="ctrl"><label>Life <span class="val" id="skval-life">0</span> <small style="opacity:.5">(0=∞)</small></label><input type="range" id="sklife" min="0" max="300" step="1" value="0"></div>
+    <div class="sep"></div>
+    <button class="btn-wide" id="skbtn-reset">↺ Nouvelle composition</button>
+  </div>
+
+  <div class="tab-pane" id="tab-sketch-color">
+    <div class="ctrl"><label style="margin-bottom:5px">Fond</label><input type="color" id="skbg-color" value="#000000"></div>
+    <div class="toggle-row"><label>Grille visible</label><input type="checkbox" id="skgrid-visible"></div>
+    <div class="sep"></div>
+    <div class="ctrl"><label>Palette <span class="val" id="skval-pal">aléatoire</span></label><input type="range" id="skpal-index" min="-1" max="36" step="1" value="-1"></div>
+  </div>
+
+  <div class="tab-pane" id="tab-sketch-tempo">
+    <div class="ctrl"><label>Intervalle pulse <span class="val" id="skval-pulse-int">8.0</span>s</label><input type="range" id="sktpulse-int" min="0.5" max="30" step="0.5" value="8.0"></div>
+    <div class="ctrl"><label>BPM div <span class="val" id="skval-beat-div">1</span></label><input type="range" id="skbeat-div" min="1" max="8" step="1" value="1"></div>
+  </div>
+
+  <div class="tab-pane" id="tab-sketch-io"><div class="sec"><div class="sec-title">MIDI CC Sketch</div><div id="skmidi-cc-list"></div></div></div>
+  <div class="tab-pane" id="tab-sketch-save"><div class="sec"><div style="color:var(--text-faint);font-size:9px">Config Sketch dans les scènes globales.</div></div></div>
+  </div><!-- /sketch -->
+
+
+  <!-- ══ NS FLUID ENGINE PANES ══ -->
+  <div class="engine-panes" data-engine="nstokes">
+  <div class="tab-pane active" id="tab-nstokes-live">
+    <div class="sec">
+      <div class="quick-row">
+        <button class="big-toggle" id="nsbtn-pulse" style="flex:1"><span class="dot"></span>RESET PARTICULES</button>
+        <button class="quick-fire" id="nsbtn-pulse-fire">▶</button>
+      </div>
+      <div class="prog-bar"><div class="prog-fill" id="nspulse-bar"></div></div>
+    </div>
+    <div class="sep"></div>
+    <div class="sec">
+      <div class="sec-title">Contrôle fluide</div>
+      <div class="ctrl"><label>Échelle vélocité <span class="val" id="nsval-vel">11.0</span></label><input type="range" id="nsvel-scale" min="1" max="40" step="0.5" value="11"></div>
+      <div class="ctrl"><label>Force souris <span class="val" id="nsval-mforce">0.100</span></label><input type="range" id="nsmouse-force" min="0.01" max="0.5" step="0.01" value="0.1"></div>
+      <div class="ctrl"><label>Rayon pointeur <span class="val" id="nsval-mradius">1</span></label><input type="range" id="nsmouse-radius" min="1" max="4" step="1" value="1"></div>
+    </div>
+    <div class="sep"></div>
+    <div class="sec">
+      <div class="sec-title">Curseur</div>
+      <div class="ctrl"><label>Curseur X <span class="val" id="nsval-cx">0.50</span></label><input type="range" id="nscursor-x" min="0" max="1" step="0.005" value="0.50"></div>
+      <div class="ctrl"><label>Curseur Y <span class="val" id="nsval-cy">0.50</span></label><input type="range" id="nscursor-y" min="0" max="1" step="0.005" value="0.50"></div>
+      <div class="quick-row" style="margin-top:4px"><button class="big-toggle" id="nsbtn-click" style="flex:1"><span class="dot"></span>CLICK</button><button class="quick-fire" id="nsbtn-click-fire">▶</button></div>
+    </div>
+    <div class="sep"></div>
+    <div class="ctrl"><label>Résolution grille N <span class="val" id="nsval-gridn">15</span></label><input type="range" id="nsgrid-n" min="5" max="35" step="1" value="15"></div>
+    <div class="ctrl"><label>Viscosité <span class="val" id="nsval-visc">0.00025</span></label><input type="range" id="nsviscosity" min="0.00001" max="0.005" step="0.00001" value="0.00025"></div>
+    <div class="ctrl"><label>Nb particules <span class="val" id="nsval-npart">8000</span></label><input type="range" id="nsnum-part" min="500" max="30000" step="500" value="8000"></div>
+    <div class="ctrl"><label>Taille point <span class="val" id="nsval-psize">1.5</span></label><input type="range" id="nspoint-size" min="0.5" max="6" step="0.5" value="1.5"></div>
+    <div class="ctrl"><label>Alpha trail <span class="val" id="nsval-trail">0.15</span></label><input type="range" id="nstrail-alpha" min="0.01" max="1" step="0.01" value="0.15"></div>
+    <div class="sep"></div>
+    <button class="btn-wide" id="nsbtn-reset-p" style="margin-bottom:6px">↺ Reset particules</button>
+    <button class="btn-wide" id="nsbtn-reset">↺ Reset simulation</button>
+  </div>
+
+  <div class="tab-pane" id="tab-nstokes-color">
+    <div class="ctrl"><label style="margin-bottom:5px">Fond</label><input type="color" id="nsbg-color" value="#000000"></div>
+    <div class="ctrl"><label style="margin-bottom:5px">Particules</label><input type="color" id="nspart-color" value="#ffffff"></div>
+    <div class="sep"></div>
+    <div class="ctrl">
+      <label>Mode couleur</label>
+      <select id="nscolor-mode" style="width:100%;margin-top:4px;background:#1a1a1a;color:#ccc;border:1px solid #333;padding:4px;border-radius:4px">
+        <option value="0">Uniforme</option>
+        <option value="1">Vélocité</option>
+        <option value="2">Position</option>
+      </select>
+    </div>
+  </div>
+
+  <div class="tab-pane" id="tab-nstokes-tempo">
+    <div class="ctrl"><label>Intervalle pulse <span class="val" id="nsval-pint">8.0</span>s</label><input type="range" id="nstpulse-int" min="0.5" max="30" step="0.5" value="8.0"></div>
+    <div class="ctrl"><label>BPM div <span class="val" id="nsval-bdiv">1</span></label><input type="range" id="nsbeat-div" min="1" max="8" step="1" value="1"></div>
+  </div>
+
+  <div class="tab-pane" id="tab-nstokes-io"><div class="sec"><div class="sec-title">MIDI CC NS Fluid</div><div id="nsmidi-cc-list"></div></div></div>
+  <div class="tab-pane" id="tab-nstokes-save"><div class="sec"><div style="color:var(--text-faint);font-size:9px">Config NS Fluid dans les scènes globales.</div></div></div>
+  </div><!-- /nstokes -->
+
   <!-- ══ GROWTH ENGINE PANES ══ -->
   <div class="engine-panes" data-engine="growth">
   <div class="tab-pane active" id="tab-growth-live">
@@ -1977,8 +2069,7 @@
       <div class="ctrl"><label>Curseur Y <span class="val" id="grwval-cy">0.50</span></label><input type="range" id="grwcursor-y" min="0" max="1" step="0.005" value="0.50"></div>
       <div class="quick-row" style="margin-top:4px"><button class="big-toggle" id="grwbtn-click" style="flex:1"><span class="dot"></span>CLICK</button><button class="quick-fire" id="grwbtn-click-fire">▶</button></div>
     </div>
-  </div>
-  <div class="tab-pane" id="tab-growth-sim">
+    <div class="sep"></div>
     <div class="ctrl"><label>Vitesse chute graine <span class="val" id="grwval-fall">3.0</span></label><input type="range" id="grwfall-speed" min="0.5" max="10" step="0.5" value="3.0"></div>
     <div class="ctrl"><label>Errance branches <span class="val" id="grwval-wander">0.33</span></label><input type="range" id="grwwander" min="0.05" max="1" step="0.01" value="0.33"></div>
     <div class="ctrl"><label>Rétrécissement <span class="val" id="grwval-shrink">0.998</span></label><input type="range" id="grwshrink" min="0.97" max="1" step="0.001" value="0.998"></div>
@@ -2021,8 +2112,7 @@
       <div class="ctrl"><label>Curseur Y <span class="val" id="gdwval-cy">0.50</span></label><input type="range" id="gdwcursor-y" min="0" max="1" step="0.005" value="0.50"></div>
       <div class="quick-row" style="margin-top:4px"><button class="big-toggle" id="gdwbtn-click" style="flex:1"><span class="dot"></span>CLICK</button><button class="quick-fire" id="gdwbtn-click-fire">▶</button></div>
     </div>
-  </div>
-  <div class="tab-pane" id="tab-gridwave-sim">
+    <div class="sep"></div>
     <div class="ctrl"><label>Espacement grille <span class="val" id="gdwval-spacing">14</span>px</label><input type="range" id="gdwspacing" min="4" max="40" step="1" value="14"></div>
     <div class="ctrl"><label>Échelle du bruit <span class="val" id="gdwval-nscale">0.02</span></label><input type="range" id="gdwnscale" min="0.005" max="0.08" step="0.001" value="0.02"></div>
     <div class="ctrl"><label>Vitesse animation <span class="val" id="gdwval-nspeed">1.0</span></label><input type="range" id="gdwnspeed" min="0.1" max="5" step="0.1" value="1.0"></div>
@@ -2073,8 +2163,7 @@
     </div>
     <div class="sep"></div>
     <button class="btn-wide" id="blmbtn-reset">↺ Tout effacer</button>
-  </div>
-  <div class="tab-pane" id="tab-bloom-sim">
+    <div class="sep"></div>
     <div class="ctrl"><label>Vitesse de chute <span class="val" id="blmval-fall">3.0</span></label><input type="range" id="blmfall-speed" min="0.5" max="10" step="0.5" value="3.0"></div>
     <div class="ctrl"><label>Rayon racine min <span class="val" id="blmval-rmin">10</span></label><input type="range" id="blmradius-min" min="4" max="30" step="1" value="10"></div>
     <div class="ctrl"><label>Rayon racine max <span class="val" id="blmval-rmax">30</span></label><input type="range" id="blmradius-max" min="10" max="60" step="1" value="30"></div>
@@ -2119,8 +2208,7 @@
       <div class="ctrl"><label>Curseur Y <span class="val" id="dspval-cy">0.50</span></label><input type="range" id="dspcursor-y" min="0" max="1" step="0.005" value="0.50"></div>
       <div class="quick-row" style="margin-top:4px"><button class="big-toggle" id="dspbtn-click" style="flex:1"><span class="dot"></span>CLICK</button><button class="quick-fire" id="dspbtn-click-fire">▶</button></div>
     </div>
-  </div>
-  <div class="tab-pane" id="tab-displace-sim">
+    <div class="sep"></div>
     <div class="ctrl"><label>Densité grille <span class="val" id="dspval-density">90</span></label><input type="range" id="dspdensity" min="20" max="200" step="5" value="90"></div>
     <div class="ctrl"><label>Fréquence bruit <span class="val" id="dspval-freq">1.0</span></label><input type="range" id="dspfreq" min="0.1" max="5" step="0.1" value="1.0"></div>
     <div class="ctrl"><label>Vitesse temporelle <span class="val" id="dspval-speed">0.6</span></label><input type="range" id="dspspeed" min="0.05" max="3" step="0.05" value="0.6"></div>

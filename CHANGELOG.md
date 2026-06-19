@@ -2,6 +2,27 @@
 
 ---
 
+## [2026-06-19] — v4.0.0.044
+
+### Ajouts
+- **Moteur SKETCH** : bloom organique 2D, accumulation de formes (polygones, étoiles, fleurs pointillistes) sur canvas off-screen — fond noir uni, 37 palettes, paramètre `life` (fondu progressif des formes vers le fond), sync tempo BPM (`spawn_sync` + `spawn_beat_div`)
+- **Moteur NS FLUID** : simulation Navier-Stokes Stable Fluids (Stam 2003) CPU, 8000 particules, 3 modes couleur (uniforme / vélocité / position), paramètre `mouse_radius` (rayon d'influence du pointeur, 1–4 cellules avec falloff euclidien)
+- **Presets SKETCH** : Risographie, Neon Storm, Pale Bloom, Dark Scatter
+- **Presets NS FLUID** : Doux, Vélocité Color, Tempête, Position Arc-en-ciel
+
+### Suppressions
+- **Moteur FEEDBACK** supprimé (dysfonctionnel — WebGL2 RGBA32F non supporté sans extension sur certains navigateurs, aucune solution satisfaisante)
+
+### Améliorations UI
+- **Onglet SIM supprimé** du tab bar — contenu fusionné à la suite du pane LIVE pour tous les moteurs (28 moteurs traités), séparés par un `<div class="sep">`
+- **NS FLUID — artefact curseur corrigé** : force diffusée sur voisinage N×N (rayon paramétrable) au lieu d'une cellule unique, delta clampée à ±20px, `_pmx`/`_pmy` initialisés à la position courante au démarrage
+- **Versioning auto** : `build.js` incrémente automatiquement le numéro de build à chaque exécution
+
+### Technique
+- **BRIEF.md** mis à jour : 23 moteurs, structure des onglets, règles SIM→LIVE
+
+---
+
 ## [2026-06-18] — commit `9f58d2b`
 
 ### Ajouts

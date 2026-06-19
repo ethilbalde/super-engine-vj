@@ -37,6 +37,8 @@ const ENGINE_FILES = [
   'engines/cloth.js',
   'engines/fpaint.js',
   'engines/wfc.js',
+  'engines/sketch.js',
+  'engines/nstokes.js',
   // ── Add new engines here ──
 ];
 
@@ -44,7 +46,20 @@ function read(rel) {
   return fs.readFileSync(path.join(SRC, rel), 'utf8');
 }
 
+function incrementBuild() {
+  const mainPath = path.join(SRC, 'main.js');
+  let src = fs.readFileSync(mainPath, 'utf8');
+  src = src.replace(/var VERSION='(v\d+\.\d+\.\d+\.)(\d+)'/, (_, prefix, build) => {
+    const next = String(Number(build) + 1).padStart(build.length, '0');
+    return `var VERSION='${prefix}${next}'`;
+  });
+  fs.writeFileSync(mainPath, src, 'utf8');
+  const m = src.match(/var VERSION='([^']+)'/);
+  return m ? m[1] : '?';
+}
+
 function build() {
+  const version    = incrementBuild();
   const style      = read('style.css');
   const ui         = read('ui.html');
   const utils      = read('utils.js');
@@ -73,7 +88,7 @@ ${infoModal}`;
   fs.writeFileSync(OUT, html, 'utf8');
 
   const lines = html.split('\n').length;
-  console.log(`[build] super-engine.html — ${lines} lines`);
+  console.log(`[build] ${version} — super-engine.html — ${lines} lines`);
 }
 
 // ── Watch mode ────────────────────────────────────────────────────────────────
