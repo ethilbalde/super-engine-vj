@@ -7,6 +7,7 @@ var Engine_WFC = (function () {
   var canvas, ctx, mouse = window._mouse, _active = false;
   var _needsReset = false, lastPulseTime = 0;
   var _gens = [];
+  var _slots = [], _slotCursor = 0, _slotsValid = false;
 
   var cfg = {
     canvas_width: 800, canvas_height: 600,
@@ -14,6 +15,7 @@ var Engine_WFC = (function () {
     max_gens: 4,
     collapse_speed: 10,
     done_delay: 2.0,
+    grid_cols: 3,
     /* SIM */
     tile_size_min: 14,
     tile_size_max: 72,
@@ -183,24 +185,44 @@ var Engine_WFC = (function () {
     }
   }
 
+  /* ── Slot layout (bas→haut, droite→gauche) ── */
+
+  function computeSlots() {
+    var W = cfg.canvas_width, H = cfg.canvas_height;
+    var numCols = Math.max(1, cfg.grid_cols | 0);
+    var slotW = Math.floor(W / numCols);
+    var numRows = Math.max(1, Math.round(H / slotW));
+    var slotH = Math.floor(H / numRows);
+    _slots = [];
+    for (var col = numCols - 1; col >= 0; col--) {
+      for (var row = numRows - 1; row >= 0; row--) {
+        _slots.push({ x: col * slotW, y: row * slotH, w: slotW, h: slotH });
+      }
+    }
+    _slotCursor = 0;
+    _slotsValid = true;
+  }
+
   /* ── Spawning ── */
 
   function spawnGen() {
     var W = cfg.canvas_width, H = cfg.canvas_height;
+    if (!_slotsValid) computeSlots();
+    var slot = _slots[_slotCursor % _slots.length];
+    _slotCursor++;
+
     var tsMin = Math.max(8,  cfg.tile_size_min | 0);
     var tsMax = Math.max(tsMin + 4, cfg.tile_size_max | 0);
     var ts = tsMin + Math.floor(Math.random() * (tsMax - tsMin + 1));
 
-    var maxC = Math.floor(W / ts);
-    var maxR = Math.floor(H / ts);
-    var cols = Math.max(3, Math.floor(3 + Math.random() * (maxC - 2)));
-    var rows = Math.max(3, Math.floor(3 + Math.random() * (maxR - 2)));
-    cols = Math.min(cols, maxC);
-    rows = Math.min(rows, maxR);
+    /* ajuste ts pour diviser slot.w proprement */
+    var cols = Math.max(2, Math.round(slot.w / ts));
+    ts = Math.max(8, Math.floor(slot.w / cols));
+    var rows = Math.max(2, Math.floor(slot.h / ts));
 
     var gw = cols * ts, gh = rows * ts;
-    var x = Math.random() * Math.max(1, W - gw);
-    var y = Math.random() * Math.max(1, H - gh);
+    var x = slot.x + ((slot.w - gw) >> 1);
+    var y = slot.y + ((slot.h - gh) >> 1);
 
     var fg;
     if (cfg.color_scheme >= 0 && cfg.color_scheme < COLORS.length) {
@@ -286,9 +308,9 @@ var Engine_WFC = (function () {
     }
   }
 
-  function triggerPulse() { _gens = []; }
+  function triggerPulse() { _gens = []; _slotCursor = 0; }
 
-  function _reset() { _gens = []; }
+  function _reset() { _gens = []; _slotCursor = 0; _slotsValid = false; }
 
   function activate() {
     _active = true;
@@ -297,7 +319,8 @@ var Engine_WFC = (function () {
     ctx = cv.getContext('2d');
     cfg.canvas_width  = cv.width  || cfg.canvas_width;
     cfg.canvas_height = cv.height || cfg.canvas_height;
-    if (_needsReset) { _needsReset = false; _gens = []; }
+    if (!_slotsValid) computeSlots();
+    if (_needsReset) { _needsReset = false; _gens = []; _slotCursor = 0; }
   }
 
   function deactivate() { _active = false; }

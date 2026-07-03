@@ -2,6 +2,26 @@
 
 ---
 
+## [2026-07-03] — v4.2.0.077
+
+### Nettoyage
+
+- Suppression de 5 panes orphelines dans `ui.html` (`lsys`, `growth`, `gridwave`, `bloom`, `displace`) — HTML sans moteur associé
+- Suppression des références fantômes `lsys` dans `main.js` (`engineNames`, liste d'activation des tabs, `ENG_PFX`, `ALL_PFX`)
+- Suppression de `src/engines/feedback.js` (orphelin, absent de `ENGINE_FILES`)
+
+### Documentation
+
+- Ajout du workflow **Banque Animation** dans `CLAUDE.md` (scan du dossier Google Drive pour proposer l'intégration de nouvelles animations)
+- Ajout de `ARCHITECTURE.md`, `PROJECT_CONTEXT.md`, `DEPENDENCIES.md`, `TODO_RECOVERY.md`
+- README mis à jour : liste des 26 moteurs actuels (était figée à 13), suppression de la mention de l'onglet SIM (fusionné dans LIVE)
+
+### Tests
+
+- Nouvelle suite `test-integrity.js` (91 tests, 0 warning)
+
+---
+
 ## [2026-06-19] — v4.0.0.047
 
 ### Améliorations moteurs

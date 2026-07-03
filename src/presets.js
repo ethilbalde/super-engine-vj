@@ -563,6 +563,33 @@
       pulse_enabled:false,pulse_interval:10.0,pulse_beat_div:1
     }}
 
+    ,'Obscure — Classique':{engine:'obscure',obscure:{
+      row_pad:50,col_pad:10,home_force:0.05,mouse_force:800,mouse_radius:150,
+      damping:0.85,line_weight:20,circle_size:0.6,
+      bg_color:'#ffffff',line_color:'#000000',
+      c1:'#4466ff',c2:'#aa33ff',c3:'#ee0000',c4:'#008800',c5:'#dd1188'
+    }}
+    ,'Obscure — Sombre':{engine:'obscure',obscure:{
+      row_pad:40,col_pad:8,home_force:0.04,mouse_force:1200,mouse_radius:200,
+      damping:0.88,line_weight:15,circle_size:0.7,
+      bg_color:'#0a0a0a',line_color:'#ffffff',
+      c1:'#ff4400',c2:'#ff00aa',c3:'#00ffcc',c4:'#ffdd00',c5:'#aa44ff'
+    }}
+
+    ,'Drift — Classique':{engine:'drift',drift:{
+      speed:2,spawn_rate:1,y_amplitude:1.0,noise_speed:0.01,
+      w_min:3,w_max:20,h_min:0,h_max:300,stroke_weight:1.5,filled:false,
+      bg_color:'#E7ECF2',color_top:'#c80000',color_bot:'#0000c8'
+    }}
+    ,'Drift — Néon Sombre':{engine:'drift',drift:{
+      speed:3,spawn_rate:2,y_amplitude:0.8,noise_speed:0.015,
+      w_min:2,w_max:15,h_min:20,h_max:500,stroke_weight:1,filled:false,
+      bg_color:'#050510',color_top:'#ff2200',color_bot:'#0066ff'
+    }}
+
+    ,'Menger — Voyage':{engine:'menger',menger:{time_speed:1.0,mouse_enabled:true,pulse_enabled:false,pulse_interval:4.0,pulse_beat_div:1}}
+    ,'Menger — Rapide':{engine:'menger',menger:{time_speed:2.5,mouse_enabled:true,pulse_enabled:false,pulse_interval:4.0,pulse_beat_div:1}}
+
     /* ── Ajouter ici les presets de tout nouveau moteur ── */
 
   };

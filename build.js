@@ -39,6 +39,9 @@ const ENGINE_FILES = [
   'engines/wfc.js',
   'engines/sketch.js',
   'engines/nstokes.js',
+  'engines/obscure.js',
+  'engines/drift.js',
+  'engines/menger.js',
   // ── Add new engines here ──
 ];
 

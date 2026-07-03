@@ -149,3 +149,53 @@ shiftHexHue(hex, degrees) // rotation de teinte
 - **Lancer `node build.js`** après chaque modification et vérifier l'absence d'erreur
 - **Toujours répondre en français**, écrire le code et les commentaires en anglais
 - Ne pas ajouter de fonctionnalités non demandées, ne pas refactoriser le code existant sans demande explicite
+
+---
+
+## Banque Animation (Google Drive)
+
+Quand l'utilisateur dit **"scan le dossier banque animation"** :
+
+Scanner le dossier Drive :
+`Claude Programe / Banque Animation`
+ID Drive : `10iCsXDkYoaDfJADkUiOIbimUliWBmUk2`
+
+### Statuts des fichiers
+- `nom.md` → à proposer
+- `nom [SKIP].md` → refusé, reproposer au prochain scan
+- `nom [HOLD].md` → en attente, ne pas proposer
+- `nom [TRAITÉ].md` → intégré, ignorer
+
+### Workflow — un fichier à la fois
+
+#### ÉTAPE 1 — Présentation
+Lire le fichier et présenter en 3 points :
+- **Ce que c'est** (type, technologie)
+- **Ce qu'il apporte** à notre engine
+- **Où il s'intègrerait** dans notre archi
+
+Demander : **OUI** / **NON** / **HOLD**
+- `NON` → renommer `[SKIP]`, passer au suivant
+- `HOLD` → renommer `[HOLD]`, passer au suivant
+- `OUI` → passer à l'étape 2
+
+#### ÉTAPE 2 — Proposition d'intégration + contrôles
+Proposer une intégration complète dans notre workflow et super engine :
+- Fichiers à créer / modifier
+- Comment l'animation s'instancie dans le moteur
+- Comment elle s'expose (composant, hook, système de paramètres)
+- Compatibilité avec les systèmes existants
+
+Puis lister **tous les contrôles disponibles** :
+- Nom, type, valeur par défaut, plage, effet visuel
+- Quels contrôles exposer à l'utilisateur vs garder en interne
+- Suggestions de valeurs optimales pour notre contexte
+
+Demander : **VALIDE** / **MODIFIE** / **ANNULE**
+- `ANNULE` → renommer `[SKIP]`, passer au suivant
+- `MODIFIE` → ajuster et représenter
+- `VALIDE` → passer à l'étape 3
+
+#### ÉTAPE 3 — Intégration
+Intégrer dans le super engine selon la proposition validée.
+Renommer `nom [TRAITÉ].md` sur Drive. Confirmer.

@@ -6,7 +6,7 @@ Ouvrir `super-engine.html` dans Chrome ou Edge et commencer à performer.
 
 ---
 
-## Moteurs de simulation (13)
+## Moteurs de simulation (26)
 
 | Moteur | Description |
 |--------|-------------|
@@ -16,13 +16,26 @@ Ouvrir `super-engine.html` dans Chrome ou Edge et commencer à performer.
 | **SPH** | Smooth Particle Hydrodynamics — fluide à particules avec pression et viscosité |
 | **BOIDS** | Nuée d'agents (séparation, alignement, cohésion) à la Craig Reynolds |
 | **PHYSARUM** | Moisissure physarum slime mold — réseau de tubes biologiques |
-| **LORENZ** | Attracteur de Lorenz 3D en rotation |
+| **LORENZ** | Attracteurs chaotiques (Lorenz, Rössler, Clifford, Thomas) |
 | **REACT** | Reaction-diffusion (Gray-Scott) — version Canvas 2D |
 | **ACO** | Colonies de fourmis (Ant Colony Optimization) avec phéromones |
-| **R-D** | Reaction-diffusion Gray-Scott **WebGL** — corail, zèbre, vers, labyrinthes, spots, mitose |
-| **ATTR** | Strange Attractors 2D — Clifford, DeJong, Peter, Tinkerbell, Gingerbread, Bedhead |
-| **LSYS** | L-Systems — fougère, arbre, flocon de Koch, dragon, Sierpiński, buisson |
-| **VOR** | Voronoi Vivant **WebGL** — cellules animées avec physique de répulsion |
+| **R-D** | Reaction-diffusion — patterns de Turing |
+| **VOR** | Voronoi Vivant — cellules animées avec physique de répulsion |
+| **FOLLOW** | Flow field — champ de flux et suivi de particules |
+| **RIBBON** | Rubans physiques animés |
+| **PHYSIKS** | Simulation de matériaux physiques |
+| **NEURAL** | Visualisation réseau de neurones |
+| **INK** | Simulation encre / peinture |
+| **SLOPE** | Champs de vecteurs |
+| **DUNE** | Sable et bruit de Perlin |
+| **CLOTH** | Tissu physique avec découpe |
+| **PAINT** | Fluid Painting **WebGL2** — peinture fluide, domain-warping |
+| **WFC** | Wave Function Collapse — grilles génératives multi-instances |
+| **SKETCH** | Dessin génératif au trait, tempo syncable BPM |
+| **NS FLUID** | Navier-Stokes (Stam 2003) — particules CPU, turbulence, vent, impulsion BPM |
+| **OBSCURE** | Moteur génératif sombre/atmosphérique |
+| **DRIFT** | Simulation de dérive |
+| **MENGER** | Éponge de Menger / fractale 3D |
 
 ---
 
@@ -30,8 +43,7 @@ Ouvrir `super-engine.html` dans Chrome ou Edge et commencer à performer.
 
 Le panneau latéral droit contient les onglets de contrôle :
 
-- **LIVE** — contrôles principaux du moteur actif (presets, brush, pulse…)
-- **SIM** — paramètres de simulation (physique, diffusion, itérations…)
+- **LIVE** — contrôles principaux du moteur actif + paramètres de simulation (physique, diffusion, itérations…)
 - **COLOR** — palette, fond, couleurs des éléments
 - **TEMPO** — synchronisation BPM, pulse automatique
 - **MIDI** — mapping MIDI CC, sélection d'appareil

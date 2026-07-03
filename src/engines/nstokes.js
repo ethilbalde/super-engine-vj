@@ -133,10 +133,14 @@ var Engine_NSFluid = (function () {
   function initParticles() {
     var W = cfg.canvas_width, H = cfg.canvas_height;
     var n = Math.floor(cfg.num_particles);
-    particles = new Float32Array(n * 2);
+    particles = new Float32Array(n * 4);
     for (var i = 0; i < n; i++) {
-      particles[i*2]   = Math.random() * W;
-      particles[i*2+1] = Math.random() * H;
+      var x = Math.random() * W;
+      var y = Math.random() * H;
+      particles[i*4]   = x;
+      particles[i*4+1] = y;
+      particles[i*4+2] = x;
+      particles[i*4+3] = y;
     }
   }
 
@@ -219,7 +223,7 @@ var Engine_NSFluid = (function () {
     if (mouse.x > 0 && mouse.x < W && mouse.y > 0 && mouse.y < H) {
       var mdx = Math.max(-20, Math.min(20, mouse.x - _pmx));
       var mdy = Math.max(-20, Math.min(20, mouse.y - _pmy));
-      if (Math.abs(mdx) + Math.abs(mdy) > 0.3 || mouse.down) {
+      if (mouse.down) {
         var cx = Math.floor(cfg.grid_n * mouse.x / W);
         var cy = Math.floor(cfg.grid_n * mouse.y / H);
         for (var di = -cfg.mouse_radius; di <= cfg.mouse_radius; di++) {
@@ -250,9 +254,9 @@ var Engine_NSFluid = (function () {
     /* simulate */
     solver.tick(dt, cfg.viscosity);
 
-    /* trail */
+    /* clear */
     var bg = hexRgb(cfg.bg_color);
-    ctx.fillStyle = 'rgba('+bg[0]+','+bg[1]+','+bg[2]+','+cfg.trail_alpha+')';
+    ctx.fillStyle = 'rgb('+bg[0]+','+bg[1]+','+bg[2]+')';
     ctx.fillRect(0, 0, W, H);
 
     /* particles */
@@ -266,11 +270,15 @@ var Engine_NSFluid = (function () {
     var uniformCol = 'rgb('+pc[0]+','+pc[1]+','+pc[2]+')';
     var count = (particles.length / 2)|0;
 
-    if (mode === 0) ctx.fillStyle = uniformCol;
+    ctx.lineWidth = ps;
+    ctx.lineCap = 'round';
+    if (mode === 0) { ctx.strokeStyle = uniformCol; ctx.beginPath(); }
 
     for (var i = 0; i < count; i++) {
-      var px = particles[i*2];
-      var py = particles[i*2+1];
+      var px  = particles[i*4];
+      var py  = particles[i*4+1];
+      var ppx = particles[i*4+2];
+      var ppy = particles[i*4+3];
 
       var cxp = Math.max(0, Math.min(n-1, (px / cW)|0));
       var cyp = Math.max(0, Math.min(n-1, (py / cH)|0));
@@ -289,18 +297,28 @@ var Engine_NSFluid = (function () {
       dx = lp(lp(dx, solver.getDx(vn,cyp), tx), lp(solver.getDx(cxp,hn), solver.getDx(vn,hn), tx), ty);
       dy = lp(lp(dy, solver.getDy(vn,cyp), tx), lp(solver.getDy(cxp,hn), solver.getDy(vn,hn), tx), ty);
 
+      particles[i*4+2] = px;
+      particles[i*4+3] = py;
       px += dx * vSc;
       py += dy * vSc;
       if (px < 0) px = 0; if (px > W) px = W;
       if (py < 0) py = 0; if (py > H) py = H;
-      particles[i*2]   = px;
-      particles[i*2+1] = py;
+      particles[i*4]   = px;
+      particles[i*4+1] = py;
 
-      if (mode === 1) ctx.fillStyle = velColor(Math.sqrt(dx*dx+dy*dy));
-      else if (mode === 2) ctx.fillStyle = posColor(px, W);
+      var col = mode === 1 ? velColor(Math.sqrt(dx*dx+dy*dy)) : mode === 2 ? posColor(px, W) : null;
+      if (col) { ctx.stroke(); ctx.beginPath(); ctx.strokeStyle = col; }
 
-      ctx.fillRect(px, py, ps, ps);
+      var dist = Math.sqrt((px-ppx)*(px-ppx)+(py-ppy)*(py-ppy));
+      if (dist > 0.5) {
+        ctx.moveTo(ppx, ppy);
+        ctx.lineTo(px, py);
+      } else {
+        ctx.moveTo(px, py);
+        ctx.lineTo(px + 0.5, py + 0.5);
+      }
     }
+    ctx.stroke();
   }
 
   function _reset() {
