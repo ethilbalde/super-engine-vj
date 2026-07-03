@@ -2,7 +2,7 @@
 
 ---
 
-## [2026-07-03] — v4.2.0.077
+## [2026-07-03] — v4.2.0.080
 
 ### Nettoyage
 
@@ -14,7 +14,15 @@
 
 - Ajout du workflow **Banque Animation** dans `CLAUDE.md` (scan du dossier Google Drive pour proposer l'intégration de nouvelles animations)
 - Ajout de `ARCHITECTURE.md`, `PROJECT_CONTEXT.md`, `DEPENDENCIES.md`, `TODO_RECOVERY.md`
-- README mis à jour : liste des 26 moteurs actuels (était figée à 13), suppression de la mention de l'onglet SIM (fusionné dans LIVE)
+- **README complètement refondu** : 
+  - Section "Volonté du projet" expliquant l'objectif général
+  - 26 moteurs détaillés (descriptions complètes, paramètres clés, use cases)
+  - Toutes les interactions possibles (souris, clavier, MIDI, OSC)
+  - Tous les onglets de contrôle expliqués en détail
+  - Workflows complets pour envoyer vers Resolume/MadMapper (OBS Virtual Camera, NDI, Spout)
+  - Workflow VJ typique (setup + performance live)
+  - FAQ et troubleshooting
+  - Configuration persistance et développement
 
 ### Tests
 
