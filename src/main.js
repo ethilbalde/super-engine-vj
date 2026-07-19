@@ -1327,7 +1327,7 @@ wire('loop-len','loop_length','val-loop-len',0);
    INIT
 ═══════════════════════════════════════════ */
 window.requestAnimationFrame=window.requestAnimationFrame||window.webkitRequestAnimationFrame||window.mozRequestAnimationFrame;
-var VERSION='v4.2.0.090';
+var VERSION='v4.2.0.097';
 /* EngineManager.init() appelle FluidSim.init() qui initialise canvas+ctx AVANT autoResize */
 EngineManager.init();
 /* ── VERSION DISPLAY ── */

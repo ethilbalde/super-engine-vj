@@ -270,16 +270,17 @@ var HandControl = (function() {
   function setPinchThreshold(v) { pinchThreshold = v; }
   function setSmoothing(v) { smoothing = v; }
 
-  function enable(onError) {
+  function enable(onDone) {
     if (_active || _starting) return;
     _starting = true;
     startCamera(function(camErr) {
-      if (camErr) { _starting = false; if (onError) onError(camErr); return; }
+      if (camErr) { _starting = false; if (onDone) onDone(camErr); return; }
       loadLandmarker(function(mlErr) {
         _starting = false;
-        if (mlErr) { stopCamera(); if (onError) onError(mlErr); return; }
+        if (mlErr) { stopCamera(); if (onDone) onDone(mlErr); return; }
         _active = true;
         loop();
+        if (onDone) onDone(null);
       });
     });
   }
