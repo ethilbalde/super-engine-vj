@@ -11,8 +11,8 @@ var Engine_Cloth=(function(){
 
   var cfg={
     canvas_width:800,canvas_height:600,
-    grid_count:50,friction:0.99,force_multiplier:0.25,
-    knife_range:15,speed_limit:8,
+    grid_count:70,friction:0.935,force_multiplier:0.3,
+    knife_range:28,speed_limit:8,
     gravity_x:0,gravity_y:0.1,
     line_color:'#00aa88',node_color:'#ff4400',bg_color:'#050505',
     line_width:1.0,node_size:2.0,opacity:0.9,trail:0.02,
@@ -61,15 +61,17 @@ var Engine_Cloth=(function(){
   }
 
   function createLinks(nodes){
-    var links=[],W=cfg.canvas_width,g=cfg.grid_count,linkDist=W/g;
-    for(var i=0;i<nodes.length;i++){
-      for(var j=i+1;j<nodes.length;j++){
-        var n1=nodes[i],n2=nodes[j];
-        var dx=n2.pos.x-n1.pos.x,dy=n2.pos.y-n1.pos.y;
-        var d=Math.sqrt(dx*dx+dy*dy);
-        if(d<=linkDist*1.5){
-          if(!(n1.pinned&&n2.pinned)){links.push(new Link(n1,n2));}
-        }
+    /* grille régulière → voisinage direct par index, évite le O(n²) de la comparaison de distances par paire */
+    var links=[],g=cfg.grid_count;
+    function idx(i,j){return j*(g+1)+i;}
+    function maybeLink(n1,n2){if(!(n1.pinned&&n2.pinned))links.push(new Link(n1,n2));}
+    for(var j=0;j<=g;j++){
+      for(var i=0;i<=g;i++){
+        var n1=nodes[idx(i,j)];
+        if(i<g)maybeLink(n1,nodes[idx(i+1,j)]);
+        if(j<g)maybeLink(n1,nodes[idx(i,j+1)]);
+        if(i<g&&j<g)maybeLink(n1,nodes[idx(i+1,j+1)]);
+        if(i>0&&j<g)maybeLink(n1,nodes[idx(i-1,j+1)]);
       }
     }
     return links;
@@ -165,13 +167,13 @@ var Engine_Cloth=(function(){
     /* draw links */
     var linkCol=cfg.hue_shift_enabled?shiftHexHue(cfg.line_color,hOff):cfg.line_color;
     ctx.strokeStyle=linkCol;
+    ctx.beginPath();
     for(var i=0;i<linkArray.length;i++){
       var link=linkArray[i];
-      ctx.beginPath();
       ctx.moveTo(link.node1.pos.x,link.node1.pos.y);
       ctx.lineTo(link.node2.pos.x,link.node2.pos.y);
-      ctx.stroke();
     }
+    ctx.stroke();
 
     /* draw nodes */
     var nodeCol=cfg.hue_shift_enabled?shiftHexHue(cfg.node_color,hOff):cfg.node_color;

@@ -49,6 +49,12 @@ function read(rel) {
   return fs.readFileSync(path.join(SRC, rel), 'utf8');
 }
 
+// ── MediaPipe hand-tracking assets (embedded as base64, zero runtime fetch) ──
+const MP_DIR = path.join(ROOT, 'assets', 'mediapipe');
+function readAssetB64(rel) {
+  return fs.readFileSync(path.join(MP_DIR, rel)).toString('base64');
+}
+
 function incrementBuild() {
   const mainPath = path.join(SRC, 'main.js');
   let src = fs.readFileSync(mainPath, 'utf8');
@@ -66,12 +72,18 @@ function build() {
   const style      = read('style.css');
   const ui         = read('ui.html');
   const utils      = read('utils.js');
-  const engines    = ENGINE_FILES.map(f => read(f)).join('\n');
-  const main       = read('main.js');
-  const presets    = read('presets.js');
-  const infoModal  = read('info-modal.html');
+  const engines      = ENGINE_FILES.map(f => read(f)).join('\n');
+  const main         = read('main.js');
+  const presets      = read('presets.js');
+  const infoModal    = read('info-modal.html');
+  const handtracking = read('handtracking.js');
 
-  const js = utils + '\n' + engines + '\n' + main + '\n' + presets;
+  const js = utils + '\n' + handtracking + '\n' + engines + '\n' + main + '\n' + presets;
+
+  const mpCjs    = readAssetB64('vision_bundle.cjs');
+  const mpLoader = readAssetB64('vision_wasm_internal.js');
+  const mpWasm   = readAssetB64('vision_wasm_internal.wasm');
+  const mpModel  = readAssetB64('hand_landmarker.task');
 
   const html =
 `<!DOCTYPE html>
@@ -83,6 +95,9 @@ function build() {
 ${style}
 </style>
 ${ui}
+<script>
+var MP_ASSETS={cjs:"${mpCjs}",loader:"${mpLoader}",wasm:"${mpWasm}",model:"${mpModel}"};
+</script>
 <script>
 ${js}
 </script>

@@ -1327,7 +1327,7 @@ wire('loop-len','loop_length','val-loop-len',0);
    INIT
 ═══════════════════════════════════════════ */
 window.requestAnimationFrame=window.requestAnimationFrame||window.webkitRequestAnimationFrame||window.mozRequestAnimationFrame;
-var VERSION='v4.2.0.078';
+var VERSION='v4.2.0.090';
 /* EngineManager.init() appelle FluidSim.init() qui initialise canvas+ctx AVANT autoResize */
 EngineManager.init();
 /* ── VERSION DISPLAY ── */
@@ -1455,6 +1455,229 @@ EngineManager.init();
 })();
 autoResize();
 initRampEditor();
+
+/* ── HAND CONTROL ── */
+(function(){
+  var btn = document.getElementById('btn-hand');
+  var popup = document.getElementById('hand-popup');
+  var status = document.getElementById('hand-status');
+  var overlay = document.getElementById('hand-overlay');
+  var pinchSlider = document.getElementById('hand-pinch');
+  var pinchVal = document.getElementById('val-hand-pinch');
+  var smoothSlider = document.getElementById('hand-smooth');
+  var smoothVal = document.getElementById('val-hand-smooth');
+  if (!btn || !popup) return;
+
+  window.HandControl.setOverlayCanvas(overlay);
+
+  function setStatus(text, color) {
+    status.textContent = text;
+    status.style.color = color || 'var(--text-muted)';
+  }
+
+  btn.addEventListener('click', function(e) {
+    e.stopPropagation();
+    if (window.HandControl.isActive()) {
+      window.HandControl.disable();
+      btn.classList.remove('on');
+      setStatus('Désactivé');
+      var panelEl = document.getElementById('panel');
+      if (panelEl) panelEl.classList.remove('hand-on');
+    } else {
+      btn.classList.add('loading');
+      setStatus('Démarrage caméra + modèle…');
+      window.HandControl.enable(function(err) {
+        btn.classList.remove('loading');
+        if (err) {
+          setStatus('Erreur : ' + (err && err.message ? err.message : err), '#ff4466');
+          return;
+        }
+        btn.classList.add('on');
+        var mode = window.HandControl.getMode();
+        var modeLabel = mode === 'online' ? 'en ligne (CDN)' : 'embarqué (offline)';
+        setStatus('Actif [' + modeLabel + '] — pouce+index = clic', '#00ffcc');
+        var panelEl = document.getElementById('panel');
+        if (panelEl) panelEl.classList.add('hand-on');
+        if (window._rescanHandIcons) window._rescanHandIcons();
+      });
+    }
+    var open = popup.classList.toggle('open');
+    btn.classList.toggle('open', open);
+  });
+  document.addEventListener('click', function(e) {
+    if (!popup.contains(e.target) && e.target !== btn) {
+      popup.classList.remove('open'); btn.classList.remove('open');
+    }
+  });
+
+  if (pinchSlider) pinchSlider.addEventListener('input', function() {
+    window.HandControl.setPinchThreshold(parseFloat(this.value));
+    if (pinchVal) pinchVal.textContent = parseFloat(this.value).toFixed(2);
+  });
+  if (smoothSlider) smoothSlider.addEventListener('input', function() {
+    window.HandControl.setSmoothing(parseFloat(this.value));
+    if (smoothVal) smoothVal.textContent = parseFloat(this.value).toFixed(2);
+  });
+})();
+
+/* ── HAND CHANNEL PICKER (icône main bleue par slider) ── */
+(function(){
+  var HAND_CHANNELS = [
+    { group: 'MAIN GAUCHE', items: [
+      { key: 'L_pinceIndex', label: 'Pincement pouce-index' },
+      { key: 'L_pinceMajeur', label: 'Pincement pouce-majeur' },
+      { key: 'L_pinceAnnulaire', label: 'Pincement pouce-annulaire' },
+      { key: 'L_pinceAuriculaire', label: 'Pincement pouce-auriculaire' },
+      { key: 'L_ouverture', label: 'Ouverture de la main' },
+      { key: 'L_proximite', label: 'Proximité caméra' },
+      { key: 'L_hauteur', label: 'Hauteur dans le cadre' },
+      { key: 'L_lateral', label: 'Position latérale' },
+      { key: 'L_inclinaison', label: 'Inclinaison du poignet' },
+      { key: 'L_vitesse', label: 'Vitesse de déplacement' }
+    ]},
+    { group: 'MAIN DROITE', items: [
+      { key: 'R_pinceIndex', label: 'Pincement pouce-index' },
+      { key: 'R_pinceMajeur', label: 'Pincement pouce-majeur' },
+      { key: 'R_pinceAnnulaire', label: 'Pincement pouce-annulaire' },
+      { key: 'R_pinceAuriculaire', label: 'Pincement pouce-auriculaire' },
+      { key: 'R_ouverture', label: 'Ouverture de la main' },
+      { key: 'R_proximite', label: 'Proximité caméra' },
+      { key: 'R_hauteur', label: 'Hauteur dans le cadre' },
+      { key: 'R_lateral', label: 'Position latérale' },
+      { key: 'R_inclinaison', label: 'Inclinaison du poignet' },
+      { key: 'R_vitesse', label: 'Vitesse de déplacement' }
+    ]},
+    { group: 'DEUX MAINS', items: [
+      { key: 'ecartement', label: 'Écartement des deux mains' },
+      { key: 'diffHauteur', label: 'Différence de hauteur' },
+      { key: 'inclinaisonMains', label: 'Inclinaison (ligne entre les mains)' }
+    ]}
+  ];
+  var CHANNEL_LABEL = {};
+  HAND_CHANNELS.forEach(function(g) { g.items.forEach(function(it) { CHANNEL_LABEL[it.key] = it.label; }); });
+
+  window._handBindings = {};
+  var HB_LS = 'vj_hand_bindings';
+  function hbSave() {
+    var s = {};
+    Object.keys(window._handBindings).forEach(function(sid) { s[sid] = window._handBindings[sid].channel; });
+    try { localStorage.setItem(HB_LS, JSON.stringify(s)); } catch (e) {}
+  }
+  var hbSaved = {};
+  try { hbSaved = JSON.parse(localStorage.getItem(HB_LS) || '{}'); } catch (e) {}
+
+  // ── popup partagé, repositionné sur le slider ciblé ──
+  var popup = document.createElement('div');
+  popup.id = 'hand-ch-popup';
+  document.body.appendChild(popup);
+  var popupTarget = null; // {slider, applyFn, btn}
+
+  function renderPopup() {
+    popup.innerHTML = '';
+    var title = document.createElement('div');
+    title.className = 'theme-lbl';
+    title.textContent = 'LIER À UN GESTE';
+    popup.appendChild(title);
+
+    var noneRow = document.createElement('label');
+    noneRow.className = 'hand-ch-row';
+    var noneBox = document.createElement('input');
+    noneBox.type = 'checkbox';
+    noneBox.checked = !popupTarget || !window._handBindings[popupTarget.slider.id];
+    noneBox.addEventListener('change', function() { if (this.checked) bindChannel(null); });
+    noneRow.appendChild(noneBox);
+    noneRow.appendChild(document.createTextNode('Aucun'));
+    popup.appendChild(noneRow);
+
+    var current = popupTarget && window._handBindings[popupTarget.slider.id];
+    HAND_CHANNELS.forEach(function(g) {
+      var gt = document.createElement('div');
+      gt.className = 'hand-ch-group';
+      gt.textContent = g.group;
+      popup.appendChild(gt);
+      g.items.forEach(function(it) {
+        var row = document.createElement('label');
+        row.className = 'hand-ch-row';
+        var box = document.createElement('input');
+        box.type = 'checkbox';
+        box.checked = !!current && current.channel === it.key;
+        box.addEventListener('change', function() { if (this.checked) bindChannel(it.key); });
+        row.appendChild(box);
+        row.appendChild(document.createTextNode(it.label));
+        popup.appendChild(row);
+      });
+    });
+  }
+
+  function bindChannel(key) {
+    if (!popupTarget) return;
+    var sid = popupTarget.slider.id;
+    if (key) {
+      window._handBindings[sid] = { channel: key, applyFn: popupTarget.applyFn };
+      popupTarget.btn.classList.add('bound');
+      popupTarget.btn.title = 'Lié : ' + CHANNEL_LABEL[key];
+    } else {
+      delete window._handBindings[sid];
+      popupTarget.btn.classList.remove('bound');
+      popupTarget.btn.title = 'Lier à un geste de la main';
+    }
+    hbSave();
+    renderPopup();
+  }
+
+  function closePopup() {
+    popup.classList.remove('open');
+    if (popupTarget) popupTarget.btn.classList.remove('open');
+    popupTarget = null;
+  }
+  document.addEventListener('click', function(e) {
+    if (popup.classList.contains('open') && !popup.contains(e.target) && (!popupTarget || e.target !== popupTarget.btn)) closePopup();
+  });
+
+  window.addHandBtnToSlider = function(slider) {
+    if (slider.dataset.handDone) return;
+    slider.dataset.handDone = '1';
+    if (!slider.id) slider.id = 'hn-' + Math.random().toString(36).slice(2);
+    var sid = slider.id;
+    var applyFn = function(v) {
+      var mn = parseFloat(slider.min) || 0, mx = parseFloat(slider.max) || 1;
+      var val = mn + (mx - mn) * v;
+      var st = parseFloat(slider.step); if (st > 0) val = Math.round(val / st) * st;
+      slider.value = val;
+      slider.dispatchEvent(new Event('input', { bubbles: true }));
+    };
+    var btn = document.createElement('button');
+    btn.className = 'hand-ch-btn';
+    btn.title = 'Lier à un geste de la main';
+    btn.textContent = '✋';
+    btn.addEventListener('click', function(e) {
+      e.stopPropagation(); e.preventDefault();
+      if (popupTarget && popupTarget.btn === btn) { closePopup(); return; }
+      if (popupTarget) popupTarget.btn.classList.remove('open');
+      popupTarget = { slider: slider, applyFn: applyFn, btn: btn };
+      renderPopup();
+      var r = btn.getBoundingClientRect();
+      popup.style.left = Math.min(r.left, window.innerWidth - 240) + 'px';
+      popup.style.top = (r.bottom + 4) + 'px';
+      popup.classList.add('open');
+      btn.classList.add('open');
+    });
+    slider.parentNode.insertBefore(btn, slider.nextSibling);
+
+    if (hbSaved[sid]) {
+      window._handBindings[sid] = { channel: hbSaved[sid], applyFn: applyFn };
+      btn.classList.add('bound');
+      btn.title = 'Lié : ' + (CHANNEL_LABEL[hbSaved[sid]] || hbSaved[sid]);
+    }
+  };
+
+  window._rescanHandIcons = function() {
+    document.querySelectorAll('#panel .ctrl input[type="range"]').forEach(function(sl) {
+      window.addHandBtnToSlider(sl);
+    });
+  };
+  setTimeout(window._rescanHandIcons, 400); // après le scan MIDI Learn (setTimeout 300) qui déplace les sliders dans une row flex
+})();
 
 /* ── THEME SYSTEM ── */
 (function(){

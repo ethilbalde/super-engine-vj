@@ -7,8 +7,19 @@
     <span style="display:flex;align-items:center;gap:4px">
       <span id="fps-display">— FPS</span>
       <button id="btn-info" title="À propos des moteurs">?</button>
+      <button id="btn-hand" title="Contrôle par tracking de main (webcam)">✋</button>
       <button id="btn-theme" title="Thème de l'interface"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><circle cx="8" cy="10" r="1.5" fill="currentColor" stroke="none"/><circle cx="12" cy="7" r="1.5" fill="currentColor" stroke="none"/><circle cx="16" cy="10" r="1.5" fill="currentColor" stroke="none"/><path d="M7 16c1.5-2 8.5-2 10 0"/></svg></button>
     </span>
+  </div>
+
+  <!-- HAND CONTROL POPUP -->
+  <div id="hand-popup">
+    <div class="theme-lbl">TRACKING DE MAIN</div>
+    <div id="hand-status" style="color:var(--text-muted);font-size:9px;margin-bottom:8px">Désactivé</div>
+    <canvas id="hand-overlay" width="220" height="165" style="width:100%;border-radius:5px;background:#000;margin-bottom:10px"></canvas>
+    <div class="ctrl"><label>Seuil pincement <span class="val" id="val-hand-pinch">0.45</span></label><input type="range" id="hand-pinch" min="0.15" max="0.8" step="0.01" value="0.45"></div>
+    <div class="ctrl"><label>Lissage <span class="val" id="val-hand-smooth">0.35</span></label><input type="range" id="hand-smooth" min="0" max="0.9" step="0.01" value="0.35"></div>
+    <div style="color:var(--text-faint);font-size:8px;line-height:1.5;margin-top:6px">Pouce + index rapprochés = clic maintenu. Position = milieu pouce/index.</div>
   </div>
   <!-- THEME POPUP -->
   <div id="theme-popup">
@@ -1701,7 +1712,7 @@
     <div class="sec">
       <div class="sec-title">Couteau (Knife)</div>
       <div class="toggle-row"><label>Couteau activé</label><input type="checkbox" id="clthknife-enabled" checked></div>
-      <div class="ctrl"><label>Rayon couteau <span class="val" id="clthval-knife">15</span></label><input type="range" id="clthknife-range" min="5" max="50" step="1" value="15"></div>
+      <div class="ctrl"><label>Rayon couteau <span class="val" id="clthval-knife">28</span></label><input type="range" id="clthknife-range" min="5" max="50" step="1" value="28"></div>
       <div class="ctrl"><label>Couleur couteau</label><input type="color" id="clthknife-color" value="#ffff00"></div>
     </div>
     <div class="sep"></div>
@@ -1721,13 +1732,13 @@
     <div class="sep"></div>
     <div class="sec">
       <div class="sec-title">Grille</div>
-      <div class="ctrl"><label>Densité grille <span class="val" id="clthval-grid">50</span></label><input type="range" id="clthgrid-count" min="10" max="100" step="5" value="50"></div>
+      <div class="ctrl"><label>Densité grille <span class="val" id="clthval-grid">70</span></label><input type="range" id="clthgrid-count" min="10" max="100" step="5" value="70"></div>
     </div>
     <div class="sep"></div>
     <div class="sec">
       <div class="sec-title">Physique</div>
-      <div class="ctrl"><label>Friction <span class="val" id="clthval-friction">0.99</span></label><input type="range" id="clthfriction" min="0.8" max="0.999" step="0.005" value="0.99"></div>
-      <div class="ctrl"><label>Force multiplier <span class="val" id="clthval-force">0.25</span></label><input type="range" id="clthforce-mult" min="0.05" max="1.0" step="0.05" value="0.25"></div>
+      <div class="ctrl"><label>Friction <span class="val" id="clthval-friction">0.935</span></label><input type="range" id="clthfriction" min="0.8" max="0.999" step="0.005" value="0.935"></div>
+      <div class="ctrl"><label>Force multiplier <span class="val" id="clthval-force">0.3</span></label><input type="range" id="clthforce-mult" min="0.05" max="1.0" step="0.05" value="0.3"></div>
       <div class="ctrl"><label>Limite vitesse <span class="val" id="clthval-speed">8</span></label><input type="range" id="clthspeed-limit" min="1" max="20" step="0.5" value="8"></div>
     </div>
     <div class="sep"></div>
@@ -2060,6 +2071,9 @@
       <div class="ctrl"><label>Force souris <span class="val" id="obsval-mforce">800</span></label><input type="range" id="obsmouse-force" min="50" max="3000" step="50" value="800"></div>
       <div class="ctrl"><label>Rayon souris <span class="val" id="obsval-mradius">150</span>px</label><input type="range" id="obsmouse-radius" min="20" max="400" step="10" value="150"></div>
       <div class="ctrl"><label>Amortissement <span class="val" id="obsval-damp">0.85</span></label><input type="range" id="obsdamping" min="0.5" max="0.99" step="0.01" value="0.85"></div>
+      <div class="ctrl"><label>Curseur X <span class="val" id="obsval-cx">0.50</span></label><input type="range" id="obscursor-x" min="0" max="1" step="0.005" value="0.50"></div>
+      <div class="ctrl"><label>Curseur Y <span class="val" id="obsval-cy">0.50</span></label><input type="range" id="obscursor-y" min="0" max="1" step="0.005" value="0.50"></div>
+      <div class="quick-row" style="margin-top:4px"><button class="big-toggle" id="obsbtn-click" style="flex:1"><span class="dot"></span>CLICK</button><button class="quick-fire" id="obsbtn-click-fire">▶</button></div>
     </div>
     <div class="sep"></div>
     <div class="sec">

@@ -2,6 +2,30 @@
 
 ---
 
+## [2026-07-19] — v4.2.0.090
+
+### Nouveau : Contrôle par tracking de main (webcam)
+
+- Tracking **2 mains** (gauche/droite distinguées) via MediaPipe HandLandmarker, exécuté 100% localement dans le navigateur (WebAssembly), sans dépendance serveur
+- **Mode hybride en ligne / embarqué** : sonde la connectivité réelle vers le CDN au démarrage — utilise le CDN (chargement plus rapide) si internet est disponible, bascule automatiquement sur les assets embarqués en base64 (Wasm + modèle, ~19 Mo) si hors-ligne ou CDN injoignable
+- Pointeur global piloté par la main droite (gauche en secours) ; pincement pouce-index = clic maintenu (`window._mouse`), donc actif nativement sur les 26 moteurs sans modification par moteur
+- **23 canaux gestuels continus** liables à n'importe quel slider de simulation : par main (pincements pouce-index/majeur/annulaire/auriculaire, ouverture, proximité caméra, hauteur, latéral, inclinaison, vitesse) + inter-mains (écartement, différence de hauteur, inclinaison de la ligne entre les mains)
+- Icône ✋ bleue à côté de chaque slider (à côté du bouton MIDI Learn) → popup groupé par MAIN GAUCHE / MAIN DROITE / DEUX MAINS, sélection par case à cocher, liaisons persistées en `localStorage`
+- Nouveau fichier `src/handtracking.js` + assets `assets/mediapipe/` (Wasm, modèle `hand_landmarker.task`, bundle MediaPipe)
+
+### OBSCURE
+
+- Ajout des sliders **Curseur X**, **Curseur Y** et bouton **CLICK** (pointeur manuel), alignés sur le système global déjà utilisé par les autres moteurs
+
+### CLOTH
+
+- **Fix perf — gel au démarrage** : `createLinks()` était en O(n²) (comparaison de distance entre chaque paire de nœuds). Remplacé par un calcul direct des voisins via les indices de grille (O(n)) — résultat identique, ~150× moins de calculs
+- **Fix perf — FPS en hausse après découpe** : le rendu des liens faisait un `beginPath()`/`stroke()` par lien individuellement (jusqu'à ~10 000 appels/frame à pleine densité). Regroupé en un seul `stroke()` par frame
+- Le couteau (déjà câblé sur l'état global `mouse.down`) s'active désormais aussi via le pincement pouce-index du tracking de main, sans code supplémentaire
+- Nouveaux réglages par défaut : densité grille `70` (était `50`), force multiplier `0.3` (était `0.25`), friction `0.935` (était `0.99`), rayon couteau `28` (était `15`)
+
+---
+
 ## [2026-07-03] — v4.2.0.080
 
 ### Nettoyage
