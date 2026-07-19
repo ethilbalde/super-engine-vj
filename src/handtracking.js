@@ -109,10 +109,14 @@ var HandControl = (function() {
       });
   }
 
+  var forceOffline = false;
+  function setForceOffline(v) { forceOffline = !!v; }
+
   function loadLandmarker(cb) {
     if (handLandmarker) { cb(null); return; }
     var HandLandmarker;
     try { HandLandmarker = getHandLandmarkerClass(); } catch (e) { cb(e); return; }
+    if (forceOffline) { loadEmbedded(HandLandmarker, cb); return; }
     probeConnectivity(function(online) {
       if (online) loadOnline(HandLandmarker, cb);
       else loadEmbedded(HandLandmarker, cb);
@@ -299,6 +303,7 @@ var HandControl = (function() {
     disable: disable,
     isActive: isActive,
     getMode: getMode,
+    setForceOffline: setForceOffline,
     setOverlayCanvas: setOverlayCanvas,
     setPinchThreshold: setPinchThreshold,
     setSmoothing: setSmoothing

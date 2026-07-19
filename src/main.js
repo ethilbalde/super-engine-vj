@@ -1327,7 +1327,7 @@ wire('loop-len','loop_length','val-loop-len',0);
    INIT
 ═══════════════════════════════════════════ */
 window.requestAnimationFrame=window.requestAnimationFrame||window.webkitRequestAnimationFrame||window.mozRequestAnimationFrame;
-var VERSION='v4.2.0.097';
+var VERSION='v4.2.0.104';
 /* EngineManager.init() appelle FluidSim.init() qui initialise canvas+ctx AVANT autoResize */
 EngineManager.init();
 /* ── VERSION DISPLAY ── */
@@ -1466,9 +1466,20 @@ initRampEditor();
   var pinchVal = document.getElementById('val-hand-pinch');
   var smoothSlider = document.getElementById('hand-smooth');
   var smoothVal = document.getElementById('val-hand-smooth');
+  var forceOfflineBox = document.getElementById('hand-force-offline');
   if (!btn || !popup) return;
 
   window.HandControl.setOverlayCanvas(overlay);
+
+  var FORCE_OFFLINE_LS = 'vj_hand_force_offline';
+  if (forceOfflineBox) {
+    try { forceOfflineBox.checked = localStorage.getItem(FORCE_OFFLINE_LS) === '1'; } catch (e) {}
+    window.HandControl.setForceOffline(forceOfflineBox.checked);
+    forceOfflineBox.addEventListener('change', function() {
+      window.HandControl.setForceOffline(this.checked);
+      try { localStorage.setItem(FORCE_OFFLINE_LS, this.checked ? '1' : '0'); } catch (e) {}
+    });
+  }
 
   function setStatus(text, color) {
     status.textContent = text;
